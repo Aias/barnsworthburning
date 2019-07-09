@@ -21,20 +21,24 @@
 	let lessons = [
 		{
 			id: 1,
-			name: 'Lesson 1'
+			name: 'Introduction'
 		},
 		{
 			id: 2,
-			name: 'Lesson 2'
+			name: 'Reactivity'
+		},
+		{
+			id: 3,
+			name: 'Props'
 		}
 	];
 </script>
 
 <nav>
 	<ul>
-		{#each lessons as lesson}
+		{#each lessons as {id, name}}
 		<li>
-			<a href="lessons/{lesson.id}" title="{lesson.name}">{lesson.id}</a>
+			<a href="lessons/{id}" title="Lesson {id}: {name}">{name}</a>
 		</li>
 		{/each}
 	</ul>
