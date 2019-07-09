@@ -32,7 +32,8 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
-	if (event.request.method !== 'GET' || event.request.headers.has('range')) return;
+	if (event.request.method !== 'GET' || event.request.headers.has('range'))
+		return;
 
 	const url = new URL(event.request.url);
 
@@ -40,7 +41,11 @@ self.addEventListener('fetch', event => {
 	if (!url.protocol.startsWith('http')) return;
 
 	// ignore dev server requests
-	if (url.hostname === self.location.hostname && url.port !== self.location.port) return;
+	if (
+		url.hostname === self.location.hostname &&
+		url.port !== self.location.port
+	)
+		return;
 
 	// always serve static files and bundler-generated assets from cache
 	if (url.host === self.location.host && cached.has(url.pathname)) {
@@ -64,19 +69,17 @@ self.addEventListener('fetch', event => {
 	// cache if the user is offline. (If the pages never change, you
 	// might prefer a cache-first approach to a network-first one.)
 	event.respondWith(
-		caches
-			.open(`offline${timestamp}`)
-			.then(async cache => {
-				try {
-					const response = await fetch(event.request);
-					cache.put(event.request, response.clone());
-					return response;
-				} catch(err) {
-					const response = await cache.match(event.request);
-					if (response) return response;
+		caches.open(`offline${timestamp}`).then(async cache => {
+			try {
+				const response = await fetch(event.request);
+				cache.put(event.request, response.clone());
+				return response;
+			} catch (err) {
+				const response = await cache.match(event.request);
+				if (response) return response;
 
-					throw err;
-				}
-			})
+				throw err;
+			}
+		})
 	);
 });

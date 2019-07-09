@@ -6,7 +6,8 @@
 </script>
 
 <style>
-	h1, p {
+	h1,
+	p {
 		margin: 0 auto;
 	}
 
@@ -36,5 +37,5 @@
 <p>{error.message}</p>
 
 {#if dev && error.stack}
-	<pre>{error.stack}</pre>
+<pre>{error.stack}</pre>
 {/if}
