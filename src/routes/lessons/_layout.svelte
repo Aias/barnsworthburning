@@ -11,5 +11,6 @@
 <style>
 	main {
 		padding: 0 var(--body-padding);
+		margin-top: var(--body-padding);
 	}
 </style>
