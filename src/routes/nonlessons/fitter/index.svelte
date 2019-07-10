@@ -17,6 +17,8 @@
 		let numChildren = childNodes.length;
 		for (let i = 0; i < numChildren; i++) {
 			if (childNodes[i].innerText) {
+				// Check to see that the element contains text that can actually be resized.
+				// This also filters out the <object> element which is automatically appended by svelte to implement width reactivity.
 				fitText(childNodes[i]);
 			}
 		}
@@ -24,30 +26,30 @@
 
 	let slowResize = throttle(resize, 100);
 
-	function fitText(node, targetDelta = 1 / 10000) {
-		let fontSize = computedFontSizeToNumeric(
-			window.getComputedStyle(node).fontSize
-		);
-		let currentWidth = node.clientWidth;
-		let scale = 1 - (currentWidth - w) / currentWidth;
+	function fitText(node, passes = 0) {
+		let computedStyle = window.getComputedStyle(node);
+		let fontSize = pxStringToNumeric(computedStyle.fontSize);
+		let currentWidth = pxStringToNumeric(computedStyle.width); // More accurate than node.clientWidth;
 
-		if (Math.abs(1 - scale) < targetDelta) {
+		let scale = 1 - (currentWidth - w) / currentWidth;
+		let delta = Math.abs(1 - scale);
+
+		node.style.fontSize = `${fontSize * scale}px`;
+
+		if (delta < 1 / 1000 || passes >= 5) {
+			// Change these numbers to adjust accuracy of the function.
+			// Passes is a failsafe to prevent infinite loops.
 			return;
 		} else {
-			node.style.fontSize = `${fontSize * scale}px`;
-
-			fitText(node);
+			fitText(node, passes + 1);
 		}
 	}
 
-	function computedFontSizeToNumeric(computedFontSize) {
-		return Number(
-			computedFontSize.substring(0, computedFontSize.length - 2)
-		);
+	function pxStringToNumeric(str) {
+		return Number(str.substring(0, str.length - 2));
 	}
 
 	onMount(() => {
-		resize();
 		mounted = true;
 	});
 </script>
