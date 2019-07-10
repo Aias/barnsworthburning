@@ -2,12 +2,15 @@
 	import { onMount } from 'svelte';
 	import throttle from 'lodash/throttle';
 
-	let mounted = false;
-	let w;
-	let fitter;
+	export let targetDelta = 1 / 1000;
+	export let maxPasses = 5;
+	export let throttleSpeed = 100;
+
+	let w = undefined;
+	let fitter = undefined;
 
 	$: {
-		if (mounted && w) {
+		if (w) {
 			slowResize();
 		}
 	}
@@ -24,7 +27,7 @@
 		}
 	}
 
-	let slowResize = throttle(resize, 100);
+	let slowResize = throttle(resize, throttleSpeed);
 
 	function fitText(node, passes = 0) {
 		let computedStyle = window.getComputedStyle(node);
@@ -36,7 +39,7 @@
 
 		node.style.fontSize = `${fontSize * scale}px`;
 
-		if (delta < 1 / 1000 || passes >= 5) {
+		if (delta < targetDelta || passes >= maxPasses) {
 			// Change these numbers to adjust accuracy of the function.
 			// Passes is a failsafe to prevent infinite loops.
 			return;
@@ -48,10 +51,6 @@
 	function pxStringToNumeric(str) {
 		return Number(str.substring(0, str.length - 2));
 	}
-
-	onMount(() => {
-		mounted = true;
-	});
 </script>
 
 <div class="fitter" bind:clientWidth="{w}" bind:this="{fitter}">
