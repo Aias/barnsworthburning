@@ -11,3 +11,13 @@
 		</li>
 	</ul>
 </nav>
+
+<h2>Other things</h2>
+
+<nav>
+	<ul>
+		<li>
+			<a href="nonlessons/fitter">Fitter</a>
+		</li>
+	</ul>
+</nav>
