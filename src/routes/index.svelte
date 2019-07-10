@@ -19,5 +19,8 @@
 		<li>
 			<a href="nonlessons/fitter">Fitter</a>
 		</li>
+		<li>
+			<a href="nonlessons/patterns">Pattern Grid</a>
+		</li>
 	</ul>
 </nav>
