@@ -1,5 +1,5 @@
 <script>
-	import Fitter from './Fitter.svelte';
+	import Fitter from '../../../components/Fitter.svelte';
 </script>
 
 <div class="container">
@@ -18,6 +18,7 @@
 	}
 
 	.container {
-		width: 40%;
+		width: 50%;
+		margin: 0 auto;
 	}
 </style>
