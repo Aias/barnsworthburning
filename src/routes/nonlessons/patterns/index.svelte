@@ -14,8 +14,6 @@
 	$: groupArray = values(groups).sort(sortByPosition);
 	$: categoryArray = values(categories).sort(sortByPosition);
 
-	$: console.log(isLoaded);
-
 	onMount(() => {
 		fetch(`nonlessons/patterns/patterns.json`)
 			.then(data => data.json())
