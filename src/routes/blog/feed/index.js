@@ -1,15 +1,13 @@
-// import Feed from './_Feed.svelte'; // This doesn't work :(
-
 // From https://github.com/sveltejs/sapper/issues/461
 // and https://github.com/sveltejs/hn.svelte.technology/blob/master/src/routes/%5Blist%5D/rss.js
 
-import { portfolio } from '../_airtable';
+import { portfolio } from '../../_airtable';
 
 const render = items => `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
 <channel>
-	<title>barnsworthburning rss</title>
-	<link>http://barnsworthburning.net/feed</link>
+	<title>bwb.log</title>
+	<link>http://barnsworthburning.net/blog/feed/</link>
 	<description>Notes, thoughts, and updates from barnsworthburning.net</description>
 	<image>
 		<url>https://hn.svelte.technology/favicon.png</url>
@@ -20,7 +18,7 @@ const render = items => `<?xml version="1.0" encoding="UTF-8" ?>
 		.map(
 			item => `<item>
 		<title>${item.title}</title>
-		<link>localhost:3000/blog/${item.id}</link>
+		<link>localhost:3000/blog/posts/${item.id}</link>
 		<description>${item.description}</description>
 		<pubDate>${new Date(item.created).toUTCString()}</pubDate>
 	</item>`
