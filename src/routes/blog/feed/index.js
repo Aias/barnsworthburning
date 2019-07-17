@@ -1,25 +1,28 @@
 // From https://github.com/sveltejs/sapper/issues/461
 // and https://github.com/sveltejs/hn.svelte.technology/blob/master/src/routes/%5Blist%5D/rss.js
+// and https://lacourt.dev/2019/06/29
 
 import { portfolio } from '../../_airtable';
+
+const siteUrl = 'http://design.barnsworthburning.net';
 
 const render = items => `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
 <channel>
-	<title>bwb.log</title>
-	<link>http://barnsworthburning.net/blog/feed/</link>
-	<description>Notes, thoughts, and updates from barnsworthburning.net</description>
+	<title><![CDATA[bwb.log]]></title>
+	<link>${siteUrl}/blog/feed/</link>
+	<description><![CDATA[Notes, thoughts, and updates from barnsworthburning.net]]></description>
 	<image>
 		<url>https://hn.svelte.technology/favicon.png</url>
-		<title>Image title</title>
+		<title><![CDATA[Image title]]></title>
 		<link>https://hn.svelte.technology/1</link>
 	</image>
 	${items
 		.map(
 			item => `<item>
-		<title>${item.title}</title>
-		<link>localhost:3000/blog/posts/${item.id}</link>
-		<description>${item.description}</description>
+		<title><![CDATA[${item.title}]]></title>
+		<link>${siteUrl}/blog/posts/${item.slug}</link>
+		<description><![CDATA[${item.description}]]></description>
 		<pubDate>${new Date(item.created).toUTCString()}</pubDate>
 	</item>`
 		)
@@ -32,7 +35,7 @@ export function get(req, res) {
 		.select({
 			maxRecords: 10,
 			pageSize: 100,
-			view: 'Grid view',
+			view: 'published-posts',
 			sort: [{ field: 'created', direction: 'desc' }]
 		})
 		.firstPage((err, records) => {
