@@ -12,6 +12,7 @@
 		"airtable": "^0.6.0",
 		"compression": "^1.7.1",
 		"lodash": "^4.17.14",
+		"marked": "^0.7.0",
 		"normalize.css": "^8.0.1",
 		"polka": "^0.5.0",
 		"sirv": "^0.4.0"

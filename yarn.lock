@@ -1363,6 +1363,11 @@ magic-string@^0.25.2:
   dependencies:
     sourcemap-codec "^1.4.4"
 
+marked@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-0.7.0.tgz#b64201f051d271b1edc10a04d1ae9b74bb8e5c0e"
+  integrity sha512-c+yYdCZJQrsRjTPhUx7VKkApw9bwDkNbHUKo1ovgcfDjb2kc8rLuRbIFyXL5WOEUwzSSKo3IXpph2K6DqB/KZg==
+
 matchit@^1.0.0:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/matchit/-/matchit-1.0.8.tgz#9a129e38f79b2053dd75339215b19e1f6bb88efb"

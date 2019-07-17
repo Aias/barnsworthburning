@@ -1,4 +1,4 @@
-import base from './_base';
+import { patterns } from '../../_airtable';
 import isEmpty from 'lodash/isEmpty';
 
 export async function get(req, res, next) {
@@ -6,7 +6,7 @@ export async function get(req, res, next) {
 	let data = {};
 	let currentPage = 0;
 
-	base(table)
+	patterns(table)
 		.select({
 			view: 'Grid view'
 		})
