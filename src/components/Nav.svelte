@@ -18,27 +18,27 @@
 </style>
 
 <script>
-	let lessons = [
+	let links = [
 		{
-			id: 1,
-			name: 'Introduction'
+			path: 'lessons',
+			title: 'Svelte tutorials'
 		},
 		{
-			id: 2,
-			name: 'Reactivity'
+			path: 'nonlessons',
+			title: 'Non-lessons'
 		},
 		{
-			id: 3,
-			name: 'Props'
+			path: 'blog',
+			title: 'Blog'
 		}
 	];
 </script>
 
 <nav>
 	<ul>
-		{#each lessons as {id, name}}
+		{#each links as {path, title}}
 		<li>
-			<a href="lessons/{id}" title="Lesson {id}: {name}">{name}</a>
+			<a href="{path}" {title}>{title}</a>
 		</li>
 		{/each}
 	</ul>

@@ -14,11 +14,11 @@
 </script>
 
 <h1>All blog posts</h1>
-<ul>
+<ol>
 	{#each posts as post}
 	<li>
 		<article>
-			<h2>{post.title}</h2>
+			<h2><a href="{`blog/posts/${post.slug}`}">{post.title}</a></h2>
 			<h3>{post.description}</h3>
 			<section>
 				{@html marked(post.content)}
@@ -26,4 +26,14 @@
 		</article>
 	</li>
 	{/each}
-</ul>
+</ol>
+
+<style>
+	ol {
+		list-style-type: none;
+		padding: 0;
+	}
+	li {
+		border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+	}
+</style>
