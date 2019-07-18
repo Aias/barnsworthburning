@@ -1,8 +1,8 @@
 import { patterns } from '../src/_airtable';
 import isEmpty from 'lodash/isEmpty';
 
-export async function get(req, res, next) {
-	const { table } = req.params;
+export function handler(event, context, callback) {
+	const { table } = event.queryStringParameters;
 	let data = {};
 	let currentPage = 0;
 
@@ -11,7 +11,7 @@ export async function get(req, res, next) {
 			view: 'Grid view'
 		})
 		.eachPage(
-			function page(records, fetchNextPage) {
+			(records, fetchNextPage) => {
 				records.forEach((r, i) => {
 					data[r.id] = {
 						position: i + currentPage * 100,
@@ -22,31 +22,22 @@ export async function get(req, res, next) {
 				currentPage++;
 				fetchNextPage();
 			},
-			function done(err) {
+			err => {
 				if (err) {
-					res.writeHead(500, {
-						'Content-Type': 'application/json'
+					callback(err, {
+						statusCode: 500,
+						body: 'Internal server error'
 					});
-					res.end(
-						JSON.stringify({
-							message: `Internal server error`,
-							error: err
-						})
-					);
 				} else if (!isEmpty(data)) {
-					res.writeHead(200, {
-						'Content-Type': 'application/json'
+					callback(null, {
+						statusCode: 200,
+						body: JSON.stringify(data)
 					});
-					res.end(JSON.stringify(data));
 				} else {
-					res.writeHead(404, {
-						'Content-Type': 'application/json'
+					callback(null, {
+						statusCode: 404,
+						body: 'Table not found'
 					});
-					res.end(
-						JSON.stringify({
-							message: `Not found`
-						})
-					);
 				}
 			}
 		);

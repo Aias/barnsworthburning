@@ -15,17 +15,17 @@
 	$: categoryArray = values(categories).sort(sortByPosition);
 
 	onMount(() => {
-		fetch(`nonlessons/patterns/patterns.json`)
+		fetch(`/.netlify/functions/patterns?table=patterns`)
 			.then(data => data.json())
 			.then(json => {
 				patterns = json;
 			});
-		fetch(`nonlessons/patterns/groups.json`)
+		fetch(`/.netlify/functions/patterns?table=groups`)
 			.then(data => data.json())
 			.then(json => {
 				groups = json;
 			});
-		fetch(`nonlessons/patterns/categories.json`)
+		fetch(`/.netlify/functions/patterns?table=categories`)
 			.then(data => data.json())
 			.then(json => {
 				categories = json;
