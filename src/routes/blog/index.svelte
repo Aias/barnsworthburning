@@ -4,6 +4,10 @@
 
 	let posts = [];
 
+	let notFinished = `
+		<p><em>This post has not been written. Maybe it's on its way.</em></p>
+	`;
+
 	onMount(() => {
 		fetch('/.netlify/functions/posts')
 			.then(data => data.json())
@@ -21,7 +25,7 @@
 			<h2><a href="{`blog/posts/${post.slug}`}">{post.title}</a></h2>
 			<h3>{post.description}</h3>
 			<section>
-				{@html marked(post.content)}
+				{@html post.content ? marked(post.content) : notFinished}
 			</section>
 		</article>
 	</li>
