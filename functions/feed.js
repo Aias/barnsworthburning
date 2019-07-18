@@ -2,7 +2,7 @@
 // and https://github.com/sveltejs/hn.svelte.technology/blob/master/src/routes/%5Blist%5D/rss.js
 // and https://lacourt.dev/2019/06/29
 
-import { portfolio } from '../../../_airtable';
+import { portfolio } from '../src/_airtable';
 
 const siteUrl = 'http://design.barnsworthburning.net';
 

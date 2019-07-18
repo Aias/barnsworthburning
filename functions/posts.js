@@ -1,6 +1,6 @@
-import { portfolio } from '../_airtable';
+import { portfolio } from '../src/_airtable';
 
-export async function get(req, res) {
+export function handler(event, context, callback) {
 	let posts = [];
 
 	portfolio('blog')
@@ -19,13 +19,13 @@ export async function get(req, res) {
 			},
 			err => {
 				if (err) {
-					res.writeHead(500, 'Internal server error.');
-					res.end(JSON.stringify(err));
+					callback(err);
 				} else {
-					res.writeHead(200, {
-						'Cache-Control': `max-age=0, s-max-age=${600}` // 10 minutes
+					callback(null, {
+						// return null to show no errors
+						statusCode: 200, // http status code
+						body: JSON.stringify(posts)
 					});
-					res.end(JSON.stringify(posts));
 				}
 			}
 		);

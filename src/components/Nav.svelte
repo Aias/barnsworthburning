@@ -20,12 +20,12 @@
 <script>
 	let links = [
 		{
-			path: 'lessons',
-			title: 'Svelte tutorials'
+			path: '/',
+			title: 'Home'
 		},
 		{
-			path: 'nonlessons',
-			title: 'Non-lessons'
+			path: 'projects',
+			title: 'Projects'
 		},
 		{
 			path: 'blog',

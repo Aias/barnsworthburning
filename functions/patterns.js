@@ -1,4 +1,4 @@
-import { patterns } from '../../_airtable';
+import { patterns } from '../src/_airtable';
 import isEmpty from 'lodash/isEmpty';
 
 export async function get(req, res, next) {

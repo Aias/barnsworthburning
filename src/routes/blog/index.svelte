@@ -5,7 +5,7 @@
 	let posts = [];
 
 	onMount(() => {
-		fetch(`blog/posts.json`)
+		fetch('/.netlify/functions/posts')
 			.then(data => data.json())
 			.then(json => {
 				posts = json;
