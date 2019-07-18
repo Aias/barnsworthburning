@@ -22,7 +22,7 @@
 	{#each posts as post}
 	<li>
 		<article>
-			<h2><a href="{`blog/posts/${post.slug}`}">{post.title}</a></h2>
+			<h2><a href="{`blog/${post.slug}`}">{post.title}</a></h2>
 			<h3>{post.description}</h3>
 			<section>
 				{@html post.content ? marked(post.content) : notFinished}

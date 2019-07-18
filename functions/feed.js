@@ -4,14 +4,14 @@
 
 import { portfolio } from '../src/_airtable';
 
-const siteUrl = 'http://design.barnsworthburning.net';
+const siteUrl = 'https://barnsworthburning.netlify.com';
 
 // TODO: Add an option for Atom.
 const renderRssXml = items => `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
 <channel>
 	<title><![CDATA[bwb.log]]></title>
-	<link>${siteUrl}/blog/feed/</link>
+	<link>${siteUrl}/blog/</link>
 	<description><![CDATA[Notes, thoughts, and updates from barnsworthburning.net]]></description>
 	<image>
 		<url>https://hn.svelte.technology/favicon.png</url>
@@ -31,7 +31,7 @@ const renderRssXml = items => `<?xml version="1.0" encoding="UTF-8" ?>
 </channel>
 </rss>`;
 
-export function get(req, res) {
+export function handler(event, context, callback) {
 	portfolio('blog')
 		.select({
 			maxRecords: 10,
@@ -41,18 +41,20 @@ export function get(req, res) {
 		})
 		.firstPage((err, records) => {
 			if (err) {
-				console.error(err);
-				return;
+				callback(err);
 			} else {
 				let items = records.map(r => r.fields);
-				console.log(items);
 
 				const feed = renderRssXml(items);
-				res.writeHead(200, {
-					'Cache-Control': `max-age=0, s-max-age=${600}`, // 10 minutes
-					'Content-Type': 'application/rss+xml'
+
+				callback(null, {
+					statusCode: 200,
+					headers: {
+						'Cache-Control': `max-age=0, s-max-age=${600}`, // 10 minutes
+						'Content-Type': 'application/rss+xml'
+					},
+					body: feed
 				});
-				res.end(feed);
 			}
 		});
 }
