@@ -1,3 +1,13 @@
+<script>
+	import { onMount } from 'svelte';
+
+	onMount(() => {
+		fetch('/.netlify/functions/hello')
+			.then(response => response.json())
+			.then(json => console.log(json));
+	});
+</script>
+
 <svelte:head>
 	<title>Svelte Tutorials</title>
 </svelte:head>
