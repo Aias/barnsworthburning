@@ -6,7 +6,8 @@ import { portfolio } from '../../_airtable';
 
 const siteUrl = 'http://design.barnsworthburning.net';
 
-const render = items => `<?xml version="1.0" encoding="UTF-8" ?>
+// TODO: Add an option for Atom.
+const renderRssXml = items => `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
 <channel>
 	<title><![CDATA[bwb.log]]></title>
@@ -46,7 +47,7 @@ export function get(req, res) {
 				let items = records.map(r => r.fields);
 				console.log(items);
 
-				const feed = render(items);
+				const feed = renderRssXml(items);
 				res.writeHead(200, {
 					'Cache-Control': `max-age=0, s-max-age=${600}`, // 10 minutes
 					'Content-Type': 'application/rss+xml'
