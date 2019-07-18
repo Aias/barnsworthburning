@@ -9,6 +9,7 @@ const dev = NODE_ENV === 'development';
 
 const server = polka();
 
+// From https://github.com/mrispoli24/sapper-netlify-jamstack-starter
 const devProxy = {
 	'/.netlify': {
 		target: 'http://localhost:9000',
