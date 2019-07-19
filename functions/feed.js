@@ -22,7 +22,8 @@ const renderRssXml = items => `<?xml version="1.0" encoding="UTF-8" ?>
 		.map(
 			item => `<item>
 		<title><![CDATA[${item.title}]]></title>
-		<link>${siteUrl}/blog/posts/${item.slug}</link>
+		<guid>${siteUrl}/blog/${item.slug}</guid>
+		<link>${siteUrl}/blog/${item.slug}</link>
 		<description><![CDATA[${item.description}]]></description>
 		<pubDate>${new Date(item.created).toUTCString()}</pubDate>
 	</item>`
