@@ -5,5 +5,6 @@
   environment = { AWS_LAMBDA_JS_RUNTIME = "nodejs10.x" }
 
 [[redirects]]
-  from = "/blog/*"
-  to = "/blog"
+  from = "/*"
+  to = "/index.html"
+  status = 200
