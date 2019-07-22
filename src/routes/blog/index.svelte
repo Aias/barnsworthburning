@@ -1,20 +1,23 @@
+<script context="module">
+	import { FULL_API } from '../../config.js';
+
+	export async function preload(page, session) {
+		const posts = await this.fetch(`${FULL_API}/posts`).then(data =>
+			data.json()
+		);
+
+		return { posts };
+	}
+</script>
+
 <script>
 	import marked from 'marked';
-	import { onMount } from 'svelte';
 
 	export let posts = [];
 
 	let notFinished = `
 		<p><em>This post has not been written. Maybe it's on its way.</em></p>
 	`;
-
-	onMount(() => {
-		fetch('/.netlify/functions/posts')
-			.then(data => data.json())
-			.then(json => {
-				posts = json;
-			});
-	});
 </script>
 
 <h1>All blog posts</h1>

@@ -4,6 +4,7 @@
 	import keys from 'lodash/keys';
 	import range from 'lodash/range';
 	import size from 'lodash/size';
+	import { FUNCTIONS_PATH } from '../../../config.js';
 
 	let patterns, groups, categories;
 	$: isLoaded = patterns && groups && categories;
@@ -15,17 +16,17 @@
 	$: categoryArray = values(categories).sort(sortByPosition);
 
 	onMount(() => {
-		fetch(`/.netlify/functions/patterns?table=patterns`)
+		fetch(`/${FUNCTIONS_PATH}/patterns?table=patterns`)
 			.then(data => data.json())
 			.then(json => {
 				patterns = json;
 			});
-		fetch(`/.netlify/functions/patterns?table=groups`)
+		fetch(`/${FUNCTIONS_PATH}/patterns?table=groups`)
 			.then(data => data.json())
 			.then(json => {
 				groups = json;
 			});
-		fetch(`/.netlify/functions/patterns?table=categories`)
+		fetch(`/${FUNCTIONS_PATH}/patterns?table=categories`)
 			.then(data => data.json())
 			.then(json => {
 				categories = json;
