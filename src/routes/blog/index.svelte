@@ -1,20 +1,20 @@
+<script context="module">
+	export async function preload(page, session) {
+		const posts = await this.fetch('/.netlify/functions/posts').then(data =>
+			data.json()
+		);
+		return { posts };
+	}
+</script>
+
 <script>
-	import { onMount } from 'svelte';
 	import marked from 'marked';
 
-	let posts = [];
+	export let posts;
 
 	let notFinished = `
 		<p><em>This post has not been written. Maybe it's on its way.</em></p>
 	`;
-
-	onMount(() => {
-		fetch('/.netlify/functions/posts')
-			.then(data => data.json())
-			.then(json => {
-				posts = json;
-			});
-	});
 </script>
 
 <h1>All blog posts</h1>
