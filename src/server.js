@@ -9,29 +9,14 @@ const dev = NODE_ENV === 'development';
 
 const server = polka();
 
-// From https://github.com/mrispoli24/sapper-netlify-jamstack-starter
-const devProxy = {
-	'/.netlify': {
-		target: 'http://localhost:9000',
-		pathRewrite: { '^/.netlify/functions': '' }
-	}
-};
-
 // Set up API proxy.
-// server.use(
-// 	proxyMiddleware('/api', {
-// 		target: 'https://barnsworthburning-api.netlify.com/.netlify/functions',
-// 		pathRewrite: { '^/api': '' },
-// 		changeOrigin: true
-// 	})
-// );
-
-// Set up the proxy.
-if (dev && devProxy) {
-	Object.keys(devProxy).forEach(function(context) {
-		server.use(proxyMiddleware(context, devProxy[context]));
-	});
-}
+server.use(
+	proxyMiddleware('/api', {
+		target: 'https://barnsworthburning-api.netlify.com/.netlify/functions',
+		pathRewrite: { '^/api': '' },
+		changeOrigin: true
+	})
+);
 
 server // You can also use Express
 	.use(
