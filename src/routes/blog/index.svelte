@@ -2,11 +2,9 @@
 	import { FULL_API } from '../../config.js';
 
 	export async function preload(page, session) {
-		const posts = await this.fetch(`${FULL_API}/posts`, {
-			headers: new Headers({
-				'Content-Type': 'application/json'
-			})
-		}).then(data => data.json());
+		const posts = await this.fetch(`${FULL_API}/posts`).then(data =>
+			data.json()
+		);
 
 		return { posts };
 	}
