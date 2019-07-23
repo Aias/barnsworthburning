@@ -13,3 +13,9 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+# https://forum.blockstack.org/t/deploying-to-netlify-with-github-cors-headers/7700
+[[headers]]
+  for = "/*"
+    [headers.values]
+      Access-Control-Allow-Origin = "*"
