@@ -1,9 +1,24 @@
 @import 'normalize.css';
 
+/* GOOD COLORS (lightest to darkest)
+ivory
+whitesmoke
+oldlace
+cornsilk
+linen
+goldenrod
+
+maroon
+midnightblue */
+
 html {
 	--body-padding: 1em;
+
 	--text-primary: rgba(0, 0, 0, 0.9);
 	--text-secondary: rgba(0, 0, 0, 0.6);
+	--background-color: ghostwhite;
+	--background-punch: white;
+	--theme-primary: maroon;
 }
 
 body {
@@ -13,4 +28,5 @@ body {
 	font-size: 100%;
 	line-height: 1.5;
 	color: var(--text-primary);
+	background-color: var(--background-color);
 }
