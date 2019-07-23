@@ -5,6 +5,11 @@
   environment = { AWS_LAMBDA_JS_RUNTIME = "nodejs10.x" }
 
 [[redirects]]
+  from = "/api/*"
+  to = "https://barnsworthburning-api.netlify.com/.netlify/functions/:splat"
+  status = 200
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
