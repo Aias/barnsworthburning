@@ -4,10 +4,10 @@
   publish = "__sapper__/export"
   environment = { AWS_LAMBDA_JS_RUNTIME = "nodejs10.x" }
 
-[[redirects]]
-  from = "/api/*"
-  to = "https://barnsworthburning-api.netlify.com/.netlify/functions/:splat"
-  status = 200
+# [[redirects]]
+#   from = "/api/*"
+#   to = "https://barnsworthburning-api.netlify.com/.netlify/functions/:splat"
+#   status = 200
 
 [[redirects]]
   from = "/*"
