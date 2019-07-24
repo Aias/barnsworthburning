@@ -14,21 +14,30 @@ midnightblue */
 html {
 	--body-padding: 1em;
 
+	--font-stack-serif: 'Palatino Linotype', Palatino, Palladio,
+		'URW Palladio L', 'Book Antiqua', Baskerville, 'Bookman Old Style',
+		'Bitstream Charter', 'Nimbus Roman No9 L', Garamond, 'Apple Garamond',
+		'ITC Garamond Narrow', 'New Century Schoolbook', 'Century Schoolbook',
+		'Century Schoolbook L', Georgia, serif;
+	--font-stack-sans: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI,
+		Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+		sans-serif;
+
 	--text-primary: rgba(0, 0, 0, 0.9);
 	--text-secondary: rgba(0, 0, 0, 0.6);
 	--background-color: ghostwhite;
 	--background-punch: white;
 	--theme-primary: #2e307f;
-	--theme-primary-bg: #1d1d40;
+	--theme-primary-dark: #1d1d40;
 	--theme-accent: darkgoldenrod;
+	--theme-accent-light: palegoldenrod;
 }
 
 body {
 	margin: 0;
-	font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen,
-		Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-	font-size: 100%;
-	line-height: 1.5;
+	font-family: var(--font-stack-serif);
+	font-size: calc(16px + (26 - 16) * ((100vw - 300px) / (1600 - 300)));
+	line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px) / (1600 - 300)));
 	color: var(--text-primary);
 	background-color: var(--background-color);
 }

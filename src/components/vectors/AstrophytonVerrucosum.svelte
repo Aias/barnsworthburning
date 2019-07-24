@@ -1,10 +1,11 @@
 <style>
 	svg {
-		width: 100%;
+		flex: 1;
+		min-width: 350px;
 	}
 	path {
-		fill: var(--background-punch);
-		stroke: var(--theme-primary);
+		fill: var(--theme-primary);
+		stroke: var(--theme-accent-light);
 		stroke-width: 1.5px;
 	}
 </style>
