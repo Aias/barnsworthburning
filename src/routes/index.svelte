@@ -1,12 +1,12 @@
 <script>
-	import AstrophytonVerrucosum from '../components/vectors/AstrophytonVerrucosum.svelte';
+	import Astrophyton from '../components/vectors/Astrophyton.svelte';
 </script>
 
 <svelte:head>
 	<title>barnsworthburning.net</title>
 </svelte:head>
 
-<AstrophytonVerrucosum />
+<Astrophyton />
 
 <blockquote cite="https://www.bartleby.com/198/1.html">
 	I should have been a pair of ragged claws <br />
