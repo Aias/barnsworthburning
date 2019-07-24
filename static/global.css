@@ -14,6 +14,7 @@ midnightblue */
 html {
 	--body-padding: 1em;
 
+	/* System font stacks from https://gist.github.com/don1138/5761014 */
 	--font-stack-serif: 'Palatino Linotype', Palatino, Palladio,
 		'URW Palladio L', 'Book Antiqua', Baskerville, 'Bookman Old Style',
 		'Bitstream Charter', 'Nimbus Roman No9 L', Garamond, 'Apple Garamond',
@@ -22,6 +23,10 @@ html {
 	--font-stack-sans: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI,
 		Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
 		sans-serif;
+	--font-stack-mono: Consolas, 'Andale Mono WT', 'Andale Mono',
+		'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono',
+		'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', Monaco,
+		'Courier New', Courier, monospace;
 
 	--text-primary: rgba(0, 0, 0, 0.9);
 	--text-secondary: rgba(0, 0, 0, 0.6);
