@@ -12,6 +12,9 @@ maroon
 midnightblue */
 
 html {
+	height: 100%;
+	position: relative;
+
 	--body-padding: 1em;
 
 	/* System font stacks from https://gist.github.com/don1138/5761014 */
@@ -39,6 +42,7 @@ html {
 }
 
 body {
+	height: 100%;
 	margin: 0;
 	font-family: var(--font-stack-serif);
 	/* https://css-tricks.com/books/volume-i/scale-typography-screen-size/ */
