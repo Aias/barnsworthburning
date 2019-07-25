@@ -38,7 +38,7 @@
 	<ul>
 		{#each links as {path, title}}
 		<li>
-			<a href="{path}" {title}>{title}</a>
+			<a rel="prefetch" href="{path}" {title}>{title}</a>
 		</li>
 		{/each}
 	</ul>
