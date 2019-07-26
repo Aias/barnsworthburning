@@ -41,6 +41,10 @@ html {
 	--theme-accent-light: palegoldenrod;
 }
 
+html.theme--dark {
+	--background-color: rgba(0, 5, 10);
+}
+
 body {
 	height: 100%;
 	margin: 0;
