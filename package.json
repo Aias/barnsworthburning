@@ -3,34 +3,34 @@
 	"version": "0.0.2",
 	"license": "MIT",
 	"scripts": {
-		"dev": "sapper dev",
+		"start": "sapper dev",
 		"build": "sapper build --legacy",
 		"export": "sapper export --legacy",
-		"start": "node __sapper__/build",
+		"serve": "node __sapper__/build",
 		"netlify:build": "sapper export"
 	},
 	"dependencies": {
 		"compression": "^1.7.1",
-		"lodash": "^4.17.14",
+		"lodash": "^4.17.15",
 		"marked": "^0.7.0",
 		"normalize.css": "^8.0.1",
 		"polka": "^0.5.0",
 		"sirv": "^0.4.0"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.0.0",
+		"@babel/core": "^7.5.5",
 		"@babel/plugin-syntax-dynamic-import": "^7.0.0",
-		"@babel/plugin-transform-runtime": "^7.0.0",
-		"@babel/preset-env": "^7.0.0",
-		"@babel/runtime": "^7.0.0",
-		"rollup": "^1.12.0",
+		"@babel/plugin-transform-runtime": "^7.5.5",
+		"@babel/preset-env": "^7.5.5",
+		"@babel/runtime": "^7.5.5",
+		"rollup": "^1.17.0",
 		"rollup-plugin-babel": "^4.0.2",
 		"rollup-plugin-commonjs": "^10.0.0",
 		"rollup-plugin-node-resolve": "^5.2.0",
 		"rollup-plugin-replace": "^2.0.0",
 		"rollup-plugin-svelte": "^5.0.1",
-		"rollup-plugin-terser": "^4.0.4",
-		"sapper": "^0.27.0",
-		"svelte": "^3.0.0"
+		"rollup-plugin-terser": "^5.1.1",
+		"sapper": "^0.27.8",
+		"svelte": "^3.6.10"
 	}
 }
