@@ -24,12 +24,20 @@
 			title: 'Home'
 		},
 		{
+			path: 'commonplace',
+			title: 'A Commonplace Book'
+		},
+		{
 			path: 'projects',
 			title: 'Projects'
 		},
 		{
 			path: 'blog',
 			title: 'Blog'
+		},
+		{
+			path: 'about',
+			title: 'About'
 		}
 	];
 </script>
