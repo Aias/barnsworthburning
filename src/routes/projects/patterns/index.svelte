@@ -136,6 +136,6 @@
 		background-color: steelblue;
 	}
 	.self {
-		background-color: black;
+		background-color: white;
 	}
 </style>

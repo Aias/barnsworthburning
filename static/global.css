@@ -51,7 +51,6 @@ body {
 	font-family: var(--font-stack-serif);
 	/* https://css-tricks.com/books/volume-i/scale-typography-screen-size/ */
 	font-size: calc(16px + (21 - 16) * ((100vw - 300px) / (1600 - 300)));
-	line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px) / (1600 - 300)));
 	color: var(--text-primary);
 	background-color: var(--background-color);
 }
