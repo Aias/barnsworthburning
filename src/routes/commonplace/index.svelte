@@ -55,7 +55,6 @@
 
 <style>
 	div {
-		display: inline;
 		text-align: justify;
 	}
 
