@@ -1,22 +1,6 @@
 @import 'normalize.css';
 
-/* GOOD COLORS (lightest to darkest)
-ivory
-whitesmoke
-oldlace
-cornsilk
-linen
-goldenrod
-
-maroon
-midnightblue */
-
-html {
-	height: 100%;
-	position: relative;
-
-	--body-padding: 1em;
-
+:root {
 	/* System font stacks from https://gist.github.com/don1138/5761014 */
 	--font-stack-serif: 'Palatino Linotype', Palatino, Palladio,
 		'URW Palladio L', 'Book Antiqua', Baskerville, 'Bookman Old Style',
@@ -31,26 +15,80 @@ html {
 		'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', Monaco,
 		'Courier New', Courier, monospace;
 
-	--text-primary: rgba(0, 0, 0, 0.9);
-	--text-secondary: rgba(0, 0, 0, 0.6);
-	--background-color: ghostwhite;
-	--background-punch: white;
-	--theme-primary: #2d3461;
-	--theme-primary-dark: #1d1d40;
+	--clr-yellow-i: #927d05;
+	--clr-yellow-ii: #a8910b;
+	--clr-yellow-iii: #d5b712;
+	--clr-yellow-iv: #ebcc20;
+	--clr-yellow-v: #ffe552;
+	--clr-yellow-base: var(--clr-yellow-iv);
+
+	--clr-red-i: #85050a;
+	--clr-red-ii: #a0060c;
+	--clr-red-iii: #b50007;
+	--clr-red-iv: #da141a;
+	--clr-red-v: #ff4b51;
+	--clr-red-base: var(--clr-red-iii);
+
+	--clr-lighter-i: hsla(0, 0%, 100%, 0.08);
+	--clr-lighter-ii: hsla(0, 0%, 100%, 0.2);
+	--clr-lighter-iii: hsla(0, 0%, 100%, 0.4);
+	--clr-lighter-iv: hsla(0, 0%, 100%, 0.7);
+	--clr-lighter-v: hsla(0, 0%, 100%, 0.95);
+
+	--clr-darker-i: hsla(0, 0%, 0%, 0.05);
+	--clr-darker-ii: hsla(0, 0%, 0%, 0.15);
+	--clr-darker-iii: hsla(0, 0%, 0%, 0.35);
+	--clr-darker-iv: hsla(0, 0%, 0%, 0.65);
+	--clr-darker-v: hsla(0, 0%, 0%, 0.93);
+
+	--body-padding: 1em;
+}
+
+body,
+.theme--light {
+	--text-primary: var(--clr-darker-v);
+	--text-secondary: var(--clr-darker-iv);
+	--theme-primary: var(--clr-red-base);
+	--theme-primary-bg: var(--clr-red-ii);
+	--theme-primary-text: var(--clr-red-ii);
 	--theme-accent: darkgoldenrod;
-	--theme-accent-light: palegoldenrod;
+	--theme-accent-bg: palegoldenrod;
+	--theme-accent-text: darkgoldenrod;
+	--layer-bg: #f2f1f0;
+	--layer-container: var(--clr-lighter-v);
+	--layer-highlight: #e6e5e4;
+	--divider: var(--clr-darker-iii);
+	--container-border: none;
 }
 
-html.theme--dark {
-	--background-color: rgba(0, 5, 10);
+.theme--dark {
+	--text-primary: var(--clr-lighter-v);
+	--text-secondary: var(--clr-lighter-iv);
+	--theme-primary: var(--clr-yellow-base);
+	--theme-primary-bg: var(--clr-yellow-iv);
+	--theme-primary-text: var(--clr-yellow-iii);
+	--theme-accent: firebrick;
+	--theme-accent-bg: red;
+	--theme-accent-text: firebrick;
+	--layer-bg: #242021;
+	--layer-container: #100e06;
+	--layer-highlight: var(--layer-container);
+	--divider: var(--clr-lighter-iv);
+	--container-border: 1px solid var(--clr-lighter-iv);
 }
 
-body {
-	height: 100%;
-	margin: 0;
-	font-family: var(--font-stack-serif);
-	/* https://css-tricks.com/books/volume-i/scale-typography-screen-size/ */
-	font-size: calc(16px + (21 - 16) * ((100vw - 300px) / (1600 - 300)));
+html {
+	font-family: var(--font-stack-sans);
+	font-size: 16px;
+	line-height: 1.4;
 	color: var(--text-primary);
-	background-color: var(--background-color);
+	background-color: var(--layer-bg);
+}
+
+html,
+body,
+.app {
+	height: 100%;
+	width: 100%;
+	position: relative;
 }

@@ -4,7 +4,10 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
 		<meta name="theme-color" content="#333333" />
-		<meta name="Description" content="The personal website / portfolio / commonplace book of Nick Trombley, software designer / web developer." />
+		<meta
+			name="Description"
+			content="The personal website / portfolio / commonplace book of Nick Trombley, software designer / web developer."
+		/>
 
 		%sapper.base%
 
@@ -18,23 +21,16 @@
 			href="https://barnsworthburning-api.netlify.com/.netlify/functions/feed"
 		/>
 
-		<!-- Sapper generates a <style> tag containing critical CSS
-	     for the current page. CSS for the rest of the app is
-	     lazily loaded when it precaches secondary pages -->
+		<!-- Injected style tags -->
 		%sapper.styles%
 
-		<!-- This contains the contents of the <svelte:head> component, if
-	     the current page has one -->
+		<!-- Injected head elements -->
 		%sapper.head%
 	</head>
 	<body>
-		<!-- The application will be rendered inside this element,
-	     because `app/client.js` references it -->
-		<div id="THIS-IS-WHERE-THE-APP-GOES">%sapper.html%</div>
-
-		<!-- Sapper creates a <script> tag containing `app/client.js`
-	     and anything else it needs to hydrate the app and
-	     initialise the router -->
+		<div id="THIS-IS-WHERE-THE-APP-GOES" class="app">
+			%sapper.html%
+		</div>
 		%sapper.scripts%
 	</body>
 </html>
