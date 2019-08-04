@@ -1,7 +1,6 @@
 <style>
 	nav {
-		margin: var(--body-padding) var(--body-padding) 0 var(--body-padding);
-		padding-bottom: var(--body-padding);
+		padding: var(--space);
 		border-bottom: 1px solid rgba(0, 0, 0, 0.25);
 	}
 
