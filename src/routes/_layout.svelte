@@ -2,11 +2,17 @@
 	import Nav from '../components/Nav.svelte';
 </script>
 
+<svelte:head>
+	<title>barnsworthburning.net</title>
+</svelte:head>
+
 <Nav />
 
 <main>
 	<slot></slot>
 </main>
+
+<footer></footer>
 
 <style>
 	main {

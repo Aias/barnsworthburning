@@ -2,10 +2,6 @@
 	import Astrophyton from '../components/vectors/Astrophyton.svelte';
 </script>
 
-<svelte:head>
-	<title>barnsworthburning.net</title>
-</svelte:head>
-
 <div>
 	<Astrophyton />
 

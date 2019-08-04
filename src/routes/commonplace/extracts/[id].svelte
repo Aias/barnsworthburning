@@ -12,11 +12,8 @@
 </script>
 
 <script>
-	import marked from 'marked';
-	marked.setOptions({
-		breaks: true,
-		smartypants: true
-	});
+	import markdown from '../../../helpers/markdown';
+
 	export let extract = {};
 </script>
 
@@ -24,7 +21,7 @@
 <article>
 	<h1>{extract.title}</h1>
 	<blockquote>
-		{@html marked(extract['extract_text'])}
+		{@html markdown.render(extract['extract_text'])}
 		<cite>—{extract['creator_name'][0]}, {extract['group_name'][0]}</cite>
 	</blockquote>
 	<footer>

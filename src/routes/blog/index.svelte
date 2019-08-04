@@ -11,11 +11,7 @@
 </script>
 
 <script>
-	import marked from 'marked';
-	marked.setOptions({
-		breaks: true,
-		smartypants: true
-	});
+	import markdown from '../../helpers/markdown';
 
 	export let posts = [];
 
@@ -34,7 +30,8 @@
 			</h2>
 			<h3>{post.description}</h3>
 			<section>
-				{@html post.content ? marked(post.content) : notFinished}
+				{@html post.content ? markdown.render(post.content) :
+				notFinished}
 			</section>
 		</article>
 	</li>
