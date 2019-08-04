@@ -13,6 +13,10 @@
 
 <script>
 	import marked from 'marked';
+	marked.setOptions({
+		breaks: true,
+		smartypants: true
+	});
 	export let extract = {};
 </script>
 
