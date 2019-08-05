@@ -42,6 +42,7 @@
 		right: 0;
 		bottom: 0;
 		left: 0;
+		height: 100%;
 		overflow: hidden;
 		color: var(--text-primary);
 		background-color: var(--layer-bg);
