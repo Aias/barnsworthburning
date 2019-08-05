@@ -30,7 +30,7 @@
 		{#each links as {path, title}}
 		<li>
 			<Link active="{currentPage === path}" className="nav-link text-inverted" prefetch href="{path || '/'}" {title}>
-				<span>&lt;&lt;&lt;</span><span>&nbsp;{title}&nbsp;</span><span>&gt;&gt;&gt;</span>
+				<span>‹‹‹</span><span>&nbsp;{title}&nbsp;</span><span>›››</span>
 			</Link>
 		</li>
 		{/each}
@@ -40,7 +40,7 @@
 <style>
 	nav {
 		background-color: var(--theme-primary-bg);
-		padding: 0.25rem 3rem;
+		padding: 0.25rem 1rem;
 		border-radius: 4rem;
 		box-shadow: 0 -3px 6px rgba(0,0,0,0.25);
 	}
@@ -50,16 +50,14 @@
 		margin: 0;
 		padding: 0;
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
 		justify-content: space-around;
 	}
 
 	li {
 		white-space: nowrap;
-	}
-
-	li + li {
-		margin-left: 2rem;
+		margin: 0 1rem;
 	}
 
 	li > :global(.nav-link) {

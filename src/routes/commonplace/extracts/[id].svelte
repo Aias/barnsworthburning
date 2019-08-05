@@ -22,7 +22,10 @@
 	<h1>{extract.title}</h1>
 	<blockquote>
 		{@html markdown.render(extract['extract_text'])}
-		<cite>—{extract['creator_name'][0]}, {extract['group_name'][0]}</cite>
+		<cite
+			>—&nbsp;{extract['creator_name'][0]},
+			{extract['group_name'][0]}</cite
+		>
 	</blockquote>
 	<footer>
 		Recorded on {new Date(extract['extracted_on'])}
