@@ -58,6 +58,7 @@
 	li {
 		white-space: nowrap;
 		margin: 0 1rem;
+		display: inline-flex;
 	}
 
 	li > :global(.nav-link) {

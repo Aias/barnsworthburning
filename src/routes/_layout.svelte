@@ -1,6 +1,7 @@
 <script>
 	import Nav from '../components/Nav.svelte';
 	import Toolbar from '../components/Toolbar.svelte';
+	import Header from '../components/Header.svelte';
 
 	let title = 'barnsworthburning.net';
 	let description =
@@ -21,7 +22,7 @@
 
 <div class="🌞">
 	<header>
-
+		<Header />
 	</header>
 	<main>
 		<slot></slot>
@@ -47,7 +48,7 @@
 		background-color: var(--layer-bg);
 
 		display: grid;
-		grid-template-columns: [header-start toolbar-start] 300px [header-end main-start footer-start] 1fr [main-end toolbar-end footer-end];
+		grid-template-columns: [header-start toolbar-start] auto [header-end main-start footer-start] 1fr [main-end toolbar-end footer-end];
 		grid-template-rows: [toolbar-start] auto [toolbar-end header-start main-start] 1fr [footer-start  main-end] auto [header-end footer-end];
 	}
 

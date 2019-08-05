@@ -62,7 +62,7 @@
     --layer-bg: var(--clr-gray-90);
     --layer-container: var(--clr-gray-95);
     --layer-highlight: var(--clr-gray-80);
-    --divider: var(--clr-darker-30);
+    --divider: var(--clr-darker-20);
     --container-border: none;
 }
 
@@ -91,4 +91,12 @@ html {
 
 .text-inverted {
     color: var(--text-inverted) !important;
+}
+
+.text-mono {
+    font-family: var(--font-stack-mono);
+    font-size: 0.875em;
+    /* The monospace fonts tend to be optically larger for a given font size. */
+    letter-spacing: 0.25px;
+    line-height: inherit;
 }

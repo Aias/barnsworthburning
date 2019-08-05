@@ -11,6 +11,7 @@
 	class="{className}"
 	class:plain="{plain}"
 	class:active="{active}"
+	class:text-mono="{true}"
 	{title}
 	{href}
 	rel="{prefetch ? 'prefetch' : ''}"
@@ -20,12 +21,8 @@
 
 <style>
 	a {
-		font-family: var(--font-stack-mono);
 		color: var(--theme-primary-text);
 		text-decoration: underline;
-		letter-spacing: 0.25px;
-		font-size: 0.875em;
-		line-height: inherit;
 	}
 
 	a:hover {
