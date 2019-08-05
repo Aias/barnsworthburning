@@ -1,5 +1,9 @@
 @import 'normalize.css';
 
+* {
+    box-sizing: border-box;
+}
+
 :root {
     /* System font stacks from https://gist.github.com/don1138/5761014 */
     --font-stack-serif: 'Palatino Linotype', Palatino, Palladio,
@@ -15,6 +19,7 @@
         'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', Monaco,
         'Courier New', Courier, monospace;
 
+    --clr-yellow-30: #866b00;
     --clr-yellow-50: #d5b712;
     --clr-yellow-60: #ebcc20;
     --clr-yellow-base: var(--clr-yellow-60);
@@ -40,20 +45,20 @@
     --clr-darker-30: hsla(0, 0%, 0%, 0.35);
     --clr-darker-40: hsla(0, 0%, 0%, 0.65);
     --clr-darker-50: hsla(0, 0%, 0%, 0.93);
+}
 
-    --space-xs: 0.25rem;
-    --space-sm: 0.5rem;
-    --space: 1rem;
-    --space-md: 2rem;
-    --space-lg: 4rem;
+.app {
+    font-size: 0.875em;
 }
 
 .🌞 {
     --text-primary: var(--clr-darker-50);
     --text-secondary: var(--clr-darker-40);
+    --text-inverted: var(--clr-lighter-50);
     --theme-primary: var(--clr-red-base);
     --theme-primary-bg: var(--clr-red-40);
     --theme-primary-text: var(--clr-red-30);
+    --theme-accent-text: var(--clr-yellow-30);
     --layer-bg: var(--clr-gray-90);
     --layer-container: var(--clr-gray-95);
     --layer-highlight: var(--clr-gray-80);
@@ -64,9 +69,11 @@
 .🌒 {
     --text-primary: var(--clr-lighter-50);
     --text-secondary: var(--clr-lighter-40);
+    --text-inverted: var(--clr-darker-50);
     --theme-primary: var(--clr-yellow-base);
     --theme-primary-bg: var(--clr-yellow-60);
     --theme-primary-text: var(--clr-yellow-50);
+    --theme-accent-text: var(--clr-red-40);
     --layer-bg: var(--clr-gray-10);
     --layer-container: var(--clr-gray-20);
     --layer-highlight: var(--clr-gray-20);
@@ -80,11 +87,8 @@ html {
     line-height: 1.5;
 }
 
-html,
-body,
-.app {
-    height: 100%;
-    width: 100%;
-    position: relative;
-    overflow: hidden;
+/*    HELPERS    */
+
+.text-inverted {
+    color: var(--text-inverted) !important;
 }

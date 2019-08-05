@@ -1,5 +1,6 @@
 <script context="module">
 	import { FULL_API } from '../../config.js';
+	import Link from '../../components/Link.svelte';
 
 	export async function preload(page, session) {
 		const extracts = await this.fetch(`${FULL_API}/extractsSimple`).then(
@@ -45,9 +46,9 @@
 <div>
 	{#each groups as {id, name, extracts, updated}}
 	<section>
-		<h2><a href="/commonplace/groups/{id}">{name}</a></h2>
+		<h2><Link prefetch href="/commonplace/groups/{id}">{name}</Link></h2>
 		{#each extracts as {title, id}}
-		<q><a href="/commonplace/extracts/{id}">{title}</a></q>
+		<q><Link plain href="/commonplace/extracts/{id}">{title}</Link></q>
 		{/each}
 	</section>
 	{/each}
@@ -62,8 +63,8 @@
 	h2,
 	q {
 		display: inline;
-		font-size: 1rem;
-		line-height: 1.8rem;
+		font-size: inherit;
+		line-height: 1.8;
 		margin: 0;
 	}
 
@@ -84,14 +85,5 @@
 
 	q + q::before {
 		content: ' · ';
-	}
-
-	q > a {
-		all: inherit;
-	}
-
-	q > a:hover {
-		cursor: pointer;
-		color: var(--theme-primary);
 	}
 </style>
