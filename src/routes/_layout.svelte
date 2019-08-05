@@ -83,8 +83,13 @@
 			grid-template-rows: [header-start toolbar-start] auto [header-end toolbar-end main-start] 1fr [main-end footer-start] auto [footer-end];
 		}
 
+		header {
+			margin-top: 1rem;
+		}
+
 		footer {
 			position: sticky;
+			position: -webkit-sticky;
 			bottom: 1rem;
 		}
 

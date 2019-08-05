@@ -64,6 +64,8 @@
 	div {
 		padding: 0.25rem 2rem;
 		border-right: 0.5rem solid var(--layer-highlight);
+		display: flex;
+		flex-direction: column;
 	}
 	section {
 		white-space: nowrap;
@@ -76,5 +78,23 @@
 	}
 	strong {
 		text-shadow: 0 0 0.5px currentColor;
+		font-weight: normal;
+	}
+
+	@media(max-width: 950px) {
+		div {
+			border-right: none;
+			flex-direction: row;
+			padding: 0;
+		}
+
+		section + section {
+			margin-top: 0;
+			margin-left: 0.5rem;
+		}
+
+		.pointer {
+			display: none;
+		}
 	}
 </style>

@@ -20,5 +20,6 @@
 
 	div :global(.icon) {
 		font-size: 1.5rem;
+		line-height: 1;
 	}
 </style>
