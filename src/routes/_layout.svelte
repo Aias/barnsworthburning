@@ -1,9 +1,6 @@
 <script>
 	import Nav from '../components/Nav.svelte';
-	import Link from '../components/Link.svelte';
-	import Github from '../components/icons/Github.svelte';
-	import RSS from '../components/icons/RSS.svelte';
-	import Spotify from '../components/icons/Spotify.svelte';
+	import Toolbar from '../components/Toolbar.svelte';
 
 	let title = 'barnsworthburning.net';
 	let description =
@@ -11,7 +8,7 @@
 	let keywords =
 		'Nick, Nicholas, Trombley, portfolio, design, designer, barnsworthburning, barns worth burning, development, front-end, commonplace book,';
 
-		export let segment;
+	export let segment;
 </script>
 
 <svelte:head>
@@ -30,9 +27,7 @@
 		<slot></slot>
 	</main>
 	<aside>
-		<Link href="https://barnsworthburning-api.netlify.com/.netlify/functions/feed"><RSS /></Link>
-		<Link href="https://github.com/Aias"><Github /></Link>
-		<Link href="https://open.spotify.com/user/223hhvix27azj60a9a80jelq3?si=2RpG1aWiTK6edlf_Uskjog"><Spotify /></Link>
+		<Toolbar />
 	</aside>
 	<footer>
 		<Nav currentPage={segment} />
@@ -59,14 +54,7 @@
 	aside {
 		grid-area: toolbar;
 		margin: 0.5rem 3rem;
-		display: grid;
-		grid-column-gap: 1rem;
-		grid-auto-flow: column;
-		justify-content: flex-end;
-	}
-
-	aside :global(.icon) {
-		font-size: 1.5rem;
+		text-align: right;
 	}
 
 	header {
@@ -97,6 +85,13 @@
 		footer {
 			position: sticky;
 			bottom: 0.5rem;
+		}
+
+		header, aside, footer, main {
+			margin-left: 0;
+			margin-right: 0;
+			padding-left: 1rem;
+			padding-right: 1rem;
 		}
 	}
 </style>
