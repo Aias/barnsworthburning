@@ -53,7 +53,7 @@
 
 	aside {
 		grid-area: toolbar;
-		margin: 0.5rem 3rem;
+		margin: 1rem 3rem 0.5rem 3rem;
 		text-align: right;
 	}
 
@@ -63,12 +63,12 @@
 	main {
 		grid-area: main;
 		overflow-y: auto;
-		padding: 0 3rem 1rem 1.5rem;
+		padding: 0 3rem 1rem 2rem;
 	}
 	footer {
 		grid-area: footer;
 		z-index: 19;
-		margin: 0 2rem 0.5rem 1rem;
+		margin: 0 2rem 1rem 1rem;
 	}
 
 
@@ -84,7 +84,7 @@
 
 		footer {
 			position: sticky;
-			bottom: 0.5rem;
+			bottom: 1rem;
 		}
 
 		header, aside, footer, main {
