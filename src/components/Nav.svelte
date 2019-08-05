@@ -30,7 +30,7 @@
 		{#each links as {path, title}}
 		<li>
 			<Link active="{currentPage === path}" className="nav-link text-inverted" prefetch href="{path || '/'}" {title}>
-				<span>‹‹‹</span><span>&nbsp;{title}&nbsp;</span><span>›››</span>
+				<span>‹‹‹</span><span class="title">&nbsp;{title}&nbsp;</span><span>›››</span>
 			</Link>
 		</li>
 		{/each}
@@ -66,5 +66,9 @@
 
 	li > :global(.nav-link.active) {
 		flex-direction: row-reverse;
+	}
+
+	.title {
+		text-transform: uppercase;
 	}
 </style>

@@ -1,6 +1,9 @@
 <script>
 	import Nav from '../components/Nav.svelte';
 	import Link from '../components/Link.svelte';
+	import Github from '../components/icons/Github.svelte';
+	import RSS from '../components/icons/RSS.svelte';
+	import Spotify from '../components/icons/Spotify.svelte';
 
 	let title = 'barnsworthburning.net';
 	let description =
@@ -20,16 +23,17 @@
 </svelte:head>
 
 <div class="🌞">
-	<aside>
-		<Link href="https://github.com/Aias">Github</Link>
-		<Link href="https://open.spotify.com/user/223hhvix27azj60a9a80jelq3?si=2RpG1aWiTK6edlf_Uskjog">Spotify</Link>
-	</aside>
 	<header>
 
 	</header>
 	<main>
 		<slot></slot>
 	</main>
+	<aside>
+		<Link href="https://barnsworthburning-api.netlify.com/.netlify/functions/feed"><RSS /></Link>
+		<Link href="https://github.com/Aias"><Github /></Link>
+		<Link href="https://open.spotify.com/user/223hhvix27azj60a9a80jelq3?si=2RpG1aWiTK6edlf_Uskjog"><Spotify /></Link>
+	</aside>
 	<footer>
 		<Nav currentPage={segment} />
 	</footer>
@@ -48,18 +52,21 @@
 		background-color: var(--layer-bg);
 
 		display: grid;
-		grid-template-columns: [header-start toolbar-start main-start footer-start] 300px [header-end] 1fr [main-end toolbar-end footer-end];
+		grid-template-columns: [header-start toolbar-start] 300px [header-end main-start footer-start] 1fr [main-end toolbar-end footer-end];
 		grid-template-rows: [toolbar-start] auto [toolbar-end header-start main-start] 1fr [footer-start  main-end] auto [header-end footer-end];
 	}
 
 	aside {
 		grid-area: toolbar;
 		margin: 0.5rem 3rem;
-		display: flex;
+		display: grid;
+		grid-column-gap: 1rem;
+		grid-auto-flow: column;
 		justify-content: flex-end;
 	}
-	aside > :global(a + a) {
-		margin-left: 2rem;
+
+	aside :global(.icon) {
+		font-size: 1.5rem;
 	}
 
 	header {
@@ -74,5 +81,22 @@
 		grid-area: footer;
 		z-index: 19;
 		margin: 0 2rem 0.5rem 1rem;
+	}
+
+
+	@media(max-width: 950px) {
+		div {
+			position: relative;
+			height: auto;
+			min-height: 100vh;
+			overflow: initial;
+			grid-template-columns: [header-start toolbar-start main-start footer-start] 1fr [header-end toolbar-end main-end footer-end];
+			grid-template-rows: [header-start toolbar-start] auto [header-end toolbar-end main-start] 1fr [main-end footer-start] auto [footer-end];
+		}
+
+		footer {
+			position: sticky;
+			bottom: 0.5rem;
+		}
 	}
 </style>

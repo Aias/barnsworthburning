@@ -2,7 +2,7 @@
 	svg {
 		flex: 1;
 		min-width: 350px;
-		height: 100%;
+		max-height: 100%;
 	}
 	path {
 		fill: var(--text-primary);
