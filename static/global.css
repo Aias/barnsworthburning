@@ -47,10 +47,6 @@
     --clr-darker-50: hsla(0, 0%, 0%, 0.93);
 }
 
-.app {
-    font-size: 0.875em;
-}
-
 .🌞 {
     --text-primary: var(--clr-darker-50);
     --text-secondary: var(--clr-darker-40);
@@ -64,7 +60,7 @@
     --layer-highlight: var(--clr-gray-80);
     --divider: var(--clr-darker-20);
     --container-border: none;
-    --container-border-radius: 0.25rem;
+    --container-border-radius: 0.25rem 2rem;
 }
 
 .🌒 {
@@ -83,10 +79,40 @@
     --container-border-radius: 0;
 }
 
+/*    TYPOGRAPHY    */
+
 html {
     font-family: var(--font-stack-sans);
     font-size: 16px;
-    line-height: 1.5;
+    /* Used as basis for spacing throughout the app. */
+    line-height: 1.6;
+}
+
+.app {
+    font-size: 0.875em;
+    /* 14px on most monitors. */
+}
+
+h1:first-child,
+h2:first-child,
+h3:first-child,
+h4:first-child,
+h5:first-child,
+h6:first-child {
+    margin-top: 0;
+}
+
+h1,
+h2 {
+    font-weight: 200;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+    font-size: 1.75rem;
 }
 
 /*    HELPERS    */
