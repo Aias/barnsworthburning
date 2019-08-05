@@ -1,22 +1,22 @@
 <script>
 	import Astrophyton from '../components/vectors/Astrophyton.svelte';
+	import Card from '../components/Card.svelte';
 </script>
 
-<div>
+<Card className="main-card">
 	<Astrophyton />
 
 	<blockquote cite="https://www.bartleby.com/198/1.html">
 		I should have been a pair of ragged claws <br />
 		Scuttling across the floors of silent seas.
 	</blockquote>
-</div>
+</Card>
 
 <style>
-	div {
+	:global(.main-card) {
 		display: flex;
 		flex-wrap: wrap;
-		align-items: center;
-		height: 100%;
+		align-items: center;	
 	}
 	blockquote {
 		font-style: italic;

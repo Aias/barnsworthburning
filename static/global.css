@@ -32,7 +32,7 @@
     --clr-gray-20: #242021;
     --clr-gray-80: #e6e5e4;
     --clr-gray-90: #f2f1f0;
-    --clr-gray-95: #fdfdfd;
+    --clr-gray-95: #fcfcfc;
 
     --clr-lighter-10: hsla(0, 0%, 100%, 0.08);
     --clr-lighter-20: hsla(0, 0%, 100%, 0.2);
@@ -64,6 +64,7 @@
     --layer-highlight: var(--clr-gray-80);
     --divider: var(--clr-darker-20);
     --container-border: none;
+    --container-border-radius: 0.25rem;
 }
 
 .🌒 {
@@ -79,6 +80,7 @@
     --layer-highlight: var(--clr-gray-20);
     --divider: var(--clr-lighter-40);
     --container-border: 1px solid var(--clr-lighter-40);
+    --container-border-radius: 0;
 }
 
 html {
