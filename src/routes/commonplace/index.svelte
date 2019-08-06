@@ -67,7 +67,6 @@
 	q {
 		display: inline;
 		font-size: inherit;
-		line-height: 1.8;
 		margin: 0;
 	}
 
@@ -84,6 +83,10 @@
 	section::after {
 		content: '';
 		margin-right: 1rem;
+	}
+
+	q:hover {
+		color: var(--theme-accent-text);
 	}
 
 	q + q::before {

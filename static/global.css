@@ -120,16 +120,6 @@ a {
 	text-decoration: underline;
 }
 
-a:hover {
-	color: var(--theme-accent-text);
-}
-
-/*    HELPERS    */
-
-.text-inverted {
-	color: var(--text-inverted) !important;
-}
-
 a,
 .text-mono {
 	font-family: var(--font-stack-mono);
@@ -137,4 +127,19 @@ a,
 	/* The monospace fonts tend to be optically larger for a given font size. */
 	/* letter-spacing: 0.25px; */
 	line-height: inherit;
+}
+
+a:hover {
+	color: var(--theme-accent-text);
+	cursor: pointer;
+}
+
+/*    HELPERS    */
+
+.inherit {
+	all: inherit;
+}
+
+.text-inverted {
+	color: var(--text-inverted) !important;
 }

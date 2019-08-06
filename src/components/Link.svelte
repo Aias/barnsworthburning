@@ -9,7 +9,7 @@
 
 <a
 	class="{className}"
-	class:plain="{plain}"
+	class:inherit="{plain}"
 	class:active="{active}"
 	{title}
 	{href}
@@ -19,11 +19,6 @@
 </a>
 
 <style>
-	.plain {
-		all: inherit;
-		cursor: pointer;
-	}
-
 	.active {
 		text-decoration: none;
 	}
