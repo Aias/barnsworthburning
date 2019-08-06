@@ -14,18 +14,21 @@
 <script>
 	import groupBy from 'lodash/groupBy';
 	import sortBy from 'lodash/sortBy';
+	import get from 'lodash/get';
+
 	export let extracts = [];
 	let groups = [];
 
 	$: {
 		let nested = {};
 		extracts.forEach(e => {
-			let groupName = e['group_name'][0];
+			let groupName = get(e, 'group_name[0]', 'Ungrouped');
+			let groupId = get(e, 'group[0]', '-1');
 			let extractedOn = new Date(e['extracted_on']);
 
 			if (!(typeof nested[groupName] === 'object')) {
 				nested[groupName] = {
-					id: e['group'][0],
+					id: groupId,
 					name: groupName,
 					extracts: [],
 					updated: extractedOn

@@ -1,96 +1,96 @@
 @import 'normalize.css';
 
 * {
-    box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 :root {
-    /* System font stacks from https://gist.github.com/don1138/5761014 */
-    --font-stack-serif: 'Palatino Linotype', Palatino, Palladio,
-        'URW Palladio L', 'Book Antiqua', Baskerville, 'Bookman Old Style',
-        'Bitstream Charter', 'Nimbus Roman No9 L', Garamond, 'Apple Garamond',
-        'ITC Garamond Narrow', 'New Century Schoolbook', 'Century Schoolbook',
-        'Century Schoolbook L', Georgia, serif;
-    --font-stack-sans: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI,
-        Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-        sans-serif;
-    --font-stack-mono: Consolas, 'Andale Mono WT', 'Andale Mono',
-        'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono',
-        'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', Monaco,
-        'Courier New', Courier, monospace;
+	/* System font stacks from https://gist.github.com/don1138/5761014 */
+	--font-stack-serif: 'Palatino Linotype', Palatino, Palladio,
+		'URW Palladio L', 'Book Antiqua', Baskerville, 'Bookman Old Style',
+		'Bitstream Charter', 'Nimbus Roman No9 L', Garamond, 'Apple Garamond',
+		'ITC Garamond Narrow', 'New Century Schoolbook', 'Century Schoolbook',
+		'Century Schoolbook L', Georgia, serif;
+	--font-stack-sans: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI,
+		Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+		sans-serif;
+	--font-stack-mono: Consolas, 'Andale Mono WT', 'Andale Mono',
+		'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono',
+		'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', Monaco,
+		'Courier New', Courier, monospace;
 
-    --clr-yellow-30: #866b00;
-    --clr-yellow-50: #d5b712;
-    --clr-yellow-60: #ebcc20;
-    --clr-yellow-base: var(--clr-yellow-60);
+	--clr-yellow-30: #866b00;
+	--clr-yellow-50: #d5b712;
+	--clr-yellow-60: #ebcc20;
+	--clr-yellow-base: var(--clr-yellow-60);
 
-    --clr-red-30: #a0060c;
-    --clr-red-40: #b50007;
-    --clr-red-base: var(--clr-red-40);
+	--clr-red-30: #a0060c;
+	--clr-red-40: #b50007;
+	--clr-red-base: var(--clr-red-40);
 
-    --clr-gray-10: #100e06;
-    --clr-gray-20: #242021;
-    --clr-gray-80: #e6e5e4;
-    --clr-gray-90: #f2f1f0;
-    --clr-gray-95: #fcfcfc;
+	--clr-gray-10: #100e06;
+	--clr-gray-20: #242021;
+	--clr-gray-80: #e6e5e4;
+	--clr-gray-90: #f2f1f0;
+	--clr-gray-95: #fcfcfc;
 
-    --clr-lighter-10: hsla(0, 0%, 100%, 0.08);
-    --clr-lighter-20: hsla(0, 0%, 100%, 0.2);
-    --clr-lighter-30: hsla(0, 0%, 100%, 0.4);
-    --clr-lighter-40: hsla(0, 0%, 100%, 0.7);
-    --clr-lighter-50: hsla(0, 0%, 100%, 0.95);
+	--clr-lighter-10: hsla(0, 0%, 100%, 0.08);
+	--clr-lighter-20: hsla(0, 0%, 100%, 0.2);
+	--clr-lighter-30: hsla(0, 0%, 100%, 0.4);
+	--clr-lighter-40: hsla(0, 0%, 100%, 0.7);
+	--clr-lighter-50: hsla(0, 0%, 100%, 0.95);
 
-    --clr-darker-10: hsla(0, 0%, 0%, 0.05);
-    --clr-darker-20: hsla(0, 0%, 0%, 0.15);
-    --clr-darker-30: hsla(0, 0%, 0%, 0.35);
-    --clr-darker-40: hsla(0, 0%, 0%, 0.65);
-    --clr-darker-50: hsla(0, 0%, 0%, 0.93);
+	--clr-darker-10: hsla(0, 0%, 0%, 0.05);
+	--clr-darker-20: hsla(0, 0%, 0%, 0.15);
+	--clr-darker-30: hsla(0, 0%, 0%, 0.35);
+	--clr-darker-40: hsla(0, 0%, 0%, 0.65);
+	--clr-darker-50: hsla(0, 0%, 0%, 0.93);
 }
 
 .🌞 {
-    --text-primary: var(--clr-darker-50);
-    --text-secondary: var(--clr-darker-40);
-    --text-inverted: var(--clr-lighter-50);
-    --theme-primary: var(--clr-red-base);
-    --theme-primary-bg: var(--clr-red-30);
-    --theme-primary-text: var(--clr-red-30);
-    --theme-accent-text: var(--clr-yellow-30);
-    --layer-bg: var(--clr-gray-90);
-    --layer-container: var(--clr-gray-95);
-    --layer-highlight: var(--clr-gray-80);
-    --divider: var(--clr-darker-20);
-    --container-border: none;
-    --container-border-radius: 0.25rem 2rem;
+	--text-primary: var(--clr-darker-50);
+	--text-secondary: var(--clr-darker-40);
+	--text-inverted: var(--clr-lighter-50);
+	--theme-primary: var(--clr-red-base);
+	--theme-primary-bg: var(--clr-red-30);
+	--theme-primary-text: var(--clr-red-30);
+	--theme-accent-text: var(--clr-yellow-30);
+	--layer-bg: var(--clr-gray-90);
+	--layer-container: var(--clr-gray-95);
+	--layer-highlight: var(--clr-gray-80);
+	--divider: var(--clr-darker-20);
+	--container-border: none;
+	--container-border-radius: 0.25rem 2rem;
 }
 
 .🌒 {
-    --text-primary: var(--clr-lighter-50);
-    --text-secondary: var(--clr-lighter-40);
-    --text-inverted: var(--clr-darker-50);
-    --theme-primary: var(--clr-yellow-base);
-    --theme-primary-bg: var(--clr-yellow-50);
-    --theme-primary-text: var(--clr-yellow-60);
-    --theme-accent-text: var(--clr-red-40);
-    --layer-bg: var(--clr-gray-10);
-    --layer-container: var(--clr-gray-20);
-    --layer-highlight: var(--clr-gray-20);
-    --divider: var(--clr-lighter-40);
-    --container-border: 1px solid var(--clr-lighter-40);
-    --container-border-radius: 0;
+	--text-primary: var(--clr-lighter-50);
+	--text-secondary: var(--clr-lighter-40);
+	--text-inverted: var(--clr-darker-50);
+	--theme-primary: var(--clr-yellow-base);
+	--theme-primary-bg: var(--clr-yellow-50);
+	--theme-primary-text: var(--clr-yellow-60);
+	--theme-accent-text: var(--clr-red-40);
+	--layer-bg: var(--clr-gray-10);
+	--layer-container: var(--clr-gray-20);
+	--layer-highlight: var(--clr-gray-20);
+	--divider: var(--clr-lighter-40);
+	--container-border: 1px solid var(--clr-lighter-40);
+	--container-border-radius: 0;
 }
 
 /*    TYPOGRAPHY    */
 
 html {
-    font-family: var(--font-stack-sans);
-    font-size: 16px;
-    /* Used as basis for spacing throughout the app. */
-    line-height: 1.6;
+	font-family: var(--font-stack-sans);
+	font-size: 16px;
+	/* Used as basis for spacing throughout the app. */
+	line-height: 1.6;
 }
 
 .app {
-    font-size: 0.875em;
-    /* 14px on most monitors. */
+	font-size: 0.875em;
+	/* 14px on most monitors. */
 }
 
 h1:first-child,
@@ -99,32 +99,42 @@ h3:first-child,
 h4:first-child,
 h5:first-child,
 h6:first-child {
-    margin-top: 0;
+	margin-top: 0;
 }
 
 h1,
 h2 {
-    font-weight: 200;
+	font-weight: 200;
 }
 
 h1 {
-    font-size: 2rem;
+	font-size: 2rem;
 }
 
 h2 {
-    font-size: 1.75rem;
+	font-size: 1.75rem;
+}
+
+a {
+	color: var(--theme-primary-text);
+	text-decoration: underline;
+}
+
+a:hover {
+	color: var(--theme-accent-text);
 }
 
 /*    HELPERS    */
 
 .text-inverted {
-    color: var(--text-inverted) !important;
+	color: var(--text-inverted) !important;
 }
 
+a,
 .text-mono {
-    font-family: var(--font-stack-mono);
-    font-size: 0.875em;
-    /* The monospace fonts tend to be optically larger for a given font size. */
-    letter-spacing: 0.25px;
-    line-height: inherit;
+	font-family: var(--font-stack-mono);
+	font-size: 0.925em;
+	/* The monospace fonts tend to be optically larger for a given font size. */
+	/* letter-spacing: 0.25px; */
+	line-height: inherit;
 }

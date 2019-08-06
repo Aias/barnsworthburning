@@ -11,7 +11,6 @@
 	class="{className}"
 	class:plain="{plain}"
 	class:active="{active}"
-	class:text-mono="{true}"
 	{title}
 	{href}
 	rel="{prefetch ? 'prefetch' : ''}"
@@ -20,15 +19,6 @@
 </a>
 
 <style>
-	a {
-		color: var(--theme-primary-text);
-		text-decoration: underline;
-	}
-
-	a:hover {
-		color: var(--theme-accent-text);
-	}
-
 	.plain {
 		all: inherit;
 		cursor: pointer;
