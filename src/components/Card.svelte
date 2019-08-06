@@ -13,5 +13,6 @@
 		box-shadow: 0 1px 1rem var(--clr-darker-20);
 		border: var(--container-border);
 		border-radius: var(--container-border-radius);
+		overflow: hidden;
 	}
 </style>

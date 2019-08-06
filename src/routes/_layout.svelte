@@ -85,6 +85,7 @@
 
 		header {
 			margin-top: 1rem;
+			display: none; /* Temporary fix */
 		}
 
 		footer {
