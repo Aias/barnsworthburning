@@ -1,20 +1,19 @@
-<script context="module">
+<script>
+	import { onMount } from 'svelte';
+	import { stores } from '@sapper/app';
+	import markdown from '../../../helpers/markdown';
 	import { FULL_API } from '../../../config.js';
 
-	export async function preload(page, session) {
-		const { id } = page.params;
-		const extract = await this.fetch(
+	const { page } = stores();
+
+	let extract = null;
+
+	onMount(async () => {
+		const { id } = $page.params;
+		extract = await fetch(
 			`${FULL_API}/record?table=extracts&id=${id}`
 		).then(data => data.json());
-
-		return { extract };
-	}
-</script>
-
-<script>
-	import markdown from '../../../helpers/markdown';
-
-	export let extract = {};
+	});
 </script>
 
 {#if extract}
