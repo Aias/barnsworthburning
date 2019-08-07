@@ -55,7 +55,9 @@
 	aside {
 		grid-area: toolbar;
 		margin: 1rem 3rem 0.5rem 3rem;
-		text-align: right;
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
 	}
 
 	header {
@@ -79,13 +81,13 @@
 			height: auto;
 			min-height: 100vh;
 			overflow: initial;
-			grid-template-columns: [header-start toolbar-start main-start footer-start] 1fr [header-end toolbar-end main-end footer-end];
-			grid-template-rows: [header-start toolbar-start] auto [header-end toolbar-end main-start] 1fr [main-end footer-start] auto [footer-end];
+			grid-template-columns: [header-start main-start footer-start] 1fr [header-end toolbar-start] auto [toolbar-end main-end footer-end];
+			grid-template-rows: [toolbar-start header-start] auto [header-end toolbar-end main-start] 1fr [main-end footer-start] auto [footer-end];
 		}
 
 		header {
 			margin-top: 1rem;
-			display: none; /* Temporary fix */
+			margin-bottom: 1rem;
 		}
 
 		footer {

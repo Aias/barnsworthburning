@@ -89,13 +89,8 @@
 	@media(max-width: 950px) {
 		div {
 			border-right: none;
-			flex-direction: row;
 			padding: 0;
-		}
-
-		section + section {
-			margin-top: 0;
-			margin-left: 0.5rem;
+			align-items: flex-start;
 		}
 
 		.pointer {

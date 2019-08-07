@@ -42,7 +42,10 @@
 		<li>
 			<Link active="{currentPage === path}" className="nav-link text-inverted" prefetch href="{path || '/'}" {title}>
 				<span class="pointer">‹‹‹</span>
-				<span class="title">&nbsp;{title}&nbsp;</span>
+				<span class="space">&nbsp;</span>
+				<svelte:component this={icon} />
+				<span class="title">{title}</span>
+				<span class="space">&nbsp;</span>
 				<span class="pointer">›››</span>
 			</Link>
 		</li>
@@ -82,7 +85,28 @@
 		flex-direction: row-reverse;
 	}
 
+	li :global(.icon) {
+		height: 1.5rem;
+		display: none;
+	}
+
 	.title {
 		text-transform: uppercase;
+	}
+
+	@media(max-width: 1080px) {
+		.pointer,
+		.space {
+			display: none;
+		}
+	}
+
+	@media(max-width: 600px) {
+		.title {
+			display: none;
+		}
+		li :global(.icon) {
+			display: inline-block;
+		}
 	}
 </style>

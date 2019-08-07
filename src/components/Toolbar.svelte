@@ -16,12 +16,19 @@
 <style>
 	div {
 		display: inline-grid;
-		grid-column-gap: 1rem;
-		grid-auto-flow: column;		
+		grid-gap: 1rem;
+		grid-template-columns: repeat(4, 1fr);	
 	}
 
 	div :global(.icon) {
 		font-size: 1.5rem;
 		line-height: 1;
+	}
+
+	@media(max-width: 950px) {
+		div {
+			grid-template-rows: repeat(2, 1fr);
+			grid-template-columns: repeat(2, 1fr);
+		}
 	}
 </style>
