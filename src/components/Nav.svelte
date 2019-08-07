@@ -1,25 +1,36 @@
 <script>
 	import Link from './Link.svelte';
+	import About from './icons/About.svelte';
+	import Book from './icons/Book.svelte';
+	import Home from './icons/Home.svelte';
+	import Projects from './icons/Projects.svelte';
+	import Writing from './icons/Writing.svelte';
+
 	let links = [
 		{
 			path: undefined,
-			title: 'Home'
+			title: 'Home',
+			icon: Home
 		},
 		{
 			path: 'commonplace',
-			title: 'A Commonplace Book'
+			title: 'A Commonplace Book',
+			icon: Book
 		},
 		{
 			path: 'projects',
-			title: 'Projects'
+			title: 'Projects',
+			icon: Projects
 		},
-		{
-			path: 'blog',
-			title: 'Blog'
-		},
+		// {
+		// 	path: 'blog',
+		// 	title: 'Writing',
+		// 	icon: Writing
+		// },
 		{
 			path: 'about',
-			title: 'About'
+			title: 'About',
+			icon: About
 		}
 	];
 	export let currentPage = undefined;
@@ -27,10 +38,12 @@
 
 <nav>
 	<ul>
-		{#each links as {path, title}}
+		{#each links as {path, title, icon}}
 		<li>
 			<Link active="{currentPage === path}" className="nav-link text-inverted" prefetch href="{path || '/'}" {title}>
-				<span>‹‹‹</span><span class="title">&nbsp;{title}&nbsp;</span><span>›››</span>
+				<span class="pointer">‹‹‹</span>
+				<span class="title">&nbsp;{title}&nbsp;</span>
+				<span class="pointer">›››</span>
 			</Link>
 		</li>
 		{/each}

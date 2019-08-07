@@ -76,6 +76,11 @@
 	section + section {
 		margin-top: 0.75rem;
 	}
+
+	section :global(a) {
+		font-size: 1em;
+	}
+
 	strong {
 		text-shadow: 0 0 0.5px currentColor;
 		font-weight: normal;

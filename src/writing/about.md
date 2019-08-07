@@ -1,7 +1,9 @@
 # The Facts
 
-This is the personal website, portfolio, and commonplace book of Nick Trombley.
-I am currently based in Tokyo,
+This is the personal website,
+design / development portfolio,
+and [commonplace book](https://en.wikipedia.org/wiki/Commonplace_book) of Nick Trombley.
+I am currently living in Tokyo,
 and available for hire:
 full-time, remote, or freelance work is welcome,
 in that preferred order.
@@ -16,7 +18,7 @@ My second job involved asking them.
 In the time since I have called myself a designer,
 I have focused on:
 creating and maintaining design systems,
-building useful tools that repay the time they're given,
+building helpful, user-friendly tools,
 teaching design principles,
 and advising development teams
 at an enterprise scale.
