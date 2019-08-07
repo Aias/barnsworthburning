@@ -1,7 +1,6 @@
 # The Facts
 
-My name is Nicholas Edward Trombley.
-I prefer Nick.
+This is the personal website, portfolio, and commonplace book of Nick Trombley.
 I am currently based in Tokyo,
 and available for hire:
 full-time, remote, or freelance work is welcome,

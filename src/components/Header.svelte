@@ -55,7 +55,7 @@
 	</section>
 	<section>
 		<span>on</span>
-		<span class="pointer">&nbsp;››››››››››››››››››&nbsp;</span>
+		<span class="pointer">&nbsp;›››››››››››››››››&nbsp;</span>
 		<Link href="/commonplace/spaces/design"><strong>DESIGN</strong></Link>
 	</section>
 </div>
