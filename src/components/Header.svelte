@@ -41,44 +41,65 @@
 	];
 </script>
 
-<div class="text-mono">
-	<section>
-		<strong>.<abbr title="Nicholas Edward Trombley">NET</abbr></strong
-		>
-		<span class="pointer">&nbsp;››››››››››››››››&nbsp;</span>
-		<span>et al</span>
-	</section>
-	<section>
-		<span>via</span>
-		<span class="pointer">&nbsp;›››››&nbsp;</span>
-		<strong>BARNSWORTHBURNING</strong>
-	</section>
-	<section>
-		<span>on</span>
-		<span class="pointer">&nbsp;›››››››››››››››››&nbsp;</span>
-		<Link href="/commonplace/spaces/design"><strong>DESIGN</strong></Link>
-	</section>
+<div class="container text-mono">
+	<details>
+		<summary>
+			<strong>.<abbr title="Nicholas Edward Trombley">NET</abbr></strong
+			>
+			<span class="pointer">&nbsp;››››››››››››››››&nbsp;</span>
+			<span>et al</span>			
+		</summary>
+	</details>
+	<details>
+		<summary>
+			<span>via</span>
+			<span class="pointer">&nbsp;›››››&nbsp;</span>
+			<strong>BARNSWORTHBURNING</strong>	
+		</summary>
+	</details>
+	<details open>
+		<summary>
+			<span>on</span>
+			<span class="pointer">&nbsp;›››››››››››››››››&nbsp;</span>
+			<Link href="/commonplace/spaces/design"><strong>DESIGN</strong></Link>	
+		</summary>
+		<ol>
+			{#each spaces as space}
+			<li>{space}</li>
+			{/each}
+		</ol>
+	</details>
 </div>
 
 <style>
-	div {
+	.container {
 		padding: 0.25rem 2rem;
 		border-right: 0.5rem solid var(--layer-highlight);
 		display: flex;
 		flex-direction: column;
 	}
-	section {
+	details {
 		white-space: nowrap;
 		padding: 0.25rem 1rem;
 		border-radius: 1rem;
 		background-color: var(--layer-highlight);
 	}
-	section + section {
+	details summary::-webkit-details-marker {
+		display:none;
+	}
+	details + details {
 		margin-top: 0.75rem;
 	}
 
-	section :global(a) {
+	details :global(a) {
 		font-size: 1em;
+	}
+
+	ol {
+		list-style-type: none;
+		margin: 1rem 0;
+		padding: 0;
+		text-align: right;
 	}
 
 	strong {
@@ -87,7 +108,7 @@
 	}
 
 	@media(max-width: 950px) {
-		div {
+		.container {
 			border-right: none;
 			padding: 0;
 			align-items: flex-start;
