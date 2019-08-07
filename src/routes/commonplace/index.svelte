@@ -80,9 +80,10 @@
 		content: none;
 	}
 
-	section::after {
-		content: '';
-		margin-right: 1rem;
+	section:not(:last-child)::after {
+		content: ' / ';
+		white-space: pre-wrap;
+		color: var(--text-secondary);
 	}
 
 	q:hover {
