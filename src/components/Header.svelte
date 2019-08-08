@@ -1,5 +1,10 @@
 <script>
+	// Abandon all hope, ye who enter here.
+
 	import Link from './Link.svelte';
+	import range from 'lodash/range';
+	import { slide } from 'svelte/transition';
+	// import { quintOut } from 'svelte/easing';
 
 	let pointerRight = '›';
 	let pointerLeft = '‹';
@@ -38,37 +43,115 @@
 		'life',
 		'zen',
 		'art'
+	].sort((a, b) => b.length - a.length); // Should already be sorted, but may as well be sure.
+
+	let contents = [
+		{
+			summary: [
+				{
+					text: '.NET',
+					emphasized: true,
+					abbr: 'Nicholas Edward Trombley'
+				},
+				{
+					text: 'et al',
+					emphasized: false
+				}
+			],
+			details: undefined,
+			isOpen: false
+		},
+		{
+			summary: [
+				{
+					text: 'via',
+					emphasized: false
+				},
+				{
+					text: 'barnsworthburning',
+					emphasized: true
+				}
+			],
+			details: undefined,
+			isOpen: false
+		},
+		{
+			summary: [
+				{
+					text: 'on',
+					emphasized: false
+				},
+				{
+					text: 'design',
+					emphasized: true,
+					linkTo: '/commonplace/spaces/design'
+				}
+			],
+			details: spaces,
+			isOpen: false
+		}
 	];
+
+	$: headerWidth = getHeaderWidth(contents);
+
+	const getHeaderWidth = (contents, minWidth = 25) => {
+		return minWidth;
+	}
+
+	const getTotalChars = summary => {
+		return summary.reduce((prev, cur) => prev + cur.text.length, 0);
+	}
+
+	const getPointers = (summary) => {
+		let summaryWidth = getTotalChars(summary);
+
+		return range(headerWidth - summaryWidth);
+	}
+
+	const makeToggleOpen = (i, details) => () => {
+		if(!details) return;
+		toggleOpen(i);
+	}
+
+	const toggleOpen = i => {
+		let newContents = [...contents];
+		newContents[i].isOpen = !newContents[i].isOpen;
+		contents = newContents;
+	}
 </script>
 
 <div class="container text-mono">
-	<details>
-		<summary>
-			<strong>.<abbr title="Nicholas Edward Trombley">NET</abbr></strong
-			>
-			<span class="pointer">&nbsp;››››››››››››››››&nbsp;</span>
-			<span>et al</span>			
-		</summary>
-	</details>
-	<details>
-		<summary>
-			<span>via</span>
-			<span class="pointer">&nbsp;›››››&nbsp;</span>
-			<strong>BARNSWORTHBURNING</strong>	
-		</summary>
-	</details>
-	<details open>
-		<summary>
-			<span>on</span>
-			<span class="pointer">&nbsp;›››››››››››››››››&nbsp;</span>
-			<Link href="/commonplace/spaces/design"><strong>DESIGN</strong></Link>	
-		</summary>
-		<ol>
-			{#each spaces as space}
-			<li>{space}</li>
+	{#each contents as {summary, details, isOpen}, i}
+	<section class:open="{isOpen}" on:mouseenter="{makeToggleOpen(i, details)}" on:mouseleave="{makeToggleOpen(i, details)}">
+		<header>
+			{#each summary as {text, emphasized, linkTo, abbr}, i}
+			{#if i > 0}
+			<span class="pointer">
+				{#each getPointers(summary) as p}
+					{pointerRight}
+				{/each}
+			</span>	
+			{/if}
+			<span class:emphasized={emphasized}>
+				{#if abbr}
+					<abbr title={abbr}>{text}</abbr>
+				{:else if linkTo}
+					<Link href="{linkTo}">{text}</Link>
+				{:else}
+					{text}
+				{/if}
+			</span>
+			{/each}
+		</header>
+		{#if details && isOpen}
+		<ol transition:slide>
+			{#each details as detail}
+			<li>{detail}</li>
 			{/each}
 		</ol>
-	</details>
+		{/if}
+	</section>
+	{/each}
 </div>
 
 <style>
@@ -77,21 +160,31 @@
 		border-right: 0.5rem solid var(--layer-highlight);
 		display: flex;
 		flex-direction: column;
+		max-height: 100%;
+		overflow-y: hidden;
 	}
-	details {
+
+	section {
 		white-space: nowrap;
 		padding: 0.25rem 1rem;
 		border-radius: 1rem;
 		background-color: var(--layer-highlight);
+		flex: 0 1 auto;
 	}
-	details summary::-webkit-details-marker {
-		display:none;
+
+	section.open {
+		overflow-y: auto;
 	}
-	details + details {
+
+	header {
+		cursor: pointer;
+	}
+
+	section + section {
 		margin-top: 0.75rem;
 	}
 
-	details :global(a) {
+	section :global(a) {
 		font-size: 1em;
 	}
 
@@ -102,9 +195,10 @@
 		text-align: right;
 	}
 
-	strong {
+	.emphasized {
 		text-shadow: 0 0 0.5px currentColor;
 		font-weight: normal;
+		text-transform: uppercase;
 	}
 
 	@media(max-width: 950px) {

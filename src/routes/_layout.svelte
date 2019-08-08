@@ -62,6 +62,7 @@
 
 	header {
 		grid-area: header;
+		overflow-y: hidden;
 	}
 	main {
 		grid-area: main;
