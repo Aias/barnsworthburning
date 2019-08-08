@@ -28,7 +28,7 @@
 </script>
 
 {#if extract}
-<article>
+<article class:myself={isMe}>
 	<header>
 		<slot name="header">
 			{#if title}
@@ -60,7 +60,7 @@
 	<blockquote>
 		<slot>
 			{@html markdown.render(text)}
-			<cite class="text-mono" class:myself={isMe}>
+			<cite class="text-mono">
 				{#each creators as {id, name}}
 				<Link href="{`/commonplace/creators/${id}`}">{name}</Link>{/each},
 				<Link href="{`/commonplace/groups/${groupId}`}">{groupName}</Link>
@@ -117,7 +117,7 @@
 		display: block;
 		margin-top: 1rem;
 	}
-	cite.myself {
+	.myself cite {
 		display: none;
 	}
 	footer,
