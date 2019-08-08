@@ -91,14 +91,13 @@
 
 <style>
 	table {
-		margin: 1em;
 		width: 100%;
 		border-collapse: collapse;
 		table-layout: fixed;
 		font-size: 9px;
 		text-align: left;
 
-		--border: 1px solid rgba(0, 0, 0, 0.05);
+		--border: 1px solid var(--layer-highlight);
 	}
 
 	td {
@@ -117,7 +116,7 @@
 		opacity: 1;
 	}
 	tr:hover {
-		background-color: lightyellow;
+		background-color: var(--layer-container);
 	}
 
 	tr > *:nth-child(1) {
@@ -127,15 +126,15 @@
 	}
 
 	.refers-to {
-		background-color: goldenrod;
-	}
-	.depends-on {
-		background-color: firebrick;
-	}
-	.supports {
 		background-color: steelblue;
 	}
+	.depends-on {
+		background-color: var(--theme-primary-bg);
+	}
+	.supports {
+		background-color: var(--theme-accent-bg);
+	}
 	.self {
-		background-color: white;
+		background-color: var(--layer-highlight);
 	}
 </style>

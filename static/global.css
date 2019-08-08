@@ -54,6 +54,7 @@
 	--theme-primary: var(--clr-red-base);
 	--theme-primary-bg: var(--clr-red-30);
 	--theme-primary-text: var(--clr-red-30);
+	--theme-accent-bg: var(--clr-yellow-50);
 	--theme-accent-text: var(--clr-yellow-30);
 	--layer-bg: var(--clr-gray-90);
 	--layer-container: var(--clr-gray-95);
@@ -70,6 +71,7 @@
 	--theme-primary: var(--clr-yellow-base);
 	--theme-primary-bg: var(--clr-yellow-50);
 	--theme-primary-text: var(--clr-yellow-60);
+	--theme-accent-bg: var(--clr-red-40);
 	--theme-accent-text: var(--clr-red-40);
 	--layer-bg: var(--clr-gray-10);
 	--layer-container: var(--clr-gray-20);
