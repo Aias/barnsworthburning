@@ -6,7 +6,7 @@
 
 	export let extract = {};
 
-	$: title = get(extract, 'title', 'Untitled');
+	$: title = get(extract, 'title');
 	$: text = get(extract, 'extract_text', '');
 	$: notes = get(extract, 'notes');
 	$: extractedOn = new Date(get(extract, 'extracted_on'));
@@ -20,34 +20,56 @@
 
 	$: groupId = get(extract, 'group[0]');
 	$: groupName = get(extract, 'group_name[0]');
+
+	$: images = get(extract, 'extract_image');
+	$: imageCaption = get(extract, 'image_caption');
 </script>
+
 {#if extract}
 <article>
 	<header>
 		<slot name="header">
+			{#if title}
 			<h1>
 				<Link href="/commonplace"><Book /></Link>
 				{title}
 			</h1>
+			{/if}
 		</slot>
 	</header>
-	<section>
-		<slot>
-			<blockquote>
-				{@html markdown.render(text)}
-				<cite class="text-mono">
-					{#each creators as {id, name}}
-					<Link href="{`/commonplace/creators/${id}`}">{name}</Link>{/each},
-					<Link href="{`/commonplace/groups/${groupId}`}">{groupName}</Link>
-				</cite>
-			</blockquote>
+	<figure>
+		<slot name="image">
+			{#if images}
+			<div class="images">
+				{#each images as {id, filename, thumbnails, type, url}}
+				<div class="image-wrapper">
+					<img src="{url}" alt="{filename}" />
+				</div>
+				{/each}
+			</div>
+			{#if imageCaption}
+			<figcaption>
+				{imageCaption}
+			</figcaption>
+			{/if}
+			{/if}
 		</slot>
-		<aside>
-			<slot name="aside">
-				{#if notes} {@html markdown.render(notes)} {/if}
-			</slot>
-		</aside>
-	</section>
+	</figure>
+	<blockquote>
+		<slot>
+			{@html markdown.render(text)}
+			<cite class="text-mono">
+				{#each creators as {id, name}}
+				<Link href="{`/commonplace/creators/${id}`}">{name}</Link>{/each},
+				<Link href="{`/commonplace/groups/${groupId}`}">{groupName}</Link>
+			</cite>
+		</slot>
+	</blockquote>
+	<aside>
+		<slot name="aside">
+			{#if notes} {@html markdown.render(notes)} {/if}
+		</slot>
+	</aside>
 	<footer>
 		<slot name="footer">
 			Recorded on {extractedOn}
@@ -59,13 +81,28 @@
 {/if}
 
 <style>
+	header:empty,
+	aside:empty,
+	footer:empty {
+		display: none;
+	}
+
 	article {
 		max-width: 50rem;
 	}
+	figure {
+		margin: 0;
+	}
+	.images {
+		display: flex;
+	}
+	figure img {
+		max-width: 100%;
+	}
 	blockquote {
-		margin: 1rem 0;
 		border-bottom: 1px solid var(--divider);
 		padding-bottom: 1rem;
+		margin: 0 0 1rem 0;
 	}
 	blockquote :global(blockquote) {
 		margin: 0;
@@ -75,9 +112,12 @@
 	}
 	cite {
 		font-style: normal;
+		display: block;
+		margin-top: 1rem;
 	}
 	footer,
-	aside {
+	aside,
+	figcaption {
 		font-size: 0.85em;
 		color: var(--text-secondary);
 	}
@@ -85,3 +125,4 @@
 		font-style: italic;
 	}
 </style>
+
