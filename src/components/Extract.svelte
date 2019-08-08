@@ -21,6 +21,8 @@
 	$: groupId = get(extract, 'group[0]');
 	$: groupName = get(extract, 'group_name[0]');
 
+	$: isMe = (creatorIds.findIndex(c => c === 'recZ4n0P0GpAG28UO') > -1) || (groupId === 'recusqwqKOFFfyopC');
+
 	$: images = get(extract, 'extract_image');
 	$: imageCaption = get(extract, 'image_caption');
 </script>
@@ -58,7 +60,7 @@
 	<blockquote>
 		<slot>
 			{@html markdown.render(text)}
-			<cite class="text-mono">
+			<cite class="text-mono" class:myself={isMe}>
 				{#each creators as {id, name}}
 				<Link href="{`/commonplace/creators/${id}`}">{name}</Link>{/each},
 				<Link href="{`/commonplace/groups/${groupId}`}">{groupName}</Link>
@@ -114,6 +116,9 @@
 		font-style: normal;
 		display: block;
 		margin-top: 1rem;
+	}
+	cite.myself {
+		display: none;
 	}
 	footer,
 	aside,
