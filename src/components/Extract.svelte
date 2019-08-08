@@ -2,7 +2,7 @@
 	import markdown from '../helpers/markdown';
 	import get from 'lodash/get';
 	import Link from './Link.svelte';
-	import Book from './Icons/Book.svelte';
+	import Book from './icons/Book.svelte';
 
 	export let extract = {};
 
