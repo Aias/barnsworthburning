@@ -49,7 +49,7 @@
 
 		display: grid;
 		grid-template-columns: [header-start toolbar-start] auto [header-end main-start footer-start] 1fr [main-end toolbar-end footer-end];
-		grid-template-rows: [toolbar-start] auto [toolbar-end header-start main-start] 1fr [footer-start  main-end] auto [header-end footer-end];
+		grid-template-rows: [toolbar-start] auto [toolbar-end header-start main-start] 1fr [header-end footer-start  main-end] auto [footer-end];
 	}
 
 	aside {
@@ -62,6 +62,7 @@
 
 	header {
 		grid-area: header;
+		overflow-y: hidden;
 	}
 	main {
 		grid-area: main;
