@@ -16,5 +16,7 @@
 	svg {
 		fill: currentColor;
 		height: 1em;
+		display: inline-block;
+		vertical-align: text-top;
 	}
 </style>

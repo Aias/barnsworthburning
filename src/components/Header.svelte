@@ -184,10 +184,6 @@
 		margin-top: 0.75rem;
 	}
 
-	section :global(a) {
-		font-size: 1em;
-	}
-
 	ol {
 		list-style-type: none;
 		margin: 1rem 0;

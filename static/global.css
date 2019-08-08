@@ -89,7 +89,7 @@ html {
 }
 
 .app {
-	font-size: 0.875em;
+	font-size: 0.875rem;
 	/* 14px on most monitors. */
 }
 
@@ -108,11 +108,11 @@ h2 {
 }
 
 h1 {
-	font-size: 2rem;
+	font-size: 2em;
 }
 
 h2 {
-	font-size: 1.75rem;
+	font-size: 1.75em;
 }
 
 a {
@@ -127,6 +127,10 @@ a,
 	/* The monospace fonts tend to be optically larger for a given font size. */
 	/* letter-spacing: 0.25px; */
 	line-height: inherit;
+}
+
+.text-mono a {
+	font-size: 1em; /* Avoid compounding ensmallnesses. */
 }
 
 a:hover {
