@@ -70,7 +70,7 @@
 	<section>
 		<h2><Link prefetch href="/commonplace/groups/{id}">{name}</Link></h2>
 		{#each extracts as {title, id}}
-		<q><Link plain href="/commonplace/extracts/{id}">{title}</Link></q>
+		<q><Link plain href="/commonplace/extracts/{id}">{title || 'Untitled'}</Link></q>
 		{/each}
 	</section>
 	{/each}

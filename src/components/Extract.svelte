@@ -62,9 +62,7 @@
 		<slot>
 			{@html markdown.render(text)}
 			<cite class="text-mono">
-				{#each creators as {id, name}}
-				<Link href="{`/commonplace/creators/${id}`}">{name}</Link>{/each},
-				<Link href="{`/commonplace/groups/${groupId}`}">{groupName}</Link>
+				{#each creators as {id, name}, i}{i > 0 ? i + 1 === creators.length ? ' & ' : ', ': ''}<Link className="creator" href="{`/commonplace/creators/${id}`}">{name}</Link>{/each}, <Link href="{`/commonplace/groups/${groupId}`}">{groupName}</Link>
 			</cite>
 		</slot>
 	</blockquote>
