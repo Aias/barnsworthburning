@@ -120,6 +120,7 @@ h2 {
 a {
 	color: var(--theme-primary-text);
 	text-decoration: underline;
+	transition: color 0.2s;
 }
 
 a,

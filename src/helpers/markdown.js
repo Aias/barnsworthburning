@@ -1,4 +1,4 @@
-import Remarkable from 'remarkable';
+import { Remarkable } from 'remarkable';
 let markdown = new Remarkable({
 	breaks: true,
 	typographer: true,

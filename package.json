@@ -3,7 +3,7 @@
 	"version": "0.0.2",
 	"license": "MIT",
 	"scripts": {
-		"start": "sapper dev",
+		"dev": "sapper dev",
 		"build": "sapper build --legacy",
 		"export": "sapper export --legacy",
 		"serve": "node __sapper__/build",
@@ -14,7 +14,7 @@
 		"lodash": "^4.17.15",
 		"normalize.css": "^8.0.1",
 		"polka": "^0.5.0",
-		"remarkable": "^1.7.4",
+		"remarkable": "^2.0.0",
 		"sirv": "^0.4.0"
 	},
 	"devDependencies": {
@@ -23,7 +23,7 @@
 		"@babel/plugin-transform-runtime": "^7.5.5",
 		"@babel/preset-env": "^7.5.5",
 		"@babel/runtime": "^7.5.5",
-		"rollup": "^1.18.0",
+		"rollup": "^1.19.4",
 		"rollup-plugin-babel": "^4.0.2",
 		"rollup-plugin-commonjs": "^10.0.2",
 		"rollup-plugin-node-resolve": "^5.2.0",
@@ -31,6 +31,6 @@
 		"rollup-plugin-svelte": "^5.0.1",
 		"rollup-plugin-terser": "^5.1.1",
 		"sapper": "^0.27.8",
-		"svelte": "^3.6.11"
+		"svelte": "^3.7.1"
 	}
 }
