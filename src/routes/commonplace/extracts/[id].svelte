@@ -8,11 +8,13 @@
 
 	let extract = null;
 
-	onMount(async () => {
+	onMount(() => {
 		const { id } = $page.params;
-		extract = await fetch(
-			`${FULL_API}/airtableGet?base=commonplace&table=extracts&id=${id}`
-		).then(data => data.json());
+		fetch(`${FULL_API}/airtableGet?base=commonplace&table=extracts&id=${id}`)
+			.then(data => data.json())
+			.then(json => {
+				extract = json;
+			})
 	});
 </script>
 
