@@ -55,8 +55,8 @@
 		background-color: var(--layer-bg);
 
 		display: grid;
-		grid-template-columns: [header-start toolbar-start] auto [header-end main-start footer-start] 1fr [main-end toolbar-end footer-end];
-		grid-template-rows: [toolbar-start] auto [toolbar-end header-start main-start] 1fr [header-end footer-start  main-end] auto [footer-end];
+		grid-template-columns: [header-start toolbar-start loading-start] auto [header-end loading-end main-start footer-start] 1fr [main-end toolbar-end footer-end];
+		grid-template-rows: [toolbar-start] auto [toolbar-end header-start loading-start main-start] 1fr [header-end loading-end footer-start  main-end] auto [footer-end];
 	}
 
 	aside {
@@ -92,8 +92,8 @@
 			height: auto;
 			min-height: 100vh;
 			overflow: initial;
-			grid-template-columns: [header-start main-start footer-start] 1fr [header-end toolbar-start] auto [toolbar-end main-end footer-end];
-			grid-template-rows: [toolbar-start header-start] auto [header-end toolbar-end main-start] 1fr [main-end footer-start] auto [footer-end];
+			grid-template-columns: [header-start loading-start main-start footer-start] 1fr [header-end toolbar-start] auto [toolbar-end main-end loading-end footer-end];
+			grid-template-rows: [toolbar-start header-start loading-start] auto [header-end toolbar-end loading-end main-start] 1fr [main-end footer-start] auto [footer-end];
 		}
 
 		header {
