@@ -1,44 +1,66 @@
 <script>
 	import { onMount } from 'svelte';
-	import values from 'lodash/values';
 	import keys from 'lodash/keys';
 	import range from 'lodash/range';
-	import size from 'lodash/size';
 	import { FULL_API } from '../../../config.js';
+	import Loading from '../../../components/Loading.svelte';
 
 	let patterns, groups, categories;
 	$: isLoaded = patterns && groups && categories;
 
-	$: numPatterns = size(patterns);
-	$: patternsCalculated = makeRelationships(patterns, numPatterns);
-	$: patternArray = values(patternsCalculated).sort(sortByPosition);
-	$: groupArray = values(groups).sort(sortByPosition);
-	$: categoryArray = values(categories).sort(sortByPosition);
+	$: patternsCalculated = makeRelationships(patterns);
+	$: patternsArr = keys(patternsCalculated)
+		.map(key => patternsCalculated[key])
+		.sort((a, b) => {
+			return a.order - b.order;
+		});
+
+	const patternOptions = {
+		fields: [
+			'pattern',
+			'category',
+			'group',
+			'significance',
+			'supports',
+			'depends_on',
+			'refers_to'
+		]
+	};
 
 	onMount(() => {
-		fetch(`${FULL_API}/patterns?table=patterns`)
+		fetch(
+			`${FULL_API}/airtableGet?base=patterns&table=patterns&options=${patternOptions}`
+		)
 			.then(data => data.json())
 			.then(json => {
 				patterns = json;
 			});
-		fetch(`${FULL_API}/patterns?table=groups`)
+		fetch(`${FULL_API}/airtableGet?base=patterns?table=groups`)
 			.then(data => data.json())
 			.then(json => {
 				groups = json;
 			});
-		fetch(`${FULL_API}/patterns?table=categories`)
+		fetch(`${FULL_API}/airtableGet?base=patterns?table=categories`)
 			.then(data => data.json())
 			.then(json => {
 				categories = json;
 			});
 	});
 
-	const sortByPosition = (a, b) => a.position - b.position;
+	const makeRelationships = patterns => {
+		if (!patterns) return {};
+		let numPatterns = patterns.length;
+		if (numPatterns === 0) return null;
+		let calculated = {};
 
-	const makeRelationships = (patterns, numPatterns) => {
-		let calculated = { ...patterns };
+		patterns.forEach((p, i) => {
+			calculated[p.id] = {
+				...p,
+				order: i
+			};
+		});
 
-		keys(calculated).forEach((key, i) => {
+		keys(calculated).forEach(key => {
 			let pattern = calculated[key];
 			pattern.relationships = range(numPatterns).map(i => ({
 				supports: false,
@@ -50,38 +72,39 @@
 					pattern[rel]
 						.map(id => calculated[id])
 						.forEach(n => {
-							pattern.relationships[n.position][rel] = true;
+							pattern.relationships[n.order][rel] = true;
 						});
 				}
 			});
 			calculated[key] = pattern;
 		});
+
 		return calculated;
 	};
 </script>
 
 {#if !isLoaded}
-<div>Still loading</div>
+<Loading />
 {:else}
 <table>
 	<thead>
 		<tr>
 			<th>Pattern</th>
-			{#each patternArray as pattern}
+			{#each patternsArr as pattern}
 			<th title="{pattern.pattern}"></th>
 			{/each}
 		</tr>
 	</thead>
 	<tbody>
-		{#each patternArray as pattern}
+		{#each patternsArr as pattern}
 		<tr>
 			<td>
 				{pattern.pattern}
 			</td>
 			{#each pattern.relationships as rel, i} <td
-			title={patternArray[i].pattern} class:depends-on={rel.depends_on}
+			title={patternsArr[i].pattern} class:depends-on={rel.depends_on}
 			class:rel={true} class:refers-to={rel.refers_to}
-			class:supports={rel.supports} class:self={pattern.position === i} />
+			class:supports={rel.supports} class:self={pattern.order === i} />
 			{/each}
 		</tr>
 		{/each}

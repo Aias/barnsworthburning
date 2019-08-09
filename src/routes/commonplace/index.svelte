@@ -4,8 +4,20 @@
 
 	export async function preload(page, session) {
 		let extracts;
+		let options = {
+			sort: [{ field: 'extracted_on', direction: 'desc' }],
+			fields: [
+				'title',
+				'group',
+				'group_name',
+				'creator',
+				'creator_name',
+				'extracted_on'
+			]				
+		};
+
 		try {
-			extracts = await this.fetch(`${FULL_API}/extractsSimple`).then(
+			extracts = await this.fetch(`${FULL_API}/airtableGet?base=commonplace&table=extracts&options=${JSON.stringify(options)}`).then(
 				data => data.json()
 			);
 		}

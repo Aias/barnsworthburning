@@ -11,7 +11,7 @@
 	onMount(async () => {
 		const { id } = $page.params;
 		extract = await fetch(
-			`${FULL_API}/record?table=extracts&id=${id}`
+			`${FULL_API}/airtableGet?base=commonplace&table=extracts&id=${id}`
 		).then(data => data.json());
 	});
 </script>

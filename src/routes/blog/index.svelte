@@ -1,10 +1,15 @@
 <script context="module">
 	import { FULL_API } from '../../config.js';
 
+	let options = JSON.stringify({
+		view: 'published-posts',
+		sort: [{ field: 'created', direction: 'desc' }]
+	});
+
 	export async function preload(page, session) {
-		const posts = await this.fetch(`${FULL_API}/posts`).then(data =>
-			data.json()
-		);
+		const posts = await this.fetch(
+			`${FULL_API}/airtableGet?base=portfolio&table=blog&options=${options}`
+		).then(data => data.json());
 
 		return { posts };
 	}
@@ -26,7 +31,7 @@
 	<li>
 		<article>
 			<h2>
-				<a rel="prefetch" href="{`blog/${post.slug}`}">{post.title}</a>
+				<a rel="prefetch" href="{`blog/${post.id}`}">{post.title}</a>
 			</h2>
 			<h3>{post.description}</h3>
 			<section>
