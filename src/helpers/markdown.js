@@ -5,4 +5,6 @@ let markdown = new Remarkable({
 	html: true
 });
 
+markdown.core.ruler.enable(['abbr']);
+
 export default markdown;

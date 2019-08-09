@@ -3,6 +3,7 @@
 	import get from 'lodash/get';
 	import Link from './Link.svelte';
 	import Book from './icons/Book.svelte';
+	import Loading from './Loading.svelte';
 
 	export let extract = {};
 
@@ -79,7 +80,7 @@
 	</footer>
 </article>
 {:else}
-<code>Loading extract content.</code>
+<Loading />
 {/if}
 
 <style>

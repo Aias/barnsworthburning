@@ -3,9 +3,16 @@
 	import Link from '../../components/Link.svelte';
 
 	export async function preload(page, session) {
-		const extracts = await this.fetch(`${FULL_API}/extractsSimple`).then(
-			data => data.json()
-		);
+		let extracts;
+		try {
+			extracts = await this.fetch(`${FULL_API}/extractsSimple`).then(
+				data => data.json()
+			);
+		}
+		catch(e) {
+			console.log(e);
+			extracts = [];
+		}
 
 		return { extracts };
 	}

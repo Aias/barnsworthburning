@@ -1,7 +1,11 @@
 <script>
+	import { stores } from '@sapper/app';
+	const { preloading } = stores();
+
 	import Nav from '../components/Nav.svelte';
 	import Toolbar from '../components/Toolbar.svelte';
 	import Header from '../components/Header.svelte';
+	import Loading from '../components/Loading.svelte';
 
 	let title = 'barnsworthburning.net';
 	let description =
@@ -33,6 +37,9 @@
 	<footer>
 		<Nav currentPage={segment} />
 	</footer>
+	{#if $preloading}
+	<Loading />
+	{/if}
 </div>
 
 <style>
@@ -60,6 +67,10 @@
 		align-items: center;
 	}
 
+	header, main, footer, aside {
+		position: relative;
+	}
+
 	header {
 		grid-area: header;
 		overflow-y: hidden;
@@ -74,7 +85,6 @@
 		z-index: 19;
 		margin: 0 2rem 1rem 1rem;
 	}
-
 
 	@media(max-width: 950px) {
 		div {

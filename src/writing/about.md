@@ -3,13 +3,14 @@
 This is the personal website,
 design / development portfolio,
 and [commonplace book](https://en.wikipedia.org/wiki/Commonplace_book) of Nick Trombley.
+
 I am currently living in Tokyo,
 and available for hire:
 full-time, remote, or freelance work is welcome,
 in that preferred order.
+
 <a href="/files/trombley_resume_2019.pdf" target="_blank">Before this</a>, I worked for about six years at <a href="https://www.epic.com" target="_blank">Epic</a>,
-a health IT / EMR software company in Verona, Wisconsin.
-We did not create <a href="https://www.epicgames.com/fortnite/home" target="_blank">Fortnite</a>.
+an EMR / EHR / health IT company in America's Dairyland.
 My first job involved database administration,
 systems monitoring,
 report writing,
@@ -28,4 +29,8 @@ for [ideas](/commonplace/spaces/ideas),
 for [creation](/commonplace/spaces/creation),
 and for [connection](/commonplace/spaces/connection).
 
-If you're curious, you can browse [other things I've made](/projects).
+*[EMR]: Electronic Medical Record
+
+*[EHR]: Electronic Health Record
+
+*[IT]: You know what this one means
