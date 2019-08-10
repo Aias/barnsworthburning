@@ -124,7 +124,11 @@ a {
 }
 
 a,
-.text-mono {
+.text-mono,
+pre,
+code,
+kbd,
+samp {
 	font-family: var(--font-stack-mono);
 	font-size: 0.925em;
 	/* The monospace fonts tend to be optically larger for a given font size. */
