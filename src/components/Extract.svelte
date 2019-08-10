@@ -61,9 +61,11 @@
 	<blockquote>
 		<slot>
 			{@html markdown.render(text)}
+			{#if !isMe}
 			<cite class="text-mono">
 				{#each creators as {id, name}, i}{i > 0 ? i + 1 === creators.length ? ' & ' : ', ': ''}<Link className="creator" href="{`/commonplace/creators/${id}`}">{name}</Link>{/each}, <Link href="{`/commonplace/groups/${groupId}`}">{groupName}</Link>
 			</cite>
+			{/if}
 		</slot>
 	</blockquote>
 	<aside>
@@ -83,6 +85,7 @@
 
 <style>
 	header:empty,
+	figure:empty,
 	aside:empty,
 	footer:empty {
 		display: none;
@@ -110,6 +113,10 @@
 		font-style: italic;
 		font-size: 1.2em;
 		font-family: var(--font-stack-serif);
+	}
+	blockquote :global(:last-child) {
+		margin-bottom: 0;
+		padding-bottom: 0;
 	}
 	cite {
 		font-style: normal;
