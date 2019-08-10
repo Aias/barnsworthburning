@@ -26,6 +26,7 @@
 
 	--clr-red-30: #a0060c;
 	--clr-red-40: #b50007;
+	--clr-red-60: #ff4313;
 	--clr-red-base: var(--clr-red-40);
 
 	--clr-gray-10: #100e06;
@@ -72,7 +73,7 @@
 	--theme-primary-bg: var(--clr-yellow-50);
 	--theme-primary-text: var(--clr-yellow-60);
 	--theme-accent-bg: var(--clr-red-40);
-	--theme-accent-text: var(--clr-red-40);
+	--theme-accent-text: var(--clr-red-60);
 	--layer-bg: var(--clr-gray-10);
 	--layer-container: var(--clr-gray-20);
 	--layer-highlight: var(--clr-gray-20);

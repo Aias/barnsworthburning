@@ -51,12 +51,13 @@
 		left: 0;
 		height: 100%;
 		overflow: hidden;
-		color: var(--text-primary);
-		background-color: var(--layer-bg);
-
+		
 		display: grid;
 		grid-template-columns: [header-start toolbar-start loading-start] auto [header-end loading-end main-start footer-start] 1fr [main-end toolbar-end footer-end];
 		grid-template-rows: [toolbar-start] auto [toolbar-end header-start loading-start main-start] 1fr [header-end loading-end footer-start  main-end] auto [footer-end];
+
+		color: var(--text-primary);
+		background-color: var(--layer-bg);
 	}
 
 	aside {
@@ -102,8 +103,8 @@
 		}
 
 		footer {
-			position: sticky;
 			position: -webkit-sticky;
+			position: sticky;
 			bottom: 1rem;
 		}
 
