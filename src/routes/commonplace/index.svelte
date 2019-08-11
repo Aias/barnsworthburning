@@ -5,14 +5,16 @@
 	export async function preload(page, session) {
 		let extracts;
 		let options = {
-			sort: [{ field: 'extracted_on', direction: 'desc' }],
+			sort: [{ field: 'last_updated', direction: 'desc' }],
+			maxRecords: 200,
 			fields: [
 				'title',
 				'group',
 				'group_name',
 				'creator',
 				'creator_name',
-				'extracted_on'
+				'extracted_on',
+				'last_updated'
 			]				
 		};
 
@@ -44,19 +46,20 @@
 			let groupName = get(e, 'group_name[0]', 'Ungrouped');
 			let groupId = get(e, 'group[0]', '-1');
 			let extractedOn = new Date(e['extracted_on']);
+			let lastUpdated = new Date(e['last_updated']);
 
 			if (!(typeof nested[groupName] === 'object')) {
 				nested[groupName] = {
 					id: groupId,
 					name: groupName,
 					extracts: [],
-					updated: extractedOn
+					updated: lastUpdated
 				};
 			}
 
 			nested[groupName].extracts.push(e);
-			if (nested[groupName]['updated'] < extractedOn) {
-				nested[groupName]['updated'] = extractedOn;
+			if (nested[groupName]['updated'] < lastUpdated) {
+				nested[groupName]['updated'] = lastUpdated;
 			}
 		});
 
