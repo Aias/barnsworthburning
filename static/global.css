@@ -46,6 +46,14 @@
 	--clr-darker-30: hsla(0, 0%, 0%, 0.35);
 	--clr-darker-40: hsla(0, 0%, 0%, 0.65);
 	--clr-darker-50: hsla(0, 0%, 0%, 0.93);
+
+	--font-size-0: 0.85em;
+	--font-size-10: 1em;
+	--font-size-20: 1.2em;
+	--font-size-30: 1.45em;
+	--font-size-40: 1.75em;
+	--font-size-50: 2em;
+	--font-size-60: 2.5em;
 }
 
 .🌞 {
@@ -111,11 +119,11 @@ h2 {
 }
 
 h1 {
-	font-size: 2em;
+	font-size: var(--font-size-50);
 }
 
 h2 {
-	font-size: 1.75em;
+	font-size: var(--font-size-40);
 }
 
 a {
@@ -133,7 +141,6 @@ samp {
 	font-family: var(--font-stack-mono);
 	font-size: 0.925em;
 	/* The monospace fonts tend to be optically larger for a given font size. */
-	/* letter-spacing: 0.25px; */
 	line-height: inherit;
 }
 
@@ -144,6 +151,13 @@ samp {
 a:hover {
 	color: var(--theme-accent-text);
 	cursor: pointer;
+}
+
+.markdown-block > *:first-child {
+	margin-top: 0;
+}
+.markdown-block > *:last-child {
+	margin-bottom: 0;
 }
 
 /*    HELPERS    */

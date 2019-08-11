@@ -6,6 +6,7 @@
 	import Loading from './Loading.svelte';
 
 	export let extract = {};
+	export let showFooter = true;
 
 	$: title = get(extract, 'title');
 	$: text = get(extract, 'extract_text', '');
@@ -30,35 +31,31 @@
 
 {#if extract}
 <article class:myself={isMe}>
+	{#if title}
 	<header>
-		<slot name="header">
-			{#if title}
-			<h1>
-				<Link href="/commonplace"><Book /></Link>
-				{title}
-			</h1>
-			{/if}
-		</slot>
+		<h1>
+			<Link href="/commonplace"><Book /></Link>
+			{title}
+		</h1>
 	</header>
+	{/if}
+	{#if images}
 	<figure>
-		<slot name="image">
-			{#if images}
-			<div class="images">
-				{#each images as {id, filename, thumbnails, type, url}}
-				<div class="image-wrapper">
-					<img src="{url}" alt="{filename}" />
-				</div>
-				{/each}
+		<div class="images">
+			{#each images as {id, filename, thumbnails, type, url}}
+			<div class="image-wrapper">
+				<img src="{url}" alt="{filename}" />
 			</div>
-			{#if imageCaption}
-			<figcaption>
-				{imageCaption}
-			</figcaption>
-			{/if}
-			{/if}
-		</slot>
+			{/each}
+		</div>
+		{#if imageCaption}
+		<figcaption>
+			{imageCaption}
+		</figcaption>
+		{/if}
 	</figure>
-	<blockquote>
+	{/if}
+	<blockquote class="markdown-block">
 		<slot>
 			{@html markdown.render(text)}
 			{#if !isMe}
@@ -68,71 +65,74 @@
 			{/if}
 		</slot>
 	</blockquote>
-	<aside>
-		<slot name="aside">
-			{#if notes} {@html markdown.render(notes)} {/if}
-		</slot>
+	{#if notes}
+	<aside class="markdown-block">
+		{@html markdown.render(notes)}
 	</aside>
+	{/if}
+	{#if showFooter}
 	<footer>
-		<slot name="footer">
-			Recorded on {extractedOn}
-		</slot>
+		Recorded on {extractedOn}
 	</footer>
+	{/if}
 </article>
 {:else}
 <Loading />
 {/if}
 
 <style>
-	header:empty,
-	figure:empty,
-	aside:empty,
-	footer:empty {
-		display: none;
-	}
-
 	article {
 		max-width: 50rem;
 	}
+
 	figure {
 		margin: 0;
 	}
-	.images {
-		display: flex;
-	}
-	figure img {
-		max-width: 100%;
-	}
+
+		.images {
+			display: flex;
+		}
+
+		img {
+			max-width: 100%;
+		}
+
 	blockquote {
-		border-bottom: 1px solid var(--divider);
-		padding-bottom: 1rem;
-		margin: 0 0 1rem 0;
+		margin: 1rem 0 0 0;
 	}
-	blockquote :global(blockquote) {
-		margin: 0;
-		font-style: italic;
-		font-size: 1.2em;
-		font-family: var(--font-stack-serif);
-	}
-	blockquote :global(:last-child) {
-		margin-bottom: 0;
-		padding-bottom: 0;
-	}
-	cite {
-		font-style: normal;
-		display: block;
-		margin-top: 1rem;
-	}
-	.myself cite {
-		display: none;
-	}
+
+		blockquote + * {
+			border-top: 1px solid var(--divider);
+			padding-top: 1rem;
+			margin-top: 1rem;
+		}
+
+		blockquote :global(blockquote) {
+			margin: 0;
+			font-style: italic;
+			font-size: var(--font-size-20);
+			font-family: var(--font-stack-serif);
+		}
+
+		cite {
+			font-style: normal;
+			display: block;
+			margin-top: 1rem;
+		}
+
+		.myself cite {
+			display: none; /* That would just be tacky. */
+		}
+
 	footer,
 	aside,
 	figcaption {
-		font-size: 0.85em;
+		font-size: var(--font-size-0);
 		color: var(--text-secondary);
 	}
+
 	footer {
+		margin-top: 1rem;
 		font-style: italic;
 	}
 </style>

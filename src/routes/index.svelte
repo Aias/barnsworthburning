@@ -34,7 +34,7 @@
 <div>
 	{#each extracts as extract}
 	<Card>
-		<Extract {extract} />
+		<Extract {extract} showFooter={false} />
 	</Card>
 	{/each}
 </div>
