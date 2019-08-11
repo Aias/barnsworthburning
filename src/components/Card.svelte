@@ -20,7 +20,7 @@
 		border: var(--container-border);
 		border-radius: var(--container-border-radius);
 		overflow: hidden;
-		transition: all 0.25s;
+		transition: border-radius 0.5s, box-shadow 0.25s, background-color 0.25s;
 	}
 
 	.clickable:hover {

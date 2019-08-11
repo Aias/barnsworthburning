@@ -1,6 +1,8 @@
 <script>
 	import { stores } from '@sapper/app';
 	const { preloading } = stores();
+	import { isDarkMode } from '../stores';
+	import getEmojiForTheme from '../helpers/getEmojiForTheme';
 
 	import Nav from '../components/Nav.svelte';
 	import Toolbar from '../components/Toolbar.svelte';
@@ -24,7 +26,7 @@
 	<meta name="keywords" content="{keywords}" />
 </svelte:head>
 
-<div class="🌞">
+<div class="{getEmojiForTheme($isDarkMode)}">
 	<header>
 		<Header />
 	</header>
@@ -58,6 +60,8 @@
 
 		color: var(--text-primary);
 		background-color: var(--layer-bg);
+
+		transition: color 0.5s, background-color 0.5s;
 	}
 
 	aside {

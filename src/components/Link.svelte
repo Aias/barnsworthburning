@@ -11,7 +11,6 @@
 	class="{className}"
 	class:inherit="{plain}"
 	class:active="{active}"
-	on:click="{(e) => e.stopPropagation()}"
 	{title}
 	{href}
 	rel="{prefetch ? 'prefetch' : ''}"
