@@ -14,9 +14,8 @@
 	{title}
 	{href}
 	rel="{prefetch ? 'prefetch' : ''}"
->
-	<slot></slot>
-</a>
+	><slot></slot
+></a>
 
 <style>
 	.active {
