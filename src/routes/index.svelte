@@ -1,4 +1,5 @@
 <script context="module">
+	import { goto } from '@sapper/app';
 	import spaces from './_spaces';
 	import { FULL_API } from '../config';
 
@@ -33,8 +34,8 @@
 {#if extracts}
 <div>
 	{#each extracts as extract}
-	<Card>
-		<Extract {extract} showFooter={false} />
+	<Card onClick="{() => goto(`/commonplace/extracts/${extract.id}`)}">
+		<Extract {extract} isCompact />
 	</Card>
 	{/each}
 </div>

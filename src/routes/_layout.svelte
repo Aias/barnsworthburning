@@ -62,7 +62,7 @@
 
 	aside {
 		grid-area: toolbar;
-		margin: 1rem 3rem 0.5rem 3rem;
+		margin: 1rem 3rem;
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;

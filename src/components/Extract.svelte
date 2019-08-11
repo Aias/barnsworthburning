@@ -6,7 +6,7 @@
 	import Loading from './Loading.svelte';
 
 	export let extract = {};
-	export let showFooter = true;
+	export let isCompact = false;
 
 	$: title = get(extract, 'title');
 	$: text = get(extract, 'extract_text', '');
@@ -30,13 +30,17 @@
 </script>
 
 {#if extract}
-<article class:myself={isMe}>
+<article class:myself={isMe} class:compact={isCompact}>
 	{#if title}
 	<header>
-		<h1>
-			<Link href="/commonplace"><Book /></Link>
-			{title}
-		</h1>
+		{#if isCompact}
+			<h2>{title}</h2>
+		{:else}
+			<h1>
+				<Link href="/commonplace"><Book /></Link>
+				{title}
+			</h1>
+		{/if}
 	</header>
 	{/if}
 	{#if images}
@@ -55,7 +59,7 @@
 		{/if}
 	</figure>
 	{/if}
-	<blockquote class="markdown-block">
+	<blockquote class="extract-main markdown-block">
 		<slot>
 			{@html markdown.render(text)}
 			{#if !isMe}
@@ -70,7 +74,7 @@
 		{@html markdown.render(notes)}
 	</aside>
 	{/if}
-	{#if showFooter}
+	{#if !isCompact}
 	<footer>
 		Recorded on {extractedOn}
 	</footer>
@@ -97,17 +101,17 @@
 			max-width: 100%;
 		}
 
-	blockquote {
+	.extract-main {
 		margin: 1rem 0 0 0;
 	}
 
-		blockquote + * {
+		.extract-main + * {
 			border-top: 1px solid var(--divider);
 			padding-top: 1rem;
 			margin-top: 1rem;
 		}
 
-		blockquote :global(blockquote) {
+		.extract-main :global(blockquote) {
 			margin: 0;
 			font-style: italic;
 			font-size: var(--font-size-20);

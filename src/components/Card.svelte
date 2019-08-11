@@ -1,8 +1,14 @@
 <script>
-	export let className = null;
+	export let className = undefined;
+	export let onClick = undefined;
 </script>
 
-<section class:card="{true}" class="{className}">
+<section
+	class:card="{true}"
+	class="{className}"
+	class:clickable="{typeof onClick === 'function'}"
+	on:click="{onClick}"
+>
 	<slot></slot>
 </section>
 
@@ -14,5 +20,12 @@
 		border: var(--container-border);
 		border-radius: var(--container-border-radius);
 		overflow: hidden;
+		transition: all 0.25s;
+	}
+
+	.clickable:hover {
+		background-color: var(--layer-container-hover);
+		cursor: pointer;
+		box-shadow: 0 1px 1.5rem var(--clr-darker-20);
 	}
 </style>
