@@ -10,7 +10,7 @@
 		let id = spaces[space] || spaces['i'];
 		let options = {
 			view: 'spaces',
-			filterByFormula: `IF(FIND("${id}", space_ids) > 0, TRUE(), FALSE())`
+			filterByFormula: `IF(FIND("${id}", ARRAYJOIN(space_ids, ",")) > 0, TRUE(), FALSE())`
 		};
 
 		let extracts = await this.fetch(
