@@ -90,6 +90,10 @@
 {/if}
 
 <style>
+	:global(object) {
+		visibility: hidden;
+	}
+
 	.layout-container {
 		display: flex;
 	}
