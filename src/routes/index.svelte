@@ -33,7 +33,7 @@
 
 	export let extracts;
 
-	const minColWidth = 300;
+	const minColWidth = 333;
 	let containerWidth = 0;
 	$: numCols = Math.max(Math.floor(containerWidth / minColWidth), 1);
 	let layout = [];
@@ -90,12 +90,19 @@
 {/if}
 
 <style>
+	/* Svelte adds an object element to calculate container sizes,
+	but doesn't include the CSS to mask them for screen readers. */
 	:global(object) {
 		visibility: hidden;
 	}
 
 	.layout-container {
 		display: flex;
+	}
+
+	.layout-col {
+		flex-grow: 1;
+		flex-basis: 0;
 	}
 
 	.layout-col:not(:first-of-type) {
