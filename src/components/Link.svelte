@@ -1,9 +1,9 @@
 <script>
-	export let title = null;
+	export let title = undefined;
 	export let href = '#';
 	export let prefetch = false;
 	export let plain = false;
-	export let className = null;
+	export let className = undefined;
 	export let active = false;
 </script>
 
@@ -13,7 +13,7 @@
 	class:active="{active}"
 	{title}
 	{href}
-	rel="{prefetch ? 'prefetch' : ''}"
+	rel="{prefetch ? 'prefetch' : undefined}"
 	><slot></slot
 ></a>
 

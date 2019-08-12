@@ -24,6 +24,7 @@
 	<meta name="Description" content="{description}" />
 	<meta property="og:description" content="{description}" />
 	<meta name="keywords" content="{keywords}" />
+	<meta name="theme-color" content="{$isDarkMode ? '#ebcc20' : '#b50007'}" />
 </svelte:head>
 
 <div class="{getEmojiForTheme($isDarkMode)}">

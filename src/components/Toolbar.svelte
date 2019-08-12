@@ -11,10 +11,10 @@
 
 <div>
 	<button title="Toggle theme" on:click="{() => isDarkMode.set(!$isDarkMode)}">{getEmojiForTheme($isDarkMode)}</button>
-	<Link href="https://barnsworthburning-api.netlify.com/.netlify/functions/feed"><RSS /></Link>
-	<Link href="https://www.linkedin.com/in/nick-trombley/"><LinkedIn /></Link>
-	<Link href="https://github.com/Aias"><Github /></Link>
-	<Link href="https://open.spotify.com/user/223hhvix27azj60a9a80jelq3?si=2RpG1aWiTK6edlf_Uskjog"><Spotify /></Link>
+	<Link title="RSS Feed" href="https://barnsworthburning-api.netlify.com/.netlify/functions/feed"><RSS /></Link>
+	<Link title="LinkedIn" href="https://www.linkedin.com/in/nick-trombley/"><LinkedIn /></Link>
+	<Link title="Github" href="https://github.com/Aias"><Github /></Link>
+	<Link title="Spotify" href="https://open.spotify.com/user/223hhvix27azj60a9a80jelq3?si=2RpG1aWiTK6edlf_Uskjog"><Spotify /></Link>
 </div>
 
 <style>
