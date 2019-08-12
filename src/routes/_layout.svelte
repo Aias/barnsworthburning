@@ -66,7 +66,7 @@
 
 	aside {
 		grid-area: toolbar;
-		margin: 1rem 3rem;
+		margin: 1rem 2rem;
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
@@ -83,12 +83,12 @@
 	main {
 		grid-area: main;
 		overflow-y: auto;
-		padding: 0 3rem 1rem 2rem;
+		padding: 0 2rem 1rem 2rem;
 	}
 	footer {
 		grid-area: footer;
 		z-index: 19;
-		margin: 0 2rem 1rem 1rem;
+		margin: 0 1rem 1rem 1rem;
 	}
 
 	@media(max-width: 950px) {
