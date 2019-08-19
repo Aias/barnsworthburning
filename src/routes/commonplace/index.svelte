@@ -18,15 +18,12 @@
 			]				
 		};
 
-		try {
-			extracts = await this.fetch(`${FULL_API}/airtableGet?base=commonplace&table=extracts&options=${JSON.stringify(options)}`).then(
-				data => data.json()
-			);
-		}
-		catch(e) {
-			console.log(e);
-			extracts = [];
-		}
+		extracts = await this.fetch(`${FULL_API}/airtableGet?base=commonplace&table=extracts&options=${JSON.stringify(options)}`)
+			.then(data => data.json())
+			.catch(error => {
+				console.log(error);
+				return [];
+			});
 
 		return { extracts };
 	}

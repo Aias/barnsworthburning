@@ -4,48 +4,13 @@
 	import Link from './Link.svelte';
 	import range from 'lodash/range';
 	import { slide } from 'svelte/transition';
-	// import { quintOut } from 'svelte/easing';
+	import { spaces, selectedSpace } from '../stores';
 
 	let pointerRight = '›';
 	let pointerLeft = '‹';
-	let spaces = [
-		'user experience',
-		'understanding',
-		'architecture',
-		'information',
-		'constraints',
-		'creativity',
-		'teaching',
-		'thinking',
-		'learning',
-		'planning',
-		'business',
-		'geometry',
-		'systems',
-		'writing',
-		'meaning',
-		'sadness',
-		'beauty',
-		'nature',
-		'seeing',
-		'design',
-		'craft',
-		'tools',
-		'color',
-		'words',
-		'death',
-		'work',
-		'code',
-		'type',
-		'food',
-		'time',
-		'love',
-		'life',
-		'zen',
-		'art'
-	].sort((a, b) => b.length - a.length); // Should already be sorted, but may as well be sure.
+	let keys = Object.keys($spaces).sort((a, b) => b.length - a.length); // Should already be sorted, but may as well be sure.
 
-	let contents = [
+	$: contents = [
 		{
 			summary: [
 				{
@@ -82,12 +47,12 @@
 					emphasized: false
 				},
 				{
-					text: 'design',
+					text: $selectedSpace,
 					emphasized: true,
 					linkTo: '/commonplace/spaces/design'
 				}
 			],
-			details: spaces,
+			details: keys,
 			isOpen: false
 		}
 	];
@@ -103,7 +68,7 @@
 	}
 
 	const getPointers = (summary) => {
-		let summaryWidth = getTotalChars(summary);
+		let summaryWidth = typeof summary === "string" ? summary.length : getTotalChars(summary);
 
 		return range(headerWidth - summaryWidth);
 	}
@@ -146,7 +111,27 @@
 		{#if details && isOpen}
 		<ol transition:slide>
 			{#each details as detail}
-			<li>{detail}</li>
+			<li>
+				{#if $selectedSpace == detail}
+				<span>
+					<span class="pointer">{pointerRight}{#each getPointers(detail) as p}{pointerRight}{/each}</span>
+					<span class="emphasized space-link">
+						{detail}
+					</span>
+				</span>
+				{:else}
+				<a href="/?📖={detail}">
+					<span class="pointer">
+						{#each getPointers(detail) as p}
+							&nbsp;
+						{/each}
+					</span>
+					<span class="emphasized space-link">
+						&nbsp;{detail}
+					</span>
+				</a>
+				{/if}
+			</li>
 			{/each}
 		</ol>
 		{/if}
@@ -189,6 +174,11 @@
 		margin: 1rem 0;
 		padding: 0;
 		text-align: right;
+		line-height: 1.8;
+	}
+
+	.space-link {
+		text-transform: uppercase;
 	}
 
 	.emphasized {

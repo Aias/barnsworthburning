@@ -1,13 +1,15 @@
 <script context="module">
 	import { goto } from '@sapper/app';
-	import spaces from './_spaces';
+	import spaceNames from '../helpers/spaces';
+	import { spaces, selectedSpace } from '../stores';
 	import { FULL_API } from '../config';
 
 	export async function preload(page, session) {
 		const { params, query } = page;
 		let space = query['📖'] || 'i';
+		selectedSpace.set(space);
 
-		let id = spaces[space] || spaces['i'];
+		let id = spaceNames[space].id || spaceNames['i'].id;
 		let options = {
 			view: 'spaces',
 			filterByFormula: `IF(FIND("${id}", ARRAYJOIN(space_ids, ",")) > 0, TRUE(), FALSE())`
@@ -17,7 +19,11 @@
 			`${FULL_API}/airtableGet?base=commonplace&table=extracts&options=${JSON.stringify(
 				options
 			)}`
-		).then(data => data.json());
+		).then(data => data.json())
+		.catch(error => {
+			console.log(error);
+			return [];
+		});
 
 		return { extracts };
 	}
@@ -39,20 +45,22 @@
 	let layout = [];
 
 	$: {
-		let colContents = range(numCols).map(c => ([]));
-		let sortedExtracts = [...extracts].map((e, i) => ({
-			extract: e, 
-			originalOrder: i, 
-			sortScore: getApproxLengthForExtract(e)
-		})).sort((a, b) => { return b.sortScore - a.sortScore; });
+		if(extracts) {
+			let colContents = range(numCols).map(c => ([]));
+			let sortedExtracts = [...extracts].map((e, i) => ({
+				extract: e, 
+				originalOrder: i, 
+				sortScore: getApproxLengthForExtract(e)
+			})).sort((a, b) => { return b.sortScore - a.sortScore; });
 
-		sortedExtracts.forEach((e, i) => {
-			colContents[i % numCols].push(e);
-		});
+			sortedExtracts.forEach((e, i) => {
+				colContents[i % numCols].push(e);
+			});
 
-		layout = colContents.map(col => col.sort((a, b) => { 
-			return a.originalOrder - b.originalOrder;
-		}));
+			layout = colContents.map(col => col.sort((a, b) => { 
+				return a.originalOrder - b.originalOrder;
+			}));			
+		}
 	}
 	
 	const getApproxLengthForExtract = (e) => {
