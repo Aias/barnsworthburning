@@ -1,15 +1,14 @@
 <script context="module">
 	import { goto } from '@sapper/app';
 	import spaceNames from '../helpers/spaces';
-	import { spaces, selectedSpace } from '../stores';
+	import { spaces } from '../stores';
 	import { FULL_API } from '../config';
 
 	export async function preload(page, session) {
 		const { params, query } = page;
 		let space = query['📖'] || 'i';
-		selectedSpace.set(space);
 
-		let id = spaceNames[space].id || spaceNames['i'].id;
+		let id = spaceNames[space] || spaceNames['i'];
 		let options = {
 			view: 'spaces',
 			filterByFormula: `IF(FIND("${id}", ARRAYJOIN(space_ids, ",")) > 0, TRUE(), FALSE())`
@@ -25,19 +24,25 @@
 			return [];
 		});
 
-		return { extracts };
+		return { extracts, space };
 	}
 </script>
 
 <script>
 	import range from 'lodash/range';
 	import get from 'lodash/get';
+	import { selectedSpace } from '../stores';
 
 	import Extract from '../components/Extract.svelte';
 	import Card from '../components/Card.svelte';
 	import Loading from '../components/Loading.svelte';
 
 	export let extracts;
+	export let space;
+
+	$: {
+		selectedSpace.set(space);
+	}
 
 	const minColWidth = 333;
 	let containerWidth = 0;
