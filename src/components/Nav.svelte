@@ -36,11 +36,11 @@
 	export let currentPage = undefined;
 </script>
 
-<nav>
+<nav class="themey">
 	<ul>
 		{#each links as {path, title, icon}}
 		<li>
-			<Link active="{currentPage === path}" className="nav-link text-inverted" prefetch href="{path || '/'}" {title}>
+			<Link active="{currentPage === path}" className="nav-link" prefetch href="{path || '/'}" {title}>
 				<span class="pointer">‹‹‹</span>
 				<span class="space">&nbsp;</span>
 				<svelte:component this={icon} />
@@ -55,7 +55,6 @@
 
 <style>
 	nav {
-		background-color: var(--theme-primary-bg);
 		padding: 0.25rem 1rem;
 		border-radius: 4rem;
 		box-shadow: 0 -3px 6px rgba(0,0,0,0.25);
