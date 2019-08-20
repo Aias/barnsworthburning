@@ -88,6 +88,7 @@
 
 {#if extracts}
 <div class="layout-container" bind:clientWidth={containerWidth}>
+	{#if containerWidth > 0}
 	{#each layout as column}
 	<div class="layout-col">
 		{#each column as { extract }}
@@ -97,6 +98,7 @@
 		{/each}
 	</div>
 	{/each}
+	{/if}
 </div>
 {:else}
 <Loading />

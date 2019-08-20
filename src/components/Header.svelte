@@ -50,11 +50,11 @@
 			<strong>BARNSWORTHBURNING</strong>
 		</header>
 	</section>
-	<section class="expandable" class:open="{navOpen}">
+	<section class="themey expandable" class:open="{navOpen}">
 		<header on:click="{makeToggleNav()}" on:mouseenter="{makeToggleNav(true)}">
 			<span>on</span>
 			<Pointers count="{getPointers(`on${$selectedSpace}`)}" />
-			<strong><Link href="/?📖={$selectedSpace}">{$selectedSpace}</Link></strong>
+			<strong>{$selectedSpace}</strong>
 		</header>
 		{#if navOpen}
 		<ol transition:slide>

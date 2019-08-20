@@ -1,112 +1,118 @@
 @import 'normalize.css';
 
 * {
-    box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 :root {
-    /* System font stacks from https://gist.github.com/don1138/5761014 */
-    --font-stack-serif: 'Palatino Linotype', Palatino, Palladio,
-        'URW Palladio L', 'Book Antiqua', Baskerville, 'Bookman Old Style',
-        'Bitstream Charter', 'Nimbus Roman No9 L', Garamond, 'Apple Garamond',
-        'ITC Garamond Narrow', 'New Century Schoolbook', 'Century Schoolbook',
-        'Century Schoolbook L', Georgia, serif;
-    --font-stack-sans: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI,
-        Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-        sans-serif;
-    --font-stack-mono: Consolas, 'Andale Mono WT', 'Andale Mono',
-        'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono',
-        'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', Monaco,
-        'Courier New', Courier, monospace;
+	/* System font stacks from https://gist.github.com/don1138/5761014 */
+	--font-stack-serif: 'Palatino Linotype', Palatino, Palladio,
+		'URW Palladio L', 'Book Antiqua', Baskerville, 'Bookman Old Style',
+		'Bitstream Charter', 'Nimbus Roman No9 L', Garamond, 'Apple Garamond',
+		'ITC Garamond Narrow', 'New Century Schoolbook', 'Century Schoolbook',
+		'Century Schoolbook L', Georgia, serif;
+	--font-stack-sans: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI,
+		Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+		sans-serif;
+	--font-stack-mono: Consolas, 'Andale Mono WT', 'Andale Mono',
+		'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono',
+		'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', Monaco,
+		'Courier New', Courier, monospace;
 
-    --clr-yellow-30: #866b00;
-    --clr-yellow-50: #d5b712;
-    --clr-yellow-60: #ebcc20;
-    --clr-yellow-base: var(--clr-yellow-60);
+	--clr-yellow-30: #866b00;
+	--clr-yellow-50: #d5b712;
+	--clr-yellow-60: #ebcc20;
+	--clr-yellow-base: var(--clr-yellow-60);
 
-    --clr-red-30: #a0060c;
-    --clr-red-40: #b50007;
-    --clr-red-60: #ff4313;
-    --clr-red-base: var(--clr-red-40);
+	--clr-red-30: #a0060c;
+	--clr-red-40: #b50007;
+	--clr-red-60: #ff4313;
+	--clr-red-base: var(--clr-red-40);
 
-    --clr-gray-0: black;
-    --clr-gray-10: #100e06;
-    --clr-gray-20: #242021;
-    --clr-gray-25: #302b2c;
-    --clr-gray-80: #e6e5e4;
-    --clr-gray-90: #f2f1f0;
-    --clr-gray-95: #fcfcfc;
-    --clr-gray-100: white;
+	--clr-gray-0: black;
+	--clr-gray-10: #100e06;
+	--clr-gray-20: #242021;
+	--clr-gray-25: #302b2c;
+	--clr-gray-80: #e6e5e4;
+	--clr-gray-90: #f2f1f0;
+	--clr-gray-95: #fcfcfc;
+	--clr-gray-100: white;
 
-    --clr-lighter-10: hsla(0, 0%, 100%, 0.08);
-    --clr-lighter-20: hsla(0, 0%, 100%, 0.2);
-    --clr-lighter-30: hsla(0, 0%, 100%, 0.4);
-    --clr-lighter-40: hsla(0, 0%, 100%, 0.7);
-    --clr-lighter-50: hsla(0, 0%, 100%, 0.95);
+	--clr-lighter-10: hsla(0, 0%, 100%, 0.08);
+	--clr-lighter-20: hsla(0, 0%, 100%, 0.2);
+	--clr-lighter-30: hsla(0, 0%, 100%, 0.4);
+	--clr-lighter-40: hsla(0, 0%, 100%, 0.7);
+	--clr-lighter-50: hsla(0, 0%, 100%, 0.95);
 
-    --clr-darker-10: hsla(0, 0%, 0%, 0.05);
-    --clr-darker-20: hsla(0, 0%, 0%, 0.15);
-    --clr-darker-30: hsla(0, 0%, 0%, 0.35);
-    --clr-darker-40: hsla(0, 0%, 0%, 0.65);
-    --clr-darker-50: hsla(0, 0%, 0%, 0.93);
+	--clr-darker-10: hsla(0, 0%, 0%, 0.05);
+	--clr-darker-20: hsla(0, 0%, 0%, 0.15);
+	--clr-darker-30: hsla(0, 0%, 0%, 0.35);
+	--clr-darker-40: hsla(0, 0%, 0%, 0.65);
+	--clr-darker-50: hsla(0, 0%, 0%, 0.93);
 
-    --font-size-0: 0.85em;
-    --font-size-10: 1em;
-    --font-size-20: 1.2em;
-    --font-size-30: 1.45em;
-    --font-size-40: 1.75em;
-    --font-size-50: 2em;
-    --font-size-60: 2.5em;
+	--font-size-0: 0.85em;
+	--font-size-10: 1em;
+	--font-size-20: 1.2em;
+	--font-size-30: 1.45em;
+	--font-size-40: 1.75em;
+	--font-size-50: 2em;
+	--font-size-60: 2.5em;
 }
 
 .🌞 {
-    --text-primary: var(--clr-darker-50);
-    --text-secondary: var(--clr-darker-40);
-    --text-inverted: var(--clr-lighter-50);
-    --theme-primary: var(--clr-red-base);
-    --theme-primary-bg: var(--clr-red-30);
-    --theme-primary-text: var(--clr-red-30);
-    --theme-accent-bg: var(--clr-yellow-50);
-    --theme-accent-text: var(--clr-yellow-30);
-    --layer-bg: var(--clr-gray-90);
-    --layer-container: var(--clr-gray-95);
-    --layer-container-hover: var(--clr-gray-100);
-    --layer-highlight: var(--clr-gray-80);
-    --divider: var(--clr-darker-20);
-    --container-border: none;
-    --container-border-radius: 0.25rem 2rem;
+	--text-primary: var(--clr-darker-50);
+	--text-secondary: var(--clr-darker-40);
+	--text-inverted: var(--clr-lighter-50);
+	--theme-primary: var(--clr-red-base);
+	--theme-primary-bg: var(--clr-red-30);
+	--theme-primary-text: var(--clr-red-30);
+	--theme-accent-bg: var(--clr-yellow-50);
+	--theme-accent-text: var(--clr-yellow-30);
+	--layer-bg: var(--clr-gray-90);
+	--layer-container: var(--clr-gray-95);
+	--layer-container-hover: var(--clr-gray-100);
+	--layer-highlight: var(--clr-gray-80);
+	--divider: var(--clr-darker-20);
+	--container-border: none;
+	--container-border-radius: 0.25rem 2rem;
 }
 
 .🌒 {
-    --text-primary: var(--clr-lighter-50);
-    --text-secondary: var(--clr-lighter-40);
-    --text-inverted: var(--clr-darker-50);
-    --theme-primary: var(--clr-yellow-base);
-    --theme-primary-bg: var(--clr-yellow-60);
-    --theme-primary-text: var(--clr-yellow-60);
-    --theme-accent-bg: var(--clr-red-40);
-    --theme-accent-text: var(--clr-red-60);
-    --layer-bg: var(--clr-gray-10);
-    --layer-container: var(--clr-gray-20);
-    --layer-container-hover: var(--clr-gray-25);
-    --layer-highlight: var(--clr-gray-20);
-    --divider: var(--clr-lighter-40);
-    --container-border: 1px solid var(--clr-lighter-40);
-    --container-border-radius: 0;
+	--text-primary: var(--clr-lighter-50);
+	--text-secondary: var(--clr-lighter-40);
+	--text-inverted: var(--clr-darker-50);
+	--theme-primary: var(--clr-yellow-base);
+	--theme-primary-bg: var(--clr-yellow-60);
+	--theme-primary-text: var(--clr-yellow-60);
+	--theme-accent-bg: var(--clr-red-40);
+	--theme-accent-text: var(--clr-red-60);
+	--layer-bg: var(--clr-gray-10);
+	--layer-container: var(--clr-gray-20);
+	--layer-container-hover: var(--clr-gray-25);
+	--layer-highlight: var(--clr-gray-20);
+	--divider: var(--clr-lighter-40);
+	--container-border: 1px solid var(--clr-lighter-40);
+	--container-border-radius: 0;
+}
+
+.🌞,
+.🌒 {
+	--text-link: var(--theme-primary);
+	--text-link-hover: var(--theme-accent-text);
 }
 
 /*    TYPOGRAPHY    */
 
 html {
-    font-family: var(--font-stack-sans);
-    font-size: 16px;
-    /* Used as basis for spacing throughout the app. */
-    line-height: 1.6;
+	font-family: var(--font-stack-sans);
+	font-size: 16px;
+	/* Used as basis for spacing throughout the app. */
+	line-height: 1.6;
 }
 
 .app {
-    font-size: 0.875rem;
-    /* 14px on most monitors. */
+	font-size: 0.875rem;
+	/* 14px on most monitors. */
 }
 
 h1:first-child,
@@ -115,28 +121,33 @@ h3:first-child,
 h4:first-child,
 h5:first-child,
 h6:first-child {
-    margin-top: 0;
+	margin-top: 0;
 }
 
 h1,
 h2 {
-    font-weight: 200;
+	font-weight: 200;
 }
 
 h1 {
-    font-size: var(--font-size-50);
-    line-height: 1.4;
+	font-size: var(--font-size-50);
+	line-height: 1.4;
 }
 
 h2 {
-    font-size: var(--font-size-40);
-    line-height: 1.4;
+	font-size: var(--font-size-40);
+	line-height: 1.4;
 }
 
 a {
-    color: var(--theme-primary-text);
-    text-decoration: underline;
-    transition: color 0.2s;
+	color: var(--text-link);
+	text-decoration: underline;
+	transition: color 0.2s;
+}
+
+a:hover {
+	color: var(--text-link-hover);
+	cursor: pointer;
 }
 
 a,
@@ -145,36 +156,40 @@ pre,
 code,
 kbd,
 samp {
-    font-family: var(--font-stack-mono);
-    font-size: 0.925em;
-    /* The monospace fonts tend to be optically larger for a given font size. */
-    line-height: inherit;
+	font-family: var(--font-stack-mono);
+	font-size: 0.925em;
+	/* The monospace fonts tend to be optically larger for a given font size. */
+	line-height: inherit;
 }
 
 .text-mono a {
-    font-size: 1em;
-    /* Avoid compounding ensmallnesses. */
+	font-size: 1em;
+	/* Avoid compounding ensmallnesses. */
 }
 
-a:hover {
-    color: var(--theme-accent-text);
-    cursor: pointer;
+.markdown-block > *:first-child {
+	margin-top: 0;
 }
 
-.markdown-block>*:first-child {
-    margin-top: 0;
-}
-
-.markdown-block>*:last-child {
-    margin-bottom: 0;
+.markdown-block > *:last-child {
+	margin-bottom: 0;
 }
 
 /*    HELPERS    */
 
 .inherit {
-    all: inherit;
+	all: inherit;
 }
 
 .text-inverted {
-    color: var(--text-inverted) !important;
+	color: var(--text-inverted) !important;
+}
+
+.themey {
+	background-color: var(--theme-primary-bg);
+	color: var(--text-inverted);
+
+	--layer-highlight: var(--theme-primary-bg);
+	--text-link: var(--text-inverted);
+	--text-link-hover: var(--text-inverted);
 }
