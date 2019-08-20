@@ -1,63 +1,24 @@
 <script>
-	// Abandon all hope, ye who enter here.
-
 	import Link from './Link.svelte';
-	import range from 'lodash/range';
+	import Pointers from './Pointers.svelte';
 	import { slide } from 'svelte/transition';
 	import { spaces, selectedSpace } from '../stores';
 
-	let pointerRight = '›';
-	let pointerLeft = '‹';
-	let keys = Object.keys($spaces).sort((a, b) => b.length - a.length); // Should already be sorted, but may as well be sure.
-
-	$: contents = [
-		{
-			summary: [
-				{
-					text: '.NET',
-					emphasized: true,
-					abbr: 'Nicholas Edward Trombley'
-				},
-				{
-					text: 'et al',
-					emphasized: false
-				}
-			],
-			details: undefined,
-			isOpen: false
-		},
-		{
-			summary: [
-				{
-					text: 'via',
-					emphasized: false
-				},
-				{
-					text: 'barnsworthburning',
-					emphasized: true
-				}
-			],
-			details: undefined,
-			isOpen: false
-		},
-		{
-			summary: [
-				{
-					text: 'on',
-					emphasized: false
-				},
-				{
-					text: $selectedSpace,
-					emphasized: true,
-					linkTo: '/commonplace/spaces/design'
-				}
-			],
-			details: keys,
-			isOpen: false
-		}
-	];
-
+	$: keys = Object.keys($spaces).sort((a, b) => b.length - a.length); // Should already be sorted, but may as well be sure.
 	$: headerWidth = getHeaderWidth(contents);
+
+	let navOpen = false;
+
+	const makeToggleNav = (isOpen) => (e) => {
+		e.stopPropagation();
+		if(typeof isOpen === "boolean") {
+			navOpen = isOpen;
+		}
+		else {
+			navOpen = !navOpen;
+		}
+		
+	}
 
 	const getHeaderWidth = (contents, minWidth = 25) => {
 		return minWidth;
@@ -70,65 +31,44 @@
 	const getPointers = (summary) => {
 		let summaryWidth = typeof summary === "string" ? summary.length : getTotalChars(summary);
 
-		return range(headerWidth - summaryWidth);
-	}
-
-	const makeToggleOpen = (i, details) => () => {
-		if(!details) return;
-		toggleOpen(i);
-	}
-
-	const toggleOpen = i => {
-		let newContents = [...contents];
-		newContents[i].isOpen = !newContents[i].isOpen;
-		contents = newContents;
+		return headerWidth - summaryWidth;
 	}
 </script>
 
-<div class="container text-mono">
-	{#each contents as {summary, details, isOpen}, i}
-	<section class:open="{isOpen}" on:mouseenter="{makeToggleOpen(i, details)}" on:mouseleave="{makeToggleOpen(i, details)}">
+<div class="container text-mono" on:click="{makeToggleNav(false)}">
+	<section>
 		<header>
-			{#each summary as {text, emphasized, linkTo, abbr}, i}
-			{#if i > 0}
-			<span class="pointer">
-				{#each getPointers(summary) as p}
-					{pointerRight}
-				{/each}
-			</span>	
-			{/if}
-			<span class:emphasized={emphasized}>
-				{#if abbr}
-					<abbr title={abbr}>{text}</abbr>
-				{:else if linkTo}
-					<Link href="{linkTo}">{text}</Link>
-				{:else}
-					{text}
-				{/if}
-			</span>
-			{/each}
+			<strong><abbr title="Nicholas Edward Trombley">.NET</abbr></strong>
+			<Pointers count="{getPointers('.NETet al')}" />
+			<span>et al</span>
 		</header>
-		{#if details && isOpen}
+	</section>
+	<section>
+		<header>
+			<span>via</span>
+			<Pointers count="{getPointers('viabarnsworthburning')}" />
+			<strong>BARNSWORTHBURNING</strong>
+		</header>
+	</section>
+	<section class="expandable" class:open="{navOpen}">
+		<header on:click="{makeToggleNav()}" on:mouseenter="{makeToggleNav(true)}">
+			<span>on</span>
+			<Pointers count="{getPointers(`on${$selectedSpace}`)}" />
+			<strong><Link href="/?📖={$selectedSpace}">{$selectedSpace}</Link></strong>
+		</header>
+		{#if navOpen}
 		<ol transition:slide>
-			{#each details as detail}
+			{#each keys as space}
 			<li>
-				{#if $selectedSpace == detail}
+				{#if $selectedSpace == space}
 				<span>
-					<span class="pointer">{pointerRight}{#each getPointers(detail) as p}{pointerRight}{/each}</span>
-					<span class="emphasized space-link">
-						{detail}
-					</span>
+					<Pointers count="{getPointers(space) + 1}" />
+					<strong>{space}</strong>
 				</span>
 				{:else}
-				<a href="/?📖={detail}">
-					<span class="pointer">
-						{#each getPointers(detail) as p}
-							&nbsp;
-						{/each}
-					</span>
-					<span class="emphasized space-link">
-						&nbsp;{detail}
-					</span>
+				<a href="/?📖={space}">
+					<Pointers count="{getPointers(space) + 1}" type="space" />
+					<strong>{space}</strong>
 				</a>
 				{/if}
 			</li>
@@ -136,7 +76,6 @@
 		</ol>
 		{/if}
 	</section>
-	{/each}
 </div>
 
 <style>
@@ -161,7 +100,7 @@
 		overflow-y: auto;
 	}
 
-	header {
+	.expandable > header {
 		cursor: pointer;
 	}
 
@@ -177,11 +116,7 @@
 		line-height: 1.8;
 	}
 
-	.space-link {
-		text-transform: uppercase;
-	}
-
-	.emphasized {
+	strong {
 		text-shadow: 0 0 0.5px currentColor;
 		font-weight: normal;
 		text-transform: uppercase;
@@ -194,7 +129,7 @@
 			align-items: flex-start;
 		}
 
-		.pointer {
+		:global(.pointer) {
 			display: none;
 		}
 	}

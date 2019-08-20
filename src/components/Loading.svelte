@@ -41,8 +41,8 @@
 	};
 </script>
 
-{#if rendered}
 <div class="loading loading--outer text-mono">
+	{#if rendered}
 	<div transition:fade class="loading--inner">
 		{#each grid as row, i} {#each row as {content, delay}, j}
 		<span in:slide="{{delay: delay, duration:  500}}" out:fade>
@@ -50,8 +50,8 @@
 		</span>
 		{/each} {/each}
 	</div>
+	{/if}
 </div>
-{/if}
 
 <style>
 	.loading--outer {
