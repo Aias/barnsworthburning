@@ -1,11 +1,13 @@
 <script context="module">
-	import spaceNames from '../helpers/spaces';
-	import { spaces } from '../stores';
-	import { FULL_API } from '../config';
+	import spaceNames from '../../../helpers/spaces';
+	import { FULL_API } from '../../../config';
 
 	export async function preload(page, session) {
-		let slug = 'i';
-		let id = spaceNames[slug];
+		const { params, query } = page;
+
+		let { slug } = params;
+		let id = spaceNames[slug] || spaceNames['i'];
+
 		let options = {
 			view: 'spaces',
 			filterByFormula: `IF(FIND("${id}", ARRAYJOIN(space_ids, ",")) > 0, TRUE(), FALSE())`
@@ -26,11 +28,11 @@
 </script>
 
 <script>
-	import { selectedSpace } from '../stores';
-	import Space from '../components/Space.svelte';
+	import { selectedSpace } from '../../../stores';
+	import Space from '../../../components/Space.svelte';
 
-	export let extracts;
-	export let space;
+	export let extracts = undefined;
+	export let space = undefined;
 
 	$: {
 		selectedSpace.set(space);

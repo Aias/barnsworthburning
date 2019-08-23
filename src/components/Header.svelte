@@ -66,7 +66,7 @@
 					<strong>{space}</strong>
 				</span>
 				{:else}
-				<a href="/?📖={space}">
+				<a href="/commonplace/spaces/{space}">
 					<Pointers count="{getPointers(space) + 1}" type="space" />
 					<strong>{space}</strong>
 				</a>

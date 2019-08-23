@@ -25,9 +25,9 @@ and advising development teams
 at an enterprise scale.
 
 This site is the product of a passion
-for [ideas](/?📖=thinking),
-for [creation](/?📖=creativity),
-and for [connection](/?📖=love).
+for [ideas](/commonplace/spaces/thinking),
+for [creation](/commonplace/spaces/creativity),
+and for [connection](/commonplace/spaces/love).
 
 *[EMR]: Electronic Medical Record
 
