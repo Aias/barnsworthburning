@@ -23,19 +23,22 @@
 			return [];
 		});
 
-		return { extracts, space: slug };
+		return { extracts };
 	}
 </script>
 
 <script>
+	import { stores } from '@sapper/app';
 	import { selectedSpace } from '../../../stores';
 	import Space from '../../../components/Space.svelte';
 
-	export let extracts = undefined;
-	export let space = undefined;
+	export let extracts;
+	
+	let { page } = stores();
 
 	$: {
-		selectedSpace.set(space);
+		let { slug } = $page.params;
+		selectedSpace.set(slug);
 	}
 </script>
 

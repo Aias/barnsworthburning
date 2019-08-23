@@ -10,7 +10,6 @@
 	let navOpen = false;
 
 	const makeToggleNav = (isOpen) => (e) => {
-		e.stopPropagation();
 		if(typeof isOpen === "boolean") {
 			navOpen = isOpen;
 		}
