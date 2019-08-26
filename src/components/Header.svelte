@@ -18,7 +18,7 @@
 		else if(switchNode.contains(e.target)) {
 			navOpen = !navOpen;			
 		}
-		else if(navNode.contains(e.target)) {
+		else if(navNode && navNode.contains(e.target)) {
 			return;
 		}
 		else {

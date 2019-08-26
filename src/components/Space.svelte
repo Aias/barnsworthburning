@@ -42,7 +42,10 @@
 		];
 		let hasImage = typeof e['extract_image'] === 'object'; // TODO: Update to handle multiple images, and use width/height fields to make more accurate predictions.
 		let score = fields.reduce((prev, cur) => {
-			return prev + get(e, cur.field, '').length;
+			let field = get(e, cur.field, '');
+			let numExtraLines = field.split(/\r\n|\r|\n/).length - 1;
+
+			return prev + (numExtraLines * 50) + field.length;
 		}, 0);
 
 		if(hasImage) score += 500;
@@ -91,5 +94,8 @@
 
 	:global(.card) {
 		margin-bottom: 1rem;
+	}
+	:global(.card:hover header) {
+		color: var(--theme-primary-text);
 	}
 </style>
