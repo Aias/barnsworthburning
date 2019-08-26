@@ -64,6 +64,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		pointer-events: none;
 	}
 	.loading--inner {
 		display: inline-grid;
@@ -71,7 +72,8 @@
 		grid-template-columns: repeat(6, 2em);
 		grid-gap: 4px;
 		place-items: center;
-		background-color: var(--layer-bg);
+		/* -webkit-backdrop-filter: blur(4px);
+		backdrop-filter: blur(4px); */
 	}
 	span {
 		display: flex;
@@ -80,6 +82,7 @@
 		justify-content: center;
 		align-items: center;
 		border: 1px solid var(--divider);
+		background-color: var(--layer-bg);
 	}
 
 	@media (max-width: 950px) {

@@ -8,15 +8,22 @@
 	$: headerWidth = getHeaderWidth(contents);
 
 	let navOpen = false;
+	let switchNode;
+	let navNode;
 
 	const makeToggleNav = (isOpen) => (e) => {
 		if(typeof isOpen === "boolean") {
 			navOpen = isOpen;
 		}
-		else {
-			navOpen = !navOpen;
+		else if(switchNode.contains(e.target)) {
+			navOpen = !navOpen;			
 		}
-		
+		else if(navNode.contains(e.target)) {
+			return;
+		}
+		else {
+			navOpen = false;
+		}		
 	}
 
 	const getHeaderWidth = (contents, minWidth = 25) => {
@@ -34,7 +41,9 @@
 	}
 </script>
 
-<div class="container text-mono" on:click="{makeToggleNav(false)}">
+<svelte:body on:click={makeToggleNav()}/>
+
+<div class="container text-mono">
 	<section>
 		<header>
 			<strong><abbr title="Nicholas Edward Trombley">.NET</abbr></strong>
@@ -50,13 +59,13 @@
 		</header>
 	</section>
 	<section class="themey expandable" class:open="{navOpen}">
-		<header on:click="{makeToggleNav()}" on:mouseenter="{makeToggleNav(true)}">
+		<header bind:this={switchNode} on:mouseenter="{makeToggleNav(true)}">
 			<span>on</span>
 			<Pointers count="{getPointers(`on${$selectedSpace}`)}" />
 			<strong>{$selectedSpace}</strong>
 		</header>
 		{#if navOpen}
-		<ol transition:slide>
+		<ol bind:this={navNode} transition:slide>
 			{#each keys as space}
 			<li>
 				{#if $selectedSpace == space}

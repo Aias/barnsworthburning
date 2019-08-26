@@ -38,7 +38,7 @@
 
 	$: {
 		let { slug } = $page.params;
-		selectedSpace.set(slug);
+		if(slug) { selectedSpace.set(slug); }
 	}
 </script>
 
