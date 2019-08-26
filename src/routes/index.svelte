@@ -33,7 +33,7 @@
 	export let space;
 
 	$: {
-		selectedSpace.set(space);
+		selectedSpace.set('everything');
 	}
 </script>
 

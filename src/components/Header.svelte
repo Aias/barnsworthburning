@@ -46,7 +46,7 @@
 <div class="container text-mono">
 	<section>
 		<header>
-			<strong><abbr title="Nicholas Edward Trombley">.NET</abbr></strong>
+			<strong><Link href="/about"><abbr title="Nicholas Edward Trombley">.NET</abbr></Link></strong>
 			<Pointers count="{getPointers('.NETet al')}" />
 			<span>et al</span>
 		</header>
@@ -55,7 +55,7 @@
 		<header>
 			<span>via</span>
 			<Pointers count="{getPointers('viabarnsworthburning')}" />
-			<strong>BARNSWORTHBURNING</strong>
+			<strong><Link href="/">BARNSWORTHBURNING</Link></strong>
 		</header>
 	</section>
 	<section class="themey expandable" class:open="{navOpen}">
@@ -128,6 +128,10 @@
 		text-shadow: 0 0 0.5px currentColor;
 		font-weight: normal;
 		text-transform: uppercase;
+	}
+
+	abbr {
+		text-decoration: none;
 	}
 
 	@media(max-width: 950px) {

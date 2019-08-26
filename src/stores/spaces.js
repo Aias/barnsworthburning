@@ -13,7 +13,7 @@ Object.keys(seed).forEach(key => {
 
 let spaces = writable(initialSpaces);
 
-let selectedSpace = writable('i');
+let selectedSpace = writable('everything');
 
 export default spaces;
 export { selectedSpace };
