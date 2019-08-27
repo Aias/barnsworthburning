@@ -6,7 +6,7 @@
 		let extracts;
 		let options = {
 			sort: [{ field: 'last_updated', direction: 'desc' }],
-			maxRecords: 200,
+			maxRecords: 300,
 			fields: [
 				'title',
 				'group',
