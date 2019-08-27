@@ -1,29 +1,34 @@
 {
 	"basics": {
 		"name": "Nick Trombley",
-		"label": "Programmer",
+		"label": "Web Designer / Developer",
 		"image": "",
-		"email": "richard.hendriks@mail.com",
-		"phone": "(912) 555-4321",
-		"url": "http://richardhendricks.example.com",
-		"summary": "Richard hails from Tulsa. He has earned degrees from the University of Oklahoma and Stanford. (Go Sooners and Cardinal!) Before starting Pied Piper, he worked for Hooli as a part time software developer. While his work focuses on applied information theory, mostly optimizing lossless compression schema of both the length-limited and adaptive variants, his non-work interests range widely, everything from quantum computing to chaos theory. He could tell you about it, but THAT would NOT be a “length-limited” conversation!",
+		"email": "trombley.nick@gmail.com",
+		"phone": "(518) 572-7310",
+		"url": "https://barnsworthburning.net",
+		"summary": "",
 		"location": {
-			"address": "2712 Broadway St",
-			"postalCode": "CA 94115",
-			"city": "San Francisco",
-			"countryCode": "US",
-			"region": "California"
+			"address": "",
+			"postalCode": "",
+			"city": "Tokyo",
+			"countryCode": "JP",
+			"region": "Tsurumi"
 		},
 		"profiles": [
 			{
-				"network": "Twitter",
-				"username": "neutralthoughts",
-				"url": ""
+				"network": "Github",
+				"username": "Aias",
+				"url": "https://github.com/Aias"
 			},
 			{
-				"network": "SoundCloud",
-				"username": "dandymusicnl",
-				"url": "https://soundcloud.example.com/dandymusicnl"
+				"network": "LinkedIn",
+				"username": "nick-trombley",
+				"url": "https://www.linkedin.com/in/nick-trombley/"
+			},
+			{
+				"network": "Spotify",
+				"username": "223hhvix27azj60a9a80jelq3",
+				"url": "https://open.spotify.com/user/223hhvix27azj60a9a80jelq3?si=2RpG1aWiTK6edlf_Uskjog"
 			}
 		]
 	},
@@ -57,13 +62,13 @@
 	],
 	"education": [
 		{
-			"institution": "University of Oklahoma",
-			"area": "Information Technology",
-			"studyType": "Bachelor",
-			"startDate": "2011-06-01",
-			"endDate": "2014-01-01",
-			"gpa": "4.0",
-			"courses": ["DB1101 - Basic SQL", "CS2011 - Java Introduction"]
+			"institution": "Boston College",
+			"area": "Mathematics",
+			"studyType": "Bachelor of Science",
+			"startDate": "2009-09-01",
+			"endDate": "2013-06-01",
+			"gpa": "3.7",
+			"courses": ["Arts & Sciences Honors Program"]
 		}
 	],
 	"awards": [
@@ -99,6 +104,10 @@
 		{
 			"language": "English",
 			"fluency": "Native speaker"
+		},
+		{
+			"language": "French",
+			"fluency": "Basic"
 		}
 	],
 	"interests": [
