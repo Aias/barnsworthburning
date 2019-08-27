@@ -33,6 +33,9 @@
 	import groupBy from 'lodash/groupBy';
 	import sortBy from 'lodash/sortBy';
 	import get from 'lodash/get';
+	import { selectedSpace } from '../../stores';
+
+	selectedSpace.set('everything');
 
 	export let extracts = [];
 	let groups = [];

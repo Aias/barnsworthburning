@@ -1,5 +1,5 @@
 <script context="module">
-	import spaceNames from '../../../helpers/spaces';
+	import spaceNames from '../../../data/spaces';
 	import { FULL_API } from '../../../config';
 
 	export async function preload(page, session) {

@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import seed from '../helpers/spaces';
+import seed from '../data/spaces';
 
 let initialSpaces = {};
 
