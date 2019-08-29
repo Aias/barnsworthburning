@@ -14,7 +14,7 @@
 <script>
 	import { selectedSpace } from '../../stores';
 
-	export let about;
+	export let about = undefined;
 
 	selectedSpace.set('self');
 </script>
