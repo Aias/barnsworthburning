@@ -32,7 +32,7 @@
 	import { selectedSpace } from '../../../stores';
 	import Space from '../../../components/Space.svelte';
 
-	export let extracts;
+	export let extracts = undefined;
 	
 	let { page } = stores();
 
