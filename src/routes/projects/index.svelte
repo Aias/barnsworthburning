@@ -42,9 +42,10 @@
 		most of the details here.
 	</p>
 	<p>
-		Instead, here's what we can do: below are some interesting things I've
-		done, along with my role in each, the technologies used, and some other
-		relevant information. If there's something that's piques your interest,
+		Instead, here's what we can do: below are some potentially interesting
+		things I've done, along with my role in each, the technologies used, and
+		some other relevant information. If there's something that's piques your
+		interest,
 		<a target="_blank" href="mailto:trombley.nick@gmail.com"
 			>send me a message</a
 		>

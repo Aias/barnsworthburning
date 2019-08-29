@@ -66,6 +66,8 @@
 		{/each}
 	</div>
 	{/each}
+	{:else}
+	<Loading />
 	{/if}
 </div>
 {:else}
