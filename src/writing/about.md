@@ -9,7 +9,7 @@ and available for hire:
 full-time, remote, or freelance work is welcome,
 in that preferred order.
 
-<a href="/files/trombley_resume_2019.pdf" target="_blank">Before this</a>, I worked for about six years at <a href="https://www.epic.com" target="_blank">Epic</a>,
+<a href="/files/trombley_resume.pdf" target="_blank">Before this</a>, I worked for about six years at <a href="https://www.epic.com" target="_blank">Epic</a>,
 an EMR / EHR / health IT company in America's Dairyland.
 My first job involved database administration,
 systems monitoring,
