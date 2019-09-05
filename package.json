@@ -7,7 +7,7 @@
 		"build": "sapper build --legacy",
 		"export": "sapper export --legacy",
 		"serve": "node __sapper__/build",
-		"netlify:build": "sapper export --legacy"
+		"netlify:build": "sapper export"
 	},
 	"dependencies": {
 		"compression": "^1.7.1",
