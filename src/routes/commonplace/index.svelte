@@ -1,6 +1,5 @@
 <script context="module">
 	import { FULL_API } from '../../config.js';
-	import Link from '../../components/Link.svelte';
 
 	export async function preload(page, session) {
 		let extracts;
@@ -34,6 +33,7 @@
 	import sortBy from 'lodash/sortBy';
 	import get from 'lodash/get';
 	import { selectedSpace } from '../../stores';
+	import Link from '../../components/Link.svelte';
 
 	selectedSpace.set('everything');
 

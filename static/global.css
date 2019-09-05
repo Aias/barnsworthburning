@@ -140,6 +140,30 @@ h2 {
 	line-height: 1.4;
 }
 
+ul {
+	list-style-type: circle;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+tr:not(:first-child) {
+	border-top: 1px solid var(--divider);
+}
+
+th {
+	text-align: left;
+	font-weight: normal;
+	color: var(--text-secondary);
+}
+
+td,
+th {
+	padding: 0.5rem 0.25rem;
+	vertical-align: baseline;
+}
+
 a {
 	color: var(--text-link);
 	text-decoration: underline;
