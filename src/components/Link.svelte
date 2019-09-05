@@ -8,7 +8,7 @@
 </script>
 
 <a
-	class="{className}"
+	class="link {className}"
 	class:inherit="{plain}"
 	class:active="{active}"
 	{title}

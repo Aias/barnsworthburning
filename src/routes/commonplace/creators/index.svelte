@@ -33,13 +33,15 @@
 
 <script>
 	import { selectedSpace } from '../../../stores';
-	import get from 'lodash/get';
 	import Link from '../../../components/Link.svelte';
+	import CommonplaceNav from '../_CommonplaceNav.svelte';
 
 	selectedSpace.set('creators');
 
 	export let creators = undefined;
 </script>
+
+<CommonplaceNav />
 
 <table>
 	<thead>
@@ -53,7 +55,7 @@
 	<tbody>
 		{#each creators as {id, full_name, profession, group_names, site}}
 		<tr>
-			<td class="creator-name">
+			<td>
 				<Link prefetch href="/commonplace/creators/{id}">{full_name}</Link>
 			</td>
 			<td>{profession ? profession.join(', ') : ''}</td>

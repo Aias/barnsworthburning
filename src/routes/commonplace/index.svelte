@@ -34,6 +34,7 @@
 	import get from 'lodash/get';
 	import { selectedSpace } from '../../stores';
 	import Link from '../../components/Link.svelte';
+	import CommonplaceNav from './_CommonplaceNav.svelte';
 
 	selectedSpace.set('everything');
 
@@ -64,29 +65,28 @@
 		});
 
 		groups = sortBy(nested, g => -g['updated']);
-		// console.log(groups);
 	}
 </script>
 
-<div>
+<CommonplaceNav />
+
+<div class="text-wall">
 	{#each groups as {id, name, extracts, updated}}
-	<section>
-		<h2><Link prefetch href="/commonplace/groups/{id}">{name}</Link></h2>
+	<section class="inline">
+		<h2 class="inline"><Link prefetch href="/commonplace/groups/{id}">{name}</Link></h2>
 		{#each extracts as {title, id}}
-		<q><Link plain href="/commonplace/extracts/{id}">{title || 'Untitled'}</Link></q>
+		<q class="inline"><Link plain href="/commonplace/extracts/{id}">{title || 'Untitled'}</Link></q>
 		{/each}
 	</section>
 	{/each}
 </div>
 
 <style>
-	div {
+	.text-wall {
 		text-align: justify;
 	}
 
-	section,
-	h2,
-	q {
+	.inline {
 		display: inline;
 		font-size: inherit;
 		margin: 0;

@@ -156,12 +156,17 @@ th {
 	text-align: left;
 	font-weight: normal;
 	color: var(--text-secondary);
+	vertical-align: bottom;
+	white-space: nowrap;
 }
 
-td,
-th {
-	padding: 0.5rem 0.25rem;
+td {
 	vertical-align: baseline;
+}
+
+th,
+td {
+	padding: 0.5rem 0.25rem;
 }
 
 a {
@@ -210,6 +215,10 @@ samp {
 
 .text-inverted {
 	color: var(--text-inverted) !important;
+}
+
+.text-right {
+	text-align: right;
 }
 
 .themey {
