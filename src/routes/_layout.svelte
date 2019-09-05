@@ -1,7 +1,7 @@
 <script>
 	import { stores } from '@sapper/app';
-	const { preloading } = stores();
-	import { isDarkMode } from '../stores';
+	import { derived } from 'svelte/store';
+	import { isDarkMode, loading } from '../stores';
 	import getEmojiForTheme from '../helpers/getEmojiForTheme';
 
 	import Nav from '../components/Nav.svelte';
@@ -14,6 +14,9 @@
 		'The personal website / portfolio / commonplace book of Nick Trombley, software designer / web developer.';
 	let keywords =
 		'Nick, Nicholas, Trombley, portfolio, design, designer, barnsworthburning, barns worth burning, development, front-end, commonplace book,';
+
+	let { preloading } = stores();
+	let loadingany = derived([preloading, loading], ([$preloading, $loading]) => $preloading || $loading);
 
 	export let segment;
 </script>
@@ -40,7 +43,7 @@
 	<footer>
 		<Nav currentPage={segment} />
 	</footer>
-	{#if $preloading}
+	{#if $loadingany}
 	<Loading />
 	{/if}
 </div>

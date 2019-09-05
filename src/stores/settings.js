@@ -8,7 +8,7 @@ import get from 'lodash/get';
 let hourOfDay = new Date().getHours();
 let isSleepingTime = hourOfDay <= 6 || hourOfDay >= 20;
 
-let isDarkMode = writable(false); // Always start in day theme until I can figure out how to prevent flash of opposite mode.
+const isDarkMode = writable(false); // Always start in day theme until I can figure out how to prevent flash of opposite mode.
 
 // --------------------------------------
 // User connection quality.
@@ -41,4 +41,14 @@ const connectionQuality = readable(isSlowConnection(), set => {
 	return () => clearInterval(interval);
 });
 
-export { isDarkMode, connectionQuality };
+// --------------------------------------
+// Site mode
+// --------------------------------------
+
+const loading = writable(false);
+
+// --------------------------------------
+// Exports
+// --------------------------------------
+
+export { isDarkMode, connectionQuality, loading };
