@@ -102,6 +102,7 @@
 		}
 
 	.extract-main {
+		all: unset;
 		margin: 1rem 0 0 0;
 	}
 
@@ -109,13 +110,6 @@
 			border-top: 1px solid var(--divider);
 			padding-top: 1rem;
 			margin-top: 1rem;
-		}
-
-		.extract-main :global(blockquote) {
-			margin: 0;
-			font-style: italic;
-			font-size: var(--font-size-20);
-			font-family: var(--font-stack-serif);
 		}
 
 		cite {

@@ -140,6 +140,15 @@ h2 {
 	line-height: 1.4;
 }
 
+blockquote {
+	margin: 0;
+	padding-left: 1rem;
+	border-left: 4px solid var(--divider);
+	font-style: italic;
+	font-size: 1.2em;
+	font-family: var(--font-stack-serif);
+}
+
 ul {
 	list-style-type: circle;
 }
