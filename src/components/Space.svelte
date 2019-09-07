@@ -1,7 +1,7 @@
 <script>
 	import range from 'lodash/range';
-	import get from 'lodash/get';
 	import { goto } from '@sapper/app';
+	import getApproximateExtractLength from '../helpers/getApproximateExtractLength';
 
 	import Extract from './Extract.svelte';
 	import Card from './Card.svelte';
@@ -20,7 +20,7 @@
 			let sortedExtracts = [...extracts].map((e, i) => ({
 				extract: e, 
 				originalOrder: i, 
-				sortScore: getApproxLengthForExtract(e)
+				sortScore: getApproximateExtractLength(e)
 			})).sort((a, b) => { return b.sortScore - a.sortScore; });
 
 			sortedExtracts.forEach((e, i) => {
@@ -29,28 +29,8 @@
 
 			layout = colContents.map(col => col.sort((a, b) => { 
 				return a.originalOrder - b.originalOrder;
-			}));			
+			}));	
 		}
-	}
-	
-	const getApproxLengthForExtract = (e) => {
-		let fields = [
-			{field: 'title', weight: 4},
-			{field: 'extract_text', weight: 1},
-			{field: 'image_caption', weight: 0.75},
-			{field: 'notes', weight: 0.75},
-		];
-		let hasImage = typeof e['extract_image'] === 'object'; // TODO: Update to handle multiple images, and use width/height fields to make more accurate predictions.
-		let score = fields.reduce((prev, cur) => {
-			let field = get(e, cur.field, '');
-			let numExtraLines = field.split(/\r\n|\r|\n/).length - 1;
-
-			return prev + (numExtraLines * 50) + field.length;
-		}, 0);
-
-		if(hasImage) score += 500;
-
-		return score;
 	}
 </script>
 

@@ -103,8 +103,12 @@
 		}
 
 	.extract-main {
-		all: unset;
+		padding: 0;
+		border: none;
 		margin: 1rem 0 0 0;
+		font-style: inherit;
+		font-size: inherit;
+		font-family: inherit;
 	}
 
 		.extract-main + * {
