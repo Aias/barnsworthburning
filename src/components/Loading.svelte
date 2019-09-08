@@ -1,5 +1,5 @@
 <script>
-	import { slide, fade } from 'svelte/transition';
+	import { slide, fade, blur } from 'svelte/transition';
 	import { onMount } from 'svelte';
 
 	let rendered = false;
@@ -45,7 +45,7 @@
 	{#if rendered}
 	<div transition:fade class="loading--inner">
 		{#each grid as row, i} {#each row as {content, delay}, j}
-		<span in:slide="{{delay: delay, duration:  500}}" out:fade>
+		<span in:blur="{{delay: delay, duration:  500}}" out:fade>
 			{content}
 		</span>
 		{/each} {/each}
@@ -92,6 +92,7 @@
 		.loading--inner {
 			width: 100%;
 			height: 100%;
+			max-height: 200px;
 			grid-template-rows: repeat(3, 1fr);
 			grid-template-columns: repeat(12, 1fr);
 		}
