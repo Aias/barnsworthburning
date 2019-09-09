@@ -5,7 +5,7 @@
 	import { spaces, selectedSpace } from '../stores';
 
 	$: keys = Object.keys($spaces).sort((a, b) => b.length - a.length); // Should already be sorted, but may as well be sure.
-	$: headerWidth = getHeaderWidth(contents);
+	$: headerWidth = getHeaderWidth(keys);
 
 	let navOpen = false;
 	let switchNode;
