@@ -1,9 +1,11 @@
 import { Remarkable } from 'remarkable';
+import meta from 'remarkable-meta';
+
 let markdown = new Remarkable({
-	breaks: true,
 	typographer: true,
+	breaks: true,
 	html: true
-});
+}).use(meta);
 
 markdown.core.ruler.enable(['abbr']);
 

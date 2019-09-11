@@ -15,6 +15,7 @@
 		"normalize.css": "^8.0.1",
 		"polka": "^0.5.0",
 		"remarkable": "^2.0.0",
+		"remarkable-meta": "^1.0.1",
 		"sirv": "^0.4.0"
 	},
 	"devDependencies": {
@@ -23,7 +24,7 @@
 		"@babel/plugin-transform-runtime": "^7.6.0",
 		"@babel/preset-env": "^7.6.0",
 		"@babel/runtime": "^7.6.0",
-		"rollup": "^1.21.0",
+		"rollup": "^1.21.2",
 		"rollup-plugin-babel": "^4.0.2",
 		"rollup-plugin-commonjs": "^10.1.0",
 		"rollup-plugin-node-resolve": "^5.2.0",
@@ -31,6 +32,6 @@
 		"rollup-plugin-svelte": "^5.0.1",
 		"rollup-plugin-terser": "^5.1.1",
 		"sapper": "^0.27.8",
-		"svelte": "^3.11.0"
+		"svelte": "^3.12.1"
 	}
 }

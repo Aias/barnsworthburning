@@ -73,7 +73,7 @@
 		margin: 1rem 2rem;
 		display: flex;
 		justify-content: flex-end;
-		align-items: center;
+		align-items: baseline;
 	}
 
 	header, main, footer, aside {

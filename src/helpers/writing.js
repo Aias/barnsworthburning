@@ -6,23 +6,34 @@ import path from 'path';
 import markdown from './markdown';
 
 const WRITING_DIRECTORY = './src/writing';
-const BLOG_DIRECTORY = WRITING_DIRECTORY + '/blog';
 
-export function getFiles() {
+export function getFiles(subdir = '') {
+	let dir = WRITING_DIRECTORY;
+	if (subdir) {
+		dir = `${dir}/${subdir}`;
+	}
 	const slugs = fs
-		.readdirSync(WRITING_DIRECTORY)
+		.readdirSync(dir)
 		.filter(file => path.extname(file) === '.md')
 		.map(file => file.slice(0, -3));
 
-	return slugs.map(getFile);
-	// .filter(file => file.meta.published)
-	// .sort((a, b) => {
-	// 	return a.meta.order - b.meta.order;
-	// });
+	return (
+		slugs
+			.map(slug => getFile(slug, subdir))
+			// .filter(file => file.meta.published)
+			.sort((a, b) => {
+				return (a.meta.order || 0) - (b.meta.order || 0);
+			})
+	);
 }
 
-export function getFile(slug) {
-	const filePath = `${WRITING_DIRECTORY}/${slug}.md`;
+export function getFile(slug = '', subdir = '') {
+	let dir = WRITING_DIRECTORY;
+	if (subdir) {
+		dir = `${dir}/${subdir}`;
+	}
+	let filePath = `${dir}/${slug}.md`;
+
 	if (!fs.existsSync(filePath)) return null;
 
 	const rawContent = fs.readFileSync(filePath, 'utf-8');
@@ -32,6 +43,7 @@ export function getFile(slug) {
 	return {
 		slug,
 		html,
-		rawContent
+		rawContent,
+		meta: markdown.meta
 	};
 }

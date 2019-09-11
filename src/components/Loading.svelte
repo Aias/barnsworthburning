@@ -1,5 +1,5 @@
 <script>
-	import { slide, fade, blur } from 'svelte/transition';
+	import { fade, blur } from 'svelte/transition';
 	import { onMount } from 'svelte';
 
 	let rendered = false;
@@ -23,11 +23,14 @@
 	];
 
 	const interval = 100; // ms
+	const duration = 500;
+
 	const grid = HOLDON.map((row, i) => {
 		return row.map((cell, j) => {
 			return {
 				content: cell,
-				delay: (i + 1) * j * interval
+				delay: (i + 1) * j * interval,
+				duration
 			};
 		});
 	});
@@ -45,7 +48,7 @@
 	{#if rendered}
 	<div transition:fade class="loading--inner">
 		{#each grid as row, i} {#each row as {content, delay}, j}
-		<span in:blur="{{delay: delay, duration:  500}}" out:fade>
+		<span in:blur="{{delay, duration}}" out:fade>
 			{content}
 		</span>
 		{/each} {/each}
