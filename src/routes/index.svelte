@@ -32,9 +32,7 @@
 	export let extracts = undefined;
 	export let space = undefined;
 
-	$: {
-		selectedSpace.set('everything');
-	}
+	selectedSpace.set('everything');
 </script>
 
 <Space {extracts} />
