@@ -1,8 +1,8 @@
 <script>
 	import { onMount } from 'svelte';
 	import { stores } from '@sapper/app';
-	import { FULL_API } from '../../../config.js';
-	import Extract from '../../../components/Extract.svelte';
+	import { FULL_API } from '../../config.js';
+	import Extract from '../../components/Extract.svelte';
 
 	const { page } = stores();
 

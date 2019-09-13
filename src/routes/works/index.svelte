@@ -1,5 +1,5 @@
 <script context="module">
-	import { FULL_API } from '../../../config.js';
+	import { FULL_API } from '../../config.js';
 
 	export async function preload(page, session) {
 		let extracts;
@@ -16,7 +16,7 @@
 			]
 		};
 
-		let groups = await this.fetch(
+		let works = await this.fetch(
 			`${FULL_API}/airtableGet?base=commonplace&table=groups&options=${JSON.stringify(
 				options
 			)}`
@@ -27,21 +27,18 @@
 				return [];
 			});
 
-		return { groups };
+		return { works };
 	}
 </script>
 
 <script>
-	import { selectedSpace } from '../../../stores';
-	import Link from '../../../components/Link.svelte';
-	import CommonplaceNav from '../_CommonplaceNav.svelte';
+	import { selectedSpace } from '../../stores';
+	import Link from '../../components/Link.svelte';
 
 	selectedSpace.set('works');
 
-	export let groups = undefined;
+	export let works = undefined;
 </script>
-
-<CommonplaceNav />
 
 <table>
 	<thead>
@@ -54,10 +51,10 @@
 		</tr>
 	</thead>
 	<tbody>
-		{#each groups as {id, name, type, creator_names, num_extracts, source_url}}
+		{#each works as {id, name, type, creator_names, num_extracts, source_url}}
 		<tr>
 			<td>
-				<Link prefetch href="/commonplace/groups/{id}">{name}</Link>
+				<Link prefetch href="/works/{id}">{name}</Link>
 			</td>
 			<td>{type ? type : ''}</td>
 			<td>

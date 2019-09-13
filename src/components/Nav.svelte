@@ -7,29 +7,29 @@
 	import Writing from './icons/Writing.svelte';
 
 	let links = [
+		// {
+		// 	path: undefined,
+		// 	title: 'Home',
+		// 	icon: Home
+		// },
 		{
 			path: undefined,
-			title: 'Home',
-			icon: Home
-		},
-		{
-			path: 'commonplace',
-			title: 'A Commonplace Book',
+			title: 'Spaces',
 			icon: Book
 		},
 		{
-			path: 'projects',
-			title: 'Projects',
+			path: 'extracts',
+			title: 'Extracts',
 			icon: Projects
 		},
-		// {
-		// 	path: 'blog',
-		// 	title: 'Writing',
-		// 	icon: Writing
-		// },
 		{
-			path: 'about',
-			title: 'About',
+			path: 'works',
+			title: 'Works',
+			icon: Writing
+		},
+		{
+			path: 'creators',
+			title: 'Creators',
 			icon: About
 		}
 	];

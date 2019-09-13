@@ -5,16 +5,14 @@
 	import Link from './Link.svelte';
 	import RSS from './icons/RSS.svelte';
 	import Github from './icons/Github.svelte';
-	import Spotify from './icons/Spotify.svelte';
-	import LinkedIn from './icons/LinkedIn.svelte';
+	import Airtable from './icons/Airtable.svelte';
 </script>
 
 <div>
 	<button title="Toggle theme" on:click="{() => isDarkMode.set(!$isDarkMode)}">{getEmojiForTheme($isDarkMode)}</button>
 	<Link title="RSS Feed" href="https://barnsworthburning-api.netlify.com/.netlify/functions/feed"><RSS /></Link>
-	<Link title="LinkedIn" href="https://www.linkedin.com/in/nick-trombley/"><LinkedIn /></Link>
-	<Link title="Github" href="https://github.com/Aias"><Github /></Link>
-	<Link title="Spotify" href="https://open.spotify.com/user/223hhvix27azj60a9a80jelq3?si=2RpG1aWiTK6edlf_Uskjog"><Spotify /></Link>
+	<Link title="Airtable" href="https://airtable.com/shrImoxRyZoDYdNg2/"><Airtable /></Link>
+	<Link title="Github" href="https://github.com/Aias/barnsworthburning"><Github /></Link>
 </div>
 
 <style>
@@ -42,12 +40,12 @@
 
 	@media(max-width: 950px) {
 		div {
-			grid-template-rows: repeat(3, 1fr);
+			grid-template-rows: repeat(2, 1fr);
 			grid-template-columns: repeat(2, 1fr);
 		}
 
 		button {
-			grid-column: 1 / span 2;
+			grid-column: 1 / span 1;
 			justify-self: flex-end;
 		}
 	}

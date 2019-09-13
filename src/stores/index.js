@@ -1,7 +1,7 @@
 import { isDarkMode, connectionQuality, loading } from './settings';
 import spaces, { selectedSpace } from './spaces';
 import extracts from './extracts';
-import groups from './groups';
+import works from './works';
 import creators from './creators';
 
 export {

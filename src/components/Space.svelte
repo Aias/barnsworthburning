@@ -40,7 +40,7 @@
 	{#each layout as column}
 	<div class="layout-col">
 		{#each column as { extract }}
-		<Card onClick="{() => goto(`/commonplace/extracts/${extract.id}`)}">
+		<Card onClick="{() => goto(`/extracts/${extract.id}`)}">
 			<Extract {extract} isCompact />
 		</Card>
 		{/each}

@@ -1,10 +1,10 @@
 import { writable } from 'svelte/store';
 
-let groups = writable({
+let works = writable({
 	'0': {
 		loaded: false,
 		data: undefined
 	}
 });
 
-export default groups;
+export default works;

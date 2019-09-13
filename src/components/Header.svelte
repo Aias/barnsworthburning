@@ -69,20 +69,21 @@
 			{#each keys as space}
 			<li>
 				{#if $selectedSpace == space}
-				<span>
-					<Pointers count="{getPointers(space) + 1}" />
-					<strong>{space}</strong>
-				</span>
+				<span><Pointers count="{getPointers(space) + 1}" />
+					<strong>{space}</strong></span>
 				{:else}
-				<a href="/commonplace/spaces/{space}">
-					<Pointers count="{getPointers(space) + 1}" type="space" />
-					<strong>{space}</strong>
-				</a>
+				<a href="/spaces/{space}"><Pointers count="{getPointers(space) + 2}" type="space" /><strong>{space}</strong></a>
 				{/if}
 			</li>
 			{/each}
 		</ol>
 		{/if}
+		<!-- Hacky way to get Sapper's export functionality to render these pages even though the above list doesn't get created on the server. -->
+		<div hidden>
+		{#each keys as space}
+			<a href="/spaces/{space}">{space}</a>
+		{/each}
+		</div>
 	</section>
 </div>
 
@@ -139,6 +140,20 @@
 			border-right: none;
 			padding: 0;
 			align-items: flex-start;
+		}
+
+		.expandable {
+			align-self: stretch;
+		}
+
+		ol {
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+		li + li::before {
+			content: ' / ';
+			white-space: pre;
 		}
 
 		:global(.pointer) {

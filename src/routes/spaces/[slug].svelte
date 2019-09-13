@@ -1,6 +1,6 @@
 <script context="module">
-	import spaceNames from '../../../data/spaces';
-	import { FULL_API } from '../../../config';
+	import spaceNames from './_spaces';
+	import { FULL_API } from '../../config';
 
 	export async function preload(page, session) {
 		const { params, query } = page;
@@ -29,8 +29,8 @@
 
 <script>
 	import { stores } from '@sapper/app';
-	import { selectedSpace } from '../../../stores';
-	import Space from '../../../components/Space.svelte';
+	import { selectedSpace } from '../../stores';
+	import Space from '../../components/Space.svelte';
 
 	export let extracts = undefined;
 	
