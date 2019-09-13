@@ -70,7 +70,7 @@
 <div class="text-wall">
 	{#each groups as {id, name, extracts, updated}}
 	<section class="inline">
-		<h2 class="inline"><Link prefetch href="/groups/{id}">{name}</Link></h2>
+		<h2 class="inline"><Link prefetch href="/works/{id}">{name}</Link></h2>
 		{#each extracts as {title, id}}
 		<q class="inline"><Link plain href="/extracts/{id}">{title || 'Untitled'}</Link></q>
 		{/each}

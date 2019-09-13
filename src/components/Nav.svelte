@@ -13,7 +13,7 @@
 		// 	icon: Home
 		// },
 		{
-			path: 'spaces',
+			path: undefined,
 			title: 'Spaces',
 			icon: Book
 		},
@@ -23,7 +23,7 @@
 			icon: Projects
 		},
 		{
-			path: 'groups',
+			path: 'works',
 			title: 'Works',
 			icon: Writing
 		},

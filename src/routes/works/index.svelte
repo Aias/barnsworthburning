@@ -16,7 +16,7 @@
 			]
 		};
 
-		let groups = await this.fetch(
+		let works = await this.fetch(
 			`${FULL_API}/airtableGet?base=commonplace&table=groups&options=${JSON.stringify(
 				options
 			)}`
@@ -27,7 +27,7 @@
 				return [];
 			});
 
-		return { groups };
+		return { works };
 	}
 </script>
 
@@ -37,7 +37,7 @@
 
 	selectedSpace.set('works');
 
-	export let groups = undefined;
+	export let works = undefined;
 </script>
 
 <table>
@@ -51,10 +51,10 @@
 		</tr>
 	</thead>
 	<tbody>
-		{#each groups as {id, name, type, creator_names, num_extracts, source_url}}
+		{#each works as {id, name, type, creator_names, num_extracts, source_url}}
 		<tr>
 			<td>
-				<Link prefetch href="/groups/{id}">{name}</Link>
+				<Link prefetch href="/works/{id}">{name}</Link>
 			</td>
 			<td>{type ? type : ''}</td>
 			<td>
