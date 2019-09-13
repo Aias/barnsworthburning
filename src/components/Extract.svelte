@@ -37,7 +37,7 @@
 			<h2>{title}</h2>
 		{:else}
 			<h1>
-				<Link href="/commonplace"><Book /></Link>
+				<Link href="/extracts"><Book /></Link>
 				{title}
 			</h1>
 		{/if}
@@ -64,7 +64,7 @@
 			{@html markdown.render(text)}
 			{#if !isMe}
 			<cite class="text-mono">
-				{#each creators as {id, name}, i}{i > 0 ? i + 1 === creators.length ? ' & ' : ', ': ''}<Link className="creator" href="{`/commonplace/creators/${id}`}">{name}</Link>{/each}, <Link href="{`/commonplace/groups/${groupId}`}">{groupName}</Link>
+				{#each creators as {id, name}, i}{i > 0 ? i + 1 === creators.length ? ' & ' : ', ': ''}<Link className="creator" href="{`/creators/${id}`}">{name}</Link>{/each}, <Link href="{`/groups/${groupId}`}">{groupName}</Link>
 			</cite>
 			{/if}
 		</slot>

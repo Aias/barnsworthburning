@@ -11,9 +11,9 @@
 
 	let title = 'barnsworthburning.net';
 	let description =
-		'The personal website / portfolio / commonplace book of Nick Trombley, software designer / web developer.';
+		'A commonplace book.';
 	let keywords =
-		'Nick, Nicholas, Trombley, portfolio, design, designer, barnsworthburning, barns worth burning, development, front-end, commonplace book,';
+		'Nick Trombley, design, barnsworthburning, barns worth burning, commonplace book, reading, writing, art';
 
 	let { preloading } = stores();
 	let loadingany = derived([preloading, loading], ([$preloading, $loading]) => $preloading || $loading);

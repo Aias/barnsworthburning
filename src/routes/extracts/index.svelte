@@ -34,7 +34,6 @@
 	import get from 'lodash/get';
 	import { selectedSpace } from '../../stores';
 	import Link from '../../components/Link.svelte';
-	import CommonplaceNav from './_CommonplaceNav.svelte';
 
 	selectedSpace.set('everything');
 
@@ -68,14 +67,12 @@
 	}
 </script>
 
-<CommonplaceNav />
-
 <div class="text-wall">
 	{#each groups as {id, name, extracts, updated}}
 	<section class="inline">
-		<h2 class="inline"><Link prefetch href="/commonplace/groups/{id}">{name}</Link></h2>
+		<h2 class="inline"><Link prefetch href="/groups/{id}">{name}</Link></h2>
 		{#each extracts as {title, id}}
-		<q class="inline"><Link plain href="/commonplace/extracts/{id}">{title || 'Untitled'}</Link></q>
+		<q class="inline"><Link plain href="/extracts/{id}">{title || 'Untitled'}</Link></q>
 		{/each}
 	</section>
 	{/each}

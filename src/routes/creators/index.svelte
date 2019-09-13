@@ -1,5 +1,5 @@
 <script context="module">
-	import { FULL_API } from '../../../config.js';
+	import { FULL_API } from '../../config.js';
 
 	export async function preload(page, session) {
 		let extracts;
@@ -32,16 +32,13 @@
 </script>
 
 <script>
-	import { selectedSpace } from '../../../stores';
-	import Link from '../../../components/Link.svelte';
-	import CommonplaceNav from '../_CommonplaceNav.svelte';
+	import { selectedSpace } from '../../stores';
+	import Link from '../../components/Link.svelte';
 
 	selectedSpace.set('creators');
 
 	export let creators = undefined;
 </script>
-
-<CommonplaceNav />
 
 <table>
 	<thead>

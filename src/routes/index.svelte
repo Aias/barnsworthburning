@@ -1,5 +1,5 @@
 <script context="module">
-	import spaceNames from '../data/spaces';
+	import spaceNames from './spaces/_spaces';
 	import { spaces } from '../stores';
 	import { FULL_API } from '../config';
 
