@@ -1,36 +1,33 @@
 <script>
 	import Link from './Link.svelte';
+
 	import About from './icons/About.svelte';
-	import Book from './icons/Book.svelte';
-	import Home from './icons/Home.svelte';
-	import Projects from './icons/Projects.svelte';
-	import Writing from './icons/Writing.svelte';
+
+	import Spaces from './icons/Spaces.svelte';
+	import Extracts from './icons/Extracts.svelte';
+	import Works from './icons/Works.svelte';
+	import Creators from './icons/Creators.svelte';
 
 	let links = [
-		// {
-		// 	path: undefined,
-		// 	title: 'Home',
-		// 	icon: Home
-		// },
 		{
 			path: undefined,
 			title: 'Spaces',
-			icon: Book
+			icon: Spaces
 		},
 		{
 			path: 'extracts',
 			title: 'Extracts',
-			icon: Projects
+			icon: Extracts
 		},
 		{
 			path: 'works',
 			title: 'Works',
-			icon: Writing
+			icon: Works
 		},
 		{
 			path: 'creators',
 			title: 'Creators',
-			icon: About
+			icon: Creators
 		}
 	];
 	export let currentPage = undefined;
