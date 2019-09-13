@@ -101,7 +101,7 @@
 			height: auto;
 			min-height: 100vh;
 			overflow: initial;
-			grid-template-columns: [header-start loading-start main-start footer-start] 1fr [header-end toolbar-start] auto [toolbar-end main-end loading-end footer-end];
+			grid-template-columns: [header-start loading-start main-start footer-start] 1fr [toolbar-start] auto [header-end toolbar-end main-end loading-end footer-end];
 			grid-template-rows: [toolbar-start header-start loading-start] auto [header-end toolbar-end loading-end main-start] 1fr [main-end footer-start] auto [footer-end];
 		}
 
