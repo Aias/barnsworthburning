@@ -29,14 +29,14 @@
 	--clr-red-60: #ff4313;
 	--clr-red-base: var(--clr-red-40);
 
-	--clr-gray-0: black;
+	--clr-gray-0: #000000;
 	--clr-gray-10: #100e06;
 	--clr-gray-20: #242021;
 	--clr-gray-25: #302b2c;
 	--clr-gray-80: #e6e5e4;
 	--clr-gray-90: #f2f1f0;
 	--clr-gray-95: #fcfcfc;
-	--clr-gray-100: white;
+	--clr-gray-100: #ffffff;
 
 	--clr-lighter-10: hsla(0, 0%, 100%, 0.08);
 	--clr-lighter-20: hsla(0, 0%, 100%, 0.2);
@@ -68,6 +68,7 @@
 	--theme-primary-text: var(--clr-red-30);
 	--theme-accent-bg: var(--clr-yellow-50);
 	--theme-accent-text: var(--clr-yellow-30);
+	--layer-deepest: var(--clr-gray-100);
 	--layer-bg: var(--clr-gray-90);
 	--layer-container: var(--clr-gray-95);
 	--layer-container-hover: var(--clr-gray-100);
@@ -86,6 +87,7 @@
 	--theme-primary-text: var(--clr-yellow-60);
 	--theme-accent-bg: var(--clr-red-40);
 	--theme-accent-text: var(--clr-red-60);
+	--layer-deepest: var(--clr-gray-0);
 	--layer-bg: var(--clr-gray-10);
 	--layer-container: var(--clr-gray-20);
 	--layer-container-hover: var(--clr-gray-25);
@@ -237,4 +239,17 @@ samp {
 	--layer-highlight: var(--theme-primary-bg);
 	--text-link: var(--text-inverted);
 	--text-link-hover: var(--text-inverted);
+}
+
+.gridded {
+	background-size: 1rem 1rem;
+	background-color: var(--layer-deepest);
+	background-image: linear-gradient(
+			to right,
+			var(--layer-deepest) 1px,
+			transparent 1px
+		),
+		linear-gradient(to bottom, var(--layer-deepest) 1px, transparent 1px);
+	/* The following statement helps put text directly on the baseline. */
+	/* background-position-y: 0.5rem; */
 }
