@@ -41,7 +41,7 @@
 		<Toolbar />
 	</aside>
 	<footer>
-		<Nav currentPage={segment} />
+		<Nav currentPage="{segment === 'spaces' ? undefined : segment}" />
 	</footer>
 	{#if $loadingany}
 	<Loading />
