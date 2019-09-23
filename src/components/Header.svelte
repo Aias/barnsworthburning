@@ -46,7 +46,8 @@
 <div class="container text-mono">
 	<section>
 		<header>
-			<strong><Link href="/about"><abbr title="Nicholas Edward Trombley">.NET</abbr></Link></strong>
+			<!-- TODO: Create a more targeted about page -->
+			<strong><Link href="https://nicktrombley.design"><abbr title="Nicholas Edward Trombley">.NET</abbr></Link></strong>
 			<Pointers count="{getPointers('.NETet al')}" />
 			<span>et al</span>
 		</header>
