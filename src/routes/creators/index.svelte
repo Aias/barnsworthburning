@@ -53,7 +53,7 @@
 		{#each creators as {id, full_name, profession, group_names, site}}
 		<tr>
 			<td>
-				<Link prefetch href="/commonplace/creators/{id}">{full_name}</Link>
+				<Link prefetch href="/creators/{id}">{full_name}</Link>
 			</td>
 			<td>{profession ? profession.join(', ') : ''}</td>
 			<td>
