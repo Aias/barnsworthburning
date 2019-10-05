@@ -7,6 +7,7 @@
 
 	export let extract = {};
 	export let isCompact = false;
+	export let listed = false;
 
 	$: title = get(extract, 'title');
 	$: text = get(extract, 'extract_text', '');
@@ -30,10 +31,10 @@
 </script>
 
 {#if extract}
-<article class:myself={isMe} class:compact={isCompact}>
+<article class:myself={isMe} class:compact={isCompact} class:listed={listed}>
 	{#if title}
 	<header>
-		{#if isCompact}
+		{#if isCompact || listed}
 			<h2>{title}</h2>
 		{:else}
 			<h1>
@@ -62,7 +63,7 @@
 	<blockquote class="extract-main markdown-block">
 		<slot>
 			{@html markdown.render(text)}
-			{#if !isMe}
+			{#if !isMe && !listed}
 			<cite class="text-mono">
 				{#each creators as {id, name}, i}{i > 0 ? i + 1 === creators.length ? ' & ' : ', ': ''}<Link className="creator" href="{`/creators/${id}`}">{name}</Link>{/each}, <Link href="{`/works/${workId}`}">{workName}</Link>
 			</cite>
@@ -74,7 +75,7 @@
 		{@html markdown.render(notes)}
 	</aside>
 	{/if}
-	{#if !isCompact}
+	{#if !isCompact && !listed}
 	<footer>
 		Recorded on {extractedOn}
 	</footer>
