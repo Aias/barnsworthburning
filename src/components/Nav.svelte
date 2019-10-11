@@ -38,12 +38,12 @@
 		{#each links as {path, title, icon}}
 		<li>
 			<Link active="{currentPage === path}" className="nav-link" prefetch href="{path || '/'}" {title}>
-				<span class="pointer">‹‹‹</span>
-				<span class="space">&nbsp;</span>
+				<span role="presentation" class="pointer">‹‹‹</span>
+				<span role="presentation" class="space">&nbsp;</span>
 				<svelte:component this={icon} />
 				<span class="title">{title}</span>
-				<span class="space">&nbsp;</span>
-				<span class="pointer">›››</span>
+				<span role="presentation" class="space">&nbsp;</span>
+				<span role="presentation" class="pointer">›››</span>
 			</Link>
 		</li>
 		{/each}

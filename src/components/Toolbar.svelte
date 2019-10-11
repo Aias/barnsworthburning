@@ -10,9 +10,9 @@
 
 <div>
 	<button title="Toggle theme" on:click="{() => isDarkMode.set(!$isDarkMode)}">{getEmojiForTheme($isDarkMode)}</button>
-	<Link title="RSS Feed" href="https://barnsworthburning-api.netlify.com/.netlify/functions/feed"><RSS /></Link>
-	<Link title="Airtable" href="https://airtable.com/shrImoxRyZoDYdNg2/"><Airtable /></Link>
-	<Link title="Github" href="https://github.com/Aias/barnsworthburning"><Github /></Link>
+	<Link title="RSS Feed" label="RSS Feed" href="https://barnsworthburning-api.netlify.com/.netlify/functions/feed"><RSS /></Link>
+	<Link title="Airtable" label="Airtable" href="https://airtable.com/shrImoxRyZoDYdNg2/"><Airtable /></Link>
+	<Link title="Github" label="Github" href="https://github.com/Aias/barnsworthburning"><Github /></Link>
 </div>
 
 <style>

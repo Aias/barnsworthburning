@@ -14,7 +14,9 @@
 	$: pointer = pointers[type];
 </script>
 
-<span class="pointer">{#each arr as p}{pointer}{/each}</span>
+<span role="presentation" class="pointer"
+	>{#each arr as p}{pointer}{/each}</span
+>
 
 <style>
 	.pointer {

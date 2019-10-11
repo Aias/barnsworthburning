@@ -1,5 +1,6 @@
 <script>
 	export let title = undefined;
+	export let label = undefined;
 	export let href = '#';
 	export let prefetch = false;
 	export let plain = false;
@@ -12,6 +13,7 @@
 	class="{className}"
 	class:inherit="{plain}"
 	class:active="{active}"
+	aria-label="{label}"
 	{title}
 	{href}
 	rel="{prefetch ? 'prefetch' : undefined}"

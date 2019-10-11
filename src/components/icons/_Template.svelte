@@ -2,6 +2,6 @@
 	import Icon from './_Base.svelte';
 </script>
 
-<Icon>
+<Icon title="Icon">
 	<!-- Markup goes here -->
 </Icon>
