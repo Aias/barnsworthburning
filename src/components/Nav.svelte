@@ -84,6 +84,7 @@
 	li :global(.icon) {
 		height: 1.5rem;
 		display: none;
+		opacity: 0.9;
 	}
 
 	.title {
