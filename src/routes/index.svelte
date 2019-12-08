@@ -30,7 +30,6 @@
 	import Space from '../components/Space.svelte';
 
 	export let extracts = undefined;
-	export let space = undefined;
 
 	selectedSpace.set('everything');
 </script>
