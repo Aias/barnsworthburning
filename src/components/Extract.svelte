@@ -55,7 +55,7 @@
 		</div>
 		{#if imageCaption}
 		<figcaption>
-			{imageCaption}
+			{@html markdown.render(imageCaption)}
 		</figcaption>
 		{/if}
 	</figure>
