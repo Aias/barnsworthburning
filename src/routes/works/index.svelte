@@ -13,7 +13,8 @@
 				'num_extracts',
 				'source_url',
 				'direct_extracts'
-			]
+			],
+			filterByFormula: `num_extracts > 0`
 		};
 
 		let works = await this.fetch(
