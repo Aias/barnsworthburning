@@ -29,19 +29,19 @@
 		"sirv": "^0.4.0"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.7.5",
-		"@babel/plugin-syntax-dynamic-import": "^7.7.4",
-		"@babel/plugin-transform-runtime": "^7.6.2",
-		"@babel/preset-env": "^7.7.6",
-		"@babel/runtime": "^7.7.6",
-		"rollup": "^1.27.9",
+		"@babel/core": "^7.8.3",
+		"@babel/plugin-syntax-dynamic-import": "^7.8.3",
+		"@babel/plugin-transform-runtime": "^7.8.3",
+		"@babel/preset-env": "^7.8.3",
+		"@babel/runtime": "^7.8.3",
+		"rollup": "^1.29.0",
 		"rollup-plugin-babel": "^4.0.2",
 		"rollup-plugin-commonjs": "^10.1.0",
 		"rollup-plugin-node-resolve": "^5.2.0",
 		"rollup-plugin-replace": "^2.0.0",
 		"rollup-plugin-svelte": "^5.1.1",
-		"rollup-plugin-terser": "^5.1.2",
+		"rollup-plugin-terser": "^5.2.0",
 		"sapper": "^0.27.9",
-		"svelte": "^3.16.0"
+		"svelte": "^3.17.1"
 	}
 }
