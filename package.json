@@ -29,12 +29,12 @@
 		"sirv": "^0.4.0"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.8.3",
+		"@babel/core": "^7.8.4",
 		"@babel/plugin-syntax-dynamic-import": "^7.8.3",
 		"@babel/plugin-transform-runtime": "^7.8.3",
-		"@babel/preset-env": "^7.8.3",
-		"@babel/runtime": "^7.8.3",
-		"rollup": "^1.29.0",
+		"@babel/preset-env": "^7.8.4",
+		"@babel/runtime": "^7.8.4",
+		"rollup": "^1.31.1",
 		"rollup-plugin-babel": "^4.0.2",
 		"rollup-plugin-commonjs": "^10.1.0",
 		"rollup-plugin-node-resolve": "^5.2.0",
@@ -42,6 +42,6 @@
 		"rollup-plugin-svelte": "^5.1.1",
 		"rollup-plugin-terser": "^5.2.0",
 		"sapper": "^0.27.9",
-		"svelte": "^3.17.1"
+		"svelte": "^3.18.2"
 	}
 }

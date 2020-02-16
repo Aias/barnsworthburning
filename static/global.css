@@ -191,6 +191,11 @@ blockquote {
 	font-family: var(--font-stack-serif);
 }
 
+hr {
+	color: var(--divider);
+	margin: 1rem 0;
+}
+
 ul {
 	list-style-type: circle;
 }
