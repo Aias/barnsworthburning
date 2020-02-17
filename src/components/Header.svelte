@@ -108,6 +108,7 @@
 
 	section.open {
 		overflow-y: auto;
+		scrollbar-width: none;
 	}
 
 	.expandable > header {

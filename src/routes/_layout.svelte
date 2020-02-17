@@ -87,7 +87,8 @@
 	main {
 		grid-area: main;
 		overflow-y: auto;
-		padding: 0 2rem 1rem 2rem;
+		padding: 0 2rem;
+		margin-bottom: 1rem;
 	}
 	footer {
 		grid-area: footer;
