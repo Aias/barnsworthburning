@@ -7,7 +7,7 @@
 	let pointers = {
 		right: '›',
 		left: '‹',
-		space: ' '
+		space: ' ',
 	};
 
 	$: arr = range(count);
@@ -20,6 +20,6 @@
 
 <style>
 	.pointer {
-		white-space: pre-wrap;
+		white-space: pre;
 	}
 </style>
