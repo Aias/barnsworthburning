@@ -14,10 +14,7 @@
 	--font-stack-sans: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI,
 		Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
 		sans-serif;
-	--font-stack-mono: Consolas, 'Andale Mono WT', 'Andale Mono',
-		'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono',
-		'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', Monaco,
-		'Courier New', Courier, monospace;
+	--font-stack-mono: 'IBM Plex Mono', monospace;
 
 	--clr-yellow-30: #866b00;
 	--clr-yellow-50: #d5b712;

@@ -128,8 +128,7 @@
 	}
 
 	strong {
-		text-shadow: 0 0 0.5px currentColor;
-		font-weight: normal;
+		font-weight: 500;
 		text-transform: uppercase;
 	}
 
