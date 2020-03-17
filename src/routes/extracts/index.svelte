@@ -44,7 +44,6 @@
 	$: earliestExtract = new Date(extracts[extracts.length - 1]['last_updated']);
 
 	onMount(async () => {
-		console.log(earliestExtract, extracts.length);
 		let filteredOptions = {
 			...options,
 			filterByFormula: `{last_updated} < DATETIME_PARSE('${earliestExtract}')`
