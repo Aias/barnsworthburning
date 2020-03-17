@@ -1,21 +1,21 @@
 <script context="module">
 	import { FULL_API } from '../../config.js';
+	let options = {
+		sort: [{ field: 'last_updated', direction: 'desc' }],
+		maxRecords: 300,
+		fields: [
+			'title',
+			'group',
+			'group_name',
+			'creator',
+			'creator_name',
+			'extracted_on',
+			'last_updated'
+		]				
+	};
 
 	export async function preload(page, session) {
 		let extracts;
-		let options = {
-			sort: [{ field: 'last_updated', direction: 'desc' }],
-			maxRecords: 300,
-			fields: [
-				'title',
-				'group',
-				'group_name',
-				'creator',
-				'creator_name',
-				'extracted_on',
-				'last_updated'
-			]				
-		};
 
 		extracts = await this.fetch(`${FULL_API}/airtableGet?base=commonplace&table=extracts&options=${JSON.stringify(options)}`)
 			.then(data => data.json())
@@ -29,6 +29,7 @@
 </script>
 
 <script>
+	import { onMount } from 'svelte';
 	import groupBy from 'lodash/groupBy';
 	import sortBy from 'lodash/sortBy';
 	import get from 'lodash/get';
@@ -38,7 +39,25 @@
 	selectedSpace.set('everything');
 
 	export let extracts = [];
-	let groups = [];
+	let chunks = [];
+
+	$: earliestExtract = new Date(extracts[extracts.length - 1]['last_updated']);
+
+	onMount(async () => {
+		console.log(earliestExtract, extracts.length);
+		let filteredOptions = {
+			...options,
+			filterByFormula: `{last_updated} < DATETIME_PARSE('${earliestExtract}')`
+		}
+		const nextPage = await fetch(`${FULL_API}/airtableGet?base=commonplace&table=extracts&options=${JSON.stringify(filteredOptions)}`)
+			.then(data => data.json())
+			.catch(error => {
+				console.log(error);
+				return [];
+			});
+		
+		extracts = nextPage;
+	})
 
 	$: {
 		let nested = {};
@@ -63,18 +82,18 @@
 			}
 		});
 
-		groups = sortBy(nested, g => -g['updated']);
+		chunks = [...chunks, sortBy(nested, g => -g['updated'])];
 	}
 </script>
 
 <div class="text-wall">
-	{#each groups as {id, name, extracts, updated}}
+	{#each chunks as work}
+	{#each work as {id, name, extracts, updated}}
 	<section class="inline">
 		<h2 class="inline"><Link prefetch href="/works/{id}">{name}</Link></h2>
 		{#each extracts as {title, id}}
-		<q class="inline"><Link plain href="/extracts/{id}">{title || 'Untitled'}</Link></q>
-		{/each}
-	</section>
+		<q class="inline"><Link plain href="/extracts/{id}">{title || 'Untitled'}</Link></q>{/each}</section>
+	{/each}
 	{/each}
 </div>
 
@@ -100,8 +119,7 @@
 	}
 
 	section:not(:last-child)::after {
-		content: ' / ';
-		white-space: pre-wrap;
+		content: ' / '; /* This is a figure space. */
 		color: var(--text-secondary);
 	}
 
