@@ -65,7 +65,7 @@
 			{@html markdown.render(text)}
 			{#if !isMe && !listed}
 			<cite class="text-mono">
-				{#each creators as {id, name}, i}{i > 0 ? i + 1 === creators.length ? ' & ' : ', ': ''}<Link className="creator" href="{`/creators/${id}`}">{name}</Link>{/each}, <Link href="{`/works/${workId}`}">{workName}</Link>
+				{#each creators as {id, name}, i}{i > 0 ? i + 1 === creators.length ? ' & ' : ', ': ''}<span>{name}</span>{/each}, <Link href="{`/works/${workId}`}">{workName}</Link>
 			</cite>
 			{/if}
 		</slot>

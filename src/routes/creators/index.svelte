@@ -12,8 +12,8 @@
 				'organization',
 				'site',
 				'groups',
-				'group_names'
-			]
+				'group_names',
+			],
 		};
 
 		let creators = await this.fetch(
@@ -53,7 +53,7 @@
 		{#each creators as {id, full_name, profession, group_names, site}}
 		<tr>
 			<td>
-				<Link prefetch href="/creators/{id}">{full_name}</Link>
+				<strong>{full_name}</strong>
 			</td>
 			<td>{profession ? profession.join(', ') : ''}</td>
 			<td>

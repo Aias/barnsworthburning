@@ -226,8 +226,6 @@ a {
 	color: var(--text-link);
 	text-decoration: underline;
 	transition: color 0.2s;
-	/* text-decoration-thickness: .125em;
-	text-underline-offset: 1.5px; */
 }
 
 a:hover {
