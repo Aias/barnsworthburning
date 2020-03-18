@@ -8,6 +8,7 @@
 		let { slug } = params;
 		let id = spaceNames[slug] || spaceNames['i'];
 
+		// TODO: Only bring back needed fields.
 		let options = {
 			view: 'spaces',
 			filterByFormula: `IF(FIND("${id}", ARRAYJOIN(space_ids, ",")) > 0, TRUE(), FALSE())`

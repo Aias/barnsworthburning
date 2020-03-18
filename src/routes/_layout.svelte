@@ -88,8 +88,11 @@
 	main {
 		grid-area: main;
 		overflow-y: auto;
-		padding: 0 2rem;
+		padding: 0 1.75rem 0 2rem;
 		margin-bottom: 1rem;
+		margin-right: 0.25rem;
+		scrollbar-color: var(--clr-scrollbar) transparent;
+		scrollbar-width: thin;
 	}
 	footer {
 		grid-area: footer;

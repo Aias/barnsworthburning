@@ -8,7 +8,7 @@
 
 		let options = {
 			view: 'Grid view',
-			filterByFormula: `LOWER(ARRAYJOIN(group_id, ",")) = LOWER('${slug}')`
+			filterByFormula: `ARRAYJOIN(group_slug, '') = '${slug}'`
 		};
 
 		let extracts = await this.fetch(
@@ -31,6 +31,8 @@
 	import Extract from '../../components/Extract.svelte';
 
 	export let extracts = undefined;
+
+	selectedSpace.set('works');
 </script>
 
 {#each extracts as extract}

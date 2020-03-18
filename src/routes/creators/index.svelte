@@ -11,8 +11,8 @@
 				'profession',
 				'organization',
 				'site',
-				'groups',
 				'group_names',
+				'group_slugs',
 			],
 		};
 
@@ -44,32 +44,33 @@
 	<thead>
 		<tr>
 			<th>Name</th>
+			<th>Homepage</th>
 			<th>Professions</th>
 			<th>Works</th>
-			<th>Homepage</th>
 		</tr>
 	</thead>
 	<tbody>
-		{#each creators as {id, full_name, profession, group_names, site}}
+		{#each creators as {id, full_name, profession, group_names, group_slugs,
+		site}}
 		<tr>
 			<td>
 				<strong>{full_name}</strong>
-			</td>
-			<td>{profession ? profession.join(', ') : ''}</td>
-			<td>
-				{#if group_names}
-				<ul>
-					{#each group_names as group}
-					<li>{group}</li>
-					{/each}
-				</ul>
-				{/if}
 			</td>
 			<td>
 				{#if site}
 				<a href="{site}" target="_blank" title="{full_name}'s home page"
 					>Website</a
 				>
+				{/if}
+			</td>
+			<td>{profession ? profession.join(', ') : ''}</td>
+			<td>
+				{#if group_names}
+				<ul>
+					{#each group_names as group, i}
+					<li><a href="/works/{group_slugs[i]}">{group}</a></li>
+					{/each}
+				</ul>
 				{/if}
 			</td>
 		</tr>

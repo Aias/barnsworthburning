@@ -5,8 +5,8 @@
 		maxRecords: 300,
 		fields: [
 			'title',
-			'group',
 			'group_name',
+			'group_slug',
 			'creator',
 			'creator_name',
 			'extracted_on',
@@ -62,13 +62,13 @@
 		let nested = {};
 		extracts.forEach(e => {
 			let groupName = get(e, 'group_name[0]', 'Ungrouped');
-			let groupId = get(e, 'group[0]', '-1');
+			let groupSlug = get(e, 'group_slug[0]', '-1');
 			let extractedOn = new Date(e['extracted_on']);
 			let lastUpdated = new Date(e['last_updated']);
 
 			if (!(typeof nested[groupName] === 'object')) {
 				nested[groupName] = {
-					id: groupId,
+					slug: groupSlug,
 					name: groupName,
 					extracts: [],
 					updated: lastUpdated
@@ -87,9 +87,9 @@
 
 <div class="text-wall">
 	{#each chunks as work}
-	{#each work as {id, name, extracts, updated}}
+	{#each work as {slug, name, extracts, updated}}
 	<section class="inline">
-		<h2 class="inline"><Link prefetch href="/works/{id}">{name}</Link></h2>
+		<h2 class="inline"><Link prefetch href="/works/{slug}">{name}</Link></h2>
 		{#each extracts as {title, id}}
 		<q class="inline"><Link plain href="/extracts/{id}">{title || 'Untitled'}</Link></q>{/each}</section>
 	{/each}

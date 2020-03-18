@@ -8,6 +8,7 @@
 			fields: [
 				'name',
 				'type',
+				'slug',
 				'creator',
 				'creator_names',
 				'num_extracts',
@@ -52,10 +53,10 @@
 		</tr>
 	</thead>
 	<tbody>
-		{#each works as {id, name, type, creator_names, num_extracts, source_url}}
+		{#each works as {name, slug, type, creator_names, num_extracts, source_url}}
 		<tr>
 			<td>
-				<Link prefetch href="/works/{id}">{name}</Link>
+				<Link prefetch href="/works/{slug}">{name}</Link>
 			</td>
 			<td>{type ? type : ''}</td>
 			<td>

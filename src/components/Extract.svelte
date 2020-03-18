@@ -21,10 +21,10 @@
 		name: creatorNames[i]
 	}));
 
-	$: workId = get(extract, 'group[0]');
+	$: workSlug = get(extract, 'group_slug[0]');
 	$: workName = get(extract, 'group_name[0]');
 
-	$: isMe = (creatorIds.findIndex(c => c === 'recZ4n0P0GpAG28UO') > -1) || (workId === 'recusqwqKOFFfyopC');
+	$: isMe = (creatorIds.findIndex(c => c === 'recZ4n0P0GpAG28UO') > -1) || (workSlug === 'barnsworthburningnet');
 
 	$: images = get(extract, 'extract_image');
 	$: imageCaption = get(extract, 'image_caption');
@@ -65,7 +65,7 @@
 			{@html markdown.render(text)}
 			{#if !isMe && !listed}
 			<cite class="text-mono">
-				{#each creators as {id, name}, i}{i > 0 ? i + 1 === creators.length ? ' & ' : ', ': ''}<span>{name}</span>{/each}, <Link href="{`/works/${workId}`}">{workName}</Link>
+				{#each creators as {id, name}, i}{i > 0 ? i + 1 === creators.length ? ' & ' : ', ': ''}<span>{name}</span>{/each}, <Link href="{`/works/${workSlug}`}">{workName}</Link>
 			</cite>
 			{/if}
 		</slot>
