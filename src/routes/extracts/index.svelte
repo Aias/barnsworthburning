@@ -1,8 +1,8 @@
 <script context="module">
 	import { FULL_API } from '../../config.js';
 	let options = {
-		sort: [{ field: 'last_updated', direction: 'desc' }],
 		maxRecords: 300,
+		view: 'Recent Works',
 		fields: [
 			'title',
 			'group_name',
@@ -10,7 +10,7 @@
 			'creator',
 			'creator_name',
 			'extracted_on',
-			'last_updated'
+			'group_last_updated_flat'
 		]				
 	};
 
@@ -41,12 +41,12 @@
 	export let extracts = [];
 	let chunks = [];
 
-	$: earliestExtract = new Date(extracts[extracts.length - 1]['last_updated']);
+	$: earliestGroup = new Date(extracts[extracts.length - 1]['group_last_updated_flat']);
 
 	onMount(async () => {
 		let filteredOptions = {
 			...options,
-			filterByFormula: `{last_updated} < DATETIME_PARSE('${earliestExtract}')`
+			filterByFormula: `{group_last_updated_flat} <= DATETIME_PARSE('${earliestGroup}')`
 		}
 		const nextPage = await fetch(`${FULL_API}/airtableGet?base=commonplace&table=extracts&options=${JSON.stringify(filteredOptions)}`)
 			.then(data => data.json())
@@ -64,7 +64,7 @@
 			let groupName = get(e, 'group_name[0]', 'Ungrouped');
 			let groupSlug = get(e, 'group_slug[0]', '-1');
 			let extractedOn = new Date(e['extracted_on']);
-			let lastUpdated = new Date(e['last_updated']);
+			let lastUpdated = new Date(e['group_last_updated_flat']);
 
 			if (!(typeof nested[groupName] === 'object')) {
 				nested[groupName] = {
@@ -81,7 +81,16 @@
 			}
 		});
 
-		chunks = [...chunks, sortBy(nested, g => -g['updated'])];
+		let chunksWithoutLastGroup = chunks.map((chunk, i) => {
+			if(i + 1 < chunks.length) {
+				return chunks[i];
+			}
+			else {
+				return chunks[i].slice(0,-1);
+			}
+		})
+
+		chunks = [...chunksWithoutLastGroup, sortBy(nested, g => -g['updated'])];
 	}
 </script>
 
