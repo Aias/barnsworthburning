@@ -1,4 +1,4 @@
-const API_URL = 'https://barnsworthburning-api.netlify.com';
+const API_URL = 'https://barnsworthburning-api.netlify.app';
 const FUNCTIONS_PATH = '.netlify/functions';
 const FULL_API = `${API_URL}/${FUNCTIONS_PATH}`;
 // const FULL_API = '/api';
