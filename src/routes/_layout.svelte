@@ -8,12 +8,7 @@
 	import Toolbar from '../components/Toolbar.svelte';
 	import Header from '../components/Header.svelte';
 	import Loading from '../components/Loading.svelte';
-
-	let title = 'barnsworthburning.net';
-	let description =
-		'A commonplace book.';
-	let keywords =
-		'Nick Trombley, design, barnsworthburning, barns worth burning, commonplace book, reading, writing, art';
+	import SEO from '../components/SEO.svelte';
 
 	let { preloading } = stores();
 	let loadingany = derived([preloading, loading], ([$preloading, $loading]) => $preloading || $loading);
@@ -21,15 +16,7 @@
 	export let segment;
 </script>
 
-<svelte:head>
-	<title>{title}</title>
-	<meta property="og:title" content="{title}" />
-	<meta name="Description" content="{description}" />
-	<meta property="og:description" content="{description}" />
-	<meta name="keywords" content="{keywords}" />
-	<meta name="theme-color" content="{$isDarkMode ? '#ebcc20' : '#b50007'}" />
-	<meta name="monetization" content="$pay.stronghold.co/1a18f752bd394de4172a951e38d6e6bc816" />
-</svelte:head>
+<SEO />
 
 <div class="{getEmojiForTheme($isDarkMode)}">
 	<header>
