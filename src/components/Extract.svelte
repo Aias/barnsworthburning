@@ -91,8 +91,7 @@
 	}
 
 	figure {
-		margin-left: 0;
-		margin-right: 0;
+		margin: 1em 0;
 	}
 
 		.images {
