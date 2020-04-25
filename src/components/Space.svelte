@@ -69,11 +69,11 @@
 	}
 
 	.layout-col:not(:first-of-type) {
-		margin-left: 1rem;
+		margin-left: 0.75rem;
 	}
 
-	:global(.card) {
-		margin-bottom: 1rem;
+	.layout-col > :global(.card) {
+		margin-bottom: 0.75rem;
 	}
 	:global(.card:hover header) {
 		color: var(--theme-primary-text);

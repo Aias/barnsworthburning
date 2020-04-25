@@ -71,8 +71,7 @@
 	--layer-highlight: var(--clr-gray-80);
 	--clr-scrollbar: var(--clr-darker-20);
 	--divider: var(--clr-darker-20);
-	--container-border: none;
-	--container-border-radius: 0.25rem 2rem;
+	--container-border: 1px solid var(--clr-darker-20);
 }
 
 .🌒 {
@@ -92,7 +91,6 @@
 	--clr-scrollbar: var(--clr-lighter-20);
 	--divider: var(--clr-lighter-40);
 	--container-border: 1px solid var(--clr-lighter-40);
-	--container-border-radius: 0;
 }
 
 .🌞,
@@ -118,8 +116,7 @@
 		--layer-highlight: var(--clr-gray-80);
 		--clr-scrollbar: var(--clr-darker-20);
 		--divider: var(--clr-darker-20);
-		--container-border: none;
-		--container-border-radius: 0.25rem 2rem;
+		--container-border: 1px solid var(--clr-darker-20);
 	}
 
 	.🌞 {
@@ -139,7 +136,6 @@
 		--clr-scrollbar: var(--clr-lighter-20);
 		--divider: var(--clr-lighter-40);
 		--container-border: 1px solid var(--clr-lighter-40);
-		--container-border-radius: 0;
 	}
 }
 

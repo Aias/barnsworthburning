@@ -16,9 +16,7 @@
 	section {
 		background-color: var(--layer-container);
 		padding: 1.25rem 1.5rem;
-		box-shadow: 0 1px 1rem var(--clr-darker-20);
 		border: var(--container-border);
-		border-radius: var(--container-border-radius);
 		overflow: hidden;
 		transition: border-radius 0.5s, box-shadow 0.25s, background-color 0.25s;
 	}
