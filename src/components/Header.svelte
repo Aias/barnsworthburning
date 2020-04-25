@@ -1,15 +1,34 @@
 <script>
+	import { onMount } from 'svelte';
+	import { slide } from 'svelte/transition';
+	import { selectedSpace } from '../stores';
+	import { FULL_API } from '../config.js';
+
 	import Link from './Link.svelte';
 	import Pointers from './Pointers.svelte';
-	import { slide } from 'svelte/transition';
-	import { spaces, selectedSpace } from '../stores';
-
-	$: keys = Object.keys($spaces).sort((a, b) => b.length - a.length); // Should already be sorted, but may as well be sure.
-	$: headerWidth = getHeaderWidth(keys);
 
 	let navOpen = false;
 	let switchNode;
 	let navNode;
+
+	let spaces = [];
+	$: headerWidth = getHeaderWidth(spaces);
+
+	onMount(async () => {
+		let options = {
+			fields: ['topic', 'field_length', 'num_extracts', 'title', 'description'],
+			view: 'released'
+		};
+
+		const s = await fetch(`${FULL_API}/airtableGet?base=commonplace&table=spaces&options=${JSON.stringify(options)}`)
+			.then(data => data.json())
+			.catch(error => {
+				console.log(error);
+				return [];
+			});
+
+		spaces = s;
+	})
 
 	const makeToggleNav = (isOpen) => (e) => {
 		if(typeof isOpen === "boolean") {
@@ -67,13 +86,13 @@
 		</header>
 		{#if navOpen}
 		<ol bind:this={navNode} transition:slide>
-			{#each keys as space}
+			{#each spaces as {topic}}
 			<li>
-				{#if $selectedSpace == space}
-				<span><Pointers count="{getPointers(space) + 1}" />
-					<strong>{space}</strong></span>
+				{#if $selectedSpace === topic}
+				<span><Pointers count="{getPointers(topic) + 1}" />
+					<strong>{topic}</strong></span>
 				{:else}
-				<a href="/spaces/{space}"><Pointers count="{getPointers(space) + 2}" type="space" /><strong>{space}</strong></a>
+				<a href="/spaces/{topic}"><Pointers count="{getPointers(topic) + 2}" type="space" /><strong>{topic}</strong></a>
 				{/if}
 			</li>
 			{/each}
@@ -81,8 +100,8 @@
 		{/if}
 		<!-- Hacky way to get Sapper's export functionality to render these pages even though the above list doesn't get created on the server. -->
 		<div hidden>
-		{#each keys as space}
-			<a href="/spaces/{space}">{space}</a>
+		{#each spaces as {topic}}
+			<a href="/spaces/{topic}">{topic}</a>
 		{/each}
 		</div>
 	</section>
