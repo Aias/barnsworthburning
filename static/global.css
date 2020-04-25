@@ -20,9 +20,9 @@
 	--clr-yellow-60: #ebcc20;
 	--clr-yellow-base: var(--clr-yellow-60);
 
-	--clr-red-30: #a0060c;
-	--clr-red-40: #b50007;
-	--clr-red-60: #ff4313;
+	--clr-red-30: #a22205;
+	--clr-red-40: #b7391d;
+	--clr-red-60: #fb4444;
 	--clr-red-base: var(--clr-red-40);
 
 	--clr-gray-0: #000000;
@@ -49,10 +49,9 @@
 	--font-size-0: 0.85em;
 	--font-size-10: 1em;
 	--font-size-20: 1.2em;
-	--font-size-30: 1.45em;
-	--font-size-40: 1.75em;
-	--font-size-50: 2em;
-	--font-size-60: 2.5em;
+	--font-size-30: calc(4em / 3);
+	--font-size-40: calc(5em / 3);
+	--font-size-50: calc(7em / 3);
 }
 
 .🌞 {
