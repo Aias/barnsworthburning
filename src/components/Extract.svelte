@@ -112,6 +112,10 @@
 		font-family: inherit;
 	}
 
+		.extract-main > :global(* + *) {
+			margin-top: 1em;
+		}
+
 		.extract-main + * {
 			border-top: 1px solid var(--divider);
 			padding-top: 1rem;
