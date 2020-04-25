@@ -10,7 +10,7 @@ const spaces = {
 	material: 'recOHsNfurhNjKeuS',
 	identity: 'recuRoZ5pF6J2cqEr',
 	teaching: 'recEWApPDsOcyCQzP',
-	planning: 'recic5RqCv3T5pmF7',
+	urbanism: 'recic5RqCv3T5pmF7',
 	darkness: 'recFCRqatZn84VzKF',
 	function: 'recnDstnk3xyyrdWy',
 	material: 'recOHsNfurhNjKeuS',

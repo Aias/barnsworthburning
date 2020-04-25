@@ -1,17 +1,16 @@
 <script context="module">
-	import spaceNames from './_spaces';
 	import { FULL_API } from '../../config';
 
 	export async function preload(page, session) {
 		const { params, query } = page;
 
 		let { slug } = params;
-		let id = spaceNames[slug] || spaceNames['i'];
+		const searchSlug = `,${slug},`;
 
 		// TODO: Only bring back needed fields.
 		let options = {
 			view: 'spaces',
-			filterByFormula: `IF(FIND("${id}", ARRAYJOIN(space_ids, ",")) > 0, TRUE(), FALSE())`
+			filterByFormula: `IF(FIND("${searchSlug}", CONCATENATE(",", ARRAYJOIN(space_names), ",")) > 0, TRUE(), FALSE())`
 		};
 
 		let extracts = await this.fetch(
