@@ -2,6 +2,7 @@
 	import range from 'lodash/range';
 	import { goto } from '@sapper/app';
 	import getApproximateExtractLength from '../helpers/getApproximateExtractLength';
+	import slugify from '../helpers/slugify';
 
 	import Extract from './Extract.svelte';
 	import Card from './Card.svelte';
@@ -18,7 +19,11 @@
 		if(extracts) {
 			let colContents = range(numCols).map(c => ([]));
 			let sortedExtracts = [...extracts].map((e, i) => ({
-				extract: e, 
+				extract: {
+					...e,
+					group_slug: e.group_slug ? e.group_slug : [],
+					extract_slug: e.title ? slugify(e.title) : ''
+				},
 				originalOrder: i, 
 				sortScore: getApproximateExtractLength(e)
 			})).sort((a, b) => { return b.sortScore - a.sortScore; });
@@ -29,7 +34,7 @@
 
 			layout = colContents.map(col => col.sort((a, b) => { 
 				return a.originalOrder - b.originalOrder;
-			}));	
+			}));
 		}
 	}
 </script>
@@ -40,7 +45,7 @@
 	{#each layout as column}
 	<div class="layout-col">
 		{#each column as { extract }}
-		<Card onClick="{() => goto(`/extracts/${extract.id}`)}">
+		<Card onClick="{() => goto(`/works/${slugify(extract.group_slug[0])}#${extract.extract_slug}`)}">
 			<Extract {extract} isCompact />
 		</Card>
 		{/each}

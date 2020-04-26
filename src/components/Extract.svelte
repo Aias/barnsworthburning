@@ -1,5 +1,6 @@
 <script>
 	import markdown from '../helpers/markdown';
+	import slugify from '../helpers/slugify';
 	import get from 'lodash/get';
 	import Link from './Link.svelte';
 	import Book from './icons/Book.svelte';
@@ -10,6 +11,7 @@
 	export let listed = false;
 
 	$: title = get(extract, 'title');
+	$: slug = title ? slugify(title) : '';
 	$: text = get(extract, 'extract_text', '');
 	$: notes = get(extract, 'notes');
 	$: extractedOn = new Date(get(extract, 'extracted_on'));
@@ -31,7 +33,7 @@
 </script>
 
 {#if extract}
-<article class:myself={isMe} class:compact={isCompact} class:listed={listed}>
+<article class:myself={isMe} class:compact={isCompact} class:listed={listed} id={slug}>
 	{#if title}
 	<header>
 		{#if isCompact || listed}

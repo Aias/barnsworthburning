@@ -35,6 +35,7 @@
 	import get from 'lodash/get';
 	import { selectedSpace } from '../../stores';
 	import Link from '../../components/Link.svelte';
+	import slugify from '../../helpers/slugify';
 
 	selectedSpace.set('everything');
 
@@ -100,7 +101,7 @@
 	<section class="inline">
 		<h2 class="inline"><Link prefetch href="/works/{slug}">{name}</Link></h2>
 		{#each extracts as {title, id}}
-		<q class="inline"><Link plain href="/extracts/{id}">{title || 'Untitled'}</Link></q>{/each}</section>
+		<q class="inline"><Link plain href="/works/{slug}#{slugify(title)}">{title || 'Untitled'}</Link></q>{/each}</section>
 	{/each}
 	{/each}
 </div>

@@ -148,6 +148,11 @@ html {
 	line-height: 1.75;
 }
 
+html,
+body {
+	background-color: var(--layer-bg);
+}
+
 .app {
 	font-size: 0.875rem;
 	/* 14px on most monitors. */

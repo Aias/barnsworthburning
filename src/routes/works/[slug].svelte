@@ -27,12 +27,39 @@
 </script>
 
 <script>
+	import { onMount, afterUpdate, tick } from 'svelte';
 	import { selectedSpace } from '../../stores';
 	import Extract from '../../components/Extract.svelte';
 
 	export let extracts = undefined;
 
 	selectedSpace.set('works');
+
+	const scrollToSelectedExtract = async () => {
+		await tick();
+		try {
+			const anchor = window.location.hash;
+
+			if(anchor) {
+				const el = document.getElementById(anchor.slice(1));
+				el.scrollIntoView({
+						behavior: 'smooth'
+					});
+			}
+			else {
+				document.querySelector("main")
+					.scrollTo({
+						top: 0,
+						behavior: 'auto'
+					});
+			}
+		}
+		catch(e) {
+			console.log(e);
+		}
+	}
+
+	afterUpdate(scrollToSelectedExtract);
 </script>
 
 {#each extracts as extract}
