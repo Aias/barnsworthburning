@@ -30,6 +30,8 @@
 
 	$: images = get(extract, 'extract_image');
 	$: imageCaption = get(extract, 'image_caption');
+
+	const stopPropagation = (e) => e.stopPropagation();
 </script>
 
 {#if extract}
@@ -67,7 +69,7 @@
 			{@html markdown.render(text)}
 			{#if !isMe && !listed}
 			<cite class="text-mono">
-				{#each creators as {id, name}, i}{i > 0 ? i + 1 === creators.length ? ' & ' : ', ': ''}<span>{name}</span>{/each}, <Link href="{`/works/${workSlug}`}">{workName}</Link>
+				{#each creators as {id, name}, i}{i > 0 ? i + 1 === creators.length ? ' & ' : ', ': ''}<span>{name}</span>{/each}, <Link href="{`/works/${workSlug}`}" on:click={stopPropagation}>{workName}</Link>
 			</cite>
 			{/if}
 		</slot>

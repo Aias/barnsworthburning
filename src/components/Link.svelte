@@ -17,6 +17,7 @@
 	{title}
 	{href}
 	rel="{prefetch ? 'prefetch' : undefined}"
+	on:click
 	><slot></slot
 ></a>
 

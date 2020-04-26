@@ -68,7 +68,7 @@
 
 <style>
 	:global(.listed + .listed:before) {
-		content: '· · ·';
+		content: '~';
 		display: block;
 		margin-top: 1.5rem;
 		margin-bottom: 1rem;
