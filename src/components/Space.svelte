@@ -65,6 +65,7 @@
 	}
 
 	.layout-container {
+		--gutter-width: 6px;
 		display: flex;
 	}
 
@@ -74,11 +75,11 @@
 	}
 
 	.layout-col:not(:first-of-type) {
-		margin-left: 4px;
+		margin-left: var(--gutter-width);
 	}
 
 	.layout-col > :global(.card) {
-		margin-bottom: 4px;
+		margin-bottom: var(--gutter-width);
 	}
 	:global(.card:hover header) {
 		color: var(--theme-primary-text);
