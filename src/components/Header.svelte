@@ -1,18 +1,22 @@
 <script>
 	import { onMount } from 'svelte';
+	import { stores } from '@sapper/app';
 	import { slide } from 'svelte/transition';
 	import { selectedSpace } from '../stores';
 	import { FULL_API } from '../config.js';
 
 	import Link from './Link.svelte';
-	import Pointers from './Pointers.svelte';
 
-	let navOpen = false;
-	let switchNode;
-	let navNode;
-
+	export let segment = undefined;
 	let spaces = [];
-	$: headerWidth = getHeaderWidth(spaces);
+
+	const { page } = stores();
+
+	$: currentSpace = segment === 'spaces' ? getSpaceFromPath($page.path) : undefined;
+
+	const getSpaceFromPath = (path = '') => {
+		return path.split('/').filter(p => p !== '')[1];
+	}
 
 	onMount(async () => {
 		let options = {
@@ -29,155 +33,107 @@
 
 		spaces = s;
 	})
-
-	const makeToggleNav = (isOpen) => (e) => {
-		if(typeof isOpen === "boolean") {
-			navOpen = isOpen;
-		}
-		else if(switchNode.contains(e.target)) {
-			navOpen = !navOpen;			
-		}
-		else if(navNode && navNode.contains(e.target)) {
-			return;
-		}
-		else {
-			navOpen = false;
-		}		
-	}
-
-	const getHeaderWidth = (contents, minWidth = 25) => {
-		return minWidth;
-	}
-
-	const getTotalChars = summary => {
-		return summary.reduce((prev, cur) => prev + cur.text.length, 0);
-	}
-
-	const getPointers = (summary) => {
-		let summaryWidth = typeof summary === "string" ? summary.length : getTotalChars(summary);
-
-		return headerWidth - summaryWidth;
-	}
 </script>
 
-<svelte:body on:click={makeToggleNav()}/>
-
-<div class="container text-mono">
-	<section>
-		<header>
-			<!-- TODO: Create a more targeted about page -->
-			<strong><Link href="https://nicktrombley.design"><abbr title="Nicholas Edward Trombley">.NET</abbr></Link></strong>
-			<Pointers count="{getPointers('.NETet al')}" />
-			<span>et al</span>
-		</header>
-	</section>
-	<section>
-		<header>
-			<span>via</span>
-			<Pointers count="{getPointers('viabarnsworthburning')}" />
-			<strong><Link href="/">BARNSWORTHBURNING</Link></strong>
-		</header>
-	</section>
-	<section class="themey expandable" class:open="{navOpen}">
-		<header bind:this={switchNode} on:mouseenter="{makeToggleNav(true)}">
-			<span>on</span>
-			<Pointers count="{getPointers(`on${$selectedSpace}`)}" />
-			<strong>{$selectedSpace}</strong>
-		</header>
-		{#if navOpen}
-		<ol bind:this={navNode} transition:slide>
-			{#each spaces as {topic}}
-			<li>
-				{#if $selectedSpace === topic}
-				<span><Pointers count="{getPointers(topic) + 1}" />
-					<strong>{topic}</strong></span>
-				{:else}
-				<a href="/spaces/{topic}"><Pointers count="{getPointers(topic) + 2}" type="space" /><strong>{topic}</strong></a>
-				{/if}
-			</li>
-			{/each}
-		</ol>
-		{/if}
-		<!-- Hacky way to get Sapper's export functionality to render these pages even though the above list doesn't get created on the server. -->
-		<div hidden>
+<nav class="container text-mono">
+	<ul class="waypoint primary">
+		<li class:active={!segment}>
+			<Link href="/">barnsworthburning</Link>
+		</li>
+	</ul>
+	<ul class="waypoint">
+		<li class:active={segment === 'works'}>
+			<Link href="/works">referenced works</Link>
+		</li>
+	</ul>
+	{#if spaces.length > 0}
+	<ul class="spaces" transition:slide>
 		{#each spaces as {topic}}
-			<a href="/spaces/{topic}">{topic}</a>
+		<li class:active={currentSpace === topic}>
+			<Link href="/spaces/{topic}">{topic}</Link>
+		</li>
 		{/each}
-		</div>
-	</section>
-</div>
+	</ul>
+	{/if}
+	<ul class="waypoint">
+		<!-- <li class:active={segment === 'about'}><Link href="/about">info</Link></li> -->
+		<li>
+			<Link href="https://airtable.com/shrImoxRyZoDYdNg2">data</Link>
+		</li>
+		<li>
+			<Link href="https://github.com/Aias/barnsworthburning">code</Link>
+		</li>
+		<li>
+			<Link href="https://barnsworthburning-api.netlify.com/.netlify/functions/feed">feed</Link>
+		</li>
+	</ul>
+</nav>
 
 <style>
-	.container {
-		padding: 0.25rem 2rem;
-		border-right: 0.5rem solid var(--layer-highlight);
+	nav {
 		display: flex;
 		flex-direction: column;
-		max-height: 100%;
-		overflow-y: hidden;
+		height: 100%;
 	}
 
-	section {
-		white-space: nowrap;
-		padding: 0.25rem 1rem;
-		border-radius: 1rem;
-		background-color: var(--layer-highlight);
-		flex: 0 1 auto;
+	nav :global(.link) {
+		color: currentColor;
 	}
 
-	section.open {
-		overflow-y: auto;
-		scrollbar-width: none;
-	}
-
-	.expandable > header {
-		cursor: pointer;
-	}
-
-	section + section {
-		margin-top: 0.75rem;
-	}
-
-	ol {
+	ul {
 		list-style-type: none;
-		margin: 1rem 0;
-		padding: 0;
+		flex: 0 1 auto;
+		margin: 0;
+		padding-right: 1rem;
+	}
+
+	ul + ul {
+		margin-top: 1.5rem;
+	}
+
+	ul.spaces {
+		flex: 0 1 auto;
+		overflow: auto;
+	}
+
+	li {
 		text-align: right;
-		line-height: 1.8;
+		padding: 0 4px;
 	}
 
-	strong {
+	.waypoint {
 		font-weight: 500;
-		text-transform: uppercase;
 	}
 
-	abbr {
-		text-decoration: none;
+	.primary {
+		color: var(--theme-primary-text);
 	}
 
-	@media(max-width: 950px) {
-		.container {
-			border-right: none;
-			padding: 0;
-			align-items: flex-start;
+	.active {
+		background-color: currentColor;
+		transition: background-color 0.2s;
+	}
+
+	.active :global(.link) {
+		color: var(--text-inverted);
+		font-weight: 500;
+	}
+
+	@media(max-width: 750px) {
+		li {
+			display: inline-block;
+			text-align: left;
+			padding: 0 0.5rem;
+			position: relative;
+			left: -0.5rem;
 		}
 
-		.expandable {
-			align-self: stretch;
+		ul + ul {
+			margin-top: 1rem;
 		}
 
-		ol {
-			display: flex;
-			flex-wrap: wrap;
-		}
-
-		li + li::before {
-			content: ' / ';
-			white-space: pre;
-		}
-
-		:global(.pointer) {
-			display: none;
+		ul.spaces {
+			overflow: initial;
 		}
 	}
 </style>

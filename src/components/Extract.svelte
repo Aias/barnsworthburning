@@ -115,7 +115,7 @@
 		font-family: inherit;
 	}
 
-		.extract-main > :global(* + *) {
+		.extract-main > :global(* + *), aside > :global(* + *) {
 			margin-top: 1em;
 		}
 

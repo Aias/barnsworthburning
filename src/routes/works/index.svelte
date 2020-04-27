@@ -86,4 +86,8 @@
 		margin: 0;
 		padding: 0 0 0 1.2rem;
 	}
+
+	td:first-child {
+		max-width: 65ch;
+	}
 </style>

@@ -23,7 +23,7 @@
 	--clr-red-30: #a22205;
 	--clr-red-40: #b7391d;
 	--clr-red-60: #fb4444;
-	--clr-red-base: var(--clr-red-40);
+	--clr-red-base: var(--clr-red-30);
 
 	--clr-gray-0: #000000;
 	--clr-gray-10: #100e06;
@@ -63,14 +63,13 @@
 	--theme-primary-text: var(--clr-red-30);
 	--theme-accent-bg: var(--clr-yellow-50);
 	--theme-accent-text: var(--clr-yellow-30);
-	--layer-deepest: var(--clr-gray-100);
-	--layer-bg: var(--clr-gray-90);
-	--layer-container: var(--clr-gray-95);
-	--layer-container-hover: var(--clr-gray-100);
+	--layer-bg: #fbf9f4;
+	--layer-container: rgba(255, 255, 255, 0);
+	--layer-container-hover: rgba(255, 255, 255, 0.25);
 	--layer-highlight: var(--clr-gray-80);
 	--clr-scrollbar: var(--clr-darker-20);
 	--divider: var(--clr-darker-20);
-	--container-border: 1px solid var(--clr-darker-20);
+	--container-border: 0.5px solid var(--clr-darker-30);
 }
 
 .🌒 {
@@ -82,60 +81,19 @@
 	--theme-primary-text: var(--clr-yellow-60);
 	--theme-accent-bg: var(--clr-red-40);
 	--theme-accent-text: var(--clr-red-60);
-	--layer-deepest: var(--clr-gray-0);
 	--layer-bg: var(--clr-gray-10);
 	--layer-container: var(--clr-gray-20);
 	--layer-container-hover: var(--clr-gray-25);
 	--layer-highlight: var(--clr-gray-20);
 	--clr-scrollbar: var(--clr-lighter-20);
 	--divider: var(--clr-lighter-40);
-	--container-border: 1px solid var(--clr-lighter-40);
+	--container-border: 0.5px solid var(--clr-lighter-20);
 }
 
 .🌞,
 .🌒 {
 	--text-link: var(--theme-primary);
 	--text-link-hover: var(--theme-accent-text);
-}
-
-@media (prefers-color-scheme: dark) {
-	.🌒 {
-		--text-primary: var(--clr-darker-50);
-		--text-secondary: var(--clr-darker-40);
-		--text-inverted: var(--clr-lighter-50);
-		--theme-primary: var(--clr-red-base);
-		--theme-primary-bg: var(--clr-red-30);
-		--theme-primary-text: var(--clr-red-30);
-		--theme-accent-bg: var(--clr-yellow-50);
-		--theme-accent-text: var(--clr-yellow-30);
-		--layer-deepest: var(--clr-gray-100);
-		--layer-bg: var(--clr-gray-90);
-		--layer-container: var(--clr-gray-95);
-		--layer-container-hover: var(--clr-gray-100);
-		--layer-highlight: var(--clr-gray-80);
-		--clr-scrollbar: var(--clr-darker-20);
-		--divider: var(--clr-darker-20);
-		--container-border: 1px solid var(--clr-darker-20);
-	}
-
-	.🌞 {
-		--text-primary: var(--clr-lighter-50);
-		--text-secondary: var(--clr-lighter-40);
-		--text-inverted: var(--clr-darker-50);
-		--theme-primary: var(--clr-yellow-base);
-		--theme-primary-bg: var(--clr-yellow-60);
-		--theme-primary-text: var(--clr-yellow-60);
-		--theme-accent-bg: var(--clr-red-40);
-		--theme-accent-text: var(--clr-red-60);
-		--layer-deepest: var(--clr-gray-0);
-		--layer-bg: var(--clr-gray-10);
-		--layer-container: var(--clr-gray-20);
-		--layer-container-hover: var(--clr-gray-25);
-		--layer-highlight: var(--clr-gray-20);
-		--clr-scrollbar: var(--clr-lighter-20);
-		--divider: var(--clr-lighter-40);
-		--container-border: 1px solid var(--clr-lighter-40);
-	}
 }
 
 /*    TYPOGRAPHY    */
@@ -145,7 +103,7 @@ html {
 	font-weight: 400;
 	font-size: 16px;
 	/* Used as basis for spacing throughout the app. */
-	line-height: 1.75;
+	line-height: calc(1.5 / 0.875); /* 24px for base font size */
 }
 
 html,
@@ -170,7 +128,7 @@ p:first-child {
 
 h1,
 h2 {
-	font-weight: 200;
+	font-weight: 300;
 }
 
 h1 {
@@ -179,7 +137,7 @@ h1 {
 }
 
 h2 {
-	font-size: var(--font-size-40);
+	font-size: var(--font-size-30);
 	line-height: 1.4;
 }
 
@@ -209,21 +167,22 @@ tr:not(:first-child) {
 	border-top: 1px solid var(--divider);
 }
 
+th,
+td {
+	padding: 0.5rem 0.25rem;
+}
+
 th {
 	text-align: left;
 	font-weight: normal;
 	color: var(--text-secondary);
 	vertical-align: bottom;
 	white-space: nowrap;
+	padding-top: 0;
 }
 
 td {
 	vertical-align: baseline;
-}
-
-th,
-td {
-	padding: 0.5rem 0.25rem;
 }
 
 strong {
@@ -232,13 +191,14 @@ strong {
 
 a {
 	color: var(--text-link);
-	text-decoration: underline;
-	transition: color 0.2s;
+	text-decoration: none;
+	transition: color 0.33s;
 }
 
 a:hover {
 	color: var(--text-link-hover);
 	cursor: pointer;
+	text-decoration: underline;
 }
 
 a,
@@ -250,7 +210,7 @@ samp {
 	font-family: var(--font-stack-mono);
 	font-size: 0.925em;
 	/* The monospace fonts tend to be optically larger for a given font size. */
-	line-height: inherit;
+	line-height: calc((1.5 / 0.875) / 0.925);
 }
 
 .text-mono a {
@@ -287,17 +247,4 @@ samp {
 	--layer-highlight: var(--theme-primary-bg);
 	--text-link: var(--text-inverted);
 	--text-link-hover: var(--text-inverted);
-}
-
-.gridded {
-	background-size: 1rem 1rem;
-	background-color: var(--layer-deepest);
-	background-image: linear-gradient(
-			to right,
-			var(--layer-deepest) 1px,
-			transparent 1px
-		),
-		linear-gradient(to bottom, var(--layer-deepest) 1px, transparent 1px);
-	/* The following statement helps put text directly on the baseline. */
-	/* background-position-y: 0.5rem; */
 }

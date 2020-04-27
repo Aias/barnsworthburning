@@ -24,6 +24,6 @@
 	.clickable:hover {
 		background-color: var(--layer-container-hover);
 		cursor: pointer;
-		box-shadow: 0 1px 1.5rem var(--clr-darker-20);
+		box-shadow: 0 1px 1rem var(--clr-darker-10);
 	}
 </style>

@@ -1,5 +1,5 @@
 <script>
-	let title = 'barnsworthburning.net';
+	let title = 'barnsworthburning';
 	let description = 'A commonplace book.';
 	let author = 'Nick Trombley';
 	let keywords =

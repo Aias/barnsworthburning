@@ -4,8 +4,6 @@
 	import { isDarkMode, loading } from '../stores';
 	import getEmojiForTheme from '../helpers/getEmojiForTheme';
 
-	import Nav from '../components/Nav.svelte';
-	import Toolbar from '../components/Toolbar.svelte';
 	import Header from '../components/Header.svelte';
 	import Loading from '../components/Loading.svelte';
 	import SEO from '../components/SEO.svelte';
@@ -20,17 +18,11 @@
 
 <div class="{getEmojiForTheme($isDarkMode)}">
 	<header>
-		<Header />
+		<Header {segment} />
 	</header>
 	<main>
 		<slot></slot>
 	</main>
-	<aside>
-		<Toolbar />
-	</aside>
-	<footer>
-		<Nav currentPage="{segment === 'spaces' ? undefined : segment}" />
-	</footer>
 	{#if $loadingany}
 	<Loading />
 	{/if}
@@ -45,6 +37,7 @@
 		left: 0;
 		height: 100%;
 		overflow: hidden;
+		padding: 3rem 2rem 2rem 3rem;
 		
 		display: grid;
 		grid-template-columns: [header-start toolbar-start loading-start] auto [header-end loading-end main-start footer-start] 1fr [main-end toolbar-end footer-end];
@@ -56,15 +49,7 @@
 		transition: color 0.5s, background-color 0.5s;
 	}
 
-	aside {
-		grid-area: toolbar;
-		margin: 1rem 2rem;
-		display: flex;
-		justify-content: flex-end;
-		align-items: baseline;
-	}
-
-	header, main, footer, aside {
+	header, main {
 		position: relative;
 	}
 
@@ -72,22 +57,16 @@
 		grid-area: header;
 		overflow-y: hidden;
 	}
+
 	main {
 		grid-area: main;
 		overflow-y: auto;
-		padding: 0 1.75rem 0 2rem;
-		margin-bottom: 1rem;
-		margin-right: 0.25rem;
+		padding: 0 1rem 0 1rem;
 		scrollbar-color: var(--clr-scrollbar) transparent;
 		scrollbar-width: thin;
 	}
-	footer {
-		grid-area: footer;
-		z-index: 19;
-		margin: 0 1rem 1rem 1rem;
-	}
 
-	@media(max-width: 950px) {
+	@media(max-width: 750px) {
 		div {
 			position: relative;
 			height: auto;
@@ -95,24 +74,24 @@
 			overflow: initial;
 			grid-template-columns: [header-start loading-start main-start footer-start] 1fr [toolbar-start] auto [header-end toolbar-end main-end loading-end footer-end];
 			grid-template-rows: [toolbar-start header-start loading-start] auto [header-end toolbar-end loading-end main-start] 1fr [main-end footer-start] auto [footer-end];
+			padding: 1rem 0.5rem;
 		}
 
 		header {
-			margin-top: 1rem;
-			margin-bottom: 1rem;
+			padding-bottom: 0.5rem;
+			padding-left: 1rem;
 		}
 
-		footer {
-			position: -webkit-sticky;
-			position: sticky;
-			bottom: 1rem;
+		header:after {
+			content: '~';
+			display: block;
+			text-align: center;
+			padding-top: 0.5rem;
 		}
 
-		header, aside, footer, main {
+		header, main {
 			margin-left: 0;
 			margin-right: 0;
-			padding-left: 1rem;
-			padding-right: 1rem;
 		}
 	}
 </style>

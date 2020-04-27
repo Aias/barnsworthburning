@@ -19,7 +19,7 @@
 		['H', '', 'L', 'D', '', 'N'],
 		['H', '', 'L', 'D', '', ''],
 		['', '', 'L', 'D', '', ''],
-		['', '', 'L', '', '', '']
+		['', '', 'L', '', '', ''],
 	];
 
 	const interval = 100; // ms
@@ -30,7 +30,7 @@
 			return {
 				content: cell,
 				delay: (i + 1) * j * interval,
-				duration
+				duration,
 			};
 		});
 	});
@@ -88,7 +88,7 @@
 		background-color: var(--layer-bg);
 	}
 
-	@media (max-width: 950px) {
+	@media (max-width: 750px) {
 		.loading--outer {
 			margin: 1rem;
 		}
