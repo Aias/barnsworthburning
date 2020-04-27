@@ -91,7 +91,7 @@
 
 <style>
 	article {
-		max-width: 50rem;
+		max-width: var(--reading-width-wide);
 	}
 
 	figure {

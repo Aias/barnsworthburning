@@ -28,18 +28,9 @@
 </script>
 
 <script>
-	import { stores } from '@sapper/app';
-	import { selectedSpace } from '../../stores';
 	import Space from '../../components/Space.svelte';
 
 	export let extracts = undefined;
-	
-	let { page } = stores();
-
-	$: {
-		let { slug } = $page.params;
-		if(slug) { selectedSpace.set(slug); }
-	}
 </script>
 
 <Space {extracts} />

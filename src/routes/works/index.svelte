@@ -34,10 +34,7 @@
 </script>
 
 <script>
-	import { selectedSpace } from '../../stores';
 	import Link from '../../components/Link.svelte';
-
-	selectedSpace.set('works');
 
 	export let works = undefined;
 </script>
@@ -88,6 +85,6 @@
 	}
 
 	td:first-child {
-		max-width: 65ch;
+		max-width: var(--reading-width-narrow);
 	}
 </style>

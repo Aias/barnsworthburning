@@ -33,11 +33,8 @@
 	import groupBy from 'lodash/groupBy';
 	import sortBy from 'lodash/sortBy';
 	import get from 'lodash/get';
-	import { selectedSpace } from '../stores';
 	import Link from '../components/Link.svelte';
 	import slugify from '../helpers/slugify';
-
-	selectedSpace.set('everything');
 
 	export let extracts = [];
 	let chunks = [];
@@ -109,7 +106,7 @@
 <style>
 	.text-wall {
 		text-align: justify;
-		column-width: 65ch;
+		column-width: var(--reading-width-narrow);
 		column-gap: 1rem;
 	}
 

@@ -12,11 +12,7 @@
 </script>
 
 <script>
-	import { selectedSpace } from '../../stores';
-
 	export let about = undefined;
-
-	selectedSpace.set('self');
 </script>
 
 <article>

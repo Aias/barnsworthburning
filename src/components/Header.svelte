@@ -2,7 +2,6 @@
 	import { onMount } from 'svelte';
 	import { stores } from '@sapper/app';
 	import { slide } from 'svelte/transition';
-	import { selectedSpace } from '../stores';
 	import { FULL_API } from '../config.js';
 
 	import Link from './Link.svelte';

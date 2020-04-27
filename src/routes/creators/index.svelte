@@ -21,8 +21,8 @@
 				options
 			)}`
 		)
-			.then(data => data.json())
-			.catch(error => {
+			.then((data) => data.json())
+			.catch((error) => {
 				console.log(error);
 				return [];
 			});
@@ -32,10 +32,7 @@
 </script>
 
 <script>
-	import { selectedSpace } from '../../stores';
 	import Link from '../../components/Link.svelte';
-
-	selectedSpace.set('creators');
 
 	export let creators = undefined;
 </script>

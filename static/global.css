@@ -51,7 +51,10 @@
 	--font-size-20: 1.2em;
 	--font-size-30: calc(4em / 3);
 	--font-size-40: calc(5em / 3);
-	--font-size-50: calc(7em / 3);
+	--font-size-50: calc(6em / 3);
+
+	--reading-width-narrow: 65ch;
+	--reading-width-wide: 75ch;
 }
 
 .🌞 {
@@ -234,6 +237,10 @@ samp {
 
 .text-inverted {
 	color: var(--text-inverted) !important;
+}
+
+.text-secondary {
+	color: var(--text-secondary);
 }
 
 .text-right {
