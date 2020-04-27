@@ -83,10 +83,11 @@
 		}
 
 		header:after {
-			content: '~';
+			content: '⁘';
 			display: block;
 			text-align: center;
 			padding-top: 0.5rem;
+			color: var(--text-secondary);
 		}
 
 		header, main {

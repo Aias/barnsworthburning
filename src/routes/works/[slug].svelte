@@ -128,11 +128,11 @@
 	}
 
 	:global(.listed + .listed:before) {
-		content: '~';
+		content: '∵';
 		display: block;
 		margin-top: 1.5rem;
 		margin-bottom: 1rem;
 		text-align: center;
-		color: var(--theme-accent-text);
+		color: var(--text-tertiary);
 	}
 </style>

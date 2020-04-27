@@ -41,7 +41,7 @@
 	--clr-lighter-50: hsla(0, 0%, 100%, 0.95);
 
 	--clr-darker-10: hsla(0, 0%, 0%, 0.05);
-	--clr-darker-20: hsla(0, 0%, 0%, 0.15);
+	--clr-darker-20: hsla(0, 0%, 0%, 0.17);
 	--clr-darker-30: hsla(0, 0%, 0%, 0.35);
 	--clr-darker-40: hsla(0, 0%, 0%, 0.65);
 	--clr-darker-50: hsla(0, 0%, 0%, 0.93);
@@ -60,6 +60,7 @@
 .🌞 {
 	--text-primary: var(--clr-darker-50);
 	--text-secondary: var(--clr-darker-40);
+	--text-tertiary: var(--clr-darker-20);
 	--text-inverted: var(--clr-lighter-50);
 	--theme-primary: var(--clr-red-base);
 	--theme-primary-bg: var(--clr-red-30);
@@ -78,6 +79,7 @@
 .🌒 {
 	--text-primary: var(--clr-lighter-50);
 	--text-secondary: var(--clr-lighter-40);
+	--text-tertiary: var(--clr-lighter-20);
 	--text-inverted: var(--clr-darker-50);
 	--theme-primary: var(--clr-yellow-base);
 	--theme-primary-bg: var(--clr-yellow-60);
