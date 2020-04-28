@@ -27,14 +27,27 @@
 </script>
 
 <script>
-	import { onMount, afterUpdate, tick } from 'svelte';
+	import { onMount, afterUpdate, tick, onDestroy } from 'svelte';
 	import { slide } from 'svelte/transition';
+	import { updateSeo } from '../../stores';
 	import Extract from '../../components/Extract.svelte';
 
 	export let extracts = undefined;
 	export let slug = undefined;
 
 	let currentWork;
+
+	$: {
+		if(currentWork) {
+			updateSeo({
+				title: `barnsworthburning • ${currentWork.name}`
+			})
+		}
+	}
+
+	onDestroy(() => {
+		updateSeo()
+	})
 
 	onMount(async () => {
 		let options = {
@@ -108,6 +121,7 @@
 	</p>
 </header>
 {/if}
+
 {#each extracts as extract}
 	<Extract {extract} listed />
 {/each}
