@@ -155,6 +155,12 @@ blockquote {
 	font-family: var(--font-stack-serif);
 }
 
+blockquote > * + *,
+article > * + *,
+* + figcaption {
+	margin-top: 1em;
+}
+
 hr {
 	color: var(--divider);
 	margin: 1rem 0;

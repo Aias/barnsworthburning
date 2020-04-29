@@ -94,28 +94,24 @@
 		max-width: var(--reading-width-wide);
 	}
 
-	figure {
-		margin: 1em 0;
-	}
 
-		.images {
+	figure > .images {
 			display: flex;
 		}
 
-		img {
+	img {
 			max-width: 100%;
 		}
 
 	.extract-main {
 		padding: 0;
 		border: none;
-		margin: 1rem 0 0 0;
 		font-style: inherit;
 		font-size: inherit;
 		font-family: inherit;
 	}
 
-		.extract-main > :global(* + *), aside > :global(* + *) {
+		aside > :global(* + *) {
 			margin-top: 1em;
 		}
 
