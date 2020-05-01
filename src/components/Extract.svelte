@@ -5,6 +5,7 @@
 	import Link from './Link.svelte';
 	import Book from './icons/Book.svelte';
 	import Loading from './Loading.svelte';
+	import CreatorNames from './CreatorNames.svelte';
 
 	export let extract = {};
 	export let isCompact = false;
@@ -18,10 +19,6 @@
 
 	$: creatorIds = get(extract, 'creator', []);
 	$: creatorNames = get(extract, 'creator_name', []);
-	$: creators = creatorIds.map((id, i) => ({
-		id,
-		name: creatorNames[i]
-	}));
 
 	$: workSlug = get(extract, 'group_slug[0]');
 	$: workName = get(extract, 'group_name[0]');
@@ -69,7 +66,7 @@
 			{@html markdown.render(text)}
 			{#if !isMe && !listed}
 			<cite class="text-mono">
-				{#each creators as {id, name}, i}{i > 0 ? i + 1 === creators.length ? ' & ' : ', ': ''}<span>{name}</span>{/each}, <Link href="{`/works/${workSlug}`}" on:click={stopPropagation}>{workName}</Link>
+				<CreatorNames creatorNames="{creatorNames}" />, <Link href="{`/works/${workSlug}`}" on:click={stopPropagation}>{workName}</Link>
 			</cite>
 			{/if}
 		</slot>

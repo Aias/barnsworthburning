@@ -29,13 +29,18 @@
 <script>
 	import { onMount, afterUpdate, tick, onDestroy } from 'svelte';
 	import { slide } from 'svelte/transition';
+	import get from 'lodash/get';
 	import { updateSeo } from '../../stores';
 	import Extract from '../../components/Extract.svelte';
+	import CreatorNames from '../../components/CreatorNames.svelte';
 
 	export let extracts = undefined;
 	export let slug = undefined;
 
 	let currentWork;
+	$: workType = get(currentWork, 'type', 'Work').toLowerCase();
+	$: workArticle = isFirstLetterAVowel(workType) ? 'An' : 'A';
+	$: creatorNames = get(currentWork, 'creator_names', ['Anonymous'])
 
 	$: {
 		if(currentWork) {
@@ -113,10 +118,14 @@
 	<h1>{currentWork.name}</h1>
 	<p class="text-secondary">
 		<em>
-			<span>{isFirstLetterAVowel(currentWork.type) ? 'An' : 'A'}</span>
-			<span>{currentWork.type.toLowerCase()}</span>
+			<span>{workArticle}</span>
+			{#if currentWork.source_url}
+			<a class="source-link" href="{currentWork.source_url}">{workType}</a>
+			{:else}
+			<span>{workType}</span>
+			{/if}
 			<span>by</span>
-			{#each currentWork.creator_names as name, i}{i > 0 ? i + 1 === currentWork.creator_names.length ? ' & ' : ', ': ''}<span>{name}</span>{/each}
+			<CreatorNames creatorNames="{creatorNames}" />
 		</em>
 	</p>
 </header>
@@ -135,6 +144,13 @@
 		position: sticky;
 		top: 0;
 		background-color: var(--layer-bg);
+	}
+
+	.source-link {
+		font-style: inherit;
+		font-weight: inherit;
+		font-size: inherit;
+		font-family: inherit;
 	}
 
 	p {
