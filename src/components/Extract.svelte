@@ -11,6 +11,8 @@
 	export let isCompact = false;
 	export let listed = false;
 
+	$: showFooter = !isCompact && !listed;
+
 	$: title = get(extract, 'title');
 	$: slug = title ? slugify(title) : '';
 	$: text = get(extract, 'extract_text', '');
@@ -76,7 +78,7 @@
 		{@html markdown.render(notes)}
 	</aside>
 	{/if}
-	{#if !isCompact && !listed}
+	{#if showFooter}
 	<footer>
 		Recorded on {extractedOn}
 	</footer>
