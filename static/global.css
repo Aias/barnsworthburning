@@ -157,6 +157,7 @@ blockquote {
 
 blockquote > * + *,
 article > * + *,
+figcaption > * + *,
 * + figcaption {
 	margin-top: 1em;
 }
