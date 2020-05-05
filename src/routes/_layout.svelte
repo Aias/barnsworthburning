@@ -87,6 +87,7 @@
 			display: block;
 			text-align: center;
 			padding-top: 0.5rem;
+			padding-right: 1rem;
 			color: var(--text-secondary);
 		}
 

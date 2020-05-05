@@ -5,6 +5,7 @@
 	import { FULL_API } from '../config.js';
 
 	import Link from './Link.svelte';
+	import Spinner from './Spinner.svelte';
 
 	export let segment = undefined;
 	let spaces = [];
@@ -45,7 +46,11 @@
 			<Link href="/works">referenced works</Link>
 		</li>
 	</ul>
-	{#if spaces.length > 0}
+	{#if spaces.length === 0}
+	<div class="loading">
+		<Spinner reverse />
+	</div>
+	{:else}
 	<ul class="spaces" transition:slide>
 		{#each spaces as {topic}}
 		<li class:active={currentSpace === topic}>
@@ -86,18 +91,23 @@
 		padding-right: 1rem;
 	}
 
-	ul + ul {
-		margin-top: 1.5rem;
-	}
-
 	ul.spaces {
 		flex: 0 1 auto;
 		overflow: auto;
 	}
 
+	nav > * + * {
+		margin-top: 1.5rem;
+	}
+
 	li {
 		text-align: right;
 		padding: 0 4px;
+	}
+
+	.loading {
+		text-align: center;
+		padding-right: 1rem;
 	}
 
 	.waypoint {
@@ -127,7 +137,7 @@
 			left: -0.5rem;
 		}
 
-		ul + ul {
+		nav > * + * {
 			margin-top: 1rem;
 		}
 

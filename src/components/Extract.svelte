@@ -3,8 +3,6 @@
 	import slugify from '../helpers/slugify';
 	import get from 'lodash/get';
 	import Link from './Link.svelte';
-	import Book from './icons/Book.svelte';
-	import Loading from './Loading.svelte';
 	import CreatorNames from './CreatorNames.svelte';
 
 	export let extract = {};
@@ -37,14 +35,7 @@
 <article class:myself={isMe} class:compact={isCompact} class:listed={listed} id={slug}>
 	{#if title}
 	<header>
-		{#if isCompact || listed}
-			<h2>{title}</h2>
-		{:else}
-			<h1>
-				<Link href="/extracts"><Book /></Link>
-				{title}
-			</h1>
-		{/if}
+		<h2>{title}</h2>
 	</header>
 	{/if}
 	{#if images}
@@ -84,8 +75,6 @@
 	</footer>
 	{/if}
 </article>
-{:else}
-<Loading />
 {/if}
 
 <style>
