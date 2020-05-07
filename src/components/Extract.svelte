@@ -88,6 +88,10 @@
 			flex-direction: column;
 		}
 
+	img {
+		border: 1px solid var(--clr-darker-10);
+	}
+
 	.extract-main {
 		padding: 0;
 		border: none;
