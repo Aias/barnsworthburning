@@ -171,6 +171,10 @@ ul {
 	list-style-type: circle;
 }
 
+img {
+	border: 1px solid var(--clr-darker-10);
+}
+
 table {
 	border-collapse: collapse;
 }

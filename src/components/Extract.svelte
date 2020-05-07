@@ -88,10 +88,6 @@
 			flex-direction: column;
 		}
 
-	img {
-			max-width: 100%;
-		}
-
 	.extract-main {
 		padding: 0;
 		border: none;
