@@ -85,6 +85,7 @@
 
 	figure > .images {
 			display: flex;
+			flex-direction: column;
 		}
 
 	img {
