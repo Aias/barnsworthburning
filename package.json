@@ -33,14 +33,14 @@
 		"@babel/plugin-transform-runtime": "^7.9.6",
 		"@babel/preset-env": "^7.9.6",
 		"@babel/runtime": "^7.9.6",
-		"rollup": "^2.8.2",
+		"rollup": "^2.10.7",
 		"rollup-plugin-babel": "^4.4.0",
 		"rollup-plugin-commonjs": "^10.1.0",
 		"rollup-plugin-node-resolve": "^5.2.0",
 		"rollup-plugin-replace": "^2.0.0",
-		"rollup-plugin-svelte": "^5.2.1",
+		"rollup-plugin-svelte": "^5.2.2",
 		"rollup-plugin-terser": "^5.3.0",
-		"sapper": "^0.27.12",
-		"svelte": "^3.22.2"
+		"sapper": "^0.27.13",
+		"svelte": "^3.22.3"
 	}
 }

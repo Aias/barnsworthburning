@@ -242,6 +242,7 @@ samp {
 
 .inherit {
 	all: inherit;
+	color: currentColor;
 }
 
 .text-inverted {
