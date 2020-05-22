@@ -162,6 +162,10 @@ figcaption > * + *,
 	margin-top: 1em;
 }
 
+blockquote em {
+	font-style: normal;
+}
+
 hr {
 	color: var(--divider);
 	margin: 1rem 0;
