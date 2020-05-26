@@ -6,13 +6,10 @@
 
 :root {
 	/* System font stacks from https://gist.github.com/don1138/5761014 */
-	--font-stack-serif: 'Palatino Linotype', Palatino, Palladio,
-		'URW Palladio L', 'Book Antiqua', Baskerville, 'Bookman Old Style',
-		'Bitstream Charter', 'Nimbus Roman No9 L', Garamond, 'Apple Garamond',
-		'ITC Garamond Narrow', 'New Century Schoolbook', 'Century Schoolbook',
-		'Century Schoolbook L', Georgia, serif;
-	--font-stack-sans: 'IBM Plex Sans', system-ui, Segoe UI, Helvetica, Roboto,
-		sans-serif;
+	--font-stack-serif: 'Palatino Linotype', Palatino, Palladio, 'URW Palladio L', 'Book Antiqua', Baskerville,
+		'Bookman Old Style', 'Bitstream Charter', 'Nimbus Roman No9 L', Garamond, 'Apple Garamond',
+		'ITC Garamond Narrow', 'New Century Schoolbook', 'Century Schoolbook', 'Century Schoolbook L', Georgia, serif;
+	--font-stack-sans: 'IBM Plex Sans', system-ui, Segoe UI, Helvetica, Roboto, sans-serif;
 	--font-stack-mono: 'IBM Plex Mono', monospace;
 
 	--clr-yellow-30: #866b00;
@@ -162,7 +159,7 @@ figcaption > * + *,
 	margin-top: 1em;
 }
 
-blockquote em {
+blockquote:not(.extract-main) em {
 	font-style: normal;
 }
 
