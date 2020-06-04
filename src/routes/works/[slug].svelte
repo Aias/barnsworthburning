@@ -45,7 +45,7 @@
 	$: {
 		if(currentWork) {
 			updateSeo({
-				title: `barnsworthburning • ${currentWork.name}`
+				title: `${currentWork.name} • barnsworthburning`
 			})
 		}
 	}
