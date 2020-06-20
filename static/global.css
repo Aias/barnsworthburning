@@ -102,6 +102,7 @@
 
 html {
 	font-family: var(--font-stack-sans);
+	font-feature-settings: 'liga';
 	font-weight: 400;
 	font-size: 16px;
 	/* Used as basis for spacing throughout the app. */
