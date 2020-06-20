@@ -34,10 +34,12 @@
 	import sortBy from 'lodash/sortBy';
 	import get from 'lodash/get';
 	import Link from '../components/Link.svelte';
+	import Spinner from '../components/Spinner.svelte';
 	import slugify from '../helpers/slugify';
 
 	export let extracts = [];
 	let chunks = [];
+	let loading = true;
 
 	$: earliestGroup = new Date(extracts[extracts.length - 1]['group_last_updated_flat']);
 
@@ -54,6 +56,7 @@
 			});
 		
 		extracts = nextPage;
+		loading = false;
 	})
 
 	$: {
@@ -101,6 +104,11 @@
 		<q class="inline"><Link plain href="/works/{slug}#{slugify(title)}">{title || 'Untitled'}</Link></q>{/each}</section>
 	{/each}
 	{/each}
+	{#if loading}
+	<section class="loading">
+		<Spinner />
+	</section>
+	{/if}
 </div>
 
 <style>
@@ -141,5 +149,9 @@
 
 	q + q::before {
 		content: ' · ';
+	}
+
+	.loading {
+		display: inline-block;
 	}
 </style>
