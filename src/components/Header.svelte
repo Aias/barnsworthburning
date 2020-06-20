@@ -3,12 +3,12 @@
 	import { stores } from '@sapper/app';
 	import { slide } from 'svelte/transition';
 	import { FULL_API } from '../config.js';
+	import { spaces } from '../stores';
 
 	import Link from './Link.svelte';
 	import Spinner from './Spinner.svelte';
 
 	export let segment = undefined;
-	let spaces = [];
 
 	const { page } = stores();
 
@@ -24,14 +24,14 @@
 			view: 'released'
 		};
 
-		const s = await fetch(`${FULL_API}/airtableGet?base=commonplace&table=spaces&options=${JSON.stringify(options)}`)
+		const fetchedSpaces = await fetch(`${FULL_API}/airtableGet?base=commonplace&table=spaces&options=${JSON.stringify(options)}`)
 			.then(data => data.json())
 			.catch(error => {
 				console.log(error);
 				return [];
 			});
 
-		spaces = s;
+		$spaces = fetchedSpaces;
 	})
 </script>
 
@@ -46,19 +46,13 @@
 			<Link href="/works">referenced works</Link>
 		</li>
 	</ul>
-	{#if spaces.length === 0}
-	<div class="loading">
-		<Spinner reverse />
-	</div>
-	{:else}
 	<ul class="spaces" transition:slide>
-		{#each spaces as {topic}}
+		{#each $spaces as {topic}}
 		<li class:active={currentSpace === topic}>
 			<Link href="/spaces/{topic}">{topic}</Link>
 		</li>
 		{/each}
 	</ul>
-	{/if}
 	<ul class="waypoint">
 		<!-- <li class:active={segment === 'about'}><Link href="/about">info</Link></li> -->
 		<li>
