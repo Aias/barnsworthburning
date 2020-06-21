@@ -61,7 +61,7 @@
 	main {
 		grid-area: main;
 		overflow-y: auto;
-		padding: 0 2rem 0 1rem;
+		padding: 0 1rem 0 1rem;
 		margin-right: -1rem;
 		scrollbar-color: var(--clr-scrollbar) transparent;
 		scrollbar-width: thin;
