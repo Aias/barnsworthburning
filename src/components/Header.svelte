@@ -99,11 +99,6 @@
 		padding: 0 4px;
 	}
 
-	.loading {
-		text-align: center;
-		padding-right: 1rem;
-	}
-
 	.waypoint {
 		font-weight: 500;
 	}
