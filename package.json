@@ -21,7 +21,6 @@
 	},
 	"dependencies": {
 		"compression": "^1.7.1",
-		"lodash": "^4.17.19",
 		"polka": "^0.5.0",
 		"remarkable": "^2.0.1",
 		"remarkable-meta": "^1.0.1",

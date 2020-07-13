@@ -29,7 +29,7 @@
 <script>
 	import { onMount, afterUpdate, tick, onDestroy } from 'svelte';
 	import { slide } from 'svelte/transition';
-	import get from 'lodash/get';
+	import get from '../../helpers/get';
 	import { updateSeo } from '../../stores';
 	import Extract from '../../components/Extract.svelte';
 	import CreatorNames from '../../components/CreatorNames.svelte';

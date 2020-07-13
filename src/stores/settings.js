@@ -1,5 +1,5 @@
 import { writable, readable } from 'svelte/store';
-import get from 'lodash/get';
+import get from '../helpers/get';
 
 // --------------------------------------
 // Site mode
@@ -33,7 +33,7 @@ const isSlowConnection = () => {
 	}
 };
 
-const connectionQuality = readable(isSlowConnection(), set => {
+const connectionQuality = readable(isSlowConnection(), (set) => {
 	const interval = setInterval(() => {
 		set(isSlowConnection());
 	}, 15000);

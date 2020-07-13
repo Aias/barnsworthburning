@@ -1,6 +1,5 @@
 import { writable, derived } from 'svelte/store';
-import get from 'lodash/get';
-import findIndex from 'lodash/findIndex';
+import get from '../helpers/get';
 
 export const extracts = writable({
 	byKey: {},
@@ -39,7 +38,7 @@ const trimDuplicates = (pages = []) => {
 				const groupLastUpdated = get(firstGroupOfNextPage, 'group_last_updated_flat', '');
 				const groupSlug = get(firstGroupOfNextPage, 'group_slug', [])[0];
 
-				const currentPageGroupIndex = findIndex(page, (extract) => {
+				const currentPageGroupIndex = page.findIndex((extract) => {
 					return (
 						extract['group_last_updated_flat'] === groupLastUpdated &&
 						get(extract, 'group_slug', [])[0] === groupSlug

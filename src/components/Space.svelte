@@ -1,5 +1,4 @@
 <script>
-	import range from 'lodash/range';
 	import { goto } from '@sapper/app';
 	import getApproximateExtractLength from '../helpers/getApproximateExtractLength';
 	import slugify from '../helpers/slugify';
@@ -17,7 +16,7 @@
 
 	$: {
 		if(extracts) {
-			let colContents = range(numCols).map(c => ([]));
+			let colContents = [...Array(numCols).keys()].map(c => ([]));
 			let sortedExtracts = [...extracts].map((e, i) => ({
 				extract: {
 					...e,

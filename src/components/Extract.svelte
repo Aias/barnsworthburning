@@ -1,7 +1,7 @@
 <script>
 	import markdown from '../helpers/markdown';
 	import slugify from '../helpers/slugify';
-	import get from 'lodash/get';
+	import get from '../helpers/get'
 	import Link from './Link.svelte';
 	import CreatorNames from './CreatorNames.svelte';
 

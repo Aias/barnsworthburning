@@ -1,4 +1,4 @@
-import get from 'lodash/get';
+import get from '../helpers/get';
 
 const fields = [
 	{ field: 'title', weight: 4 },
@@ -7,7 +7,7 @@ const fields = [
 	{ field: 'notes', weight: 0.75 }
 ];
 
-const getApproximateExtractLength = e => {
+const getApproximateExtractLength = (e) => {
 	let hasImage = typeof e['extract_image'] === 'object'; // TODO: Update to handle multiple images, and use width/height fields to make more accurate predictions.
 	let score = fields.reduce((prev, cur) => {
 		let field = get(e, cur.field, '');
