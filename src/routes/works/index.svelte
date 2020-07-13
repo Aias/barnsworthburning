@@ -12,8 +12,7 @@
 				'creator',
 				'creator_names',
 				'num_extracts',
-				'source_url',
-				'direct_extracts'
+				'source_url'
 			],
 			filterByFormula: `num_extracts > 0`
 		};
