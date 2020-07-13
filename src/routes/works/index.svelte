@@ -2,7 +2,6 @@
 	import { FULL_API } from '../../config.js';
 
 	export async function preload(page, session) {
-		let extracts;
 		let options = {
 			sort: [{ field: 'name', direction: 'asc' }],
 			fields: [

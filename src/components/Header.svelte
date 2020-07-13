@@ -38,12 +38,12 @@
 <nav class="container text-mono">
 	<ul class="waypoint primary">
 		<li class:active={!segment}>
-			<Link href="/">barnsworthburning</Link>
+			<Link prefetch href="/">barnsworthburning</Link>
 		</li>
 	</ul>
 	<ul class="waypoint">
 		<li class:active={segment === 'works'}>
-			<Link href="/works">referenced works</Link>
+			<Link prefetch href="/works">referenced works</Link>
 		</li>
 	</ul>
 	<ul class="spaces" transition:slide>

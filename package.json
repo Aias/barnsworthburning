@@ -14,8 +14,8 @@
 	},
 	"scripts": {
 		"dev": "sapper dev",
-		"build": "sapper build --legacy",
-		"export": "sapper export --legacy",
+		"build": "sapper build",
+		"export": "sapper export",
 		"serve": "node __sapper__/build",
 		"netlify:build": "sapper export"
 	},

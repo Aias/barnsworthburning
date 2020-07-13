@@ -15,7 +15,7 @@
 	};
 
 	export async function preload(page, session) {
-		if(session && session.extractsLoaded) {
+		if(session.extractsLoaded) {
 			return { extracts: []};
 		}
 
@@ -42,12 +42,12 @@
 	import slugify from '../helpers/slugify';
 
 	const { session } = stores();
-	$: loading = !($session && $session.extractsLoaded);
+	$: loading = !($session.extractsLoaded);
 
 	export let extracts = [];
 
 	onMount(async () => {
-		if($session && $session.extractsLoaded) {
+		if($session.extractsLoaded) {
 			return null;
 		}
 
