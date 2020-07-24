@@ -62,7 +62,7 @@
 			<Link href="https://github.com/Aias/barnsworthburning">code</Link>
 		</li>
 		<li>
-			<Link href="https://barnsworthburning-api.netlify.com/.netlify/functions/feed">feed</Link>
+			<Link href="/feed.xml">feed</Link>
 		</li>
 	</ul>
 </nav>

@@ -30,6 +30,7 @@
 	import { onMount, afterUpdate, tick, onDestroy } from 'svelte';
 	import { slide } from 'svelte/transition';
 	import get from '../../helpers/get';
+	import isFirstLetterAVowel from '../../helpers/isFirstLetterAVowel';
 	import { updateSeo } from '../../stores';
 	import Extract from '../../components/Extract.svelte';
 	import CreatorNames from '../../components/CreatorNames.svelte';
@@ -93,20 +94,6 @@
 		}
 		catch(error) {
 			console.log(error);
-		}
-	}
-
-	const isFirstLetterAVowel = (str = '') => {
-		if(str.length <= 0) return false;
-		else {
-			const firstLetter = str[0].toLowerCase();
-			const vowels = ['a','e','i','o','u'];
-			if(vowels.indexOf(firstLetter) >= 0) {
-				return true;
-			}
-			else {
-				return false;
-			}
 		}
 	}
 

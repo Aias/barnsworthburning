@@ -90,6 +90,9 @@
 		<Spinner />
 	</section>
 	{/if}
+	<section class="hidden">
+		<a href="/feed">Feed</a>
+	</section>
 </div>
 
 <style>
@@ -134,5 +137,9 @@
 
 	.loading {
 		display: inline-block;
+	}
+
+	.hidden {
+		display: none;
 	}
 </style>
