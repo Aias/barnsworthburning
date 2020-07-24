@@ -90,10 +90,11 @@
 		<Spinner />
 	</section>
 	{/if}
-	<section class="hidden">
-		<a href="/feed">Feed</a>
-	</section>
 </div>
+
+<section class="hidden" aria-hidden="true">
+	<a href="/feed">Feed</a>
+</section>
 
 <style>
 	.text-wall {
