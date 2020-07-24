@@ -3,6 +3,7 @@ import { writable } from 'svelte/store';
 export const defaultSpaces = [
 	'understanding',
 	'architecture',
+	'information',
 	'melancholy',
 	'creativity',
 	'aesthetics',
