@@ -20,7 +20,7 @@
 			let sortedExtracts = [...extracts].map((e, i) => ({
 				extract: {
 					...e,
-					group_slug: e.group_slug ? e.group_slug : [],
+					work_slug: e.work_slug ? e.work_slug : [],
 					extract_slug: e.title ? slugify(e.title) : ''
 				},
 				originalOrder: i, 
@@ -44,7 +44,7 @@
 	{#each layout as column}
 	<div class="layout-col">
 		{#each column as { extract }}
-		<Card onClick="{() => goto(`/works/${slugify(extract.group_slug[0])}#${extract.extract_slug}`)}">
+		<Card onClick="{() => goto(`/works/${slugify(extract.work_slug[0])}#${extract.extract_slug}`)}">
 			<Extract {extract} isCompact />
 		</Card>
 		{/each}

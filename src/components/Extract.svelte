@@ -20,8 +20,8 @@
 	$: creatorIds = get(extract, 'creator', []);
 	$: creatorNames = get(extract, 'creator_name', []);
 
-	$: workSlug = get(extract, 'group_slug[0]');
-	$: workName = get(extract, 'group_name[0]');
+	$: workSlug = get(extract, 'work_slug[0]');
+	$: workName = get(extract, 'work_name[0]');
 
 	$: isMe = (creatorIds.findIndex(c => c === 'recZ4n0P0GpAG28UO') > -1) || (workSlug === 'barnsworthburningnet');
 

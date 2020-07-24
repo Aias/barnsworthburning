@@ -10,7 +10,7 @@ export const extractPages = writable([]);
 
 export const extractWall = derived(extractPages, ($extractPages) => {
 	const nested = nestByWork(trimDuplicates($extractPages));
-	const orderedGroups = Object.keys(nested)
+	const orderedWorks = Object.keys(nested)
 		.map((key) => nested[key])
 		.sort((a, b) => {
 			if (a.updated > b.updated) {
@@ -22,7 +22,7 @@ export const extractWall = derived(extractPages, ($extractPages) => {
 			}
 		});
 
-	return orderedGroups;
+	return orderedWorks;
 });
 
 const trimDuplicates = (pages = []) => {
@@ -34,19 +34,19 @@ const trimDuplicates = (pages = []) => {
 				if (i === pages.length - 1) {
 					return page;
 				}
-				const firstGroupOfNextPage = pages[i + 1][0] || {};
-				const groupLastUpdated = get(firstGroupOfNextPage, 'group_last_updated_flat', '');
-				const groupSlug = get(firstGroupOfNextPage, 'group_slug', [])[0];
+				const firstWorkOfNextPage = pages[i + 1][0] || {};
+				const workLastUpdated = get(firstWorkOfNextPage, 'work_last_updated_flat', '');
+				const workSlug = get(firstWorkOfNextPage, 'work_slug', [])[0];
 
-				const currentPageGroupIndex = page.findIndex((extract) => {
+				const currentPageWorkIndex = page.findIndex((extract) => {
 					return (
-						extract['group_last_updated_flat'] === groupLastUpdated &&
-						get(extract, 'group_slug', [])[0] === groupSlug
+						extract['work_last_updated_flat'] === workLastUpdated &&
+						get(extract, 'work_slug', [])[0] === workSlug
 					);
 				});
 
-				if (currentPageGroupIndex >= 0) {
-					return page.slice(0, currentPageGroupIndex);
+				if (currentPageWorkIndex >= 0) {
+					return page.slice(0, currentPageWorkIndex);
 				} else {
 					return page;
 				}
@@ -56,22 +56,22 @@ const trimDuplicates = (pages = []) => {
 };
 
 const nestByWork = (extracts = []) => {
-	return extracts.reduce((groups, extract) => {
-		const groupName = get(extract, 'group_name[0]', 'Ungrouped');
-		const groupSlug = get(extract, 'group_slug[0]', '-1');
-		const lastUpdated = new Date(extract['group_last_updated_flat']);
+	return extracts.reduce((works, extract) => {
+		const workName = get(extract, 'work_name[0]', 'Unknown');
+		const workSlug = get(extract, 'work_slug[0]', '-1');
+		const lastUpdated = new Date(extract['work_last_updated_flat']);
 
-		if (typeof groups[groupSlug] !== 'object') {
-			groups[groupSlug] = {
-				slug: groupSlug,
-				name: groupName,
+		if (typeof works[workSlug] !== 'object') {
+			works[workSlug] = {
+				slug: workSlug,
+				name: workName,
 				extracts: [],
 				updated: lastUpdated
 			};
 		}
 
-		groups[groupSlug].extracts.push(extract);
+		works[workSlug].extracts.push(extract);
 
-		return groups;
+		return works;
 	}, {});
 };

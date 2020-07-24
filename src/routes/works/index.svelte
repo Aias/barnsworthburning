@@ -17,7 +17,7 @@
 		};
 
 		let works = await this.fetch(
-			`${FULL_API}/airtableGet?base=commonplace&table=groups&options=${JSON.stringify(
+			`${FULL_API}/airtableGet?base=commonplace&table=works&options=${JSON.stringify(
 				options
 			)}`
 		)

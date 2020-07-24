@@ -5,12 +5,12 @@
 		view: 'Recent Works',
 		fields: [
 			'title',
-			'group_name',
-			'group_slug',
+			'work_name',
+			'work_slug',
 			'creator',
 			'creator_name',
 			'extracted_on',
-			'group_last_updated_flat'
+			'work_last_updated_flat'
 		]				
 	};
 
@@ -53,11 +53,11 @@
 
 		$extractPages = [...$extractPages, extracts];
 
-		const earliestGroup = new Date(extracts[extracts.length - 1]['group_last_updated_flat']);
+		const earliestWork = new Date(extracts[extracts.length - 1]['work_last_updated_flat']);
 		
 		let filteredOptions = {
 			...options,
-			filterByFormula: `{group_last_updated_flat} <= DATETIME_PARSE('${earliestGroup}')`
+			filterByFormula: `{work_last_updated_flat} <= DATETIME_PARSE('${earliestWork}')`
 		}
 		const nextPage = await fetch(`${FULL_API}/airtableGet?base=commonplace&table=extracts&options=${JSON.stringify(filteredOptions)}`)
 			.then(data => data.json())

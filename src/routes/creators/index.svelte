@@ -5,21 +5,11 @@
 		let extracts;
 		let options = {
 			sort: [{ field: 'last_name', direction: 'asc' }],
-			fields: [
-				'full_name',
-				'last_name',
-				'profession',
-				'organization',
-				'site',
-				'group_names',
-				'group_slugs',
-			],
+			fields: ['full_name', 'last_name', 'profession', 'organization', 'site', 'work_names', 'work_slugs']
 		};
 
 		let creators = await this.fetch(
-			`${FULL_API}/airtableGet?base=commonplace&table=creators&options=${JSON.stringify(
-				options
-			)}`
+			`${FULL_API}/airtableGet?base=commonplace&table=creators&options=${JSON.stringify(options)}`
 		)
 			.then((data) => data.json())
 			.catch((error) => {
@@ -47,25 +37,22 @@
 		</tr>
 	</thead>
 	<tbody>
-		{#each creators as {id, full_name, profession, group_names, group_slugs,
-		site}}
+		{#each creators as {id, full_name, profession, work_names, work_slugs, site}}
 		<tr>
 			<td>
 				<strong>{full_name}</strong>
 			</td>
 			<td>
 				{#if site}
-				<a href="{site}" target="_blank" title="{full_name}'s home page"
-					>Website</a
-				>
+				<a href="{site}" target="_blank" title="{full_name}'s home page">Website</a>
 				{/if}
 			</td>
 			<td>{profession ? profession.join(', ') : ''}</td>
 			<td>
-				{#if group_names}
+				{#if work_names}
 				<ul>
-					{#each group_names as group, i}
-					<li><a href="/works/{group_slugs[i]}">{group}</a></li>
+					{#each work_names as work, i}
+					<li><a href="/works/{work_slugs[i]}">{work}</a></li>
 					{/each}
 				</ul>
 				{/if}

@@ -8,7 +8,7 @@
 
 		let options = {
 			view: 'Grid view',
-			filterByFormula: `ARRAYJOIN(group_slug, '') = '${slug}'`
+			filterByFormula: `ARRAYJOIN(work_slug, '') = '${slug}'`
 		};
 
 		let extracts = await this.fetch(
@@ -60,7 +60,7 @@
 		};
 
 		let work = await fetch(
-			`${FULL_API}/airtableGet?base=commonplace&table=groups&options=${JSON.stringify(
+			`${FULL_API}/airtableGet?base=commonplace&table=works&options=${JSON.stringify(
 				options
 			)}`)
 			.then(data => data.json())
