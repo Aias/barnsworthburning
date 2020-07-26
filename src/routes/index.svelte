@@ -1,7 +1,7 @@
 <script context="module">
 	import { FULL_API } from '../config.js';
 	let options = {
-		maxRecords: 300,
+		maxRecords: 600,
 		view: 'Recent Works',
 		fields: [
 			'title',
@@ -46,12 +46,11 @@
 
 	export let extracts = [];
 
-	onMount(async () => {
-		if($session.extractsLoaded) {
-			return null;
-		}
+	$extractPages = [...$extractPages, extracts];
+	$session.extractsLoaded = true;
 
-		$extractPages = [...$extractPages, extracts];
+	const fetchNewPage = async () => {
+		$session.extractsLoaded = false;
 
 		const earliestWork = new Date(extracts[extracts.length - 1]['work_last_updated_flat']);
 		
@@ -66,16 +65,9 @@
 				return [];
 			});
 
-		session.update(s => {
-			const current = s || {};
-			return {
-				...current,
-				extractsLoaded: true
-			};
-		})
-
+		$session.extractsLoaded = true;
 		$extractPages = [...$extractPages, nextPage];
-	})
+	}
 </script>
 
 <div class="text-wall">
