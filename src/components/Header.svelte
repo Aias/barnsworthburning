@@ -54,7 +54,7 @@
 		{/each}
 	</ul>
 	<ul class="waypoint">
-		<!-- <li class:active={segment === 'about'}><Link href="/about">info</Link></li> -->
+		<li class:active={segment === 'about'}><Link href="/about">info</Link></li>
 		<li>
 			<Link href="https://airtable.com/shrImoxRyZoDYdNg2">data</Link>
 		</li>
