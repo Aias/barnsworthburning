@@ -7,8 +7,8 @@
 		let { slug } = params;
 
 		let options = {
-			view: 'Grid view',
-			filterByFormula: `ARRAYJOIN(work_slug, '') = '${slug}'`
+			filterByFormula: `ARRAYJOIN(work_slug, '') = '${slug}'`,
+			fields: ['title', 'extract_text', 'notes', 'extracted_on', 'creator', 'creator_name', 'work_slug', 'work_name', 'extract_image', 'image_caption']
 		};
 
 		let extracts = await this.fetch(

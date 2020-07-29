@@ -9,7 +9,7 @@
 	export let isCompact = false;
 	export let listed = false;
 
-	$: showFooter = !isCompact && !listed;
+	$: showFooter = false;
 
 	$: title = get(extract, 'title');
 	$: slug = title ? slugify(title) : '';
