@@ -1,0 +1,17 @@
+# From https://www.voorhoede.nl/en/blog/scheduling-netlify-deploys-with-github-actions/
+# and https://ericjinks.com/blog/2019/netlify-scheduled-build/
+
+name: Scheduled build
+on:
+    schedule:
+        # Run at 4:00 UTC = Noon Eastern, every day
+        - cron: '0 4 * * *'
+jobs:
+    build:
+        name: Request Netlify Webhook
+        runs-on: ubuntu-latest
+        steps:
+            - name: Curl request
+              run: curl -s -X POST https://api.netlify.com/build_hooks/${TOKEN}
+              env:
+                  TOKEN: ${{ secrets.NETLIFY_BUILD_HOOK }}
