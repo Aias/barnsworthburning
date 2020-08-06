@@ -30,7 +30,7 @@
 <script>
 	import Space from '../../components/Space.svelte';
 
-	export let extracts = undefined;
+	export let extracts = [];
 </script>
 
-<Space {extracts} />
+<Space extracts="{extracts.reverse()}" />

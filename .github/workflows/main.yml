@@ -4,7 +4,7 @@
 name: Scheduled build
 on:
     schedule:
-        # Run at 4:00 UTC = Noon Eastern, every day
+        # Run at 4:00 UTC = Midnight Eastern, every day
         - cron: '0 4 * * *'
 jobs:
     build:

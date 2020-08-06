@@ -33,6 +33,7 @@ export const defaultSpaces = [
 	'time',
 	'art',
 	'zen',
+	'www',
 	'ux',
 	'i'
 ].map((space) => ({
