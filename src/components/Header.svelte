@@ -49,7 +49,7 @@
 	<ul class="spaces" transition:slide>
 		{#each $spaces as {topic}}
 		<li class:active={currentSpace === topic}>
-			<Link href="/spaces/{topic}"><label>Subspace: </label>{topic}</Link>
+			<Link href="/spaces/{topic}"><span class="label">Subspace: </span>{topic}</Link>
 		</li>
 		{/each}
 	</ul>
@@ -90,7 +90,7 @@
 		overflow: auto;
 	}
 
-	.spaces label {
+	.spaces .label {
 		display: inline-block;
 		width: 0;
 		opacity: 0;
