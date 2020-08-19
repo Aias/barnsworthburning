@@ -222,9 +222,9 @@ code,
 kbd,
 samp {
 	font-family: var(--font-stack-mono);
-	font-size: 0.925em;
 	/* The monospace fonts tend to be optically larger for a given font size. */
-	line-height: calc((1.5 / 0.875) / 0.925);
+	/* font-size: 0.925em;
+	line-height: calc((1.5 / 0.875) / 0.925); */
 }
 
 .text-mono a {
