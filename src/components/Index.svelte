@@ -43,11 +43,11 @@
 	{#each index as {type, ...node}, i}
 	<li>
 		{#if type === 'creator'}
-		<a href="#creator/{node.slug}">{lastFirst(node)}</a>&nbsp;<span class="text-secondary">
+		<a href="/creator/{node.slug}">{lastFirst(node)}</a>&nbsp;<span class="text-secondary">
 			{node.extracts ? node.extracts.length : 0}
 		</span>
 		{:else}
-		<a href="#space/{node.topic}">{node.topic}</a>&nbsp;<span class="text-secondary">
+		<a href="/space/{node.topic}">{node.topic}</a>&nbsp;<span class="text-secondary">
 			{node.extracts ? node.extracts.length : 0}
 		</span>
 		{/if}
@@ -57,10 +57,10 @@
 
 <style>
 	ol {
+		margin: 0;
 		list-style-type: none;
 		column-width: 20ch;
 		column-gap: 5ch;
-		margin: 1rem;
 		font-size: 10.5px;
 	}
 

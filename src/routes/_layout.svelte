@@ -28,7 +28,7 @@
 	let { preloading } = stores();
 	let loadingany = derived([preloading, loading], ([$preloading, $loading]) => $preloading || $loading);
 
-	export let segment;
+	// export let segment;
 	export let creators;
 	export let spaces;
 </script>
@@ -47,5 +47,20 @@
 </div>
 
 <style>
-	
+	div {
+		display: flex;
+		padding: 2rem;
+	}
+	header {
+		flex: 1;
+	}
+	main {
+		overflow: hidden;
+		border-left: 1px solid var(--divider);
+		padding-left: 1rem;
+		margin-left: 1rem;
+	}
+	main:empty {
+		display: none;
+	}
 </style>
