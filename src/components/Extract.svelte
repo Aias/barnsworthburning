@@ -54,6 +54,7 @@
 		{/if}
 	</figure>
 	{/if}
+	{#if text || ((creatorNames.length > 0 || parentName) && !suppressCitation)}
 	<blockquote class="extract-main markdown-block">
 		<slot>
 			{#if text}
@@ -71,6 +72,7 @@
 			{/if}
 		</slot>
 	</blockquote>
+	{/if}
 	{#if notes}
 	<aside class="markdown-block">
 		{@html markdown.render(notes)}

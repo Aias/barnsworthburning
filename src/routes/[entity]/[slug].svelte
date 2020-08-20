@@ -39,7 +39,8 @@
 </script>
 
 <script>
-	import Extract from '../../components/Extract.svelte'
+	import Extract from '../../components/Extract.svelte';
+	import Card from '../../components/Card.svelte';
 	
 	export let entity;
 	export let creator;
@@ -52,21 +53,44 @@
 </script>
 
 <div class="wrapper">
-	<a href="/">Close Panel</a>
+	<header>
+		<h1>
+			{#if creator}
+			{creator.full_name}
+			{:else}
+			{space.title || space.topic}
+			{/if}
+		</h1>
+		<a href="/">Close Panel</a>
+	</header>
 	<div class="extract-list">
 		{#each extracts as extract (extract.full_slug)}
-			<Extract {extract} suppressCitation="{entity === 'creator'}" />
+			<Card>
+				<Extract {extract} suppressCitation="{entity === 'creator'}" />
+			</Card>
 		{/each}		
 	</div>
 </div>
 
 <style>
+	header {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+	}
+	h1::first-letter {
+		text-transform: capitalize;
+	}
 	.wrapper {
 		width: 500px;
 	}
 	
 	.extract-list {
 		margin-top: 2rem;
+	}
+
+	.extract-list > :global(* + *) {
+		margin-top: 1rem;
 	}
 
 	.extract-list :global(.extract + .extract) {

@@ -38,7 +38,7 @@
 <div class="{getEmojiForTheme($isDarkMode)}">
 	<header>
 		<nav>
-			<Index {creators} {spaces} />
+			<Index {creators} {spaces} {segment} />
 		</nav>
 	</header>
 	<main>
@@ -61,8 +61,6 @@
 	}
 	main {
 		overflow: hidden;
-		border-left: 1px solid var(--divider);
-		padding-left: 1rem;
 		margin-left: 1rem;
 	}
 	main:empty {

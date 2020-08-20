@@ -110,6 +110,11 @@
 <style>
 	.toolbar {
 		display: flex;
+		margin-bottom: 1rem;
+	}
+
+	.toolbar > * + * {
+		margin-left: 0.5rem;
 	}
 
 	ol {
