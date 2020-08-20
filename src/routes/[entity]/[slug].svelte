@@ -29,10 +29,8 @@
 			filterByFormula: `FIND(RECORD_ID(), "${extractIds}") > 0`
 		})(this.fetch);
 
-		console.log(extracts);
-
 		return {
-			params,
+			entity,
 			creator,
 			space,
 			extracts
@@ -41,27 +39,39 @@
 </script>
 
 <script>
-	export let params;
+	import Extract from '../../components/Extract.svelte'
+	
+	export let entity;
 	export let creator;
 	export let space;
 	export let extracts;
+
+	$: {
+		console.log(creator || space);
+	}
 </script>
 
 <div class="wrapper">
 	<a href="/">Close Panel</a>
-	<pre>{JSON.stringify(params)}</pre>
-	<pre>{JSON.stringify(creator)}</pre>
-	<pre>{JSON.stringify(space)}</pre>
-	<pre>{JSON.stringify(extracts)}</pre>
+	<div class="extract-list">
+		{#each extracts as extract (extract.full_slug)}
+			<Extract {extract} suppressCitation="{entity === 'creator'}" />
+		{/each}		
+	</div>
 </div>
 
 <style>
 	.wrapper {
 		width: 500px;
 	}
-
-	pre {
-		overflow-x: auto;
-		white-space: pre-wrap;
+	
+	.extract-list {
+		margin-top: 2rem;
 	}
+
+	.extract-list :global(.extract + .extract) {
+		margin-top: 2rem;
+		padding-top: 2rem;
+		border-top: 1px solid var(--divider);
+	}	
 </style>

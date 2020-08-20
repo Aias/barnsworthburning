@@ -7,32 +7,32 @@
 
 	export let extract = {};
 	export let isCompact = false;
-	export let listed = false;
+	export let suppressCitation = false;
 
 	$: showFooter = false;
 
-	$: title = get(extract, 'title');
-	$: slug = title ? slugify(title) : '';
-	$: text = get(extract, 'extract_text', '');
-	$: notes = get(extract, 'notes');
-	$: extractedOn = new Date(get(extract, 'extracted_on'));
+	const isWork = get(extract, 'is_work')
 
-	$: creatorIds = get(extract, 'creator', []);
-	$: creatorNames = get(extract, 'creator_name', []);
+	const title = get(extract, 'title');
+	const slug = title ? slugify(title) : '';
+	const text = get(extract, 'extract', '');
+	const notes = get(extract, 'notes');
+	const extractedOn = new Date(get(extract, 'extracted_on'));
 
-	$: workSlug = get(extract, 'work_slug[0]');
-	$: workName = get(extract, 'work_name[0]');
+	const creatorSlugs = get(extract, 'combined_creator_slugs', []);
+	const creatorNames = get(extract, 'combined_creator_names', []);
 
-	$: isMe = (creatorIds.findIndex(c => c === 'recZ4n0P0GpAG28UO') > -1) || (workSlug === 'barnsworthburningnet');
+	const parentSlug = get(extract, 'parent_slug[0]');
+	const parentName = get(extract, 'parent_name[0]');
 
-	$: images = get(extract, 'extract_image');
-	$: imageCaption = get(extract, 'image_caption');
+	const images = get(extract, 'extract_image');
+	const imageCaption = get(extract, 'image_caption');
 
 	const stopPropagation = (e) => e.stopPropagation();
 </script>
 
 {#if extract}
-<article class:myself={isMe} class:compact={isCompact} class:listed={listed} id={slug}>
+<article class="extract" class:compact={isCompact} class:no-cite={suppressCitation} id={slug}>
 	{#if title}
 	<header>
 		<h2>{title}</h2>
@@ -56,10 +56,17 @@
 	{/if}
 	<blockquote class="extract-main markdown-block">
 		<slot>
+			{#if text}
 			{@html markdown.render(text)}
-			{#if !isMe && !listed}
+			{/if}
+			{#if !suppressCitation}
 			<cite class="text-mono">
-				<CreatorNames creatorNames="{creatorNames}" />, <Link href="{`/works/${workSlug}`}" on:click={stopPropagation}>{workName}</Link>
+				{#if creatorNames.length > 0}
+				<CreatorNames creatorNames="{creatorNames}" />
+				{/if}
+				{#if parentName}
+				<Link className="parent" href="{`/works/${parentSlug}`}" on:click={stopPropagation}>{parentName}</Link>
+				{/if}
 			</cite>
 			{/if}
 		</slot>
@@ -100,25 +107,25 @@
 		font-family: inherit;
 	}
 
-		aside > :global(* + *) {
-			margin-top: 1em;
-		}
+	aside > :global(* + *) {
+		margin-top: 1em;
+	}
 
-		.extract-main + * {
-			border-top: 1px solid var(--divider);
-			padding-top: 1rem;
-			margin-top: 1rem;
-		}
+	.extract-main + * {
+		border-top: 1px solid var(--divider);
+		padding-top: 1rem;
+		margin-top: 1rem;
+	}
 
-		cite {
-			font-style: normal;
-			display: block;
-			margin-top: 1rem;
-		}
+	cite {
+		font-style: normal;
+		display: block;
+		margin-top: 1rem;
+	}
 
-		.myself cite {
-			display: none; /* That would just be tacky. */
-		}
+	cite > :global(*:not(:last-child)::after) {
+		content: ", ";
+	}
 
 	footer,
 	aside,

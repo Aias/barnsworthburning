@@ -3,12 +3,12 @@
 
 	export async function preload(page, session) {
 		const creators = await select('creators', {
-			fields: ['full_name', 'last_name', 'extracts', 'spaces', 'last_updated', 'slug'],
+			fields: ['full_name', 'last_name', 'extracts', 'spaces', 'last_updated', 'connections_last_updated', 'slug', 'num_extracts', 'num_fragments'],
 			filterByFormula: `{num_extracts} > 0`
 		})(this.fetch);
 
 		const spaces = await select('spaces', {
-			fields: ['topic', 'extracts', 'creators', 'last_updated'],
+			fields: ['topic', 'extracts', 'creators', 'last_updated', 'connections_last_updated'],
 			filterByFormula: `{num_extracts} > 1`
 		})(this.fetch);
 
@@ -28,7 +28,7 @@
 	let { preloading } = stores();
 	let loadingany = derived([preloading, loading], ([$preloading, $loading]) => $preloading || $loading);
 
-	// export let segment;
+	export let segment = '';
 	export let creators;
 	export let spaces;
 </script>
@@ -48,11 +48,16 @@
 
 <style>
 	div {
+		--padding: 2rem;
 		display: flex;
-		padding: 2rem;
+		padding: var(--padding);
 	}
 	header {
 		flex: 1;
+		max-height: calc(100vh - 2 * var(--padding));
+		position: sticky;
+		top: var(--padding);
+		overflow-y: auto;
 	}
 	main {
 		overflow: hidden;

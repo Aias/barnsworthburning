@@ -2,12 +2,16 @@
 	export let creators = [];
 	export let spaces = [];
 
+	// let secondarySort = 'alpha';
+	let primarySort = 'alpha';
+
 	$: index = creators
 		.map((c) => ({ ...c, type: 'creator' }))
 		.concat(spaces.map((s) => ({ ...s, type: 'space' })))
-		.sort(compareFields);
+		// .sort(compareFields(secondarySort))
+		.sort(compareFields(primarySort));
 
-	const getSortField = (obj) => {
+	const getAlpha = (obj) => {
 		if (obj.type === 'creator') {
 			return obj.last_name || '';
 		} else {
@@ -15,12 +19,45 @@
 		}
 	};
 
-	const compareFields = (a, b) => {
-		return getSortField(a).toLowerCase() > getSortField(b).toLowerCase()
-			? 1
-			: getSortField(a).toLowerCase() < getSortField(b).toLowerCase()
-			? -1
-			: 0;
+	const getTime = (obj, type = 'connections') => {
+		switch (type) {
+			case 'record':
+				return new Date(obj.last_updated);
+			case 'connections':
+			default:
+				return new Date(obj.connections_last_updated);
+		}
+	};
+
+	const getCount = (obj) => {
+		if (obj.type === 'creator') {
+			return obj.num_extracts + obj.num_fragments;
+		} else {
+			return obj.extracts.length;
+		}
+	};
+
+	const compareFields = (sort = 'alpha') => {
+		switch (sort) {
+			case 'alpha':
+				return (a, b) => {
+					return getAlpha(a).toLowerCase() > getAlpha(b).toLowerCase()
+						? 1
+						: getAlpha(a).toLowerCase() < getAlpha(b).toLowerCase()
+						? -1
+						: 0;
+				};
+			case 'time':
+				return (a, b) => {
+					return getTime(b) - getTime(a) === 0
+						? getTime(b, 'record') - getTime(a, 'record')
+						: getTime(b) - getTime(a);
+				};
+			case 'count':
+				return (a, b) => {
+					return getCount(b) - getCount(a);
+				};
+		}
 	};
 
 	const lastFirst = (creator) => {
@@ -39,12 +76,27 @@
 	};
 </script>
 
+<div class="toolbar">
+	<label>
+		<input type="radio" name="sort" bind:group="{primarySort}" value="alpha" />
+		Alpha
+	</label>
+	<label>
+		<input type="radio" name="sort" bind:group="{primarySort}" value="time" />
+		Time
+	</label>
+	<label>
+		<input type="radio" name="sort" bind:group="{primarySort}" value="count" />
+		Count
+	</label>
+</div>
+
 <ol>
 	{#each index as {type, ...node}, i}
 	<li>
 		{#if type === 'creator'}
 		<a href="/creator/{node.slug}">{lastFirst(node)}</a>&nbsp;<span class="text-secondary">
-			{node.extracts ? node.extracts.length : 0}
+			{node.num_extracts + node.num_fragments}
 		</span>
 		{:else}
 		<a href="/space/{node.topic}">{node.topic}</a>&nbsp;<span class="text-secondary">
@@ -56,6 +108,10 @@
 </ol>
 
 <style>
+	.toolbar {
+		display: flex;
+	}
+
 	ol {
 		margin: 0;
 		list-style-type: none;
