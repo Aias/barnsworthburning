@@ -30,7 +30,6 @@
 		})(this.fetch);
 
 		return {
-			entity,
 			creator,
 			space,
 			extracts
@@ -42,7 +41,6 @@
 	import Extract from '../../components/Extract.svelte';
 	import Card from '../../components/Card.svelte';
 	
-	export let entity;
 	export let creator;
 	export let space;
 	export let extracts;
@@ -66,7 +64,7 @@
 	<div class="extract-list">
 		{#each extracts as extract (extract.full_slug)}
 			<Card>
-				<Extract {extract} suppressCitation="{entity === 'creator'}" />
+				<Extract {extract} />
 			</Card>
 		{/each}		
 	</div>

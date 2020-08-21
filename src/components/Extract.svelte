@@ -6,15 +6,11 @@
 	import CreatorNames from './CreatorNames.svelte';
 
 	export let extract = {};
-	export let isCompact = false;
-	export let suppressCitation = false;
-
-	$: showFooter = false;
 
 	const isWork = get(extract, 'is_work')
 
 	const title = get(extract, 'title');
-	const slug = title ? slugify(title) : '';
+	const slug = get(extract, 'full_slug', slugify(title));
 	const text = get(extract, 'extract', '');
 	const notes = get(extract, 'notes');
 	const extractedOn = new Date(get(extract, 'extracted_on'));
@@ -27,64 +23,55 @@
 
 	const images = get(extract, 'extract_image');
 	const imageCaption = get(extract, 'image_caption');
-
-	const stopPropagation = (e) => e.stopPropagation();
 </script>
 
-{#if extract}
-<article class="extract" class:compact={isCompact} class:no-cite={suppressCitation} id={slug}>
+<article class="extract {isWork ? 'extract--work' : 'extract--fragment'}" id={slug}>
 	{#if title}
 	<header>
 		<h2>{title}</h2>
 	</header>
 	{/if}
-	{#if images}
-	<figure>
-		<div class="images">
-			{#each images as {id, filename, thumbnails, type, url}}
-			<div class="image-wrapper">
-				<img src="{url}" alt="{filename}" />
+	<figure class="extract-main">
+		{#if images}
+		<figure class="image-container">
+			<div class="image-list">
+				{#each images as {id, filename, thumbnails, type, url}}
+				<div class="image-wrapper">
+					<img src="{url}" alt="{filename}" />
+				</div>
+				{/each}
 			</div>
-			{/each}
-		</div>
-		{#if imageCaption}
-		<figcaption>
-			{@html markdown.render(imageCaption)}
-		</figcaption>
+			{#if imageCaption}
+			<figcaption class="caption">
+				{@html markdown.render(imageCaption)}
+			</figcaption>
+			{/if}
+		</figure>
 		{/if}
-	</figure>
-	{/if}
-	{#if text || ((creatorNames.length > 0 || parentName) && !suppressCitation)}
-	<blockquote class="extract-main markdown-block">
-		<slot>
+		{#if text || (creatorNames.length > 0 || parentName)}
+		<blockquote class="extract-text markdown-block">
 			{#if text}
 			{@html markdown.render(text)}
 			{/if}
-			{#if !suppressCitation}
+		</blockquote>
+		{/if}
+		<figcaption>
 			<cite class="text-mono">
 				{#if creatorNames.length > 0}
 				<CreatorNames creatorNames="{creatorNames}" />
 				{/if}
 				{#if parentName}
-				<Link className="parent" href="{`/works/${parentSlug}`}" on:click={stopPropagation}>{parentName}</Link>
+				<Link className="parent" href="{`/works/${parentSlug}`}">{parentName}</Link>
 				{/if}
-			</cite>
-			{/if}
-		</slot>
-	</blockquote>
-	{/if}
+			</cite>				
+		</figcaption>
+	</figure>
 	{#if notes}
-	<aside class="markdown-block">
+	<footer class="caption markdown-block">
 		{@html markdown.render(notes)}
-	</aside>
-	{/if}
-	{#if showFooter}
-	<footer>
-		Recorded on {extractedOn}
 	</footer>
 	{/if}
 </article>
-{/if}
 
 <style>
 	article {
@@ -92,16 +79,17 @@
 	}
 
 
-	figure > .images {
+	.image-container > .image-list {
 			display: flex;
 			flex-direction: column;
+			/* margin: 0 calc(-1 * var(--container-padding-side)); */
 		}
 
 	img {
 		border: 1px solid var(--clr-darker-10);
 	}
 
-	.extract-main {
+	.extract-text {
 		padding: 0;
 		border: none;
 		font-style: inherit;
@@ -109,36 +97,20 @@
 		font-family: inherit;
 	}
 
-	aside > :global(* + *) {
-		margin-top: 1em;
-	}
-
-	.extract-main + * {
-		border-top: 1px solid var(--divider);
-		padding-top: 1rem;
-		margin-top: 1rem;
-	}
-
 	cite {
 		font-style: normal;
 		display: block;
-		margin-top: 1rem;
+		margin-top: 1em;
 	}
 
 	cite > :global(*:not(:last-child)::after) {
 		content: ", ";
 	}
 
-	footer,
-	aside,
-	figcaption {
-		font-size: var(--font-size-0);
-		color: var(--text-secondary);
-	}
-
 	footer {
+		border-top: 1px solid var(--divider);
+		padding-top: 1rem;
 		margin-top: 1rem;
-		font-style: italic;
 	}
 </style>
 

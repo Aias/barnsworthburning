@@ -155,12 +155,12 @@ blockquote {
 
 blockquote > * + *,
 article > * + *,
-figcaption > * + *,
-* + figcaption {
+figure > * + *,
+footer > * + * {
 	margin-top: 1em;
 }
 
-blockquote:not(.extract-main) em {
+blockquote:not(.extract-text) em {
 	font-style: normal;
 }
 
@@ -225,6 +225,11 @@ samp {
 	/* The monospace fonts tend to be optically larger for a given font size. */
 	/* font-size: 0.925em;
 	line-height: calc((1.5 / 0.875) / 0.925); */
+}
+
+.caption {
+	font-size: var(--font-size-0);
+	color: var(--text-secondary);
 }
 
 .text-mono a {
