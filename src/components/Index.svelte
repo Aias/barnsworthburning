@@ -1,18 +1,22 @@
 <script>
+	import { stores } from '@sapper/app';
+	const { page } = stores();
+
 	export let creators = [];
 	export let spaces = [];
+	export let segment = '';
 
 	// let secondarySort = 'alpha';
 	let primarySort = 'alpha';
 
 	$: index = creators
-		.map((c) => ({ ...c, type: 'creator' }))
-		.concat(spaces.map((s) => ({ ...s, type: 'space' })))
+		.map((c) => ({ ...c, entity: 'creator' }))
+		.concat(spaces.map((s) => ({ ...s, entity: 'space' })))
 		// .sort(compareFields(secondarySort))
 		.sort(compareFields(primarySort));
 
 	const getAlpha = (obj) => {
-		if (obj.type === 'creator') {
+		if (obj.entity === 'creator') {
 			return obj.last_name || '';
 		} else {
 			return obj.topic || '';
@@ -30,7 +34,7 @@
 	};
 
 	const getCount = (obj) => {
-		if (obj.type === 'creator') {
+		if (obj.entity === 'creator') {
 			return obj.num_extracts + obj.num_fragments;
 		} else {
 			return obj.extracts.length;
@@ -60,6 +64,10 @@
 		}
 	};
 
+	const getSlug = (obj) => {
+		return obj.entity === 'creator' ? obj.slug : obj.topic;
+	};
+
 	const lastFirst = (creator) => {
 		const last = creator.last_name;
 		const full = creator.full_name;
@@ -73,6 +81,12 @@
 		const firstPart = full.substring(0, lastLoc).trim();
 
 		return `${last}, ${firstPart}`;
+	};
+
+	const isActive = (node, page) => {
+		const { params } = page;
+
+		return node.entity === params.entity && getSlug(node) === params.slug;
 	};
 </script>
 
@@ -92,9 +106,9 @@
 </div>
 
 <ol>
-	{#each index as {type, ...node}, i}
-	<li>
-		{#if type === 'creator'}
+	{#each index as node, i}
+	<li class:active="{isActive(node, $page)}">
+		{#if node.entity === 'creator'}
 		<a href="/creator/{node.slug}">{lastFirst(node)}</a>&nbsp;<span class="text-secondary">
 			{node.num_extracts + node.num_fragments}
 		</span>
@@ -127,8 +141,26 @@
 
 	li {
 		--indent: 1em;
-		padding-left: var(--indent);
+		--padding: 8px;
+		padding-left: calc(var(--indent) + var(--padding));
+		padding-right: var(--padding);
+		margin-left: calc(-1 * var(--padding));
 		text-indent: calc(-1 * var(--indent));
+		position: relative;
+		transition: background-color 0.25s;
+	}
+
+	li.active {
+		background-color: currentColor;
+		--text-secondary: var(--clr-lighter-40);
+	}
+
+	li.active a {
+		color: var(--text-inverted);
+	}
+
+	li.active span {
+		opacity: 0.75;
 	}
 
 	span {

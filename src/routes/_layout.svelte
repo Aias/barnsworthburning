@@ -58,10 +58,12 @@
 		position: sticky;
 		top: var(--padding);
 		overflow-y: auto;
+		padding: 0 1rem;
+		margin: 0 -1rem;
 	}
 	main {
 		overflow: hidden;
-		margin-left: 1rem;
+		margin-left: 2rem;
 	}
 	main:empty {
 		display: none;

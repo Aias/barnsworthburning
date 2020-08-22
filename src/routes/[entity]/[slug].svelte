@@ -44,10 +44,6 @@
 	export let creator;
 	export let space;
 	export let extracts;
-
-	$: {
-		console.log(creator || space);
-	}
 </script>
 
 <div class="wrapper">
