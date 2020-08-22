@@ -49,21 +49,19 @@
 		</figure>
 		{/if}
 		{#if text || (creatorNames.length > 0 || parentName)}
-		<blockquote class="extract-text markdown-block">
+		<blockquote class="extract-text markdown-block" cite={extract.source}>
 			{#if text}
 			{@html markdown.render(text)}
 			{/if}
 		</blockquote>
 		{/if}
-		<figcaption>
-			<cite class="text-mono">
-				{#if creatorNames.length > 0}
-				<CreatorNames creatorNames="{creatorNames}" />
-				{/if}
-				{#if parentName}
-				<Link className="parent" href="{`/works/${parentSlug}`}">{parentName}</Link>
-				{/if}
-			</cite>				
+		<figcaption class="extract-source text-mono">
+			{#if creatorNames.length > 0}
+			<CreatorNames creatorNames="{creatorNames}" />
+			{/if}
+			{#if parentName}
+			<Link className="parent" href="{`/works/${parentSlug}`}"><cite>{parentName}</cite></Link>
+			{/if}			
 		</figcaption>
 	</figure>
 	{#if notes}
@@ -97,14 +95,12 @@
 		font-family: inherit;
 	}
 
-	cite {
-		font-style: normal;
-		display: block;
-		margin-top: 1em;
+	.extract-source > :global(*:not(:last-child)::after) {
+		content: ", ";
 	}
 
-	cite > :global(*:not(:last-child)::after) {
-		content: ", ";
+	cite {
+		font-style: normal;
 	}
 
 	footer {
