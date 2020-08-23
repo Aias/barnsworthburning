@@ -3,7 +3,7 @@
 	import slugify from '../helpers/slugify';
 	import get from '../helpers/get'
 	import Link from './Link.svelte';
-	import CreatorNames from './CreatorNames.svelte';
+	import Citation from './Citation.svelte';
 
 	export let extract = {};
 
@@ -13,25 +13,26 @@
 	const slug = get(extract, 'full_slug', slugify(title));
 	const text = get(extract, 'extract', '');
 	const notes = get(extract, 'notes');
-	const extractedOn = new Date(get(extract, 'extracted_on'));
+	const topics = get(extract, 'space_topics');
 
-	const creatorSlugs = get(extract, 'combined_creator_slugs', []);
-	const creatorNames = get(extract, 'combined_creator_names', []);
-
-	const parentSlug = get(extract, 'parent_slug[0]');
-	const parentName = get(extract, 'parent_name[0]');
+	const childTitles = get(extract, 'child_titles');
 
 	const images = get(extract, 'extract_image');
 	const imageCaption = get(extract, 'image_caption');
 </script>
 
-<article class="extract {isWork ? 'extract--work' : 'extract--fragment'}" id={slug}>
+<article class="extract {isWork ? 'extract--work' : 'extract--fragment'}" id={slug} on:click="{(e) => console.log(extract) }">
 	{#if title}
 	<header>
 		<h2>{title}</h2>
 	</header>
 	{/if}
 	<figure class="extract-main">
+		{#if isWork}
+		<figcaption class="extract-source">
+			<Citation {extract} />
+		</figcaption>
+		{/if}
 		{#if images}
 		<figure class="image-container">
 			<div class="image-list">
@@ -48,22 +49,31 @@
 			{/if}
 		</figure>
 		{/if}
-		{#if text || (creatorNames.length > 0 || parentName)}
+		{#if text}
 		<blockquote class="extract-text markdown-block" cite={extract.source}>
-			{#if text}
 			{@html markdown.render(text)}
-			{/if}
 		</blockquote>
 		{/if}
-		<figcaption class="extract-source text-mono">
-			{#if creatorNames.length > 0}
-			<CreatorNames creatorNames="{creatorNames}" />
-			{/if}
-			{#if parentName}
-			<Link className="parent" href="{`/works/${parentSlug}`}"><cite>{parentName}</cite></Link>
-			{/if}			
+		{#if !isWork}
+		<figcaption class="extract-source">
+			<Citation {extract} />
 		</figcaption>
+		{/if}
 	</figure>
+	{#if childTitles}
+	<ol class="extract-children small">
+		{#each childTitles as child}
+		&ZeroWidthSpace;<li>&ZeroWidthSpace;<a class="child" href="/works/{slug}">&ZeroWidthSpace;{child}&ZeroWidthSpace;</a>&ZeroWidthSpace;</li>&ZeroWidthSpace;
+		{/each}
+	</ol>
+	{/if}
+	{#if topics}
+	<ul class="extract-spaces small">
+		{#each topics as topic}
+		<li><a class="topic" href="/space/{topic}">{topic}</a></li>
+		{/each}
+	</ul>
+	{/if}
 	{#if notes}
 	<footer class="caption markdown-block">
 		{@html markdown.render(notes)}
@@ -76,6 +86,10 @@
 		max-width: var(--reading-width-wide);
 	}
 
+	.extract-main {
+		display: flex;
+		flex-direction: column;
+	}
 
 	.image-container > .image-list {
 			display: flex;
@@ -95,12 +109,50 @@
 		font-family: inherit;
 	}
 
-	.extract-source > :global(*:not(:last-child)::after) {
-		content: ", ";
+	.extract-spaces {
+		list-style-type: none;
+		margin-bottom: 0;
+		display: flex;
+		max-width: 100%;
+		overflow-x: auto;
 	}
 
-	cite {
-		font-style: normal;
+	.extract-spaces > li + li {
+		margin-left: 1em;
+	}
+
+	.topic {
+		color: var(--text-secondary);
+		text-transform: uppercase;
+		white-space: nowrap;
+	}
+
+	.topic::before {
+		content: '#';
+		opacity: 0.5;
+		display: inline-block;
+		margin-right: 2px;
+	}
+
+	.extract-children {
+		list-style-position: inside;
+		list-style-type: none;
+		color: var(--text-secondary);
+		--separation: 0.5rem;
+	}
+
+	.extract-children li, .extract-children a {
+		display: inline;
+	}
+
+	.extract-children > li:not(:last-child) {
+		margin-right: var(--separation);
+	}
+
+	.extract-children > li + li::before {
+		content: '/';
+		color: var(--text-tertiary);
+		margin-right: var(--separation);
 	}
 
 	footer {

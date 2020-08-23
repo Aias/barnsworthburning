@@ -6,6 +6,7 @@
 	export let plain = false;
 	export let className = undefined;
 	export let active = false;
+	export let newWindow = false;
 </script>
 
 <a
@@ -17,6 +18,7 @@
 	{title}
 	{href}
 	rel="{prefetch ? 'prefetch' : undefined}"
+	target="{newWindow ? '_blank' : undefined}"
 	on:click
 	><slot></slot
 ></a>
