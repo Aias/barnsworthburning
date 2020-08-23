@@ -4,7 +4,6 @@
 
 	export let creators = [];
 	export let spaces = [];
-	export let segment = '';
 
 	// let secondarySort = 'alpha';
 	let primarySort = 'alpha';
@@ -134,7 +133,7 @@
 	ol {
 		margin: 0;
 		list-style-type: none;
-		column-width: 20ch;
+		column-width: 25ch;
 		column-gap: 5ch;
 		font-size: 10.5px;
 	}
