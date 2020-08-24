@@ -6,13 +6,13 @@
 		let creator, space;
 
 		switch (entity) {
-			case 'creator':
+			case 'creators':
 				creator = await select('creators', {
 					filterByFormula: `slug = "${slug}"`
 				})(this.fetch);
 				if (creator.length > 0) creator = creator[0];
 				break;
-			case 'space':
+			case 'spaces':
 				space = await select('spaces', {
 					filterByFormula: `topic = "${slug}"`
 				})(this.fetch);

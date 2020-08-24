@@ -6,5 +6,5 @@
 </script>
 
 <span {...$$restProps}>
-	{#each creatorNames as name, i}{i > 0 ? i + 1 === creatorNames.length ? ' & ' : ', ': ''}<Link href="/creator/{slugify(name)}">{name}</Link>{/each}
+	{#each creatorNames as name, i}{i > 0 ? i + 1 === creatorNames.length ? ' & ' : ', ': ''}<Link href="/creators/{slugify(name)}">{name}</Link>{/each}
 </span>

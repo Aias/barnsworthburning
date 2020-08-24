@@ -6,7 +6,7 @@
 	export let spaces = [];
 
 	// let secondarySort = 'alpha';
-	let primarySort = 'alpha';
+	let primarySort = 'time';
 
 	$: index = creators
 		.map((c) => ({ ...c, entity: 'creator' }))
@@ -108,11 +108,11 @@
 	{#each index as node, i}
 	<li class:active="{isActive(node, $page)}">
 		{#if node.entity === 'creator'}
-		<a href="/creator/{node.slug}">{lastFirst(node)}</a>&nbsp;<span class="text-secondary">
+		<a href="/creators/{node.slug}">{lastFirst(node)}</a>&nbsp;<span class="text-secondary">
 			{node.num_extracts + node.num_fragments}
 		</span>
 		{:else}
-		<a href="/space/{node.topic}">{node.topic}</a>&nbsp;<span class="text-secondary">
+		<a href="/spaces/{node.topic}">{node.topic}</a>&nbsp;<span class="text-secondary">
 			{node.extracts ? node.extracts.length : 0}
 		</span>
 		{/if}

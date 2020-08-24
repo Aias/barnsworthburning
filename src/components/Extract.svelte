@@ -70,7 +70,7 @@
 	{#if topics}
 	<ul class="extract-spaces small">
 		{#each topics as topic}
-		<li><a class="topic" href="/space/{topic}">{topic}</a></li>
+		<li><a class="topic" href="/spaces/{topic}">{topic}</a></li>
 		{/each}
 	</ul>
 	{/if}
