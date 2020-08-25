@@ -135,7 +135,7 @@
 		list-style-type: none;
 		column-width: 25ch;
 		column-gap: 5ch;
-		font-size: 10.5px;
+		font-size: var(--font-size-0);
 	}
 
 	li {

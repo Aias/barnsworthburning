@@ -155,9 +155,11 @@ blockquote {
 
 blockquote > * + *,
 article > * + *,
+section > * + *,
 figure > * + *,
 footer > * + * {
-	margin-top: 1em;
+	--spacing: 1em;
+	margin-top: var(--spacing);
 }
 
 blockquote:not(.extract-text) em {
@@ -223,8 +225,8 @@ kbd,
 samp {
 	font-family: var(--font-stack-mono);
 	/* The monospace fonts tend to be optically larger for a given font size. */
-	/* font-size: 0.925em;
-	line-height: calc((1.5 / 0.875) / 0.925); */
+	font-size: 0.933em;
+	line-height: calc((1.5 / 0.875) / 0.933);
 }
 
 small,

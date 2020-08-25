@@ -16,6 +16,7 @@
 	const topics = get(extract, 'space_topics');
 
 	const childTitles = get(extract, 'child_titles');
+	const connectionTitles = get(extract, 'connection_titles'); 
 
 	const images = get(extract, 'extract_image');
 	const imageCaption = get(extract, 'image_caption');
@@ -60,19 +61,30 @@
 		</figcaption>
 		{/if}
 	</figure>
-	{#if childTitles}
-	<ol class="extract-children small">
-		{#each childTitles as child}
-		&ZeroWidthSpace;<li>&ZeroWidthSpace;<a class="child" href="/works/{slug}">&ZeroWidthSpace;{child}&ZeroWidthSpace;</a>&ZeroWidthSpace;</li>&ZeroWidthSpace;
-		{/each}
-	</ol>
-	{/if}
-	{#if topics}
-	<ul class="extract-spaces small">
-		{#each topics as topic}
-		<li><a class="topic" href="/spaces/{topic}">{topic}</a></li>
-		{/each}
-	</ul>
+	{#if childTitles || connectionTitles || topics}
+	<section>
+		{#if childTitles}
+		<ol class="linked-list extract-children">
+			{#each childTitles as child}
+			&ZeroWidthSpace;<li>&ZeroWidthSpace;<a class="child" href="/works/{slug}">&ZeroWidthSpace;{child}&ZeroWidthSpace;</a>&ZeroWidthSpace;</li>&ZeroWidthSpace;
+			{/each}
+		</ol>
+		{/if}
+		{#if connectionTitles}
+		<ol class="linked-list extract-connections">
+			{#each connectionTitles as child}
+			&ZeroWidthSpace;<li>&ZeroWidthSpace;<a class="child" href="/works/{slug}">&ZeroWidthSpace;{child}&ZeroWidthSpace;</a>&ZeroWidthSpace;</li>&ZeroWidthSpace;
+			{/each}
+		</ol>
+		{/if}
+		{#if topics}
+		<ul class="extract-spaces">
+			{#each topics as topic}
+			<li><a class="topic" href="/spaces/{topic}">{topic}</a></li>
+			{/each}
+		</ul>
+		{/if}
+	</section>
 	{/if}
 	{#if notes}
 	<footer class="caption markdown-block">
@@ -134,22 +146,42 @@
 		margin-right: 2px;
 	}
 
-	.extract-children {
+	section > * {
+		--spacing: 0.5em;
+		font-size: var(--font-size-0);
+	}
+
+	.linked-list {
+		--separation: 0.5rem;
+		position: relative;
+		padding-left: 20px;
 		list-style-position: inside;
 		list-style-type: none;
 		color: var(--text-secondary);
-		--separation: 0.5rem;
 	}
 
-	.extract-children li, .extract-children a {
+	.linked-list::before {
+		position: absolute;
+		left: 0;
+	}
+
+	.extract-children::before {
+		content: '↳';
+	}
+
+	.extract-connections::before {
+		content: '⮂';
+	}
+
+	.linked-list li, .linked-list a {
 		display: inline;
 	}
 
-	.extract-children > li:not(:last-child) {
+	.linked-list > li:not(:last-child) {
 		margin-right: var(--separation);
 	}
 
-	.extract-children > li + li::before {
+	.linked-list > li + li::before {
 		content: '/';
 		color: var(--text-tertiary);
 		margin-right: var(--separation);
