@@ -85,7 +85,7 @@
 	const isActive = (node, page) => {
 		const { params } = page;
 
-		return node.entity === params.entity && getSlug(node) === params.slug;
+		return params.entity && params.entity.indexOf(node.entity) > -1 && getSlug(node) === params.slug;
 	};
 </script>
 
