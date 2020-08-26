@@ -39,6 +39,8 @@
 </script>
 
 <script>
+	import { flip } from 'svelte/animate';
+
 	import Extract from '../../components/Extract.svelte';
 	import Card from '../../components/Card.svelte';
 	
@@ -58,13 +60,15 @@
 		</h1>
 		<a href="/">Close Panel</a>
 	</header>
-	<div class="extract-list">
+	<ul class="extract-list">
 		{#each extracts as extract (extract.full_slug)}
+		<li animate:flip="{{duration: 500}}">
 			<Card>
 				<Extract {extract} />
-			</Card>
+			</Card>			
+		</li>
 		{/each}		
-	</div>
+	</ul>
 </div>
 
 <style>
@@ -82,6 +86,7 @@
 	
 	.extract-list {
 		margin-top: 2rem;
+		list-style-type: none;
 	}
 
 	.extract-list > :global(* + *) {
