@@ -26,7 +26,8 @@
 		const extractIds = extractsArr.join(',');
 
 		const extracts = await select('extracts', {
-			filterByFormula: `FIND(RECORD_ID(), "${extractIds}") > 0`
+			filterByFormula: `FIND(RECORD_ID(), "${extractIds}") > 0`,
+			view: 'Recently Updated'
 		})(this.fetch);
 
 		return {

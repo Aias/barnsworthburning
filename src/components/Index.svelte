@@ -159,7 +159,7 @@
 	}
 
 	.toolbar > * + * {
-		--separation: 1.5rem;
+		--separation: 1rem;
 		margin-left: var(--separation);
 		padding-left: var(--separation);
 		border-left: 1px solid var(--divider);
