@@ -72,16 +72,18 @@
 </div>
 
 <style>
+	.wrapper {
+		width: 500px;
+	}
+
 	header {
 		display: flex;
 		justify-content: space-between;
 		align-items: baseline;
 	}
-	h1::first-letter {
+
+	header > h1::first-letter {
 		text-transform: capitalize;
-	}
-	.wrapper {
-		width: 500px;
 	}
 	
 	.extract-list {

@@ -132,14 +132,20 @@
 </div>
 
 <ol>
+	<!-- <li class="recent">
+		<a href="/recent">Recent Things</a>
+	</li>
+	<li class="center">
+		<span class="text-tertiary">⁘  ⁘  ⁘</span>
+	</li> -->
 	{#each index as node, i}
 	<li class:active="{isActive(node, $page)}">
 		{#if node.entity === 'creator'}
-		<a href="/creators/{node.slug}">{lastFirst(node)}</a>&nbsp;<span class="text-secondary">
+		<a href="/creators/{node.slug}">{lastFirst(node)}</a>&nbsp;<span class="count text-secondary">
 			{node.num_extracts + node.num_fragments}
 		</span>
 		{:else}
-		<a href="/spaces/{node.topic}">{node.topic}</a>&nbsp;<span class="text-secondary">
+		<a href="/spaces/{node.topic}">{node.topic}</a>&nbsp;<span class="count text-secondary">
 			{node.extracts ? node.extracts.length : 0}
 		</span>
 		{/if}
@@ -202,18 +208,18 @@
 		color: var(--text-inverted);
 	}
 
-	li.active span {
+	li.active .count {
 		opacity: 0.75;
 	}
 
-	span {
+	.count {
 		margin-left: 1em;
 		text-align: right;
 		opacity: 0.25;
 		transition: opacity 0.15s;
 	}
 
-	li:hover > span {
+	li:hover > .count {
 		opacity: 1;
 	}
 </style>

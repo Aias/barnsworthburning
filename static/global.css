@@ -50,6 +50,8 @@
 	--font-size-40: calc(5em / 3);
 	--font-size-50: calc(6em / 3);
 
+	--line-height: calc(1.5 / 0.875); /* 24px for base font size */
+
 	--reading-width-narrow: 65ch;
 	--reading-width-wide: 75ch;
 }
@@ -104,9 +106,8 @@ html {
 	font-family: var(--font-stack-sans);
 	font-feature-settings: 'liga';
 	font-weight: 400;
-	font-size: 16px;
-	/* Used as basis for spacing throughout the app. */
-	line-height: calc(1.5 / 0.875); /* 24px for base font size */
+	font-size: 16px; /* Used as basis for spacing throughout the app. */
+	line-height: var(--line-height);
 }
 
 html,
@@ -168,7 +169,12 @@ blockquote:not(.extract-text) em {
 
 hr {
 	color: var(--divider);
-	margin: 1rem 0;
+	margin: calc(1em * var(--line-height) - 1px) 0 0 0;
+	padding-top: calc(1em * var(--line-height));
+	border-style: solid;
+	border-bottom: none;
+	border-left: none;
+	border-right: none;
 }
 
 ul {
@@ -273,7 +279,15 @@ small,
 	color: var(--text-secondary);
 }
 
-.text-right {
+.text-tertiary {
+	color: var(--text-tertiary);
+}
+
+.center {
+	text-align: center;
+}
+
+.right {
 	text-align: right;
 }
 
