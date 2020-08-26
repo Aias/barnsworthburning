@@ -20,8 +20,7 @@
 	rel="{prefetch ? 'prefetch' : undefined}"
 	target="{newWindow ? '_blank' : undefined}"
 	on:click
-	><slot></slot
-></a>
+	><slot /></a>
 
 <style>
 	.active {

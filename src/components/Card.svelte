@@ -4,7 +4,7 @@
 </script>
 
 <section class:card="{true}" class="{className}" class:clickable="{typeof onClick === 'function'}" on:click="{onClick}">
-	<slot></slot>
+	<slot />
 </section>
 
 <style>

@@ -9,33 +9,27 @@
 	export let extracts;
 </script>
 
-<div class="wrapper">
-	<header>
-		<h1>
-			{#if creator}
-			{creator.full_name}
-			{:else}
-			{space.title || space.topic}
-			{/if}
-		</h1>
-		<a href="/">Close Panel</a>
-	</header>
-	<ul class="extract-list">
-		{#each extracts as extract (extract.full_slug)}
-		<li animate:flip="{{duration: 500}}">
-			<Card>
-				<Extract {extract} />
-			</Card>			
-		</li>
-		{/each}		
-	</ul>
-</div>
+<header>
+	<h1>
+		{#if creator}
+		{creator.full_name}
+		{:else}
+		{space.title || space.topic}
+		{/if}
+	</h1>
+	<a href="/">Close Panel</a>
+</header>
+<ul class="extract-list">
+	{#each extracts as extract (extract.slug)}
+	<li animate:flip="{{duration: 500}}">
+		<Card>
+			<Extract {extract} />
+		</Card>			
+	</li>
+	{/each}		
+</ul>
 
 <style>
-	.wrapper {
-		width: 500px;
-	}
-
 	header {
 		display: flex;
 		justify-content: space-between;

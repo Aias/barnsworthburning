@@ -41,7 +41,7 @@
 		</nav>
 	</header>
 	<main>
-		<slot></slot>
+		<slot />
 	</main>
 </div>
 

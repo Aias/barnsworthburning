@@ -59,7 +59,7 @@
 .🌞 {
 	--text-primary: var(--clr-darker-50);
 	--text-secondary: var(--clr-darker-40);
-	--text-tertiary: var(--clr-darker-20);
+	--text-tertiary: var(--clr-darker-30);
 	--text-inverted: var(--clr-lighter-50);
 	--theme-primary: var(--clr-red-base);
 	--theme-primary-bg: var(--clr-red-30);
@@ -78,7 +78,7 @@
 .🌒 {
 	--text-primary: var(--clr-lighter-50);
 	--text-secondary: var(--clr-lighter-40);
-	--text-tertiary: var(--clr-lighter-20);
+	--text-tertiary: var(--clr-lighter-30);
 	--text-inverted: var(--clr-darker-50);
 	--theme-primary: var(--clr-yellow-base);
 	--theme-primary-bg: var(--clr-yellow-60);

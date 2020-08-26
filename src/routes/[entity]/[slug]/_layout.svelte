@@ -46,7 +46,28 @@
 	export let extracts;
 </script>
 
-<div>
-	<ExtractGallery {creator} {space} {extracts} />
-	<slot />
+<div class="wrapper">
+	<div class="gallery">
+		<ExtractGallery {creator} {space} {extracts} />
+	</div>
+	<div class="panel"><slot /></div>
 </div>
+
+<style>
+	.wrapper {
+		display: flex;
+	}
+	.gallery {
+		width: 500px;
+	}
+
+	.panel {
+		margin-left: 2rem;
+		padding-left: 2rem;
+		border-left: 1px solid var(--divider);
+	}
+
+	.panel:empty {
+		display: none;
+	}
+</style>
