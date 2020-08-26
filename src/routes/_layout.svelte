@@ -53,6 +53,7 @@
 	}
 	header {
 		flex: 1;
+		min-width: 250px;
 		max-height: calc(100vh - 2 * var(--padding));
 		position: sticky;
 		top: var(--padding);

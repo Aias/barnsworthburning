@@ -5,12 +5,26 @@
 	import Link from './Link.svelte';
 	import Citation from './Citation.svelte';
 
+	import { stores } from '@sapper/app';
+	const { page } = stores();
+
+	let entity, entitySlug, extractSlug, fragmentSlug;
+	$: {
+		const { params } = $page;
+		entity = params.entity;
+		entitySlug = params.slug;
+		if(params.extract) {
+			extractSlug = params.extract[0];
+			fragmentSlug = params.extract[1];
+		}
+	}
+
 	export let extract = {};
 
 	const isWork = get(extract, 'is_work')
 
 	const title = get(extract, 'title');
-	const slug = get(extract, 'full_slug', slugify(title));
+	const slug = get(extract, 'slug', slugify(title));
 	const text = get(extract, 'extract', '');
 	const notes = get(extract, 'notes');
 	const topics = get(extract, 'space_topics');
@@ -22,10 +36,10 @@
 	const imageCaption = get(extract, 'image_caption');
 </script>
 
-<article class="extract {isWork ? 'extract--work' : 'extract--fragment'}" id={slug} on:click="{(e) => console.log(extract) }">
+<article class="extract {isWork ? 'extract--work' : 'extract--fragment'}" on:click="{(e) => console.log(extract, $page.params) }">
 	{#if title}
 	<header>
-		<h2>{title}</h2>
+		<h2 class="extract-title"><a href="/{entity}/{entitySlug}/{slug}">{title}</a></h2>
 	</header>
 	{/if}
 	<figure class="extract-main">
@@ -66,14 +80,14 @@
 		{#if childTitles}
 		<ol class="linked-list extract-children">
 			{#each childTitles as child}
-			&ZeroWidthSpace;<li>&ZeroWidthSpace;<a class="child" href="/works/{slug}">&ZeroWidthSpace;{child}&ZeroWidthSpace;</a>&ZeroWidthSpace;</li>&ZeroWidthSpace;
+			&ZeroWidthSpace;<li>&ZeroWidthSpace;<a class="child" href="/{entity}/{entitySlug}/{slug}/{slugify(child)}">&ZeroWidthSpace;{child}&ZeroWidthSpace;</a>&ZeroWidthSpace;</li>&ZeroWidthSpace;
 			{/each}
 		</ol>
 		{/if}
 		{#if connectionTitles}
 		<ol class="linked-list extract-connections">
 			{#each connectionTitles as child}
-			&ZeroWidthSpace;<li>&ZeroWidthSpace;<a class="child" href="/works/{slug}">&ZeroWidthSpace;{child}&ZeroWidthSpace;</a>&ZeroWidthSpace;</li>&ZeroWidthSpace;
+			&ZeroWidthSpace;<li>&ZeroWidthSpace;<a class="child" href="/{entity}/{entitySlug}/{slugify(child)}">&ZeroWidthSpace;{child}&ZeroWidthSpace;</a>&ZeroWidthSpace;</li>&ZeroWidthSpace;
 			{/each}
 		</ol>
 		{/if}
@@ -96,6 +110,13 @@
 <style>
 	article {
 		max-width: var(--reading-width-wide);
+	}
+
+	.extract-title > a {
+		font-family: inherit;
+		color: var(--text-primary);
+		font-size: inherit;
+		line-height: inherit;
 	}
 
 	.extract-main {

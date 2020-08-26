@@ -8,6 +8,12 @@
 
 	export let extract = {};
 
+	import { stores } from '@sapper/app';
+	const { page } = stores();
+
+	const { params } = $page;
+	const { entity, slug: entitySlug, extract: extractSlug } = params;
+
 	const creatorNames = get(extract, 'combined_creator_names', []);
 	const parentTitle = get(extract, 'parent_title[0]');
 	const parentSlug = get(extract, 'parent_slug[0]');
@@ -31,7 +37,7 @@
 	{/if}
 	{#if parentTitle}
 	<span class="parent-name">
-		<Link className="parent" href="{`/works/${parentSlug}`}"><cite>{parentTitle}</cite></Link>
+		<Link className="parent" href="/{entity}/{entitySlug}/{parentSlug}"><cite>{parentTitle}</cite></Link>
 	</span>
 	{/if}	
 {/if}
