@@ -8,9 +8,20 @@
 	// let secondarySort = 'alpha';
 	let primarySort = 'time';
 
+	let entityType = 'all';
+
+	const filterList = (filter = 'all') => (node) => {
+		if (filter === 'all') {
+			return true;
+		} else {
+			return node.entity === filter;
+		}
+	};
+
 	$: index = creators
 		.map((c) => ({ ...c, entity: 'creator' }))
 		.concat(spaces.map((s) => ({ ...s, entity: 'space' })))
+		.filter(filterList(entityType))
 		// .sort(compareFields(secondarySort))
 		.sort(compareFields(primarySort));
 
@@ -90,18 +101,34 @@
 </script>
 
 <div class="toolbar">
-	<label>
-		<input type="radio" name="sort" bind:group="{primarySort}" value="alpha" />
-		Alpha
-	</label>
-	<label>
-		<input type="radio" name="sort" bind:group="{primarySort}" value="time" />
-		Time
-	</label>
-	<label>
-		<input type="radio" name="sort" bind:group="{primarySort}" value="count" />
-		Count
-	</label>
+	<div class="radio-group">
+		<label class="input input--radio">
+			<input type="radio" name="sort" bind:group="{primarySort}" value="alpha" />
+			Alpha
+		</label>
+		<label class="input input--radio">
+			<input type="radio" name="sort" bind:group="{primarySort}" value="time" />
+			Time
+		</label>
+		<label class="input input--radio">
+			<input type="radio" name="sort" bind:group="{primarySort}" value="count" />
+			Count
+		</label>
+	</div>
+	<div class="radio-group">
+		<label class="input input--radio">
+			<input type="radio" name="filter" bind:group="{entityType}" value="all" />
+			Everything
+		</label>
+		<label class="input input--radio">
+			<input type="radio" name="filter" bind:group="{entityType}" value="creator" />
+			Creators
+		</label>
+		<label class="input input--radio">
+			<input type="radio" name="filter" bind:group="{entityType}" value="space" />
+			Spaces
+		</label>
+	</div>
 </div>
 
 <ol>
@@ -123,10 +150,27 @@
 <style>
 	.toolbar {
 		display: flex;
-		margin-bottom: 1rem;
+		position: sticky;
+		top: 0;
+		background-color: var(--layer-bg);
+		z-index: 1;
+		max-width: 100%;
+		overflow-x: auto;
 	}
 
 	.toolbar > * + * {
+		--separation: 1.5rem;
+		margin-left: var(--separation);
+		padding-left: var(--separation);
+		border-left: 1px solid var(--divider);
+	}
+
+	.radio-group {
+		display: flex;
+		margin-bottom: 1rem;
+	}
+
+	.radio-group > * + * {
 		margin-left: 0.5rem;
 	}
 

@@ -252,6 +252,12 @@ small,
 	margin-bottom: 0;
 }
 
+/*    CONTROLS    */
+
+.input--radio {
+	white-space: nowrap;
+}
+
 /*    HELPERS    */
 
 .inherit {

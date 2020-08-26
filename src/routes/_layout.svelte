@@ -28,7 +28,6 @@
 	let { preloading } = stores();
 	let loadingany = derived([preloading, loading], ([$preloading, $loading]) => $preloading || $loading);
 
-	export let segment = '';
 	export let creators;
 	export let spaces;
 </script>
@@ -38,7 +37,7 @@
 <div class="{getEmojiForTheme($isDarkMode)}">
 	<header>
 		<nav>
-			<Index {creators} {spaces} {segment} />
+			<Index {creators} {spaces} />
 		</nav>
 	</header>
 	<main>
