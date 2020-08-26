@@ -103,20 +103,6 @@
 <div class="toolbar">
 	<div class="radio-group">
 		<label class="input input--radio">
-			<input type="radio" name="sort" bind:group="{primarySort}" value="alpha" />
-			Alpha
-		</label>
-		<label class="input input--radio">
-			<input type="radio" name="sort" bind:group="{primarySort}" value="time" />
-			Time
-		</label>
-		<label class="input input--radio">
-			<input type="radio" name="sort" bind:group="{primarySort}" value="count" />
-			Count
-		</label>
-	</div>
-	<div class="radio-group">
-		<label class="input input--radio">
 			<input type="radio" name="filter" bind:group="{entityType}" value="all" />
 			Everything
 		</label>
@@ -127,6 +113,20 @@
 		<label class="input input--radio">
 			<input type="radio" name="filter" bind:group="{entityType}" value="space" />
 			Spaces
+		</label>
+	</div>
+	<div class="radio-group">
+		<label class="input input--radio">
+			<input type="radio" name="sort" bind:group="{primarySort}" value="time" />
+			Time
+		</label>
+		<label class="input input--radio">
+			<input type="radio" name="sort" bind:group="{primarySort}" value="count" />
+			Count
+		</label>
+		<label class="input input--radio">
+			<input type="radio" name="sort" bind:group="{primarySort}" value="alpha" />
+			Alpha
 		</label>
 	</div>
 </div>
