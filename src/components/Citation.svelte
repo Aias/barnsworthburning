@@ -12,7 +12,7 @@
 	const { page } = stores();
 
 	const { params } = $page;
-	const { entity, slug: entitySlug, extract: extractSlug } = params;
+	const { entity, slug: entitySlug } = params;
 
 	const creatorNames = get(extract, 'combined_creator_names', []);
 	const parentTitle = get(extract, 'parent_title[0]');

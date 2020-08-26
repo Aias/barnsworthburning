@@ -25,6 +25,7 @@
 
 	const title = get(extract, 'title');
 	const slug = get(extract, 'slug', slugify(title));
+	const parentSlug = get(extract, 'parent_slug[0]');
 	const text = get(extract, 'extract', '');
 	const notes = get(extract, 'notes');
 	const topics = get(extract, 'space_topics');
@@ -34,12 +35,21 @@
 
 	const images = get(extract, 'extract_image');
 	const imageCaption = get(extract, 'image_caption');
+
+	let titleLink;
+
+	$: {
+		const rootPath = [entity, entitySlug];
+		const fullPath = isWork ? rootPath.concat([slug]) : rootPath.concat([parentSlug, slug]);
+
+		titleLink = `/${fullPath.join('/')}`;
+	}
 </script>
 
 <article class="extract {isWork ? 'extract--work' : 'extract--fragment'}" on:click="{(e) => console.log(extract, $page.params) }">
 	{#if title}
 	<header>
-		<h2 class="extract-title"><a href="/{entity}/{entitySlug}/{slug}">{title}</a></h2>
+		<h2 class="extract-title"><a href="{titleLink}">{title}</a></h2>
 	</header>
 	{/if}
 	<figure class="extract-main">
