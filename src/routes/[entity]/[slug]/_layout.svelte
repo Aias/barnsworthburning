@@ -65,6 +65,7 @@
 		margin-left: 2rem;
 		padding-left: 2rem;
 		border-left: 1px solid var(--divider);
+		max-width: var(--reading-width-narrow);
 	}
 
 	.panel:empty {

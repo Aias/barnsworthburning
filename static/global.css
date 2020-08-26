@@ -72,7 +72,7 @@
 	--layer-highlight: var(--clr-gray-80);
 	--clr-scrollbar: var(--clr-darker-20);
 	--divider: var(--clr-darker-20);
-	--container-border: 0.5px solid var(--clr-darker-30);
+	--container-border: 0.5px solid var(--divider);
 }
 
 .🌒 {
@@ -91,7 +91,7 @@
 	--layer-highlight: var(--clr-gray-20);
 	--clr-scrollbar: var(--clr-lighter-20);
 	--divider: var(--clr-lighter-40);
-	--container-border: 0.5px solid var(--clr-lighter-20);
+	--container-border: 0.5px solid var(--divider);
 }
 
 .🌞,
