@@ -56,19 +56,36 @@
 <style>
 	.wrapper {
 		display: flex;
+		position: relative;
 	}
 	.gallery {
 		width: 500px;
+		position: sticky;
+		top: var(--padding);
+		max-height: calc(100vh - 1 * var(--padding));
+		padding-bottom: var(--padding);
+		margin-bottom: calc(-1 * var(--padding));
+		padding-right: 1.5rem;
+		margin-right: -1.5rem;
+		overflow-y: auto;
 	}
 
 	.panel {
-		margin-left: 2rem;
-		padding-left: 2rem;
+		--transition: 0.33s ease-out;
+		min-height: 100vh;
+		margin: calc(-1 * var(--padding)) 0 calc(-1 * var(--padding)) 2rem;
+		padding: var(--padding) 0 var(--padding) 2rem;
 		border-left: 1px solid var(--divider);
-		max-width: var(--reading-width-narrow);
+		width: var(--reading-width-narrow);
+		opacity: 1;
+		transition: width var(--transition), margin var(--transition), padding var(--transition);
+		overflow-x: hidden;
 	}
 
 	.panel:empty {
-		display: none;
+		opacity: 0;
+		width: 0;
+		margin: 0;
+		padding: 0;
 	}
 </style>

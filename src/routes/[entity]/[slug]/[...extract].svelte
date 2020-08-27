@@ -35,7 +35,7 @@
 
 <header>
 	{#each parentExtract as parent (parent.id)}
-		<Card>
+		<Card inverted>
 			<Extract extract="{parent}" />
 		</Card>
 	{/each}	

@@ -62,7 +62,6 @@
 		margin: 0 -1rem;
 	}
 	main {
-		overflow: hidden;
 		margin-left: 2rem;
 	}
 	main:empty {

@@ -1,9 +1,10 @@
 <script>
 	export let className = undefined;
 	export let onClick = undefined;
+	export let inverted = false;
 </script>
 
-<section class:card="{true}" class="{className}" class:clickable="{typeof onClick === 'function'}" on:click="{onClick}">
+<section class:🌒="{inverted}" class:card="{true}" class="{className}" class:clickable="{typeof onClick === 'function'}" on:click="{onClick}">
 	<slot />
 </section>
 
