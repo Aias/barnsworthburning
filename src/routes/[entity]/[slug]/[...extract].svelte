@@ -7,29 +7,37 @@
 
 		const filterString = `OR(CONCATENATE('-', slug, '-') = '-${extractSlug}-', FIND('${extractSlug}', parent_slug) = 1)`; // Returns true if an extract has the same slug (it is the parent) or if its parent has the same slug (it's a child of the extract we're looking for).
 
-		console.log(extractSlug, fragmentSlug);
 		const extracts = await select('extracts', {
-			maxRecords: 20,
 			filterByFormula: filterString
 		})(this.fetch);
 
 		return {
-			extracts
+			extracts,
+			extractSlug,
+			//fragmentSlug
 		};
 	}
 </script>
 
 <script>
 	export let extracts = [];
+	export let extractSlug
+	// export let fragmentSlug;
 
 	import Extract from '../../../components/Extract.svelte';
 	import Card from '../../../components/Card.svelte';
 
-	$: parentExtract = extracts.slice(0,1);
-	$: childExtracts = extracts.slice(1);
+	let parentExtract, childExtracts;
 
 	$: {
-		console.log(parentExtract, childExtracts);
+		let parentIndex = extracts.findIndex(e => {
+			return e.slug === extractSlug;
+		});
+		if(parentIndex === -1) parentIndex = 0;
+
+		parentExtract = [extracts[parentIndex]];
+		childExtracts = [...extracts];
+		childExtracts.splice(parentIndex, 1);
 	}
 </script>
 
@@ -43,7 +51,7 @@
 <ol>
 	{#each childExtracts as child (child.id)}
 	<li>
-		<Extract extract="{child}" />
+		<Extract extract="{child}" suppressCitation />
 	</li>
 	{/each}
 </ol>

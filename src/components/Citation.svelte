@@ -7,6 +7,7 @@
 	import CreatorNames from './CreatorNames.svelte';
 
 	export let extract = {};
+	export let suppressCitation = false;
 
 	import { stores } from '@sapper/app';
 	const { page } = stores();
@@ -14,39 +15,44 @@
 	const { params } = $page;
 	const { entity, slug: entitySlug } = params;
 
-	const creatorNames = get(extract, 'combined_creator_names', []);
+	const combinedCreatorNames = get(extract, 'combined_creator_names', []);
+	const parentCreatorNames = get(extract, 'parent_creator_names', []);
 	const parentTitle = get(extract, 'parent_title[0]');
 	const parentSlug = get(extract, 'parent_slug[0]');
 	const type = get(extract, 'type', 'Work');
 	const source = get(extract, 'source');
 	const isWork = get(extract, 'is_work');
 
+	$: creatorNames = suppressCitation ? combinedCreatorNames.filter(name => parentCreatorNames.indexOf(name) === -1) : combinedCreatorNames;
+	$: showCitation = isWork ? true : suppressCitation ? creatorNames.length > 0 : true;
 </script>
 
-<div class="{isWork ? 'work' : 'extract'} text-mono">
-{#if isWork}
-	<span>
-		{article(type)} <span class="extract-type">{type}</span>
+{#if showCitation}
+	<div class="{isWork ? 'work' : 'extract'} text-mono">
+	{#if isWork}
+		<span>
+			{article(type)} <span class="extract-type">{type}</span>
+			{#if creatorNames.length > 0}
+			by <CreatorNames creatorNames="{creatorNames}" />
+			{/if}		
+		</span>
+	{:else}
 		{#if creatorNames.length > 0}
-		by <CreatorNames creatorNames="{creatorNames}" />
-		{/if}		
-	</span>
-{:else}
-	{#if creatorNames.length > 0}
-	<CreatorNames class="creator-names" creatorNames="{creatorNames}" />
+		<CreatorNames class="creator-names" creatorNames="{creatorNames}" />
+		{/if}
+		{#if parentTitle && !suppressCitation}
+		<span class="parent-name">
+			<Link className="parent" href="/{entity}/{entitySlug}/{parentSlug}"><cite>{parentTitle}</cite></Link>
+		</span>
+		{/if}	
 	{/if}
-	{#if parentTitle}
-	<span class="parent-name">
-		<Link className="parent" href="/{entity}/{entitySlug}/{parentSlug}"><cite>{parentTitle}</cite></Link>
-	</span>
-	{/if}	
+	{#if source}
+		<small class="extract-source">
+			<Link href="{source}" newWindow>{domainOfUrl(source)}</Link>
+		</small>
+	{/if}
+	</div>
 {/if}
-{#if source}
-	<small class="extract-source">
-		<Link href="{source}" newWindow>{domainOfUrl(source)}</Link>
-	</small>
-{/if}
-</div>
 
 <style>
 	.extract-type {

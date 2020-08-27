@@ -20,6 +20,7 @@
 	}
 
 	export let extract = {};
+	export let suppressCitation = false;
 
 	const isWork = get(extract, 'is_work')
 
@@ -54,9 +55,7 @@
 	{/if}
 	<figure class="extract-main">
 		{#if isWork}
-		<figcaption class="extract-source">
-			<Citation {extract} />
-		</figcaption>
+		<figcaption class="extract-caption"><Citation {extract} {suppressCitation} /></figcaption>
 		{/if}
 		{#if images}
 		<figure class="image-container">
@@ -80,9 +79,7 @@
 		</blockquote>
 		{/if}
 		{#if !isWork}
-		<figcaption class="extract-source">
-			<Citation {extract} />
-		</figcaption>
+		<figcaption class="extract-caption"><Citation {extract} {suppressCitation} /></figcaption>
 		{/if}
 	</figure>
 	{#if childTitles || connectionTitles || topics}
@@ -150,6 +147,10 @@
 		font-style: inherit;
 		font-size: inherit;
 		font-family: inherit;
+	}
+
+	.extract-caption:empty {
+		display: none;
 	}
 
 	.extract-spaces {
