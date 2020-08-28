@@ -101,34 +101,16 @@
 </script>
 
 <div class="toolbar">
-	<div class="radio-group">
-		<label class="input input--radio">
-			<input type="radio" name="filter" bind:group="{entityType}" value="all" />
-			Everything
-		</label>
-		<label class="input input--radio">
-			<input type="radio" name="filter" bind:group="{entityType}" value="creator" />
-			Creators
-		</label>
-		<label class="input input--radio">
-			<input type="radio" name="filter" bind:group="{entityType}" value="space" />
-			Spaces
-		</label>
-	</div>
-	<div class="radio-group">
-		<label class="input input--radio">
-			<input type="radio" name="sort" bind:group="{primarySort}" value="time" />
-			Time
-		</label>
-		<label class="input input--radio">
-			<input type="radio" name="sort" bind:group="{primarySort}" value="count" />
-			Count
-		</label>
-		<label class="input input--radio">
-			<input type="radio" name="sort" bind:group="{primarySort}" value="alpha" />
-			Alpha
-		</label>
-	</div>
+	<select bind:value="{entityType}">
+		<option value="all">Everything</option>
+		<option value="creator">Creators</option>
+		<option value="space">Spaces</option>
+	</select>
+	<select bind:value="{primarySort}">
+		<option value="time">By Time</option>
+		<option value="count">By Count</option>
+		<option value="alpha">Alphabetically</option>
+	</select>
 </div>
 
 <ol>
@@ -155,29 +137,26 @@
 
 <style>
 	.toolbar {
+		--separation: 1rem;
 		display: flex;
+		flex-wrap: wrap;
 		position: sticky;
 		top: 0;
 		background-color: var(--layer-bg);
 		z-index: 1;
-		max-width: 100%;
-		overflow-x: auto;
+		padding-bottom: 1rem;
+		margin-left: calc(-1 * var(--separation));
+		margin-top: -0.5rem;
+		max-width: 400px;
 	}
 
-	.toolbar > * + * {
-		--separation: 1rem;
+	.toolbar > * {
 		margin-left: var(--separation);
-		padding-left: var(--separation);
-		border-left: 1px solid var(--divider);
+		margin-top: 0.5rem;
 	}
 
-	.radio-group {
-		display: flex;
-		margin-bottom: 1rem;
-	}
-
-	.radio-group > * + * {
-		margin-left: 0.5rem;
+	select {
+		flex: 1 0 125px;
 	}
 
 	ol {

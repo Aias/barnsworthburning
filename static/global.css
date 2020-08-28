@@ -265,6 +265,18 @@ small,
 	white-space: nowrap;
 }
 
+select {
+	background-color: var(--layer-bg);
+	border-radius: 0;
+	font-size: var(--font-size-0);
+	font-family: var(--font-stack-mono);
+	border: 1px solid var(--text-secondary);
+	padding: 0.25em 0.5em;
+	/* -webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none; */
+}
+
 /*    HELPERS    */
 
 .inherit {

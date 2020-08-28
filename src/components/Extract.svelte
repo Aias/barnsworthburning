@@ -21,6 +21,7 @@
 
 	export let extract = {};
 	export let suppressCitation = false;
+	export let idPrefix = '';
 
 	const isWork = get(extract, 'is_work')
 
@@ -30,6 +31,8 @@
 	const text = get(extract, 'extract', '');
 	const notes = get(extract, 'notes');
 	const topics = get(extract, 'space_topics');
+
+	const elementId = idPrefix ? `${idPrefix}--${slug}` : slug;
 
 	const childTitles = get(extract, 'child_titles');
 	const connectionTitles = get(extract, 'connection_titles'); 
@@ -47,7 +50,7 @@
 	}
 </script>
 
-<article class="extract {isWork ? 'extract--work' : 'extract--fragment'}" on:click="{(e) => console.log(extract, $page.params) }">
+<article id="{elementId}" class="extract {isWork ? 'extract--work' : 'extract--fragment'}" on:click="{(e) => console.log(extract, $page.params) }">
 	{#if title}
 	<header>
 		<h2 class="extract-title"><a href="{titleLink}">{title}</a></h2>
