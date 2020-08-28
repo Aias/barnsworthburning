@@ -112,28 +112,29 @@
 		<option value="alpha">Alphabetically</option>
 	</select>
 </div>
-
-<ol>
-	<!-- <li class="recent">
-		<a href="/recent">Recent Things</a>
-	</li>
-	<li class="center">
-		<span class="text-tertiary">⁘  ⁘  ⁘</span>
-	</li> -->
-	{#each index as node, i}
-	<li class:active="{isActive(node, $page)}">
-		{#if node.entity === 'creator'}
-		<a href="/creators/{node.slug}">{lastFirst(node)}</a>&nbsp;<span class="count text-secondary">
-			{node.num_extracts + node.num_fragments}
-		</span>
-		{:else}
-		<a href="/spaces/{node.topic}">{node.topic}</a>&nbsp;<span class="count text-secondary">
-			{node.extracts ? node.extracts.length : 0}
-		</span>
-		{/if}
-	</li>
-	{/each}
-</ol>
+<nav>
+	<ol>
+		<!-- <li class="recent">
+			<a href="/recent">Recent Things</a>
+		</li>
+		<li class="center">
+			<span class="text-tertiary">⁘  ⁘  ⁘</span>
+		</li> -->
+		{#each index as node, i}
+		<li class:active="{isActive(node, $page)}">
+			{#if node.entity === 'creator'}
+			<a href="/creators/{node.slug}">{lastFirst(node)}</a>&nbsp;<span class="count text-secondary">
+				{node.num_extracts + node.num_fragments}
+			</span>
+			{:else}
+			<a href="/spaces/{node.topic}">{node.topic}</a>&nbsp;<span class="count text-secondary">
+				{node.extracts ? node.extracts.length : 0}
+			</span>
+			{/if}
+		</li>
+		{/each}
+	</ol>
+</nav>
 
 <style>
 	.toolbar {
@@ -144,15 +145,14 @@
 		top: 0;
 		background-color: var(--layer-bg);
 		z-index: 1;
-		padding-bottom: 1rem;
+		padding-bottom: 0.5rem;
 		margin-left: calc(-1 * var(--separation));
-		margin-top: -0.5rem;
 		max-width: 400px;
 	}
 
 	.toolbar > * {
 		margin-left: var(--separation);
-		margin-top: 0.5rem;
+		margin-bottom: 0.5rem;
 	}
 
 	select {

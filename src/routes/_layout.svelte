@@ -34,11 +34,11 @@
 
 <SEO />
 
-<div class="{getEmojiForTheme($isDarkMode)}">
+<div class="app-container {getEmojiForTheme($isDarkMode)}">
 	<header>
-		<nav>
+		<div class="index-container">
 			<Index {creators} {spaces} />
-		</nav>
+		</div>
 	</header>
 	<main>
 		<slot />
@@ -46,7 +46,7 @@
 </div>
 
 <style>
-	div {
+	.app-container {
 		--padding: 2rem;
 		display: flex;
 		padding: var(--padding);
@@ -58,9 +58,53 @@
 		position: sticky;
 		top: var(--padding);
 		overflow-y: auto;
+		overflow-x: hidden;
 		padding: 0 1rem;
 		margin: 0 -1rem;
 	}
+
+	.index-container {
+		position: relative;
+	}
+
+	@media (max-width: 1150px) {
+		header {
+			position: fixed;
+			background-color: var(--text-primary);
+			z-index: 1;
+			width: 0;
+			min-width: 0;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			max-height: 100vh;
+			padding: 1rem;
+			margin: 0;
+			border-right: 1px solid var(--divider);
+			transition: background-color 0.25s, width 0.25s;
+		}
+
+		header > * {
+			opacity: 0;
+			transition: opacity 0.25s;
+		}
+
+		header:hover,
+		header:active, 
+		header:focus-within, 
+		header:focus {
+			background-color: var(--layer-bg);
+			width: 300px;
+		}
+
+		header:hover > *,
+		header:active > *, 
+		header:focus-within > *, 
+		header:focus > * {
+			opacity: 1;
+		}
+	}
+
 	main {
 		margin-left: 2rem;
 	}
