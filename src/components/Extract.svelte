@@ -2,7 +2,6 @@
 	import markdown from '../helpers/markdown';
 	import slugify from '../helpers/slugify';
 	import get from '../helpers/get'
-	import Link from './Link.svelte';
 	import Citation from './Citation.svelte';
 
 	import { stores } from '@sapper/app';

@@ -44,9 +44,10 @@
 	export let creator;
 	export let space;
 	export let extracts;
+	export let segment;
 </script>
 
-<main class="wrapper">
+<main class="wrapper" class:layout="{segment}">
 	<div class="gallery">
 		<ExtractGallery {creator} {space} {extracts} />
 	</div>
@@ -87,5 +88,6 @@
 		width: 0;
 		margin: 0;
 		padding: 0;
+		min-height: 0;
 	}
 </style>

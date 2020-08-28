@@ -3,7 +3,6 @@
 	import get from '../helpers/get'
 	import { article } from '../helpers/isFirstLetterAVowel';
 	import domainOfUrl from '../helpers/domainOfUrl';
-	import Link from './Link.svelte';
 	import CreatorNames from './CreatorNames.svelte';
 
 	export let extract = {};
@@ -42,13 +41,13 @@
 		{/if}
 		{#if parentTitle && !suppressCitation}
 		<span class="parent-name">
-			<Link className="parent" href="/{entity}/{entitySlug}/{parentSlug}"><cite>{parentTitle}</cite></Link>
+			<a class="parent" href="/{entity}/{entitySlug}/{parentSlug}"><cite>{parentTitle}</cite></a>
 		</span>
 		{/if}	
 	{/if}
 	{#if source}
 		<small class="extract-source">
-			<Link href="{source}" newWindow>{domainOfUrl(source)}</Link>
+			<a href="{source}" target="_blank">{domainOfUrl(source)}</a>
 		</small>
 	{/if}
 	</div>
