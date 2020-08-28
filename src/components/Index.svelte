@@ -101,16 +101,18 @@
 </script>
 
 <div class="toolbar">
-	<select bind:value="{entityType}">
-		<option value="all">Everything</option>
-		<option value="creator">Creators</option>
-		<option value="space">Spaces</option>
-	</select>
-	<select bind:value="{primarySort}">
-		<option value="time">By Time</option>
-		<option value="count">By Count</option>
-		<option value="alpha">Alphabetically</option>
-	</select>
+	<div class="field-group">
+		<select bind:value="{entityType}">
+			<option value="all">Everything</option>
+			<option value="creator">Creators</option>
+			<option value="space">Spaces</option>
+		</select>
+		<select bind:value="{primarySort}">
+			<option value="time">By Time</option>
+			<option value="count">By Count</option>
+			<option value="alpha">Alphabetically</option>
+		</select>
+	</div>
 </div>
 <nav>
 	<ol>
@@ -138,19 +140,23 @@
 
 <style>
 	.toolbar {
-		--separation: 1rem;
-		display: flex;
-		flex-wrap: wrap;
 		position: sticky;
 		top: 0;
 		background-color: var(--layer-bg);
 		z-index: 1;
-		padding-bottom: 0.5rem;
+		margin: 0 calc(-1 * var(--padding));
+		padding: 0 var(--padding) 0.5rem;
+	}
+
+	.field-group {
+		--separation: 1rem;
+		display: flex;
+		flex-wrap: wrap;
 		margin-left: calc(-1 * var(--separation));
 		max-width: 400px;
 	}
 
-	.toolbar > * {
+	.field-group > * {
 		margin-left: var(--separation);
 		margin-bottom: 0.5rem;
 	}

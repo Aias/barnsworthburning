@@ -40,9 +40,7 @@
 			<Index {creators} {spaces} />
 		</div>
 	</header>
-	<main>
-		<slot />
-	</main>
+	<slot />
 </div>
 
 <style>
@@ -60,14 +58,18 @@
 		overflow-y: auto;
 		overflow-x: hidden;
 		padding: 0 1rem;
-		margin: 0 -1rem;
+		margin: 0 -1.5rem;
 	}
 
 	.index-container {
 		position: relative;
 	}
 
-	@media (max-width: 1150px) {
+	header + :global(*) {
+		margin-left: 2rem;
+	}
+
+	@media (max-width: 0px) {
 		header {
 			position: fixed;
 			background-color: var(--text-primary);
@@ -103,12 +105,5 @@
 		header:focus > * {
 			opacity: 1;
 		}
-	}
-
-	main {
-		margin-left: 2rem;
-	}
-	main:empty {
-		display: none;
 	}
 </style>

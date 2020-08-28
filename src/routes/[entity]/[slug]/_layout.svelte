@@ -46,12 +46,12 @@
 	export let extracts;
 </script>
 
-<div class="wrapper">
+<main class="wrapper">
 	<div class="gallery">
 		<ExtractGallery {creator} {space} {extracts} />
 	</div>
 	<div class="panel"><slot /></div>
-</div>
+</main>
 
 <style>
 	.wrapper {
