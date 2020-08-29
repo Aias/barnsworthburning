@@ -25,9 +25,11 @@
 
 	const images = get(extract, 'extract_image');
 	const imageCaption = get(extract, 'image_caption');
+
+	const logClicks = false;
 </script>
 
-<article id="{elementId}" class="extract {isWork ? 'extract--work' : 'extract--fragment'}" on:click="{(e) => console.log(extract) }">
+<article id="{elementId}" class="extract {isWork ? 'extract--work' : 'extract--fragment'}" on:click="{(e) => logClicks && console.log(extract) }">
 	{#if title}
 	<header>
 		<h2 class="extract-title"><InternalLink toExtract="{isWork ? slug : parentSlug}" toFragment="{isWork ? '' : slug}">{title}</InternalLink></h2>

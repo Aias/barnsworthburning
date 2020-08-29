@@ -38,8 +38,10 @@
 			destinationUrl = `/${destinationArray.join('/')}`;
 		}
 	}
+
+	$: isActive = destinationUrl === $page.path;
 </script>
 
-<a href="{destinationUrl}" rel="{prefetch ? 'prefetch' : undefined}" {...$$restProps}>
+<a href="{destinationUrl}" class:active="{isActive}" rel="{prefetch ? 'prefetch' : undefined}" {...$$restProps}>
 	<slot />
 </a>
