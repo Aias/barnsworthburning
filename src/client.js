@@ -5,5 +5,5 @@ sapper
 		target: document.querySelector('#🕹️')
 	})
 	.then(() => {
-		sapper.prefetch('/works');
+		// sapper.prefetch('/works');
 	});

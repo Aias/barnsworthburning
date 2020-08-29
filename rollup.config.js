@@ -12,7 +12,9 @@ const dev = mode === 'development';
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
 const onwarn = (warning, onwarn) =>
-	(warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) || onwarn(warning);
+	(warning.code === 'MISSING_EXPORT' && /'preload'/.test(warning.message)) ||
+	(warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) ||
+	onwarn(warning);
 
 export default {
 	client: {
@@ -78,6 +80,7 @@ export default {
 			}),
 			svelte({
 				generate: 'ssr',
+				hydratable: true,
 				dev
 			}),
 			resolve({
@@ -85,9 +88,7 @@ export default {
 			}),
 			commonjs()
 		],
-		external: Object.keys(pkg.dependencies).concat(
-			require('module').builtinModules || Object.keys(process.binding('natives'))
-		),
+		external: Object.keys(pkg.dependencies).concat(require('module').builtinModules),
 
 		preserveEntrySignatures: 'strict',
 		onwarn
@@ -107,6 +108,6 @@ export default {
 	// 	],
 
 	// 	preserveEntrySignatures: false,
-	// 	onwarn
+	// 	onwarn,
 	// }
 };

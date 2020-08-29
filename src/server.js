@@ -14,8 +14,8 @@ server // You can also use Express
 		sirv('static', { dev }),
 		sapper.middleware({
 			session: (req, res) => ({
-				extractsLoaded: false,
-				worksLoaded: false
+				activeWindow: 'index', // index, gallery, panel
+				activeParams: {}
 			})
 		})
 	)

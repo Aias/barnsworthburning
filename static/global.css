@@ -35,7 +35,7 @@
 	--clr-lighter-20: hsla(0, 0%, 100%, 0.2);
 	--clr-lighter-30: hsla(0, 0%, 100%, 0.4);
 	--clr-lighter-40: hsla(0, 0%, 100%, 0.7);
-	--clr-lighter-50: hsla(0, 0%, 100%, 0.95);
+	--clr-lighter-50: hsla(0, 0%, 100%, 0.93);
 
 	--clr-darker-10: hsla(0, 0%, 0%, 0.05);
 	--clr-darker-20: hsla(0, 0%, 0%, 0.17);
@@ -50,6 +50,8 @@
 	--font-size-40: calc(5em / 3);
 	--font-size-50: calc(6em / 3);
 
+	--line-height: calc(1.5 / 0.875); /* 24px for base font size */
+
 	--reading-width-narrow: 65ch;
 	--reading-width-wide: 75ch;
 }
@@ -57,7 +59,7 @@
 .🌞 {
 	--text-primary: var(--clr-darker-50);
 	--text-secondary: var(--clr-darker-40);
-	--text-tertiary: var(--clr-darker-20);
+	--text-tertiary: var(--clr-darker-30);
 	--text-inverted: var(--clr-lighter-50);
 	--theme-primary: var(--clr-red-base);
 	--theme-primary-bg: var(--clr-red-30);
@@ -70,13 +72,13 @@
 	--layer-highlight: var(--clr-gray-80);
 	--clr-scrollbar: var(--clr-darker-20);
 	--divider: var(--clr-darker-20);
-	--container-border: 0.5px solid var(--clr-darker-30);
+	--container-border: 1px solid var(--divider);
 }
 
 .🌒 {
 	--text-primary: var(--clr-lighter-50);
 	--text-secondary: var(--clr-lighter-40);
-	--text-tertiary: var(--clr-lighter-20);
+	--text-tertiary: var(--clr-lighter-30);
 	--text-inverted: var(--clr-darker-50);
 	--theme-primary: var(--clr-yellow-base);
 	--theme-primary-bg: var(--clr-yellow-60);
@@ -89,13 +91,14 @@
 	--layer-highlight: var(--clr-gray-20);
 	--clr-scrollbar: var(--clr-lighter-20);
 	--divider: var(--clr-lighter-40);
-	--container-border: 0.5px solid var(--clr-lighter-20);
+	--container-border: 2px solid var(--clr-gray-0);
 }
 
 .🌞,
 .🌒 {
 	--text-link: var(--theme-primary);
 	--text-link-hover: var(--theme-accent-text);
+	color: var(--text-primary);
 }
 
 /*    TYPOGRAPHY    */
@@ -104,9 +107,8 @@ html {
 	font-family: var(--font-stack-sans);
 	font-feature-settings: 'liga';
 	font-weight: 400;
-	font-size: 16px;
-	/* Used as basis for spacing throughout the app. */
-	line-height: calc(1.5 / 0.875); /* 24px for base font size */
+	font-size: 16px; /* Used as basis for spacing throughout the app. */
+	line-height: var(--line-height);
 }
 
 html,
@@ -141,7 +143,7 @@ h1 {
 
 h2 {
 	font-size: var(--font-size-30);
-	line-height: 1.4;
+	line-height: 1.5;
 }
 
 blockquote {
@@ -155,18 +157,25 @@ blockquote {
 
 blockquote > * + *,
 article > * + *,
-figcaption > * + *,
-* + figcaption {
-	margin-top: 1em;
+section > * + *,
+figure > * + *,
+footer > * + * {
+	--spacing: 1em;
+	margin-top: var(--spacing);
 }
 
-blockquote:not(.extract-main) em {
+blockquote:not(.extract-text) em {
 	font-style: normal;
 }
 
 hr {
 	color: var(--divider);
-	margin: 1rem 0;
+	margin: calc(1em * var(--line-height) - 1px) 0 0 0;
+	padding-top: calc(1em * var(--line-height));
+	border-style: solid;
+	border-bottom: none;
+	border-left: none;
+	border-right: none;
 }
 
 ul {
@@ -222,9 +231,19 @@ code,
 kbd,
 samp {
 	font-family: var(--font-stack-mono);
-	font-size: 0.925em;
 	/* The monospace fonts tend to be optically larger for a given font size. */
-	line-height: calc((1.5 / 0.875) / 0.925);
+	font-size: 0.933em;
+	line-height: calc((1.5 / 0.875) / 0.933);
+}
+
+small,
+.small {
+	font-size: var(--font-size-0);
+}
+
+.caption {
+	font-size: var(--font-size-0);
+	color: var(--text-secondary);
 }
 
 .text-mono a {
@@ -238,6 +257,31 @@ samp {
 
 .markdown-block > *:last-child {
 	margin-bottom: 0;
+}
+
+/*    CONTROLS    */
+
+.input--radio {
+	white-space: nowrap;
+}
+
+select {
+	background-color: var(--layer-bg);
+	border-radius: 0;
+	font-size: var(--font-size-0);
+	font-family: var(--font-stack-mono);
+	border: 1px solid var(--text-secondary);
+	padding: 0.25em 0.5em;
+	/* -webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none; */
+}
+
+select:focus {
+	outline: none;
+	border-color: var(--theme-primary);
+	box-shadow: 0 0 2px var(--theme-primary);
+	color: var(--theme-primary-text);
 }
 
 /*    HELPERS    */
@@ -255,7 +299,15 @@ samp {
 	color: var(--text-secondary);
 }
 
-.text-right {
+.text-tertiary {
+	color: var(--text-tertiary);
+}
+
+.center {
+	text-align: center;
+}
+
+.right {
 	text-align: right;
 }
 
