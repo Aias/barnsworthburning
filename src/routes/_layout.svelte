@@ -7,17 +7,19 @@
 	import select from '../helpers/select.js';
 	import { setContext, onMount } from 'svelte';
 	import { writable } from 'svelte/store'
+	import { loading } from '../stores';
 
 	import SEO from '../components/SEO.svelte';
 	import Index from '../components/Index.svelte';
+	import Loading from '../components/Loading.svelte';
 
 	let { page, session } = stores();
-
 	let activeParams = $page.params;
 	const activeWindow = writable(activeParams.extract ? 'panel' : activeParams.slug || activeParams.entity ? 'gallery' : 'index');
 	setContext('activeWindow', activeWindow);
 
 	onMount(async () => {
+		$loading = true;
 		creators = await select('creators', {
 			fields: ['full_name', 'last_name', 'extracts', 'spaces', 'last_updated', 'connections_last_updated', 'slug', 'num_extracts', 'num_fragments'],
 			view: 'By Count',
@@ -29,6 +31,7 @@
 			view: 'By Count',
 			maxRecords: 200
 		})(fetch);
+		$loading = false;
 	})
 
 	$: {
@@ -58,6 +61,7 @@
 <SEO />
 
 <div class="app-container 🌞 active--{$activeWindow}" class:layout="{segment}">
+	<Loading />
 	{#if creators && spaces}
 	<header>
 		<div class="index-container">
@@ -75,6 +79,7 @@
 		position: relative;
 		align-items: flex-start;
 	}
+
 	header {
 		flex: 1;
 		min-width: 200px;
