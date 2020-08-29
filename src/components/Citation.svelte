@@ -5,12 +5,16 @@
 	import domainOfUrl from '../helpers/domainOfUrl';
 	import CreatorNames from './CreatorNames.svelte';
 	import InternalLink from './InternalLink.svelte';
+	import { getContext } from 'svelte';
+
+	const parentContainer = getContext('parentContainer');
 
 	export let extract = {};
 	export let suppressCitation = false;
 
 	const combinedCreatorNames = get(extract, 'combined_creator_names', []);
 	const parentCreatorNames = get(extract, 'parent_creator_names', []);
+	const slug = get(extract, 'slug');
 	const parentTitle = get(extract, 'parent_title[0]');
 	const parentSlug = get(extract, 'parent_slug[0]');
 	const type = get(extract, 'type', 'Work');
@@ -36,7 +40,7 @@
 		{/if}
 		{#if parentTitle && !suppressCitation}
 		<span class="parent-name">
-			<InternalLink class="parent" toExtract="{parentSlug}"><cite>{parentTitle}</cite></InternalLink>
+			<InternalLink class="parent" toExtract="{parentSlug}" toFragment="{parentContainer === 'panel' ? slug : undefined}"><cite>{parentTitle}</cite></InternalLink>
 		</span>
 		{/if}	
 	{/if}

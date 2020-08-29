@@ -24,12 +24,14 @@
 	export let extractSlug
 	// export let fragmentSlug;
 
+	import { setContext } from 'svelte';
 	import Extract from '../../../components/Extract.svelte';
 	import Card from '../../../components/Card.svelte';
 
 	let parentExtract, childExtracts;
 
 	const idPrefix = 'panel';
+	setContext('parentContainer', 'panel');
 
 	$: {
 		let parentIndex = extracts.findIndex(e => {
