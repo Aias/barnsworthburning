@@ -4,12 +4,14 @@
 	export async function preload(page, session) {
 		const creators = await select('creators', {
 			fields: ['full_name', 'last_name', 'extracts', 'spaces', 'last_updated', 'connections_last_updated', 'slug', 'num_extracts', 'num_fragments'],
-			filterByFormula: `{num_extracts} > 0`
+			view: 'By Count',
+			maxRecords: 200
 		})(this.fetch);
 
 		const spaces = await select('spaces', {
 			fields: ['topic', 'extracts', 'creators', 'last_updated', 'connections_last_updated'],
-			filterByFormula: `{num_extracts} > 1`
+			view: 'By Count',
+			maxRecords: 200
 		})(this.fetch);
 
 		return { creators, spaces };
