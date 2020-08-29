@@ -1,0 +1,45 @@
+<script>
+	export let toIndex = false;
+	export let toType = '';
+	export let toEntity = '';
+	export let toExtract = '';
+	export let toFragment = '';
+	export let prefetch = false;
+
+	import { stores } from '@sapper/app';
+	const { page } = stores();
+
+	let destinationUrl = '';
+
+	$: {
+		if(toIndex) {
+			destinationUrl = '/';
+		}
+		else {
+			let { entity: currentType, slug: currentEntity, extract } = $page.params;
+			let currentExtract, currentFragment;
+			if(extract) {
+				currentExtract = extract[0];
+				currentFragment = extract[1];
+			}
+			
+			let destinationArray = [];
+			if(toType !== false && toEntity !== false) {
+				destinationArray = destinationArray.concat(toType || currentType, toEntity || currentEntity);
+
+				if(toExtract !== false) {
+					destinationArray = destinationArray.concat(toExtract || currentExtract);
+					if(toFragment) {
+						destinationArray = destinationArray.concat(toFragment || currentFragment);
+					}
+				}
+			}
+
+			destinationUrl = `/${destinationArray.join('/')}`;
+		}
+	}
+</script>
+
+<a href="{destinationUrl}" rel="{prefetch ? 'prefetch' : undefined}" {...$$restProps}>
+	<slot />
+</a>

@@ -1,22 +1,9 @@
 <script>
 	import markdown from '../helpers/markdown';
 	import slugify from '../helpers/slugify';
-	import get from '../helpers/get'
+	import get from '../helpers/get';
 	import Citation from './Citation.svelte';
-
-	import { stores } from '@sapper/app';
-	const { page } = stores();
-
-	let entity, entitySlug, extractSlug, fragmentSlug;
-	$: {
-		const { params } = $page;
-		entity = params.entity;
-		entitySlug = params.slug;
-		if(params.extract) {
-			extractSlug = params.extract[0];
-			fragmentSlug = params.extract[1];
-		}
-	}
+	import InternalLink from './InternalLink.svelte';
 
 	export let extract = {};
 	export let suppressCitation = false;
@@ -38,21 +25,12 @@
 
 	const images = get(extract, 'extract_image');
 	const imageCaption = get(extract, 'image_caption');
-
-	let titleLink;
-
-	$: {
-		const rootPath = [entity, entitySlug];
-		const fullPath = isWork ? rootPath.concat([slug]) : rootPath.concat([parentSlug, slug]);
-
-		titleLink = `/${fullPath.join('/')}`;
-	}
 </script>
 
-<article id="{elementId}" class="extract {isWork ? 'extract--work' : 'extract--fragment'}" on:click="{(e) => console.log(extract, $page.params) }">
+<article id="{elementId}" class="extract {isWork ? 'extract--work' : 'extract--fragment'}" on:click="{(e) => console.log(extract) }">
 	{#if title}
 	<header>
-		<h2 class="extract-title"><a href="{titleLink}">{title}</a></h2>
+		<h2 class="extract-title"><InternalLink toExtract="{isWork ? slug : parentSlug}" toFragment="{isWork ? '' : slug}">{title}</InternalLink></h2>
 	</header>
 	{/if}
 	<figure class="extract-main">
@@ -89,21 +67,21 @@
 		{#if childTitles}
 		<ol class="linked-list extract-children">
 			{#each childTitles as child}
-			&ZeroWidthSpace;<li>&ZeroWidthSpace;<a class="child" href="/{entity}/{entitySlug}/{slug}/{slugify(child)}">&ZeroWidthSpace;{child}&ZeroWidthSpace;</a>&ZeroWidthSpace;</li>&ZeroWidthSpace;
+			&ZeroWidthSpace;<li>&ZeroWidthSpace;<InternalLink class="link link--child" toExtract="{slug}" toFragment="{slugify(child)}">&ZeroWidthSpace;{child}&ZeroWidthSpace;</InternalLink>&ZeroWidthSpace;</li>&ZeroWidthSpace;
 			{/each}
 		</ol>
 		{/if}
 		{#if connectionTitles}
 		<ol class="linked-list extract-connections">
-			{#each connectionTitles as child}
-			&ZeroWidthSpace;<li>&ZeroWidthSpace;<a class="child" href="/{entity}/{entitySlug}/{slugify(child)}">&ZeroWidthSpace;{child}&ZeroWidthSpace;</a>&ZeroWidthSpace;</li>&ZeroWidthSpace;
+			{#each connectionTitles as connection}
+			&ZeroWidthSpace;<li>&ZeroWidthSpace;<InternalLink class="link link--connection" toExtract="{slugify(connection)}">&ZeroWidthSpace;{connection}&ZeroWidthSpace;</InternalLink>&ZeroWidthSpace;</li>&ZeroWidthSpace;
 			{/each}
 		</ol>
 		{/if}
 		{#if topics}
 		<ul class="extract-spaces">
 			{#each topics as topic}
-			<li><a class="topic" href="/spaces/{topic}">{topic}</a></li>
+			<li><InternalLink class="topic" toType="spaces" toEntity="{topic}">{topic}</InternalLink></li>
 			{/each}
 		</ul>
 		{/if}
@@ -121,7 +99,7 @@
 		max-width: var(--reading-width-wide);
 	}
 
-	.extract-title > a {
+	.extract-title > :global(a) {
 		font-family: inherit;
 		color: var(--text-primary);
 		font-size: inherit;
@@ -167,13 +145,13 @@
 		margin-left: 1em;
 	}
 
-	.topic {
+	:global(.topic) {
 		color: var(--text-secondary);
 		text-transform: uppercase;
 		white-space: nowrap;
 	}
 
-	.topic::before {
+	:global(.topic::before) {
 		content: '#';
 		opacity: 0.5;
 		display: inline-block;
@@ -207,7 +185,7 @@
 		content: '⮂';
 	}
 
-	.linked-list li, .linked-list a {
+	.linked-list :global(*) {
 		display: inline;
 	}
 

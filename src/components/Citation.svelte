@@ -4,15 +4,10 @@
 	import { article } from '../helpers/isFirstLetterAVowel';
 	import domainOfUrl from '../helpers/domainOfUrl';
 	import CreatorNames from './CreatorNames.svelte';
+	import InternalLink from './InternalLink.svelte';
 
 	export let extract = {};
 	export let suppressCitation = false;
-
-	import { stores } from '@sapper/app';
-	const { page } = stores();
-
-	const { params } = $page;
-	const { entity, slug: entitySlug } = params;
 
 	const combinedCreatorNames = get(extract, 'combined_creator_names', []);
 	const parentCreatorNames = get(extract, 'parent_creator_names', []);
@@ -41,7 +36,7 @@
 		{/if}
 		{#if parentTitle && !suppressCitation}
 		<span class="parent-name">
-			<a class="parent" href="/{entity}/{entitySlug}/{parentSlug}"><cite>{parentTitle}</cite></a>
+			<InternalLink class="parent" toExtract="{parentSlug}"><cite>{parentTitle}</cite></InternalLink>
 		</span>
 		{/if}	
 	{/if}

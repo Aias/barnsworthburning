@@ -1,9 +1,10 @@
 <script>
-	import { stores } from '@sapper/app';
-	const { page } = stores();
-
 	export let creators = [];
 	export let spaces = [];
+
+	import InternalLink from './InternalLink.svelte';
+	import { stores } from '@sapper/app';
+	const { page } = stores();
 
 	// let secondarySort = 'alpha';
 	let primarySort = 'time';
@@ -125,11 +126,15 @@
 		{#each index as node, i}
 		<li class:active="{isActive(node, $page)}">
 			{#if node.entity === 'creator'}
-			<a href="/creators/{node.slug}">{lastFirst(node)}</a>&nbsp;<span class="count text-secondary">
+			<InternalLink toType="creators" toEntity="{node.slug}">{lastFirst(node)}</InternalLink>&nbsp;<span
+				class="count text-secondary"
+			>
 				{node.num_extracts + node.num_fragments}
 			</span>
 			{:else}
-			<a href="/spaces/{node.topic}">{node.topic}</a>&nbsp;<span class="count text-secondary">
+			<InternalLink toType="spaces" toEntity="{node.topic}">{node.topic}</InternalLink>&nbsp;<span
+				class="count text-secondary"
+			>
 				{node.extracts ? node.extracts.length : 0}
 			</span>
 			{/if}
@@ -189,7 +194,7 @@
 		--text-secondary: var(--clr-lighter-40);
 	}
 
-	li.active a {
+	li.active :global(a) {
 		color: var(--text-inverted);
 	}
 
