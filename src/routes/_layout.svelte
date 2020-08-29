@@ -22,7 +22,7 @@
 	export let creators;
 	export let spaces;
 	export let segment;
-	
+
 	import { stores } from '@sapper/app';
 	import { isDarkMode } from '../stores';
 	import getEmojiForTheme from '../helpers/getEmojiForTheme';
@@ -30,40 +30,38 @@
 	import SEO from '../components/SEO.svelte';
 	import Index from '../components/Index.svelte';
 
-	// let { page, session } = stores();
+	let { page, session } = stores();
 
-	// const { entity, slug, extract } = $page.params;
+	let activeParams = $page.params;
+	let activeWindow = activeParams.extract ? 'panel' : activeParams.slug || activeParams.entity ? 'gallery' : 'index';
 
-	// $session.activeParams = $page.params;
-	// $session.activeWindow = extract ? 'panel' : slug || entity ? 'gallery' : 'index';
+	$: {
+		const { entity: newEntity, slug: newSlug, extract: newExtract = [] } = $page.params;
+		const { entity: activeEntity, slug: activeSlug, extract: activeExtract = [] } = activeParams;
 
-	// $: {
-	// 	const { entity: newEntity, slug: newSlug, extract: newExtract = [] } = $page.params;
-	// 	const { entity: activeEntity, slug: activeSlug, extract: activeExtract = [] } = $session.activeParams;
+		let needsUpdate = false;
+		if(activeEntity && !newEntity) { // Navigating to index.
+			needsUpdate = true;
+			activeWindow = 'index';
+		}
+		else if(newEntity !== activeEntity || newSlug !== activeSlug) {
+			needsUpdate = true;
+			activeWindow = 'gallery';
+		}
+		else if(newExtract[0] !== activeExtract[0]) {
+			needsUpdate = true;
+			activeWindow = 'panel';
+		}
 
-	// 	let needsUpdate = false;
-	// 	if(activeEntity && !newEntity) { // Navigating to index.
-	// 		needsUpdate = true;
-	// 		$session.activeWindow = 'index';
-	// 	}
-	// 	else if(newEntity !== activeEntity || newSlug !== activeSlug) {
-	// 		needsUpdate = true;
-	// 		$session.activeWindow = 'gallery';
-	// 	}
-	// 	else if(newExtract[0] !== activeExtract[0]) {
-	// 		needsUpdate = true;
-	// 		$session.activeWindow = 'panel';
-	// 	}
-
-	// 	if(needsUpdate) {
-	// 		$session.activeParams = $page.params;
-	// 	}
-	// }
+		if(needsUpdate) {
+			activeParams = $page.params;
+		}
+	}
 </script>
 
 <SEO />
 
-<div class="app-container {getEmojiForTheme($isDarkMode)}" class:layout="{segment}">
+<div class="app-container {getEmojiForTheme($isDarkMode)} active--{activeWindow}" class:layout="{segment}">
 	<header>
 		<div class="index-container">
 			<Index {creators} {spaces} />
