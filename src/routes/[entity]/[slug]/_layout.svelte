@@ -58,24 +58,22 @@
 	.wrapper {
 		display: flex;
 		position: relative;
+		align-items: flex-start;
 	}
 	.gallery {
 		width: 500px;
 		position: sticky;
-		top: var(--padding);
-		max-height: calc(100vh - 1 * var(--padding));
-		padding-bottom: var(--padding);
-		margin-bottom: calc(-1 * var(--padding));
-		padding-right: 1.5rem;
-		margin-right: -1.5rem;
+		top: 0;
+		max-height: 100vh;
+		padding: var(--padding) calc(var(--padding) / 2 + 5px);
+		margin: 0 calc(var(--padding) / 2 - 5px);
 		overflow-y: auto;
 	}
 
 	.panel {
 		--transition: 0.33s ease-out;
 		min-height: 100vh;
-		margin: calc(-1 * var(--padding)) 0 calc(-1 * var(--padding)) 2rem;
-		padding: var(--padding) 0 var(--padding) 2rem;
+		padding: var(--padding);
 		border-left: 1px solid var(--divider);
 		width: var(--reading-width-narrow);
 		opacity: 1;

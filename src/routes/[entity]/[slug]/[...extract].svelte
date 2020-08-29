@@ -60,27 +60,33 @@
 		await tick();
 		if($activeWindow === 'panel') {
 			if(fragmentSlug) {
-				scrollPanelTo(fragmentSlug)
+				scrollPanel(fragmentSlug)
 			}
 			else {
-				scrollPanelTo(extractSlug);
+				scrollPanel();
 			}
 		}
 	})
 
-	const scrollPanelTo = (slug) => {
-		const elementId = `${idPrefix}--${slug}`;
-
+	const scrollPanel = (slug) => {
 		try {
-			const el = document.getElementById(elementId);
+			let offset = 0;
+			if(slug) {
+				const elementId = `${idPrefix}--${slug}`;
+				const el = document.getElementById(elementId);
+				if(el) {
+					offset = el.offsetTop;
+				}			
+			}
 
 			window.scrollTo({
-				top: el.offsetTop,
+				top: offset - 32,
 				behavior: 'smooth'
 			});
 		}
-		catch(e) {
+		catch(error) {
 			return null;
+			console.log(error);
 		}
 	}
 </script>

@@ -77,7 +77,8 @@
 	.app-container {
 		--padding: 2rem;
 		display: flex;
-		padding: var(--padding);
+		position: relative;
+		align-items: flex-start;
 	}
 	header {
 		flex: 1;
@@ -87,8 +88,8 @@
 		top: var(--padding);
 		overflow-y: auto;
 		overflow-x: hidden;
-		padding: 0 1rem;
-		margin: 0 -1.5rem;
+		padding: 0 var(--padding);
+		margin: var(--padding) 0;
 	}
 
 	.index-container {
@@ -96,44 +97,6 @@
 	}
 
 	header + :global(*) {
-		margin-left: 2rem;
-	}
-
-	@media (max-width: 0px) {
-		header {
-			position: fixed;
-			background-color: var(--text-primary);
-			z-index: 1;
-			width: 0;
-			min-width: 0;
-			top: 0;
-			left: 0;
-			bottom: 0;
-			max-height: 100vh;
-			padding: 1rem;
-			margin: 0;
-			border-right: 1px solid var(--divider);
-			transition: background-color 0.25s, width 0.25s;
-		}
-
-		header > * {
-			opacity: 0;
-			transition: opacity 0.25s;
-		}
-
-		header:hover,
-		header:active, 
-		header:focus-within, 
-		header:focus {
-			background-color: var(--layer-bg);
-			width: 300px;
-		}
-
-		header:hover > *,
-		header:active > *, 
-		header:focus-within > *, 
-		header:focus > * {
-			opacity: 1;
-		}
+		margin-left: calc(-0.5 * var(--padding));
 	}
 </style>
