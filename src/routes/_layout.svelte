@@ -1,32 +1,11 @@
-<script context="module">
-	import select from '../helpers/select.js';
-
-	export async function preload(page, session) {
-		const creators = await select('creators', {
-			fields: ['full_name', 'last_name', 'extracts', 'spaces', 'last_updated', 'connections_last_updated', 'slug', 'num_extracts', 'num_fragments'],
-			view: 'By Count',
-			maxRecords: 200
-		})(this.fetch);
-
-		const spaces = await select('spaces', {
-			fields: ['topic', 'extracts', 'creators', 'last_updated', 'connections_last_updated'],
-			view: 'By Count',
-			maxRecords: 200
-		})(this.fetch);
-
-		return { creators, spaces };
-	}
-</script>
-
 <script>
-	export let creators;
-	export let spaces;
+	let creators;
+	let spaces;
 	export let segment;
 
 	import { stores } from '@sapper/app';
-	import { isDarkMode } from '../stores';
-	import getEmojiForTheme from '../helpers/getEmojiForTheme';
-	import { setContext } from 'svelte';
+	import select from '../helpers/select.js';
+	import { setContext, onMount } from 'svelte';
 	import { writable } from 'svelte/store'
 
 	import SEO from '../components/SEO.svelte';
@@ -37,6 +16,20 @@
 	let activeParams = $page.params;
 	const activeWindow = writable(activeParams.extract ? 'panel' : activeParams.slug || activeParams.entity ? 'gallery' : 'index');
 	setContext('activeWindow', activeWindow);
+
+	onMount(async () => {
+		creators = await select('creators', {
+			fields: ['full_name', 'last_name', 'extracts', 'spaces', 'last_updated', 'connections_last_updated', 'slug', 'num_extracts', 'num_fragments'],
+			view: 'By Count',
+			maxRecords: 200
+		})(fetch);
+
+		spaces = await select('spaces', {
+			fields: ['topic', 'extracts', 'creators', 'last_updated', 'connections_last_updated'],
+			view: 'By Count',
+			maxRecords: 200
+		})(fetch);
+	})
 
 	$: {
 		const { entity: newEntity, slug: newSlug, extract: newExtract = [] } = $page.params;
@@ -64,13 +57,15 @@
 
 <SEO />
 
-<div class="app-container {getEmojiForTheme($isDarkMode)} active--{$activeWindow}" class:layout="{segment}">
+<div class="app-container 🌞 active--{$activeWindow}" class:layout="{segment}">
+	{#if creators && spaces}
 	<header>
 		<div class="index-container">
 			<Index {creators} {spaces} />
 		</div>
 	</header>
 	<slot />
+	{/if}
 </div>
 
 <style>
