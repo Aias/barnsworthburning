@@ -7,7 +7,7 @@
 	import select from '../helpers/select.js';
 	import { setContext, onMount } from 'svelte';
 	import { writable } from 'svelte/store';
-	import { slide } from 'svelte/transition';
+	import { fade, slide } from 'svelte/transition';
 	import { loading } from '../stores';
 
 	import SEO from '../components/SEO.svelte';
@@ -61,22 +61,22 @@
 
 <SEO />
 
-<div class="app-container 🌞 active--{$activeWindow}" class:layout="{segment}">
-	<Loading />
-	{#if creators && spaces}
+<Loading />
+{#if creators && spaces}
+<div class="app-container active--{$activeWindow}" class:layout="{segment}" in:fade="{{duration: 1000, delay: 500}}">
 	<header>
 		<div class="index-container">
 			<Index {creators} {spaces} />
 		</div>
 	</header>
 	<slot />
-	{:else}
-	<blockquote out:slide="{{duration: 1000}}">
-		I should have been a pair of ragged claws <br/>
-		Scuttling across the floors of silent seas.
-	</blockquote>
-	{/if}
 </div>
+{:else}
+<blockquote out:slide="{{duration: 1000}}">
+	I should have been a pair of ragged claws <br/>
+	Scuttling across the floors of silent seas.
+</blockquote>
+{/if}
 
 <style>
 	blockquote {
