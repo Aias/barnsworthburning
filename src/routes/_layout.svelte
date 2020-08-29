@@ -26,6 +26,8 @@
 	import { stores } from '@sapper/app';
 	import { isDarkMode } from '../stores';
 	import getEmojiForTheme from '../helpers/getEmojiForTheme';
+	import { setContext } from 'svelte';
+	import { writable } from 'svelte/store'
 
 	import SEO from '../components/SEO.svelte';
 	import Index from '../components/Index.svelte';
@@ -33,7 +35,8 @@
 	let { page, session } = stores();
 
 	let activeParams = $page.params;
-	let activeWindow = activeParams.extract ? 'panel' : activeParams.slug || activeParams.entity ? 'gallery' : 'index';
+	const activeWindow = writable(activeParams.extract ? 'panel' : activeParams.slug || activeParams.entity ? 'gallery' : 'index');
+	setContext('activeWindow', activeWindow);
 
 	$: {
 		const { entity: newEntity, slug: newSlug, extract: newExtract = [] } = $page.params;
@@ -42,15 +45,15 @@
 		let needsUpdate = false;
 		if(activeEntity && !newEntity) { // Navigating to index.
 			needsUpdate = true;
-			activeWindow = 'index';
+			$activeWindow = 'index';
 		}
 		else if(newEntity !== activeEntity || newSlug !== activeSlug) {
 			needsUpdate = true;
-			activeWindow = 'gallery';
+			$activeWindow = 'gallery';
 		}
 		else if(newExtract[0] !== activeExtract[0]) {
 			needsUpdate = true;
-			activeWindow = 'panel';
+			$activeWindow = 'panel';
 		}
 
 		if(needsUpdate) {
@@ -61,7 +64,7 @@
 
 <SEO />
 
-<div class="app-container {getEmojiForTheme($isDarkMode)} active--{activeWindow}" class:layout="{segment}">
+<div class="app-container {getEmojiForTheme($isDarkMode)} active--{$activeWindow}" class:layout="{segment}">
 	<header>
 		<div class="index-container">
 			<Index {creators} {spaces} />

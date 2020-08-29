@@ -42,6 +42,6 @@
 	$: isActive = destinationUrl === $page.path;
 </script>
 
-<a href="{destinationUrl}" class:active="{isActive}" rel="{prefetch ? 'prefetch' : undefined}" {...$$restProps}>
+<a sapper:noscroll href="{destinationUrl}" class:active="{isActive}" rel="{prefetch ? 'prefetch' : undefined}" {...$$restProps}>
 	<slot />
 </a>

@@ -14,7 +14,7 @@
 		return {
 			extracts,
 			extractSlug,
-			// fragmentSlug
+			fragmentSlug
 		};
 	}
 </script>
@@ -22,15 +22,16 @@
 <script>
 	export let extracts = [];
 	export let extractSlug
-	// export let fragmentSlug;
+	export let fragmentSlug;
 
-	import { setContext } from 'svelte';
+	import { setContext, getContext, tick, afterUpdate } from 'svelte';
 	import Extract from '../../../components/Extract.svelte';
 	import Card from '../../../components/Card.svelte';
 
 	let parentExtract, childExtracts;
 
 	const idPrefix = 'panel';
+	const activeWindow = getContext('activeWindow');
 	setContext('parentContainer', 'panel');
 
 	$: {
@@ -54,12 +55,24 @@
 		});
 	}
 
-	const scrollToFragment = (slug) => {
+	afterUpdate(async () => {
+		// Not quite perfect, something buggy here.
+		await tick();
+		if($activeWindow === 'panel') {
+			if(fragmentSlug) {
+				scrollPanelTo(fragmentSlug)
+			}
+			else {
+				scrollPanelTo(extractSlug);
+			}
+		}
+	})
+
+	const scrollPanelTo = (slug) => {
 		const elementId = `${idPrefix}--${slug}`;
 
 		try {
 			const el = document.getElementById(elementId);
-			console.log(el);
 
 			window.scrollTo({
 				top: el.offsetTop,
