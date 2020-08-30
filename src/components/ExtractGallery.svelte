@@ -47,7 +47,7 @@
 	.extract-list {
 		margin-top: 2rem;
 		list-style-type: none;
-		column-width: 33ch;
+		column-width: 35ch;
 	}
 
 	.extract-list > * {
