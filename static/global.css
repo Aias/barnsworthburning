@@ -322,3 +322,135 @@ select:focus {
 	--text-link: var(--text-inverted);
 	--text-link-hover: var(--text-inverted);
 }
+
+/*    LAYOUT    */
+html,
+body,
+.app {
+	height: 100%;
+}
+
+.app {
+	--padding: 2rem;
+}
+
+.layout {
+	display: flex;
+	position: relative;
+	align-items: flex-start;
+}
+
+.layout > * {
+	padding: var(--padding);
+	overflow-x: hidden;
+}
+
+.layout__panel:empty {
+	display: none;
+}
+
+@media screen and (max-width: 650px) {
+	.layout {
+		--padding: 1rem;
+		align-items: stretch;
+		max-height: 100%;
+		height: 100%;
+		overflow-x: auto;
+		overflow-y: hidden;
+		scroll-snap-type: x mandatory;
+	}
+
+	.layout__index,
+	.layout__gallery,
+	.layout__panel {
+		width: 100vw;
+		min-width: 100vw;
+		height: 100%;
+		overflow-y: auto;
+		position: relative;
+		scroll-snap-align: start;
+	}
+
+	.layout__index {
+		padding-top: 0;
+		margin-top: var(--padding);
+		height: calc(100% - var(--padding));
+	}
+}
+
+@media screen and (min-width: 650px) {
+	.layout__index {
+		flex: 2 1 0;
+		min-width: 200px;
+		max-height: 100vh;
+		position: sticky;
+		top: 0;
+		overflow-y: auto;
+	}
+
+	.layout__gallery {
+		flex: 2 1 var(--reading-width-narrow);
+		position: sticky;
+		top: 0;
+		max-height: 100vh;
+		overflow-y: auto;
+		padding-right: calc(var(--padding) / 2 + 5px);
+		margin-right: calc(var(--padding) / 2 - 5px);
+	}
+
+	.layout__panel {
+		flex: 1 1 var(--reading-width-narrow);
+		min-height: 100vh;
+		border-left: 1px solid var(--divider);
+		max-width: var(--reading-width-wide);
+	}
+}
+
+@media screen and (min-width: 650px) and (max-width: 1350px) {
+	.layout {
+		--index-width: 1.5rem;
+	}
+
+	.layout__index {
+		position: fixed;
+		min-width: 0;
+		flex: 0 0 auto;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		width: 0;
+		padding-right: 0;
+		padding-left: var(--index-width);
+		background-color: var(--text-secondary);
+		transition: width 0.5s, background-color 0.5s, padding 0.5s;
+		z-index: 1;
+		border-right: 1px solid var(--text-primary);
+	}
+
+	.layout__index > * {
+		opacity: 0;
+		transition: opacity 0.5s;
+	}
+
+	.layout__index:hover,
+	.layout__index:only-child {
+		width: 225px;
+		background-color: var(--layer-bg);
+		padding-right: var(--padding);
+		border-right: 1px solid var(--divider);
+	}
+
+	.layout__index:hover > *,
+	.layout__index:only-child > * {
+		opacity: 1;
+	}
+
+	.layout__index:only-child {
+		width: 100%;
+		border-right: none;
+	}
+
+	.layout__gallery {
+		margin-left: var(--index-width);
+	}
+}

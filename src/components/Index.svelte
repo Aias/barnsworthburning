@@ -173,8 +173,8 @@
 	ol {
 		margin: 0;
 		list-style-type: none;
-		column-width: 25ch;
-		column-gap: 5ch;
+		column-width: 23ch;
+		column-gap: var(--padding);
 		font-size: var(--font-size-0);
 	}
 

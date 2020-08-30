@@ -97,10 +97,6 @@
 </article>
 
 <style>
-	article {
-		max-width: var(--reading-width-wide);
-	}
-
 	.extract-title > :global(a) {
 		font-family: inherit;
 		color: var(--text-primary);

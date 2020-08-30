@@ -63,7 +63,7 @@
 
 <Loading />
 {#if creators && spaces}
-<main class="app-container layout active--{$activeWindow}" in:fade="{{duration: 1000, delay: 500}}" class:segment="{segment}">
+<main class="layout active--{$activeWindow}" in:fade="{{duration: 1000, delay: 500}}" class:segment="{segment}">
 	<aside class="layout__index">
 		<Index {creators} {spaces} />
 	</aside>
@@ -85,24 +85,5 @@
 		padding: 1rem;
 		border: 0;
 		background-color: var(--layer-bg);
-	}
-
-	.app-container {
-		--padding: 2rem;
-		display: flex;
-		position: relative;
-		align-items: flex-start;
-	}
-
-	.layout__index {
-		flex: 1;
-		min-width: 200px;
-		max-height: calc(100vh - 2 * var(--padding));
-		position: sticky;
-		top: var(--padding);
-		overflow-y: auto;
-		overflow-x: hidden;
-		padding: 0 var(--padding);
-		margin: var(--padding) 0;
 	}
 </style>

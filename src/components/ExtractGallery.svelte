@@ -36,6 +36,10 @@
 		align-items: baseline;
 	}
 
+	header > a {
+		text-align: right;
+	}
+
 	header > h1::first-letter {
 		text-transform: capitalize;
 	}
@@ -43,6 +47,13 @@
 	.extract-list {
 		margin-top: 2rem;
 		list-style-type: none;
+		column-width: 33ch;
+	}
+
+	.extract-list > * {
+		-webkit-column-break-inside: avoid;
+		page-break-inside: avoid;
+		break-inside: avoid;
 	}
 
 	.extract-list > :global(* + *) {

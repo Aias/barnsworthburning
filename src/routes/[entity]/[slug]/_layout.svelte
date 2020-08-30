@@ -51,34 +51,3 @@
 	<ExtractGallery {creator} {space} {extracts} />
 </div>
 <div class="layout__panel"><slot /></div>
-
-<style>
-	.layout__gallery {
-		width: 500px;
-		position: sticky;
-		top: 0;
-		max-height: 100vh;
-		padding: var(--padding) calc(var(--padding) / 2 + 5px);
-		margin: 0 calc(var(--padding) / 2 - 5px);
-		overflow-y: auto;
-	}
-
-	.layout__panel {
-		--transition: 0.33s ease-out;
-		min-height: 100vh;
-		padding: var(--padding);
-		border-left: 1px solid var(--divider);
-		width: var(--reading-width-narrow);
-		opacity: 1;
-		transition: width var(--transition), margin var(--transition), padding var(--transition);
-		overflow-x: hidden;
-	}
-
-	.layout__panel:empty {
-		opacity: 0;
-		width: 0;
-		margin: 0;
-		padding: 0;
-		min-height: 0;
-	}
-</style>
