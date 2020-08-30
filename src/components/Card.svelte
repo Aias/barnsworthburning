@@ -2,7 +2,7 @@
 	export let inverted = false;
 </script>
 
-<section class:🌒="{inverted}" class:card="{true}" {...$$restProps}>
+<section class:inverted="{inverted}" class:card="{true}" {...$$restProps}>
 	<slot />
 </section>
 

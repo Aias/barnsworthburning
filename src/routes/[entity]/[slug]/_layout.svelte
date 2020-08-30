@@ -47,20 +47,13 @@
 	export let segment;
 </script>
 
-<main class="wrapper" class:layout="{segment}">
-	<div class="gallery">
-		<ExtractGallery {creator} {space} {extracts} />
-	</div>
-	<div class="panel"><slot /></div>
-</main>
+<div class="layout__gallery" class:segment="{segment}">
+	<ExtractGallery {creator} {space} {extracts} />
+</div>
+<div class="layout__panel"><slot /></div>
 
 <style>
-	.wrapper {
-		display: flex;
-		position: relative;
-		align-items: flex-start;
-	}
-	.gallery {
+	.layout__gallery {
 		width: 500px;
 		position: sticky;
 		top: 0;
@@ -70,7 +63,7 @@
 		overflow-y: auto;
 	}
 
-	.panel {
+	.layout__panel {
 		--transition: 0.33s ease-out;
 		min-height: 100vh;
 		padding: var(--padding);
@@ -81,7 +74,7 @@
 		overflow-x: hidden;
 	}
 
-	.panel:empty {
+	.layout__panel:empty {
 		opacity: 0;
 		width: 0;
 		margin: 0;

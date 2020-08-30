@@ -63,14 +63,12 @@
 
 <Loading />
 {#if creators && spaces}
-<div class="app-container active--{$activeWindow}" class:layout="{segment}" in:fade="{{duration: 1000, delay: 500}}">
-	<header>
-		<div class="index-container">
-			<Index {creators} {spaces} />
-		</div>
-	</header>
+<main class="app-container layout active--{$activeWindow}" in:fade="{{duration: 1000, delay: 500}}" class:segment="{segment}">
+	<aside class="layout__index">
+		<Index {creators} {spaces} />
+	</aside>
 	<slot />
-</div>
+</main>
 {:else}
 <blockquote out:slide="{{duration: 1000}}">
 	I should have been a pair of ragged claws <br/>
@@ -96,7 +94,7 @@
 		align-items: flex-start;
 	}
 
-	header {
+	.layout__index {
 		flex: 1;
 		min-width: 200px;
 		max-height: calc(100vh - 2 * var(--padding));
@@ -106,13 +104,5 @@
 		overflow-x: hidden;
 		padding: 0 var(--padding);
 		margin: var(--padding) 0;
-	}
-
-	.index-container {
-		position: relative;
-	}
-
-	header + :global(*) {
-		margin-left: calc(-0.5 * var(--padding));
 	}
 </style>

@@ -56,7 +56,8 @@
 	--reading-width-wide: 75ch;
 }
 
-.🌞 {
+.🌞,
+.🌒 .inverted {
 	--text-primary: var(--clr-darker-50);
 	--text-secondary: var(--clr-darker-40);
 	--text-tertiary: var(--clr-darker-30);
@@ -75,7 +76,8 @@
 	--container-border: 1px solid var(--divider);
 }
 
-.🌒 {
+.🌒,
+.🌞 .inverted {
 	--text-primary: var(--clr-lighter-50);
 	--text-secondary: var(--clr-lighter-40);
 	--text-tertiary: var(--clr-lighter-30);
@@ -95,7 +97,8 @@
 }
 
 .🌞,
-.🌒 {
+.🌒,
+.inverted {
 	--text-link: var(--theme-primary);
 	--text-link-hover: var(--theme-accent-text);
 	color: var(--text-primary);
