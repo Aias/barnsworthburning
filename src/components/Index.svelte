@@ -101,56 +101,66 @@
 	};
 </script>
 
-<div class="toolbar">
-	<div class="field-group">
-		<select bind:value="{entityType}">
-			<option value="all">Everything</option>
-			<option value="creator">Creators</option>
-			<option value="space">Spaces</option>
-		</select>
-		<select bind:value="{primarySort}">
-			<option value="time">By Time</option>
-			<option value="count">By Count</option>
-			<option value="alpha">Alphabetically</option>
-		</select>
+<aside class="layout__index">
+	<div class="toolbar">
+		<div class="field-group">
+			<select bind:value="{entityType}">
+				<option value="all">Everything</option>
+				<option value="creator">Creators</option>
+				<option value="space">Spaces</option>
+			</select>
+			<select bind:value="{primarySort}">
+				<option value="time">By Time</option>
+				<option value="count">By Count</option>
+				<option value="alpha">Alphabetically</option>
+			</select>
+		</div>
 	</div>
-</div>
-<nav>
-	<ol>
-		<!-- <li class="recent">
-			<a href="/recent">Recent Things</a>
-		</li>
-		<li class="center">
-			<span class="text-tertiary">⁘  ⁘  ⁘</span>
-		</li> -->
-		{#each index as node, i}
-		<li class:active="{isActive(node, $page)}">
-			{#if node.entity === 'creator'}
-			<InternalLink toType="creators" toEntity="{node.slug}">{lastFirst(node)}</InternalLink>&nbsp;<span
-				class="count text-secondary"
-			>
-				{node.num_extracts + node.num_fragments}
-			</span>
-			{:else}
-			<InternalLink toType="spaces" toEntity="{node.topic}">{node.topic}</InternalLink>&nbsp;<span
-				class="count text-secondary"
-			>
-				{node.extracts ? node.extracts.length : 0}
-			</span>
-			{/if}
-		</li>
-		{/each}
-	</ol>
-</nav>
+	<nav>
+		<ol>
+			<!-- <li class="recent">
+				<a href="/recent">Recent Things</a>
+			</li>
+			<li class="center">
+				<span class="text-tertiary">⁘  ⁘  ⁘</span>
+			</li> -->
+			{#each index as node, i}
+			<li class:active="{isActive(node, $page)}">
+				{#if node.entity === 'creator'}
+				<InternalLink toType="creators" toEntity="{node.slug}">{lastFirst(node)}</InternalLink>&nbsp;<span
+					class="count text-secondary"
+				>
+					{node.num_extracts + node.num_fragments}
+				</span>
+				{:else}
+				<InternalLink toType="spaces" toEntity="{node.topic}">{node.topic}</InternalLink>&nbsp;<span
+					class="count text-secondary"
+				>
+					{node.extracts ? node.extracts.length : 0}
+				</span>
+				{/if}
+			</li>
+			{/each}
+		</ol>
+	</nav>
+</aside>
 
 <style>
+	aside {
+		height: 100%;
+		overflow-y: hidden;
+		display: flex;
+		flex-direction: column;
+	}
+	nav {
+		flex: 1;
+		overflow-y: auto;
+		padding-right: 0.5rem;
+		margin-right: -0.5rem;
+	}
 	.toolbar {
-		position: sticky;
-		top: 0;
-		background-color: var(--layer-bg);
-		z-index: 1;
-		margin: 0 calc(-1 * var(--padding));
-		padding: 0 var(--padding) 0.5rem;
+		flex: 0 0 auto;
+		padding-bottom: 1rem;
 	}
 
 	.field-group {

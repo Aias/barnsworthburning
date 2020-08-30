@@ -345,6 +345,10 @@ body,
 	overflow-x: hidden;
 }
 
+.layout__index {
+	max-height: 100vh;
+}
+
 .layout__panel:empty {
 	display: none;
 }

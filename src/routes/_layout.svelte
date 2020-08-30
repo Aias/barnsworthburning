@@ -64,9 +64,7 @@
 <Loading />
 {#if creators && spaces}
 <main class="layout active--{$activeWindow}" in:fade="{{duration: 1000, delay: 500}}" class:segment="{segment}">
-	<aside class="layout__index">
-		<Index {creators} {spaces} />
-	</aside>
+	<Index {creators} {spaces} />
 	<slot />
 </main>
 {:else}
