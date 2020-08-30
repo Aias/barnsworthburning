@@ -5,7 +5,7 @@
 
 	import { stores } from '@sapper/app';
 	import select from '../helpers/select.js';
-	import { setContext, onMount } from 'svelte';
+	import { setContext, onMount, afterUpdate, tick } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { fade, slide } from 'svelte/transition';
 	import { loading } from '../stores';
@@ -57,13 +57,31 @@
 			activeParams = $page.params;
 		}
 	}
+
+	afterUpdate(async () => {
+		await tick();
+		try {
+			const container = document.getElementById("layout");
+			const child = document.querySelector(`.layout__${$activeWindow}`);
+			
+			if(container && child) {
+				container.scrollTo({
+					left: child.offsetLeft,
+					behavior: 'smooth'
+				});	
+			}
+		}
+		catch(error) {
+			console.log("Could not scroll.", error);
+		}
+	});
 </script>
 
 <SEO />
 
 <Loading />
 {#if creators && spaces}
-<main class="layout active--{$activeWindow}" in:fade="{{duration: 1000, delay: 500}}" class:segment="{segment}">
+<main id="layout" class="layout active--{$activeWindow}" in:fade="{{duration: 1000, delay: 500}}" class:segment="{segment}">
 	<Index {creators} {spaces} />
 	<slot />
 </main>
