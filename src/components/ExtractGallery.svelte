@@ -51,18 +51,9 @@
 	}
 
 	.extract-list > * {
+		margin-bottom: 1rem;
 		-webkit-column-break-inside: avoid;
 		page-break-inside: avoid;
 		break-inside: avoid;
 	}
-
-	.extract-list > :global(* + *) {
-		margin-top: 1rem;
-	}
-
-	.extract-list :global(.extract + .extract) {
-		margin-top: 2rem;
-		padding-top: 2rem;
-		border-top: 1px solid var(--divider);
-	}	
 </style>
