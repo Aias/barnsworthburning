@@ -55,5 +55,13 @@
 		-webkit-column-break-inside: avoid;
 		page-break-inside: avoid;
 		break-inside: avoid;
+		/* Baffling Safari bug that causes parts of certain children
+		   to disappear when using CSS columns, but only for items that are
+		   not in the very first column.
+		   
+		   See: https://stackoverflow.com/questions/29624396/when-using-column-count-overflowing-content-completely-disappears-in-all-but-fi  */
+		-webkit-transform: translateX(0);
+		-moz-transform: translateX(0);
+		transform: translateX(0);
 	}
 </style>

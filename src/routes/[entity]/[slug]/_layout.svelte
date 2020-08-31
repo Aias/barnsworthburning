@@ -27,7 +27,7 @@
 
 		const extracts = await select('extracts', {
 			filterByFormula: `FIND(RECORD_ID(), "${extractIds}") > 0`,
-			view: 'Recently Updated'
+			view: 'By Relevance'
 		})(this.fetch);
 
 		return {

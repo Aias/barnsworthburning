@@ -4,6 +4,7 @@
 	import get from '../helpers/get';
 	import Citation from './Citation.svelte';
 	import InternalLink from './InternalLink.svelte';
+	import ImageCarousel from './ImageCarousel.svelte';
 
 	export let extract = {};
 	export let suppressCitation = false;
@@ -40,20 +41,7 @@
 		<figcaption class="extract-caption"><Citation {extract} {suppressCitation} /></figcaption>
 		{/if}
 		{#if images}
-		<figure class="image-container">
-			<div class="image-list">
-				{#each images as {id, filename, thumbnails, type, url}}
-				<div class="image-wrapper">
-					<img src="{url}" alt="{filename}" />
-				</div>
-				{/each}
-			</div>
-			{#if imageCaption}
-			<figcaption class="caption">
-				{@html markdown.render(imageCaption)}
-			</figcaption>
-			{/if}
-		</figure>
+		<ImageCarousel {images} {imageCaption} />
 		{/if}
 		{#if text}
 		<blockquote class="extract-text markdown-block" cite={extract.source}>
@@ -109,16 +97,6 @@
 		flex-direction: column;
 	}
 
-	.image-container > .image-list {
-			display: flex;
-			flex-direction: column;
-			/* margin: 0 calc(-1 * var(--container-padding-side)); */
-		}
-
-	img {
-		border: 1px solid var(--clr-darker-10);
-	}
-
 	.extract-text {
 		padding: 0;
 		border: none;
@@ -129,31 +107,6 @@
 
 	.extract-caption:empty {
 		display: none;
-	}
-
-	.extract-spaces {
-		list-style-type: none;
-		margin-bottom: 0;
-		display: flex;
-		max-width: 100%;
-		overflow-x: auto;
-	}
-
-	.extract-spaces > li + li {
-		margin-left: 1em;
-	}
-
-	:global(.topic) {
-		color: var(--text-secondary);
-		text-transform: uppercase;
-		white-space: nowrap;
-	}
-
-	:global(.topic::before) {
-		content: '#';
-		opacity: 0.5;
-		display: inline-block;
-		margin-right: 2px;
 	}
 
 	section > * {
@@ -195,6 +148,31 @@
 		content: '/';
 		color: var(--text-tertiary);
 		margin-right: var(--separation);
+	}
+
+	.extract-spaces {
+		list-style-type: none;
+		margin-bottom: 0;
+		display: flex;
+		max-width: 100%;
+		overflow-x: auto;
+	}
+
+	.extract-spaces > li + li {
+		margin-left: 1em;
+	}
+
+	:global(.topic) {
+		color: var(--text-secondary);
+		text-transform: uppercase;
+		white-space: nowrap;
+	}
+
+	:global(.topic::before) {
+		content: '#';
+		opacity: 0.5;
+		display: inline-block;
+		margin-right: 2px;
 	}
 
 	footer {
