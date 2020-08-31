@@ -104,16 +104,30 @@
 <aside class="layout__index">
 	<div class="toolbar">
 		<div class="field-group">
-			<select bind:value="{entityType}">
-				<option value="all">Everything</option>
-				<option value="creator">Creators</option>
-				<option value="space">Spaces</option>
-			</select>
-			<select bind:value="{primarySort}">
-				<option value="time">By Time</option>
-				<option value="count">By Count</option>
-				<option value="alpha">Alphabetically</option>
-			</select>
+			<div class="select-wrapper">
+				<select bind:value="{entityType}">
+					<option value="all">Everything</option>
+					<option value="creator">Creators</option>
+					<option value="space">Spaces</option>
+				</select>
+				<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="M8.25652 16L5.00313 10.2607H6.93848V2.66945H2L3.16788 0H14.513L13.3452 2.66945H9.60793V10.2607H11.5099L8.25652 16Z"
+					/>
+				</svg>
+			</div>
+			<div class="select-wrapper">
+				<select bind:value="{primarySort}">
+					<option value="time">By Time</option>
+					<option value="count">By Count</option>
+					<option value="alpha">Alphabetically</option>
+				</select>
+				<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="M8.25652 16L5.00313 10.2607H6.93848V2.66945H2L3.16788 0H14.513L13.3452 2.66945H9.60793V10.2607H11.5099L8.25652 16Z"
+					/>
+				</svg>
+			</div>
 		</div>
 	</div>
 	<nav>
@@ -176,10 +190,38 @@
 	.field-group > * {
 		margin-left: var(--separation);
 		margin-bottom: 0.5rem;
+		flex: 1 0 125px;
+	}
+
+	.select-wrapper {
+		position: relative;
+	}
+
+	.select-wrapper:focus-within > svg {
+		transform: translateY(-50%) rotate(180deg);
+		color: var(--text-secondary);
+	}
+
+	.select-wrapper > svg {
+		position: absolute;
+		pointer-events: none;
+		right: 10px;
+		top: calc(50% + 1px);
+		font-size: 9px;
+		height: 1em;
+		width: 1em;
+		display: block;
+		transform: translateY(-50%);
+		color: var(--text-tertiary);
+		fill: currentColor;
+		transition: all 0.25s;
 	}
 
 	select {
-		flex: 1 0 125px;
+		appearance: none;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		width: 100%;
 	}
 
 	ol {
