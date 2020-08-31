@@ -157,6 +157,8 @@
 		overflow-y: auto;
 		padding-right: 0.5rem;
 		margin-right: -0.5rem;
+		padding-left: 1rem;
+		margin-left: -1rem;
 	}
 	.toolbar {
 		flex: 0 0 auto;
@@ -181,7 +183,8 @@
 	}
 
 	ol {
-		margin: 0;
+		--cantilever: 8px;
+		margin: 0 0 0 calc(-1 * var(--cantilever));
 		list-style-type: none;
 		column-width: 23ch;
 		column-gap: var(--padding);
@@ -190,10 +193,8 @@
 
 	li {
 		--indent: 1em;
-		--padding: 8px;
-		padding-left: calc(var(--indent) + var(--padding));
-		padding-right: var(--padding);
-		margin-left: calc(-1 * var(--padding));
+		padding-left: calc(var(--indent) + var(--cantilever));
+		padding-right: var(--cantilever);
 		text-indent: calc(-1 * var(--indent));
 		position: relative;
 		transition: background-color 0.25s;
