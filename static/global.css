@@ -405,7 +405,7 @@ body,
 	.layout__panel {
 		flex: 1 1 var(--reading-width-narrow);
 		min-height: 100vh;
-		border-left: 1px solid var(--theme-primary);
+		border-left: 2px solid var(--theme-primary-text);
 		max-width: var(--reading-width-wide);
 	}
 }
