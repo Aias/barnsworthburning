@@ -382,7 +382,7 @@ body,
 	}
 }
 
-@media screen and (min-width: 650px) {
+@media screen and (min-width: 700px) {
 	.layout__index {
 		flex: 2 1 0;
 		min-width: 200px;
@@ -405,12 +405,12 @@ body,
 	.layout__panel {
 		flex: 1 1 var(--reading-width-narrow);
 		min-height: 100vh;
-		border-left: 1px solid var(--divider);
+		border-left: 1px solid var(--theme-primary);
 		max-width: var(--reading-width-wide);
 	}
 }
 
-@media screen and (min-width: 650px) and (max-width: 1350px) {
+@media screen and (min-width: 700px) and (max-width: 1350px) {
 	.layout {
 		--index-width: 1.5rem;
 	}
