@@ -1,7 +1,8 @@
 <script>
+	export let segment;
 	let creators;
 	let spaces;
-	export let segment;
+	let error;
 
 	import { stores } from '@sapper/app';
 	import select from '../helpers/select.js';
@@ -13,6 +14,7 @@
 	import SEO from '../components/SEO.svelte';
 	import Index from '../components/Index.svelte';
 	import Loading from '../components/Loading.svelte';
+	import Error from '../components/Error.svelte';
 
 	let { page, session } = stores();
 	let activeParams = $page.params;
@@ -21,17 +23,30 @@
 
 	onMount(async () => {
 		$loading = true;
-		creators = await select('creators', {
-			fields: ['full_name', 'last_name', 'extracts', 'spaces', 'last_updated', 'connections_last_updated', 'slug', 'num_extracts', 'num_fragments'],
-			view: 'By Count',
-			maxRecords: 200
-		})(fetch);
 
-		spaces = await select('spaces', {
-			fields: ['topic', 'extracts', 'creators', 'last_updated', 'connections_last_updated'],
-			view: 'By Count',
-			maxRecords: 200
-		})(fetch);
+		const [ creatorsQuery, spacesQuery ] = await Promise.all([
+			select('creators', {
+				fields: ['full_name', 'last_name', 'extracts', 'spaces', 'last_updated', 'connections_last_updated', 'slug', 'num_extracts', 'num_fragments'],
+				view: 'By Count',
+				maxRecords: 200
+			})(fetch),
+			select('spaces', {
+				fields: ['topic', 'extracts', 'creators', 'last_updated', 'connections_last_updated'],
+				view: 'By Count',
+				maxRecords: 200
+			})(fetch)
+		]);
+
+		console.log(creatorsQuery, spacesQuery)
+		
+		if(creatorsQuery.error || spacesQuery.error) {
+			creatorsQuery.error ? error = creatorsQuery.error : error = spacesQuery.error;
+		}
+		else {
+			creators = creatorsQuery.records;
+			spaces = spacesQuery.records;
+		}
+
 		$loading = false;
 	})
 
@@ -85,6 +100,8 @@
 	<Index {creators} {spaces} />
 	<slot />
 </main>
+{:else if error}
+<Error {error} />
 {:else}
 <blockquote out:slide="{{duration: 1000}}">
 	I should have been a pair of ragged claws <br/>

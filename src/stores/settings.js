@@ -2,15 +2,6 @@ import { writable, readable } from 'svelte/store';
 import get from '../helpers/get';
 
 // --------------------------------------
-// Site mode
-// --------------------------------------
-
-let hourOfDay = new Date().getHours();
-let isSleepingTime = hourOfDay <= 6 || hourOfDay >= 20;
-
-const isDarkMode = writable(false); // Always start in day theme until I can figure out how to prevent flash of opposite mode.
-
-// --------------------------------------
 // User connection quality.
 // See https://css-tricks.com/weekly-platform-news-improving-ux-on-slow-connections-a-tip-for-writing-alt-text-and-a-polyfill-for-the-html-loading-attribute/
 // --------------------------------------
@@ -47,8 +38,10 @@ const connectionQuality = readable(isSlowConnection(), (set) => {
 
 const loading = writable(false);
 
+const siteError = writable();
+
 // --------------------------------------
 // Exports
 // --------------------------------------
 
-export { isDarkMode, connectionQuality, loading };
+export { siteError, connectionQuality, loading };

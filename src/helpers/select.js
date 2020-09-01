@@ -1,14 +1,19 @@
 import { FULL_API } from '../config.js';
+import { siteError } from '../stores';
 
 export default (table = 'extracts', options = {}) => async (fetch) => {
-	const results = await fetch(
+	let error;
+	const records = await fetch(
 		`${FULL_API}/airtableGet?base=barnsworthburning&table=${table}&options=${JSON.stringify(options)}`
 	)
 		.then((data) => data.json())
-		.catch((error) => {
-			console.log(error);
-			return [];
+		.catch((e) => {
+			console.error(e);
+			error = e;
 		});
 
-	return results;
+	return {
+		records,
+		error
+	};
 };

@@ -7,34 +7,39 @@
 
 		switch (entity) {
 			case 'creators':
-				creator = await select('creators', {
+				const { records: creators, errorC } = await select('creators', {
 					filterByFormula: `slug = "${slug}"`
 				})(this.fetch);
-				if (creator.length > 0) creator = creator[0];
+				if (creators) creator = creators[0]; // Reduce to single value (since select always returns an array).
 				break;
 			case 'spaces':
-				space = await select('spaces', {
+				const { records: spaces, errorS } = await select('spaces', {
 					filterByFormula: `topic = "${slug}"`
 				})(this.fetch);
-				if (space.length > 0) space = space[0];
+				if (spaces) space = spaces[0];
 				break;
 			default:
 				console.error('Unknown entity!');
 		}
 
-		const extractsArr = creator ? creator.extracts : space.extracts;
-		const extractIds = extractsArr.join(',');
+		if(creator || space) {
+			const extractsArr = creator ? creator.extracts : space.extracts;
+			const extractIds = extractsArr.join(',');
 
-		const extracts = await select('extracts', {
-			filterByFormula: `FIND(RECORD_ID(), "${extractIds}") > 0`,
-			view: 'By Relevance'
-		})(this.fetch);
+			const { records: extracts, errorE } = await select('extracts', {
+				filterByFormula: `FIND(RECORD_ID(), "${extractIds}") > 0`,
+				view: 'By Relevance'
+			})(this.fetch);
 
-		return {
-			creator,
-			space,
-			extracts
-		};
+			return {
+				creator,
+				space,
+				extracts
+			};			
+		}
+		else {
+			return null;
+		}
 	}
 </script>
 

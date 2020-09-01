@@ -1,4 +1,4 @@
-import { isDarkMode, connectionQuality, loading } from './settings';
+import { siteError, connectionQuality, loading } from './settings';
 import seo, { updateSeo } from './seo';
 
-export { isDarkMode, connectionQuality, loading, seo, updateSeo };
+export { siteError, connectionQuality, loading, seo, updateSeo };

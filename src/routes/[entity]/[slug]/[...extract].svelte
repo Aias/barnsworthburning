@@ -7,7 +7,7 @@
 
 		const filterString = `OR(CONCATENATE('-', slug, '-') = '-${extractSlug}-', FIND('${extractSlug}', parent_slug) = 1)`; // Returns true if an extract has the same slug (it is the parent) or if its parent has the same slug (it's a child of the extract we're looking for).
 
-		const extracts = await select('extracts', {
+		const {records: extracts, error} = await select('extracts', {
 			filterByFormula: filterString
 		})(this.fetch);
 
@@ -28,31 +28,33 @@
 	import Extract from '../../../components/Extract.svelte';
 	import Card from '../../../components/Card.svelte';
 
-	let parentExtract, childExtracts;
+	let parentExtract, childExtracts = [];
 
 	const idPrefix = 'panel';
 	const activeWindow = getContext('activeWindow');
 	setContext('parentContainer', 'panel');
 
 	$: {
-		let parentIndex = extracts.findIndex(e => {
-			return e.slug === extractSlug;
-		});
-		if(parentIndex === -1) parentIndex = 0;
+		if(extracts) {
+			let parentIndex = extracts.findIndex(e => {
+				return e.slug === extractSlug;
+			});
+			if(parentIndex === -1) parentIndex = 0;
 
-		parentExtract = extracts[parentIndex];
-		childExtracts = [...extracts];
-		childExtracts.splice(parentIndex, 1);
+			parentExtract = extracts[parentIndex];
+			childExtracts = [...extracts];
+			childExtracts.splice(parentIndex, 1);
 
-		const childOrder = parentExtract.children || [];
+			const childOrder = parentExtract.children || [];
 
-		childExtracts.sort((a, b) => {
-			const indexA = childOrder.indexOf(a.id);
-			const indexB = childOrder.indexOf(b.id);
+			childExtracts.sort((a, b) => {
+				const indexA = childOrder.indexOf(a.id);
+				const indexB = childOrder.indexOf(b.id);
 
-			if(indexA > indexB) return 1;
-			else return -1;
-		});
+				if(indexA > indexB) return 1;
+				else return -1;
+			});			
+		}
 	}
 
 	afterUpdate(async () => {
