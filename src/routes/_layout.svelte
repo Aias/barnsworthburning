@@ -36,8 +36,6 @@
 				maxRecords: 200
 			})(fetch)
 		]);
-
-		console.log(creatorsQuery, spacesQuery)
 		
 		if(creatorsQuery.error || spacesQuery.error) {
 			creatorsQuery.error ? error = creatorsQuery.error : error = spacesQuery.error;
