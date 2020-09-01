@@ -4,7 +4,7 @@
 	export let title = null;
 </script>
 
-<svg class="{className}" class:icon="{true}" xmlns="http://www.w3.org/2000/svg" viewBox="{viewBox}">
+<svg class="{className}" class:icon="{true}" xmlns="http://www.w3.org/2000/svg" viewBox="{viewBox}" {...$$restProps}>
 	{#if title}
 	<title>{title}</title>
 	{/if}

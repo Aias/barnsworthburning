@@ -3,6 +3,7 @@
 	export let spaces = [];
 
 	import InternalLink from './InternalLink.svelte';
+	import Arrow from './icons/Arrow.svelte';
 	import { stores } from '@sapper/app';
 	const { page } = stores();
 
@@ -105,28 +106,20 @@
 	<div class="toolbar">
 		<div class="field-group">
 			<div class="select-wrapper">
-				<select bind:value="{entityType}">
+				<select bind:value="{entityType}" aria-label="What to show">
 					<option value="all">Everything</option>
 					<option value="creator">Creators</option>
 					<option value="space">Spaces</option>
 				</select>
-				<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path
-						d="M8.25652 16L5.00313 10.2607H6.93848V2.66945H2L3.16788 0H14.513L13.3452 2.66945H9.60793V10.2607H11.5099L8.25652 16Z"
-					/>
-				</svg>
+				<Arrow />
 			</div>
 			<div class="select-wrapper">
-				<select bind:value="{primarySort}">
+				<select bind:value="{primarySort}" aria-label="How to sort">
 					<option value="time">By Time</option>
 					<option value="count">By Count</option>
 					<option value="alpha">Alphabetically</option>
 				</select>
-				<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path
-						d="M8.25652 16L5.00313 10.2607H6.93848V2.66945H2L3.16788 0H14.513L13.3452 2.66945H9.60793V10.2607H11.5099L8.25652 16Z"
-					/>
-				</svg>
+				<Arrow />
 			</div>
 		</div>
 	</div>
@@ -147,7 +140,7 @@
 					{node.num_extracts + node.num_fragments}
 				</span>
 				{:else}
-				<InternalLink toType="spaces" toEntity="{node.topic}">{node.topic}</InternalLink>&nbsp;<span
+				<InternalLink toType="spaces" toEntity="{node.topic}"><span class="screenreader">Subspace:</span>{node.topic}</InternalLink>&nbsp;<span
 					class="count text-secondary"
 				>
 					{node.extracts ? node.extracts.length : 0}
@@ -197,12 +190,12 @@
 		position: relative;
 	}
 
-	.select-wrapper:focus-within > svg {
+	.select-wrapper:focus-within > :global(.icon) {
 		transform: translateY(-50%) rotate(180deg);
 		color: var(--text-secondary);
 	}
 
-	.select-wrapper > svg {
+	.select-wrapper > :global(.icon) {
 		position: absolute;
 		pointer-events: none;
 		right: 10px;

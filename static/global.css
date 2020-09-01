@@ -323,6 +323,17 @@ select:focus {
 	--text-link-hover: var(--text-inverted);
 }
 
+/* https://stackoverflow.com/questions/26032089/in-html-how-can-i-have-text-that-is-only-accessible-for-screen-readers-i-e-fo#:~:text=visibility%3A%20hidden%3B%20and%2For,want%20read%20by%20screen%20readers. */
+.screenreader {
+	position: absolute !important; /* Outside the DOM flow */
+	height: 1px;
+	width: 1px; /* Nearly collapsed */
+	overflow: hidden;
+	left: -10000px;
+	clip-path: rect(1px, 1px, 1px, 1px); /* All other browsers */
+	clip: rect(1px, 1px, 1px, 1px); /* All other browsers */
+}
+
 /*    LAYOUT    */
 html,
 body,

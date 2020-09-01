@@ -57,14 +57,14 @@
 		{#if childTitles}
 		<ol class="linked-list extract-children">
 			{#each childTitles as child}
-			&ZeroWidthSpace;<li>&ZeroWidthSpace;<InternalLink class="link link--child" toExtract="{slug}" toFragment="{slugify(child)}">&ZeroWidthSpace;{child}&ZeroWidthSpace;</InternalLink>&ZeroWidthSpace;</li>&ZeroWidthSpace;
+			<li>&ZeroWidthSpace;<InternalLink class="link link--child" toExtract="{slug}" toFragment="{slugify(child)}">&ZeroWidthSpace;{child}&ZeroWidthSpace;</InternalLink>&ZeroWidthSpace;</li>
 			{/each}
 		</ol>
 		{/if}
 		{#if connectionTitles}
 		<ol class="linked-list extract-connections">
 			{#each connectionTitles as connection}
-			&ZeroWidthSpace;<li>&ZeroWidthSpace;<InternalLink class="link link--connection" toExtract="{slugify(connection)}">&ZeroWidthSpace;{connection}&ZeroWidthSpace;</InternalLink>&ZeroWidthSpace;</li>&ZeroWidthSpace;
+			<li>&ZeroWidthSpace;<InternalLink class="link link--connection" toExtract="{slugify(connection)}">&ZeroWidthSpace;{connection}&ZeroWidthSpace;</InternalLink>&ZeroWidthSpace;</li>
 			{/each}
 		</ol>
 		{/if}

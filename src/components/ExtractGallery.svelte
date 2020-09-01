@@ -1,12 +1,20 @@
 <script>
-	import { flip } from 'svelte/animate';
-
-	import Extract from './Extract.svelte';
-	import Card from './Card.svelte';
-	
 	export let creator;
 	export let space;
 	export let extracts;
+
+	import Extract from './Extract.svelte';
+	import Card from './Card.svelte';
+	import Close from './icons/Close.svelte';
+	import Arrow from './icons/Arrow.svelte';
+	import InternalLink from './InternalLink.svelte';
+
+	import { flip } from 'svelte/animate';
+	import { stores } from '@sapper/app';
+	const { page } = stores();
+
+	$: params = $page.params;
+	$: selectedExtract = params.extract;
 </script>
 
 <header>
@@ -17,7 +25,15 @@
 		{space.title || space.topic}
 		{/if}
 	</h1>
-	<a href="/">Close Panel</a>
+	{#if selectedExtract}
+	<InternalLink toExtract={false} title="Hide right-hand reading panel" aria-label="Hide reading panel">
+		<Arrow direction="right" />
+	</InternalLink>
+	{:else}
+	<InternalLink toIndex title="Close gallery (back to index)" aria-label="Close gallery (back to index)">
+		<Close />
+	</InternalLink>
+	{/if}
 </header>
 <ul class="extract-list">
 	{#each extracts as extract (extract.slug)}
@@ -36,8 +52,9 @@
 		align-items: baseline;
 	}
 
-	header > a {
+	header > :global(a) {
 		text-align: right;
+		font-size: 1rem;
 	}
 
 	header > h1::first-letter {

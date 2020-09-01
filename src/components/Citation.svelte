@@ -46,7 +46,7 @@
 	{/if}
 	{#if source}
 		<small class="extract-source">
-			<a href="{source}" target="_blank">{domainOfUrl(source)}</a>
+			<a href="{source}" target="_blank" rel="noreferrer">{domainOfUrl(source)}</a>
 		</small>
 	{/if}
 	</div>
@@ -66,7 +66,8 @@
 	}
 
 	.extract-source {
-		opacity: 0.5;
+		--opacity: 0.8;
+		opacity: var(--opacity);
 		transition: opacity 0.25s;
 		margin-left: 0.25em;
 	}
@@ -76,11 +77,11 @@
 	}
 
 	.extract-source:before {
-		opacity: 0.5;
+		opacity: var(--opacity);
 		content: '[';
 	}
 	.extract-source:after {
-		opacity: 0.5;
+		opacity: var(--opacity);
 		content: ']';
 	}
 </style>
