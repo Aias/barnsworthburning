@@ -19,6 +19,12 @@
 	}
 </script>
 
-<Icon transform="rotate({rotation})" {...$$restProps}>
+<Icon class="arrow" style="--rotation: {rotation}deg" {...$$restProps}>
 	<path d="M82.5652 160L50.0313 102.607H69.3848V26.6945H20L31.6788 0H145.13L133.452 26.6945H96.0792V102.607H115.099L82.5652 160Z" />
 </Icon>
+
+<style>
+	:global(svg.arrow) {
+		transform: rotate(var(--rotation));
+	}
+</style>
