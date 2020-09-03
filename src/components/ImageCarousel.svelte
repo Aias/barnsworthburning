@@ -18,7 +18,7 @@
 	let url, width, height;
 	$: {
 		const thumbnails = displayedImage.thumbnails;
-		if (thumbnails.large) {
+		if (thumbnails && thumbnails.large) {
 			url = thumbnails.large.url;
 			width = thumbnails.large.width;
 			height = thumbnails.large.height;
