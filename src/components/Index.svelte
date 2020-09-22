@@ -103,34 +103,32 @@
 </script>
 
 <aside class="layout__index">
-	<div class="toolbar">
-		<div class="field-group">
-			<div class="select-wrapper">
-				<select bind:value="{entityType}" aria-label="What to show">
-					<option value="all">Everything</option>
-					<option value="creator">Creators</option>
-					<option value="space">Spaces</option>
-				</select>
-				<Arrow />
-			</div>
-			<div class="select-wrapper">
-				<select bind:value="{primarySort}" aria-label="How to sort">
-					<option value="time">By Time</option>
-					<option value="count">By Count</option>
-					<option value="alpha">Alphabetically</option>
-				</select>
-				<Arrow />
-			</div>
-		</div>
-	</div>
 	<nav>
 		<ol>
-			<!-- <li class="recent">
-				<a href="/recent">Recent Things</a>
+			<li class:selected="{entityType === 'all'}" class="settings settings--entity-type">
+				<button class="link" on:click="{() => {entityType = 'all'}}">Show Everything</button>
+			</li>
+			<li class:selected="{entityType === 'creator'}" class="settings settings--entity-type">
+				<button class="link" on:click="{() => {entityType = 'creator'}}">Show Creators</button>
+			</li>
+			<li class:selected="{entityType === 'space'}" class="settings settings--entity-type">
+				<button class="link" on:click="{() => {entityType = 'space'}}">Show Spaces</button>
 			</li>
 			<li class="center">
 				<span class="text-tertiary">⁘  ⁘  ⁘</span>
-			</li> -->
+			</li>
+			<li class:selected="{primarySort === 'time'}" class="settings settings--primary-sort">
+				<button class="link" on:click="{() => {primarySort = 'time'}}">By Time</button>
+			</li>
+			<li class:selected="{primarySort === 'count'}" class="settings settings--primary-sort">
+				<button class="link" on:click="{() => {primarySort = 'count'}}">By Count</button>
+			</li>
+			<li class:selected="{primarySort === 'alpha'}" class="settings settings--primary-sort">
+				<button class="link" on:click="{() => {primarySort = 'alpha'}}">By Name</button>
+			</li>
+			<li class="center">
+				<span class="text-tertiary">⁘  ⁘  ⁘</span>
+			</li>
 			{#each index as node, i}
 			<li class:active="{isActive(node, $page)}">
 				{#if node.entity === 'creator'}
@@ -140,11 +138,9 @@
 					{node.num_extracts + node.num_fragments}
 				</span>
 				{:else}
-				<InternalLink toType="spaces" toEntity="{node.topic}"><span class="screenreader">Subspace:</span>{node.topic}</InternalLink>&nbsp;<span
-					class="count text-secondary"
-				>
-					{node.extracts ? node.extracts.length : 0}
-				</span>
+				<InternalLink toType="spaces" toEntity="{node.topic}"
+					><span class="screenreader">Subspace:</span>{node.topic}</InternalLink
+				>&nbsp;<span class="count text-secondary"> {node.extracts ? node.extracts.length : 0} </span>
 				{/if}
 			</li>
 			{/each}
@@ -167,55 +163,6 @@
 		padding-left: 1rem;
 		margin-left: -1rem;
 	}
-	.toolbar {
-		flex: 0 0 auto;
-		padding-bottom: 1rem;
-	}
-
-	.field-group {
-		--separation: 1rem;
-		display: flex;
-		flex-wrap: wrap;
-		margin-left: calc(-1 * var(--separation));
-		max-width: 400px;
-	}
-
-	.field-group > * {
-		margin-left: var(--separation);
-		margin-bottom: 0.5rem;
-		flex: 1 0 125px;
-	}
-
-	.select-wrapper {
-		position: relative;
-	}
-
-	.select-wrapper:focus-within > :global(.icon) {
-		transform: translateY(-50%) rotate(180deg);
-		color: var(--text-secondary);
-	}
-
-	.select-wrapper > :global(.icon) {
-		position: absolute;
-		pointer-events: none;
-		right: 10px;
-		top: calc(50% + 1px);
-		font-size: 9px;
-		height: 1em;
-		width: 1em;
-		display: block;
-		transform: translateY(-50%);
-		color: var(--text-tertiary);
-		fill: currentColor;
-		transition: all 0.25s;
-	}
-
-	select {
-		appearance: none;
-		-webkit-appearance: none;
-		-moz-appearance: none;
-		width: 100%;
-	}
 
 	ol {
 		--cantilever: 8px;
@@ -235,8 +182,15 @@
 		transition: background-color 0.25s;
 	}
 
+	li.selected {
+		background-color: var(--text-primary);
+	}
+	li.selected button {
+		color: var(--text-inverted);
+	}
+
 	li.active {
-		background-color: currentColor;
+		background-color: var(--theme-primary);
 		--text-secondary: var(--clr-lighter-40);
 	}
 
