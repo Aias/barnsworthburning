@@ -183,10 +183,13 @@
 	}
 
 	li.selected {
-		background-color: var(--text-primary);
+		--border-width: 4px;
+		border-left: var(--border-width) solid var(--text-primary);
+		margin-left: calc(-1 * var(--border-width));
 	}
 	li.selected button {
-		color: var(--text-inverted);
+		color: var(--text-primary);
+		font-weight: 500;
 	}
 
 	li.active {
