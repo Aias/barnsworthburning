@@ -26,19 +26,33 @@
 			url = displayedImage.url;
 		}
 	}
+
+	const getImageUrl = (image, size) => {
+		const { thumbnails, url } = image;
+		if (!size || !thumbnails) {
+			return url;
+		} else {
+			const thumbnail = thumbnails[size];
+			if (thumbnail) {
+				return thumbnail.url;
+			} else {
+				return url;
+			}
+		}
+	};
 </script>
 
 <figure class="image-container">
 	<div class="main-image">
 		{#if totalImages > 1}
 		<div class="thumbnails">
-			{#each images as {id, filename, thumbnails, url}, index (id)}
+			{#each images as image, index (image.id)}
 			<div
 				class="thumbnail-container"
 				class:selected="{index === currentIndex}"
 				on:click="{() => currentIndex = index}"
 			>
-				<img src="{thumbnails.large.url}" alt="{filename}" />
+				<img src="{getImageUrl(image, 'large')}" alt="{image.filename}" />
 			</div>
 			{/each}
 		</div>
