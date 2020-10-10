@@ -106,25 +106,37 @@
 	<nav>
 		<ol>
 			<li class:selected="{entityType === 'all'}" class="settings settings--entity-type">
-				<button class="link" on:click="{() => {entityType = 'all'}}">Show Everything</button>
+				<button class="link" on:click="{() => {entityType = 'all'}}">
+					<span class="settings-label">Show&nbsp;</span>Everything
+				</button>
 			</li>
 			<li class:selected="{entityType === 'creator'}" class="settings settings--entity-type">
-				<button class="link" on:click="{() => {entityType = 'creator'}}">Show Creators</button>
+				<button class="link" on:click="{() => {entityType = 'creator'}}">
+					<span class="settings-label">Show&nbsp;</span>Creators
+				</button>
 			</li>
 			<li class:selected="{entityType === 'space'}" class="settings settings--entity-type">
-				<button class="link" on:click="{() => {entityType = 'space'}}">Show Spaces</button>
+				<button class="link" on:click="{() => {entityType = 'space'}}">
+					<span class="settings-label">Show&nbsp;</span>Spaces
+				</button>
 			</li>
 			<li class="center">
 				<span class="text-tertiary">⁘  ⁘  ⁘</span>
 			</li>
 			<li class:selected="{primarySort === 'time'}" class="settings settings--primary-sort">
-				<button class="link" on:click="{() => {primarySort = 'time'}}">By Time</button>
+				<button class="link" on:click="{() => {primarySort = 'time'}}">
+					<span class="settings-label">By&nbsp;</span>Time
+				</button>
 			</li>
 			<li class:selected="{primarySort === 'count'}" class="settings settings--primary-sort">
-				<button class="link" on:click="{() => {primarySort = 'count'}}">By Count</button>
+				<button class="link" on:click="{() => {primarySort = 'count'}}">
+					<span class="settings-label">By&nbsp;</span>Count
+				</button>
 			</li>
 			<li class:selected="{primarySort === 'alpha'}" class="settings settings--primary-sort">
-				<button class="link" on:click="{() => {primarySort = 'alpha'}}">By Name</button>
+				<button class="link" on:click="{() => {primarySort = 'alpha'}}">
+					<span class="settings-label">By&nbsp;</span>Name
+				</button>
 			</li>
 			<li class="center">
 				<span class="text-tertiary">⁘  ⁘  ⁘</span>
@@ -178,7 +190,6 @@
 		padding-left: calc(var(--indent) + var(--cantilever));
 		padding-right: var(--cantilever);
 		text-indent: calc(-1 * var(--indent));
-		position: relative;
 		transition: background-color 0.25s;
 	}
 
@@ -190,6 +201,9 @@
 	li.selected button {
 		color: var(--text-primary);
 		font-weight: 500;
+	}
+	li:not(.selected) .settings-label {
+		visibility: hidden;
 	}
 
 	li.active {
