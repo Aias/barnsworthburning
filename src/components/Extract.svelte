@@ -64,7 +64,7 @@
 			{#if truncatedChildren && i > maxChildren}
 			<!-- Don't render anything. -->
 			{:else if truncatedChildren && i === maxChildren}
-			<li on:click="{() => showAllChildren = true}"><span class="link caption">+{childTitles.length - maxChildren} More</span></li>
+			<li><button on:click="{() => showAllChildren = true}" class="link caption">+{childTitles.length - maxChildren} More</button></li>
 			{:else}
 			<li>&ZeroWidthSpace;<InternalLink class="link link--child" toExtract="{slug}" toFragment="{slugify(child)}">&ZeroWidthSpace;{child}&ZeroWidthSpace;</InternalLink>&ZeroWidthSpace;</li>
 			{/if}
