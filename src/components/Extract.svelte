@@ -28,6 +28,10 @@
 	const imageCaption = get(extract, 'image_caption');
 
 	const logClicks = false;
+
+	const maxChildren = 5;
+	let showAllChildren = false;
+	$: truncatedChildren = !showAllChildren && (childTitles && childTitles.length > maxChildren);
 </script>
 
 <article id="{elementId}" class="extract {isWork ? 'extract--work' : 'extract--fragment'}" on:click="{(e) => logClicks && console.log(extract) }">
@@ -56,8 +60,14 @@
 	<section>
 		{#if childTitles}
 		<ol class="linked-list extract-children">
-			{#each childTitles as child}
+			{#each childTitles as child, i}
+			{#if truncatedChildren && i > maxChildren}
+			<!-- Don't render anything. -->
+			{:else if truncatedChildren && i === maxChildren}
+			<li on:click="{() => showAllChildren = true}"><span class="link caption">+{childTitles.length - maxChildren} More</span></li>
+			{:else}
 			<li>&ZeroWidthSpace;<InternalLink class="link link--child" toExtract="{slug}" toFragment="{slugify(child)}">&ZeroWidthSpace;{child}&ZeroWidthSpace;</InternalLink>&ZeroWidthSpace;</li>
+			{/if}
 			{/each}
 		</ol>
 		{/if}
@@ -151,15 +161,17 @@
 	}
 
 	.extract-spaces {
+		--spacing: 1em;
 		list-style-type: none;
 		margin-bottom: 0;
+		margin-left: calc(-1 * var(--spacing));
 		display: flex;
+		flex-wrap: wrap;
 		max-width: 100%;
-		overflow-x: auto;
 	}
 
-	.extract-spaces > li + li {
-		margin-left: 1em;
+	.extract-spaces > li {
+		margin-left: var(--spacing);
 	}
 
 	:global(.topic) {
