@@ -251,6 +251,10 @@ samp {
 	line-height: calc((1.5 / 0.875) / 0.933);
 }
 
+pre {
+	overflow-x: auto;
+}
+
 small,
 .small {
 	font-size: var(--font-size-0);
