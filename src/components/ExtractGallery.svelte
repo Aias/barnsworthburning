@@ -8,6 +8,7 @@
 	import Close from './icons/Close.svelte';
 	import Arrow from './icons/Arrow.svelte';
 	import InternalLink from './InternalLink.svelte';
+	import slugify from '../helpers/slugify';
 
 	import { flip } from 'svelte/animate';
 	import { stores } from '@sapper/app';
@@ -15,6 +16,35 @@
 
 	$: params = $page.params;
 	$: selectedExtract = params.extract;
+
+	$: entity = creator || space;
+	$: connectedSpaces = mapConnections(entity.connected_spaces, entity.topic);
+	$: connectedCreators = mapConnections(entity.connected_creators, entity.full_name);
+
+	const mapConnections = (commaJoinedString = '', self = '') => {
+		if(!commaJoinedString) return null;
+		
+		const arr = commaJoinedString
+			.split(',')
+			.map(s => s.trim())
+			.filter(d => d !== self);
+
+		return sortByFrequency(arr);
+	}
+
+	const sortByFrequency = (array = []) => {
+		var frequency = {};
+
+		array.forEach(value => frequency[value] = 0);
+
+		var uniques = array.filter(value => {
+			return ++frequency[value] == 1;
+		});
+
+		return uniques.sort((a, b) => {
+			return frequency[b] - frequency[a];
+		});
+	}
 </script>
 
 <header>
@@ -44,6 +74,30 @@
 	</li>
 	{/each}		
 </ul>
+{#if connectedCreators || connectedSpaces}
+<footer>
+	<hr />
+	<em>See also:</em>
+	{#if connectedSpaces}
+	<ol class="spaces-list">
+		{#each connectedSpaces as space}
+		<li>
+			<InternalLink toType="spaces" toEntity="{space}" class="topic">{space}</InternalLink>
+		</li>
+		{/each}
+	</ol>
+	{/if}
+	{#if connectedCreators}
+	<ol class="linked-list">
+		{#each connectedCreators as creator}
+		<li>
+			<InternalLink toType="creators" toEntity="{slugify(creator)}">{creator}</InternalLink>
+		</li>
+		{/each}
+	</ol>
+	{/if}
+</footer>
+{/if}
 
 <style>
 	header {
@@ -59,6 +113,11 @@
 
 	header > h1::first-letter {
 		text-transform: capitalize;
+	}
+
+	footer {
+		margin-top: 2em;
+		font-size: var(--font-size-0);
 	}
 	
 	.extract-list {

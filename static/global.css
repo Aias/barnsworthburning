@@ -351,6 +351,58 @@ select:focus {
 	clip: rect(1px, 1px, 1px, 1px); /* All other browsers */
 }
 
+/*    COMPONENTS    */
+.spaces-list {
+	--spacing: 1em;
+	list-style-type: none;
+	margin-bottom: 0;
+	margin-left: calc(-1 * var(--spacing));
+	display: flex;
+	flex-wrap: wrap;
+	max-width: 100%;
+}
+
+.spaces-list > li {
+	margin-left: var(--spacing);
+}
+
+.linked-list {
+	--separation: 0.5rem;
+	position: relative;
+	list-style-position: inside;
+	list-style-type: none;
+	color: var(--text-secondary);
+}
+
+.linked-list * {
+	display: inline;
+}
+
+.linked-list > li:not(:last-child) {
+	margin-right: var(--separation);
+}
+
+.linked-list > li + li::before {
+	content: '/';
+	color: var(--text-tertiary);
+	margin-right: var(--separation);
+}
+
+.topic {
+	color: var(--text-secondary);
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.topic::before {
+	content: '#';
+	opacity: 0.5;
+	display: inline-block;
+	margin-right: 2px;
+}
+
+.spaces-list 
+
 /*    LAYOUT    */
 html,
 body,
