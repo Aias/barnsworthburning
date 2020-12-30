@@ -9,7 +9,7 @@
 	export let extract = {};
 	export let suppressCitation = false;
 	export let idPrefix = '';
-	// export let fromRssFeed = false;
+	export let fromRssFeed = false;
 
 	const isWork = get(extract, 'is_work')
 
@@ -38,7 +38,13 @@
 <article id="{elementId}" class="extract {isWork ? 'extract--work' : 'extract--fragment'}" on:click="{(e) => logClicks && console.log(extract) }">
 	{#if title}
 	<header>
-		<h2 class="extract-title"><InternalLink toExtract="{isWork ? slug : parentSlug}" toFragment="{isWork ? '' : slug}">{title}</InternalLink></h2>
+		<h2 class="extract-title">
+		{#if fromRssFeed}
+			{title}
+		{:else}
+			<InternalLink toExtract="{isWork ? slug : parentSlug}" toFragment="{isWork ? '' : slug}">{title}</InternalLink>
+		{/if}
+		</h2>
 	</header>
 	{/if}
 	<figure class="extract-main">

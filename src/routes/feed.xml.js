@@ -89,10 +89,7 @@ ${recentWorks
 			}.]]></summary>
         <published>${new Date(extracted_on).toISOString()}</published>
         <updated>${new Date(last_updated).toISOString()}</updated>
-        <link rel="alternate" href="${SITE_URL}/${generateLink(
-				combined_creator_names,
-				combined_space_topics
-			)}/${slug}" />${
+        <link rel="alternate" href="${SITE_URL}/${generateLink(combined_creator_names, combined_space_topics)}" />${
 				source
 					? `
         <link rel="via" href="${source}" />`
