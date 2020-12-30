@@ -15,7 +15,8 @@ server // You can also use Express
 		sapper.middleware({
 			session: (req, res) => ({
 				activeWindow: 'index', // index, gallery, panel
-				activeParams: {}
+				activeParams: {},
+				indexLoaded: false
 			})
 		})
 	)

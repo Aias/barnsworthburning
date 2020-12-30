@@ -1,7 +1,7 @@
 <script context="module">
 	import select from '../../../helpers/select';
 
-	export async function preload({ params, query }) {
+	export async function preload({ params, query }, session) {
 		const { entity, slug, extract } = params;
 		const [extractSlug, fragmentSlug] = extract;
 

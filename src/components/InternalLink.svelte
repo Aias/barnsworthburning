@@ -7,7 +7,21 @@
 	export let prefetch = false;
 
 	import { stores } from '@sapper/app';
-	const { page } = stores();
+	import { readable } from 'svelte/store';
+
+	const appStores = stores();
+	let page;
+	if(appStores) {
+		page = appStores.page;
+	}
+	else {
+		page = readable({
+			params: {
+				entity: 'spaces',
+				slug: 'design'
+			}
+		})
+	}
 
 	let destinationUrl = '';
 

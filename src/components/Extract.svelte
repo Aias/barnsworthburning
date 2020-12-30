@@ -9,6 +9,7 @@
 	export let extract = {};
 	export let suppressCitation = false;
 	export let idPrefix = '';
+	// export let fromRssFeed = false;
 
 	const isWork = get(extract, 'is_work')
 

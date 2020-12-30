@@ -7,9 +7,20 @@ import Extract from '../components/Extract.svelte';
 
 import { SITE_URL, FULL_API } from '../config';
 import multiJoin from '../helpers/multiJoin';
+import select from '../helpers/select';
+import slugify from '../helpers/slugify';
+import mapConnections from '../helpers/mapConnections';
 import { article } from '../helpers/isFirstLetterAVowel';
 
 import fetch from 'node-fetch';
+
+const generateLink = (creators = [], spaces = ['design']) => {
+	if (creators.length > 0) {
+		return `creators/${slugify(creators[0])}`;
+	} else {
+		return `spaces/${mapConnections(spaces)[0]}`;
+	}
+};
 
 const meta = {
 	title: 'barnsworthburning',
@@ -38,7 +49,7 @@ const atom = (recentWorks, extracts = []) => {
     </author>
     <updated>${(() => {
 		const mostRecentWork = recentWorks[0];
-		return new Date(mostRecentWork['extracts_last_updated']).toISOString();
+		return new Date(mostRecentWork['last_updated']).toISOString();
 	})()}</updated>${meta.tags
 		.map(
 			(tag) => `
@@ -48,46 +59,73 @@ const atom = (recentWorks, extracts = []) => {
 ${recentWorks
 	.map(
 		({
-			name,
+			title,
 			type,
-			creator_names,
-			source_url,
+			combined_creator_names,
+			source,
+			extract,
 			notes,
 			slug,
-			extracts_last_updated,
-			created_time,
+			last_updated,
+			extracted_on,
 			michelin_stars,
-			spaces
+			combined_space_topics = ['design'],
+			extract_image,
+			image_caption
 		}) => {
 			return `    <entry>
         <id>${SITE_URL}/works/${slug}</id>
-        <title><![CDATA[${name}]]></title>${creator_names.map(
-				(creator) => `
+        <title><![CDATA[${title}]]></title>${
+				combined_creator_names &&
+				combined_creator_names.map(
+					(creator) => `
         <author>
             <name><![CDATA[${creator}]]></name>
         </author>`
-			)}
-        <summary><![CDATA[${article(type)} ${type.toLowerCase()} by ${multiJoin(creator_names)}.]]></summary>
-        <published>${new Date(created_time).toISOString()}</published>
-        <updated>${new Date(extracts_last_updated).toISOString()}</updated>
-        <link rel="alternate" href="${SITE_URL}/works/${slug}" />${
-				source_url
+				)
+			}
+        <summary><![CDATA[${article(type)} ${type.toLowerCase()}${
+				combined_creator_names && ` by ${multiJoin(combined_creator_names)}`
+			}.]]></summary>
+        <published>${new Date(extracted_on).toISOString()}</published>
+        <updated>${new Date(last_updated).toISOString()}</updated>
+        <link rel="alternate" href="${SITE_URL}/${generateLink(
+				combined_creator_names,
+				combined_space_topics
+			)}/${slug}" />${
+				source
 					? `
-        <link rel="via" href="${source_url}" />`
+        <link rel="via" href="${source}" />`
 					: ''
 			}
         <content><![CDATA[
-			<p>
-				<em>${article(type)} ${type.toLowerCase()} by ${multiJoin(creator_names)}.</em>
-				${source_url ? `<a href="${source_url}">Source</a>` : ''}
-			</p>
+			${
+				Extract.render({
+					extract: {
+						type,
+						combined_creator_names,
+						source,
+						extract,
+						notes,
+						slug,
+						last_updated,
+						extracted_on,
+						michelin_stars,
+						is_work: true,
+						extract_image,
+						image_caption
+					},
+					fromRssFeed: true
+				}).html
+			}
 			${(() => {
-				const workExtracts = extracts.filter((e) => e.work_slug[0] === slug);
+				const workExtracts = extracts.filter((e) => e.parent_slug[0] === slug);
 				return workExtracts
 					.map((extract) => {
 						const { html } = Extract.render({
 							extract,
-							listed: true
+							suppressCitation: true,
+							fromRssFeed: true
 						});
 						return html;
 					})
@@ -102,33 +140,30 @@ ${recentWorks
 
 export async function get(req, res, next) {
 	const workOptions = {
-		view: 'Recent',
+		view: 'Works',
 		maxRecords: 30,
 		fields: [
-			'name',
+			'title',
 			'type',
 			'slug',
-			'creator',
-			'creator_names',
-			'num_extracts',
-			'source_url',
+			'creators',
+			'combined_creator_names',
+			'num_children',
+			'source',
+			'extract',
 			'notes',
-			'created_time',
+			'extracted_on',
+			'last_updated',
 			'spaces',
+			'combined_space_topics',
 			'michelin_stars',
-			'extracts_last_updated'
+			'extract_image',
+			'image_caption'
 		],
-		filterByFormula: 'num_extracts > 0'
+		filterByFormula: `last_updated < DATEADD(TODAY(), -1, 'day')`
 	};
 
-	const works = await fetch(
-		`${FULL_API}/airtableGet?base=commonplace&table=works&options=${JSON.stringify(workOptions)}`
-	)
-		.then((data) => data.json())
-		.catch((error) => {
-			console.log(error);
-			return [];
-		});
+	const { records: works } = await select('extracts', workOptions)(fetch);
 
 	if (!works || works.length === 0) {
 		next();
@@ -139,29 +174,23 @@ export async function get(req, res, next) {
 	const slugString = `,${workSlugs.join(',')},`;
 
 	let extractOptions = {
-		filterByFormula: `IF(FIND(CONCATENATE(',', {work_slug}, ','), '${slugString}') > 0, TRUE(), FALSE())`,
+		filterByFormula: `IF(FIND(CONCATENATE(',', {parent_slug}, ','), '${slugString}') > 0, TRUE(), FALSE())`,
 		fields: [
 			'title',
-			'extract_text',
+			'extract',
 			'notes',
 			'extracted_on',
-			'creator',
-			'creator_name',
-			'work_slug',
-			'work_name',
+			'creators',
+			'creator_names',
+			'slug',
+			'parent_slug',
+			'parent_title',
 			'extract_image',
 			'image_caption'
 		]
 	};
 
-	const extracts = await fetch(
-		`${FULL_API}/airtableGet?base=commonplace&table=extracts&options=${JSON.stringify(extractOptions)}`
-	)
-		.then((data) => data.json())
-		.catch((error) => {
-			console.log(error);
-			return [];
-		});
+	const { records: extracts } = await select('extracts', extractOptions)(fetch);
 
 	res.setHeader('Content-Type', 'application/atom+xml');
 	res.setHeader('Cache-Control', `max-age=0, s-max-age=${3600}`);

@@ -9,6 +9,7 @@
 	import Arrow from './icons/Arrow.svelte';
 	import InternalLink from './InternalLink.svelte';
 	import slugify from '../helpers/slugify';
+	import mapConnections from '../helpers/mapConnections';
 
 	import { flip } from 'svelte/animate';
 	import { stores } from '@sapper/app';
@@ -20,31 +21,6 @@
 	$: entity = creator || space;
 	$: connectedSpaces = mapConnections(entity.connected_spaces, entity.topic);
 	$: connectedCreators = mapConnections(entity.connected_creators, entity.full_name);
-
-	const mapConnections = (commaJoinedString = '', self = '') => {
-		if(!commaJoinedString) return null;
-		
-		const arr = commaJoinedString
-			.split(',')
-			.map(s => s.trim())
-			.filter(d => d !== self);
-
-		return sortByFrequency(arr);
-	}
-
-	const sortByFrequency = (array = []) => {
-		var frequency = {};
-
-		array.forEach(value => frequency[value] = 0);
-
-		var uniques = array.filter(value => {
-			return ++frequency[value] == 1;
-		});
-
-		return uniques.sort((a, b) => {
-			return frequency[b] - frequency[a];
-		});
-	}
 </script>
 
 <header>

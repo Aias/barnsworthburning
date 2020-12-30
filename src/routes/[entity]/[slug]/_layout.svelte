@@ -1,7 +1,7 @@
 <script context="module">
 	import select from '../../../helpers/select';
 
-	export async function preload({ params, query }) {
+	export async function preload({ params, query }, session) {
 		const { entity, slug } = params;
 		let creator, space;
 
@@ -52,7 +52,9 @@
 	export let segment;
 </script>
 
+{#if creator || space}
 <div class="layout__gallery" class:segment="{segment}">
 	<ExtractGallery {creator} {space} {extracts} />
 </div>
 <div class="layout__panel"><slot /></div>
+{/if}

@@ -46,6 +46,10 @@
 		}
 
 		$loading = false;
+		// session.update(s => ({
+		// 	...s,
+		// 	indexLoaded: true
+		// }));
 	})
 
 	$: {
@@ -94,7 +98,7 @@
 
 <Loading />
 {#if creators && spaces}
-<main id="layout" class="layout active--{$activeWindow}" in:fade="{{duration: 1000, delay: 500}}" class:segment="{segment}">
+<main id="layout" class="layout active--{$activeWindow}" in:fade="{{duration: 1000, delay: 500}}" class:segment="{segment}" class:panel-open="{activeParams.extract}">
 	<Index {creators} {spaces} />
 	<slot />
 </main>
