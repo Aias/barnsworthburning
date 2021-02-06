@@ -76,16 +76,17 @@ ${recentWorks
 			return `    <entry>
         <id>${SITE_URL}/works/${slug}</id>
         <title><![CDATA[${title}]]></title>${
-				combined_creator_names &&
-				combined_creator_names.map(
-					(creator) => `
+				combined_creator_names
+					? combined_creator_names.map(
+							(creator) => `
         <author>
             <name><![CDATA[${creator}]]></name>
         </author>`
-				)
+					  )
+					: ''
 			}
         <summary><![CDATA[${article(type)} ${type.toLowerCase()}${
-				combined_creator_names && ` by ${multiJoin(combined_creator_names)}`
+				combined_creator_names ? ` by ${multiJoin(combined_creator_names)}` : ''
 			}.]]></summary>
         <published>${new Date(extracted_on).toISOString()}</published>
         <updated>${new Date(last_updated).toISOString()}</updated>
@@ -160,7 +161,7 @@ export async function get(req, res, next) {
 			'extract_image',
 			'image_caption'
 		],
-		filterByFormula: `last_updated < DATEADD(TODAY(), -1, 'day')`
+		filterByFormula: `last_updated < DATEADD(NOW(), -1, 'day')`
 	};
 
 	const { records: works } = await select('extracts', workOptions)(fetch);
