@@ -91,19 +91,12 @@
 <SEO />
 
 <Loading />
-{#if creators && spaces}
 <main id="layout" class="layout active--{$activeWindow}" in:fade="{{duration: 1000, delay: 500}}" class:segment="{segment}" class:panel-open="{activeParams.extract}">
+	{#if creators && spaces}
 	<Index {creators} {spaces} />
+	{/if}
 	<slot />
 </main>
-{:else if error}
-<Error {error} />
-{:else}
-<blockquote out:slide="{{duration: 1000}}">
-	I should have been a pair of ragged claws <br/>
-	Scuttling across the floors of silent seas.
-</blockquote>
-{/if}
 
 <style>
 	blockquote {
