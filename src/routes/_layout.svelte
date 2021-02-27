@@ -56,6 +56,7 @@
 	setContext('activeWindow', activeWindow);
 
 	$: {
+		console.log("testing", creators, spaces)
 		const { entity: newEntity, slug: newSlug, extract: newExtract = [] } = $page.params;
 		const { entity: activeEntity, slug: activeSlug, extract: activeExtract = [] } = activeParams;
 
