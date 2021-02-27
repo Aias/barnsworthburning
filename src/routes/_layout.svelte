@@ -1,46 +1,12 @@
-<script context="module">
-	import select from '../helpers/select';
-
-	export async function preload({ params, query }, session) {
-		let creators,
-		spaces;
-
-		const [ creatorsQuery, spacesQuery ] = await Promise.all([
-			select('creators', {
-				fields: ['full_name', 'last_name', 'extracts', 'spaces', 'last_updated', 'connections_last_updated', 'slug', 'num_extracts', 'num_fragments'],
-				view: 'By Count',
-				maxRecords: 200
-			})(this.fetch),
-			select('spaces', {
-				fields: ['topic', 'extracts', 'creators', 'last_updated', 'connections_last_updated'],
-				view: 'By Count',
-				maxRecords: 200
-			})(this.fetch)
-		]);
-		
-		if(creatorsQuery.error || spacesQuery.error) {
-			creatorsQuery.error ? error = creatorsQuery.error : error = spacesQuery.error;
-		}
-		else {
-			creators = creatorsQuery.records;
-			spaces = spacesQuery.records;
-		}
-
-		return {
-			creators, 
-			spaces
-		}
-	}
-</script>
-
 <script>
 	export let segment;
-	export let creators;
-	export let spaces;
+	let creators;
+	let spaces;
 	let error;
 
+	import select from '../helpers/select';
 	import { stores } from '@sapper/app';
-	import { setContext, afterUpdate, tick } from 'svelte';
+	import { setContext, afterUpdate, tick, onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { fade, slide } from 'svelte/transition';
 	import { loading } from '../stores';
@@ -54,6 +20,31 @@
 	let activeParams = $page.params;
 	const activeWindow = writable(activeParams.extract ? 'panel' : activeParams.slug || activeParams.entity ? 'gallery' : 'index');
 	setContext('activeWindow', activeWindow);
+
+	onMount(async () => {
+		$loading = true;
+		const [ creatorsQuery, spacesQuery ] = await Promise.all([
+			select('creators', {
+				fields: ['full_name', 'last_name', 'extracts', 'spaces', 'last_updated', 'connections_last_updated', 'slug', 'num_extracts', 'num_fragments'],
+				view: 'By Count',
+				maxRecords: 200
+			})(fetch),
+			select('spaces', {
+				fields: ['topic', 'extracts', 'creators', 'last_updated', 'connections_last_updated'],
+				view: 'By Count',
+				maxRecords: 200
+			})(fetch)
+		]);
+		
+		if(creatorsQuery.error || spacesQuery.error) {
+			creatorsQuery.error ? error = creatorsQuery.error : error = spacesQuery.error;
+		}
+		else {
+			creators = creatorsQuery.records;
+			spaces = spacesQuery.records;
+		}
+		$loading = false;
+	})
 
 	$: {
 		const { entity: newEntity, slug: newSlug, extract: newExtract = [] } = $page.params;
