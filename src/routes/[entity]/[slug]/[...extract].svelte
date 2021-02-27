@@ -1,40 +1,47 @@
-<script context="module">
-	import select from '../../../helpers/select';
-
-	export async function preload({ params, query }, session) {
-		const { entity, slug, extract } = params;
-		const [extractSlug, fragmentSlug] = extract;
-
-		const filterString = `OR(CONCATENATE('-', slug, '-') = '-${extractSlug}-', FIND('${extractSlug}', parent_slug) = 1)`; // Returns true if an extract has the same slug (it is the parent) or if its parent has the same slug (it's a child of the extract we're looking for).
-
-		const {records: extracts, error} = await select('extracts', {
-			filterByFormula: filterString
-		})(this.fetch);
-
-		return {
-			extracts,
-			extractSlug,
-			fragmentSlug
-		};
-	}
-</script>
-
 <script>
-	export let extracts = [];
-	export let extractSlug
-	export let fragmentSlug;
-
+	import select from '../../../helpers/select';
+	import { stores } from '@sapper/app';
 	import { setContext, getContext, tick, afterUpdate } from 'svelte';
+	import { derived } from 'svelte/store';
+
 	import Extract from '../../../components/Extract.svelte';
 	import Card from '../../../components/Card.svelte';
 
-	let parentExtract, childExtracts = [];
+	const { page } = stores();
+
+	let parentExtract;
+	let childExtracts = [];
 
 	const idPrefix = 'panel';
 	const activeWindow = getContext('activeWindow');
 	setContext('parentContainer', 'panel');
 
-	$: {
+	const extractData = derived(page, ($page, set) => {
+		const { params, slug } = $page;
+		const extract = params.extract;
+
+		const extractSlug = extract ? extract[0] : null;
+		const fragmentSlug = extract ? extract[1] : null;
+
+		const filterString = `OR(CONCATENATE('-', slug, '-') = '-${extractSlug}-', FIND('${extractSlug}', parent_slug) = 1)`; // Returns true if an extract has the same slug (it is the parent) or if its parent has the same slug (it's a child of the extract we're looking for).
+
+		select('extracts', {
+			filterByFormula: filterString
+		})(fetch)
+			.then(({records, error}) => {
+				set({
+					error,
+					...parentAndChildren(records, extractSlug),
+					extractSlug,
+					fragmentSlug
+				})
+			});
+	})
+
+	const parentAndChildren = (extracts, extractSlug) => {
+		let parentExtract;
+		let childExtracts;
+
 		if(extracts) {
 			let parentIndex = extracts.findIndex(e => {
 				return e.slug === extractSlug;
@@ -55,11 +62,19 @@
 				else return -1;
 			});			
 		}
+
+		return {
+			parentExtract,
+			childExtracts
+		};
 	}
 
 	afterUpdate(async () => {
 		// Not quite perfect, something buggy here.
 		await tick();
+
+		const fragmentSlug = $extractData && $extractData.fragmentSlug;
+
 		if($activeWindow === 'panel') {
 			if(fragmentSlug) {
 				scrollPanel(fragmentSlug)
@@ -93,20 +108,22 @@
 	}
 </script>
 
+{#if $extractData}
 <header>
-	{#each [parentExtract] as parent (parent.id)}
+	{#each [$extractData.parentExtract] as parent (parent.id)}
 		<Card inverted>
 			<Extract extract="{parent}" {idPrefix} />
 		</Card>
 	{/each}	
 </header>
 <ol>
-	{#each childExtracts as child (child.id)}
+	{#each $extractData.childExtracts as child (child.id)}
 	<li>
 		<Extract extract="{child}" suppressCitation {idPrefix} />
 	</li>
 	{/each}
 </ol>
+{/if}
 
 <style>
 	header + ol {
