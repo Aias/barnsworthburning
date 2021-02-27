@@ -49,6 +49,8 @@
 				}
 			}
 
+			destinationArray = destinationArray.filter(Boolean); // Return only truthy segments.
+
 			destinationUrl = `/${destinationArray.join('/')}`;
 		}
 	}
