@@ -5,7 +5,7 @@
 	let error;
 
 	import select from '../helpers/select';
-	import { stores } from '@sapper/app';
+	import { stores, goto } from '@sapper/app';
 	import { setContext, afterUpdate, tick, onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { fade, slide } from 'svelte/transition';
@@ -15,6 +15,13 @@
 	import Index from '../components/Index.svelte';
 	import Loading from '../components/Loading.svelte';
 	import Error from '../components/Error.svelte';
+
+	try {
+		goto(window.location.pathname);
+	}
+	catch(e) {
+
+	}
 
 	let { page, session } = stores();
 	let activeParams = $page.params;
