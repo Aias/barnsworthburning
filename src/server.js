@@ -8,7 +8,7 @@ const dev = NODE_ENV === 'development';
 
 const server = polka();
 
-server
+server // You can also use Express
 	.use(
 		compression({ threshold: 0 }),
 		sirv('static', { dev }),

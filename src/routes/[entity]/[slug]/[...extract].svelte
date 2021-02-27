@@ -22,7 +22,7 @@
 <script>
 	export let extracts = [];
 	export let extractSlug
-	// export let fragmentSlug;
+	export let fragmentSlug;
 
 	import { setContext, getContext, tick, afterUpdate } from 'svelte';
 	import Extract from '../../../components/Extract.svelte';
@@ -31,8 +31,8 @@
 	let parentExtract, childExtracts = [];
 
 	const idPrefix = 'panel';
-	// const activeWindow = getContext('activeWindow');
-	// setContext('parentContainer', 'panel');
+	const activeWindow = getContext('activeWindow');
+	setContext('parentContainer', 'panel');
 
 	$: {
 		if(extracts) {
@@ -57,40 +57,40 @@
 		}
 	}
 
-	// afterUpdate(async () => {
-	// 	// Not quite perfect, something buggy here.
-	// 	await tick();
-	// 	if($activeWindow === 'panel') {
-	// 		if(fragmentSlug) {
-	// 			scrollPanel(fragmentSlug)
-	// 		}
-	// 		else {
-	// 			scrollPanel();
-	// 		}
-	// 	}
-	// })
+	afterUpdate(async () => {
+		// Not quite perfect, something buggy here.
+		await tick();
+		if($activeWindow === 'panel') {
+			if(fragmentSlug) {
+				scrollPanel(fragmentSlug)
+			}
+			else {
+				scrollPanel();
+			}
+		}
+	})
 
-	// const scrollPanel = (slug) => {
-	// 	try {
-	// 		let offset = 0;
-	// 		if(slug) {
-	// 			const elementId = `${idPrefix}--${slug}`;
-	// 			const el = document.getElementById(elementId);
-	// 			if(el) {
-	// 				offset = el.offsetTop;
-	// 			}			
-	// 		}
+	const scrollPanel = (slug) => {
+		try {
+			let offset = 0;
+			if(slug) {
+				const elementId = `${idPrefix}--${slug}`;
+				const el = document.getElementById(elementId);
+				if(el) {
+					offset = el.offsetTop;
+				}			
+			}
 
-	// 		window.scrollTo({
-	// 			top: offset - 32,
-	// 			behavior: 'smooth'
-	// 		});
-	// 	}
-	// 	catch(error) {
-	// 		return null;
-	// 		console.log(error);
-	// 	}
-	// }
+			window.scrollTo({
+				top: offset - 32,
+				behavior: 'smooth'
+			});
+		}
+		catch(error) {
+			return null;
+			console.log(error);
+		}
+	}
 </script>
 
 <header>
