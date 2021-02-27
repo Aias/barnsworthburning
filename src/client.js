@@ -9,3 +9,6 @@ sapper
 		console.log(window.location);
 		sapper.goto(window.location.pathname);
 	});
+
+// https://github.com/sveltejs/sapper/issues/383#issuecomment-593596735
+__SAPPER__.preloaded = [];
