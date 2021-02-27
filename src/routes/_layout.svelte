@@ -16,13 +16,6 @@
 	import Loading from '../components/Loading.svelte';
 	import Error from '../components/Error.svelte';
 
-	try {
-		goto(window.location.pathname);
-	}
-	catch(e) {
-
-	}
-
 	let { page, session } = stores();
 	let activeParams = $page.params;
 	const activeWindow = writable(activeParams.extract ? 'panel' : activeParams.slug || activeParams.entity ? 'gallery' : 'index');
