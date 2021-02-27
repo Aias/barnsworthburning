@@ -1,78 +1,143 @@
 <script>
-	export let creator;
-	export let space;
-	export let extracts;
-
 	import Extract from './Extract.svelte';
 	import Card from './Card.svelte';
 	import Close from './icons/Close.svelte';
 	import Arrow from './icons/Arrow.svelte';
 	import InternalLink from './InternalLink.svelte';
 	import slugify from '../helpers/slugify';
+	import select from '../helpers/select';
 	import mapConnections from '../helpers/mapConnections';
 
 	import { flip } from 'svelte/animate';
 	import { stores } from '@sapper/app';
+	import { derived, writable } from 'svelte/store';
+	import { onMount } from 'svelte';
+
 	const { page } = stores();
+
+	const clientFetch = writable();
+
+	onMount(() => {
+		clientFetch.set(fetch);
+	});
+
+	const galleryData = derived([page, clientFetch], ([$page, $clientFetch], set) => {
+		if (!$clientFetch) return null;
+
+		const { params } = $page;
+		const { entity: entityType, slug } = params;
+		let creator, space;
+
+		let entityQuery;
+		switch (entityType) {
+			case 'creators':
+				entityQuery = select('creators', {
+					filterByFormula: `slug = "${slug}"`
+				});
+				break;
+			case 'spaces':
+				entityQuery = select('spaces', {
+					filterByFormula: `topic = "${slug}"`
+				});
+				break;
+			default:
+				console.error('Unknown entity!');
+		}
+
+		entityQuery($clientFetch)
+			.then(({ records, error }) => {
+				if (records) {
+					const entity = records[0];
+					const extractsArr = entity.extracts;
+					const extractIds = extractsArr.join(',');
+
+					select('extracts', {
+						filterByFormula: `FIND(RECORD_ID(), "${extractIds}") > 0`,
+						view: 'By Relevance'
+					})($clientFetch).then(({ records, error }) => {
+						set({
+							entity,
+							entityType,
+							extracts: records
+						});
+					});
+				}
+			})
+			.catch((error) => {
+				set(null);
+			});
+	});
 
 	$: params = $page.params;
 	$: selectedExtract = params.extract;
 
-	$: entity = creator || space;
-	$: connectedSpaces = mapConnections(entity.connected_spaces, entity.topic);
-	$: connectedCreators = mapConnections(entity.connected_creators, entity.full_name);
+	let entity, entityType, extracts, connectedSpaces, connectedCreators;
+
+	$: {
+		if ($galleryData) {
+			extracts = $galleryData.extracts;
+			entity = $galleryData.entity;
+			entityType = $galleryData.entityType;
+			connectedSpaces = mapConnections(entity.connected_spaces, entity.topic);
+			connectedCreators = mapConnections(entity.connected_creators, entity.full_name);
+
+			console.log(entity, extracts);
+		}
+	}
 </script>
 
-<header>
-	<h1>
-		{#if creator}
-		{creator.full_name}
+{#if entity && extracts}
+	<header>
+		<h1>
+			{#if entityType === 'creators'}
+			{entity.full_name}
+			{:else}
+			{entity.title || entity.topic}
+			{/if}
+		</h1>
+		{#if selectedExtract}
+		<InternalLink toExtract={false} title="Hide right-hand reading panel" aria-label="Hide reading panel">
+			<Arrow direction="right" />
+		</InternalLink>
 		{:else}
-		{space.title || space.topic}
+		<InternalLink toIndex title="Close gallery (back to index)" aria-label="Close gallery (back to index)">
+			<Close />
+		</InternalLink>
 		{/if}
-	</h1>
-	{#if selectedExtract}
-	<InternalLink toExtract={false} title="Hide right-hand reading panel" aria-label="Hide reading panel">
-		<Arrow direction="right" />
-	</InternalLink>
-	{:else}
-	<InternalLink toIndex title="Close gallery (back to index)" aria-label="Close gallery (back to index)">
-		<Close />
-	</InternalLink>
-	{/if}
-</header>
-<ul class="extract-list">
-	{#each extracts as extract (extract.slug)}
-	<li animate:flip="{{duration: 500}}">
-		<Card>
-			<Extract {extract} />
-		</Card>			
-	</li>
-	{/each}		
-</ul>
-{#if connectedCreators || connectedSpaces}
-<footer>
-	<hr />
-	<em>See also:</em>
-	{#if connectedSpaces}
-	<ol class="spaces-list">
-		{#each connectedSpaces as space}
-		<li>
-			<InternalLink toType="spaces" toEntity="{space}" class="topic">{space}</InternalLink>
+	</header>
+	<ul class="extract-list">
+		{#each extracts as extract (extract.slug)}
+		<li animate:flip="{{duration: 500}}">
+			<Card>
+				<Extract {extract} />
+			</Card>			
 		</li>
-		{/each}
-	</ol>
+		{/each}		
+	</ul>
+	{#if connectedCreators || connectedSpaces}
+	<footer>
+		<hr />
+		<em>See also:</em>
+		{#if connectedSpaces}
+		<ol class="spaces-list">
+			{#each connectedSpaces as space}
+			<li>
+				<InternalLink toType="spaces" toEntity="{space}" class="topic">{space}</InternalLink>
+			</li>
+			{/each}
+		</ol>
+		{/if}
+		{#if connectedCreators}
+		<ol class="linked-list">
+			{#each connectedCreators as creator}
+			<li>
+				<InternalLink toType="creators" toEntity="{slugify(creator)}">{creator}</InternalLink>
+			</li>
+			{/each}
+		</ol>
+		{/if}
+	</footer>
 	{/if}
-	{#if connectedCreators}
-	<ol class="linked-list">
-		{#each connectedCreators as creator}
-		<li>
-			<InternalLink toType="creators" toEntity="{slugify(creator)}">{creator}</InternalLink>
-		</li>
-		{/each}
-	</ol>
-	{/if}
-</footer>
 {/if}
 
 <style>
@@ -95,7 +160,7 @@
 		margin-top: 2em;
 		font-size: var(--font-size-0);
 	}
-	
+
 	.extract-list {
 		margin-top: 2rem;
 		list-style-type: none;

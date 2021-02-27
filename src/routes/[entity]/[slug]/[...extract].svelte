@@ -1,13 +1,19 @@
 <script>
 	import select from '../../../helpers/select';
 	import { stores } from '@sapper/app';
-	import { setContext, getContext, tick, afterUpdate } from 'svelte';
-	import { derived } from 'svelte/store';
+	import { setContext, getContext, tick, afterUpdate, onMount } from 'svelte';
+	import { derived, writable } from 'svelte/store';
 
 	import Extract from '../../../components/Extract.svelte';
 	import Card from '../../../components/Card.svelte';
 
 	const { page } = stores();
+
+	const clientFetch = writable();
+
+	onMount(() => {
+		clientFetch.set(fetch);
+	})
 
 	let parentExtract;
 	let childExtracts = [];
@@ -16,7 +22,9 @@
 	const activeWindow = getContext('activeWindow');
 	setContext('parentContainer', 'panel');
 
-	const extractData = derived(page, ($page, set) => {
+	const extractData = derived([page, clientFetch], ([$page, $clientFetch], set) => {
+		if(!$clientFetch) return null;
+
 		const { params, slug } = $page;
 		const extract = params.extract;
 
