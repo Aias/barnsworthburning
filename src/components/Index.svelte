@@ -1,11 +1,22 @@
 <script>
 	export let creators = [];
 	export let spaces = [];
+	let _creators, _spaces;
+	let index;
+
+	import { onMount } from 'svelte';
+	import { stores } from '@sapper/app';
+	const { page } = stores();
 
 	import InternalLink from './InternalLink.svelte';
 	import Arrow from './icons/Arrow.svelte';
-	import { stores } from '@sapper/app';
-	const { page } = stores();
+
+	onMount(async () => {
+		// By waiting until after the first render to assign the needed variables,
+		// we bypass a complete render, so export script doesn't start crawling internal links.
+		_creators = creators;
+		_spaces = spaces;
+	});
 
 	// let secondarySort = 'alpha';
 	let primarySort = 'time';
@@ -20,12 +31,16 @@
 		}
 	};
 
-	$: index = creators
-		.map((c) => ({ ...c, entity: 'creator' }))
-		.concat(spaces.map((s) => ({ ...s, entity: 'space' })))
-		.filter(filterList(entityType))
-		// .sort(compareFields(secondarySort))
-		.sort(compareFields(primarySort));
+	$: {
+		if (_creators && _spaces) {
+			index = _creators
+				.map((c) => ({ ...c, entity: 'creator' }))
+				.concat(_spaces.map((s) => ({ ...s, entity: 'space' })))
+				.filter(filterList(entityType))
+				// .sort(compareFields(secondarySort))
+				.sort(compareFields(primarySort));
+		}
+	}
 
 	const getAlpha = (obj) => {
 		if (obj.entity === 'creator') {
@@ -102,6 +117,7 @@
 	};
 </script>
 
+{#if index}
 <aside class="layout__index">
 	<nav>
 		<ol>
@@ -159,6 +175,7 @@
 		</ol>
 	</nav>
 </aside>
+{/if}
 
 <style>
 	aside {

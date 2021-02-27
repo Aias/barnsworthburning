@@ -2,8 +2,8 @@
 	import select from '../helpers/select';
 
 	export async function preload({ params, query }, session) {
-		let creatorsReceived,
-		spacesReceived;
+		let creators,
+		spaces;
 
 		const [ creatorsQuery, spacesQuery ] = await Promise.all([
 			select('creators', {
@@ -22,27 +22,25 @@
 			creatorsQuery.error ? error = creatorsQuery.error : error = spacesQuery.error;
 		}
 		else {
-			creatorsReceived = creatorsQuery.records;
-			spacesReceived = spacesQuery.records;
+			creators = creatorsQuery.records;
+			spaces = spacesQuery.records;
 		}
 
 		return {
-			creatorsReceived, 
-			spacesReceived
+			creators, 
+			spaces
 		}
 	}
 </script>
 
 <script>
 	export let segment;
-	export let creatorsReceived;
-	export let spacesReceived;
-	let creators;
-	let spaces;
+	export let creators;
+	export let spaces;
 	let error;
 
 	import { stores } from '@sapper/app';
-	import { setContext, onMount, afterUpdate, tick } from 'svelte';
+	import { setContext, afterUpdate, tick } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { fade, slide } from 'svelte/transition';
 	import { loading } from '../stores';
@@ -56,17 +54,6 @@
 	let activeParams = $page.params;
 	const activeWindow = writable(activeParams.extract ? 'panel' : activeParams.slug || activeParams.entity ? 'gallery' : 'index');
 	setContext('activeWindow', activeWindow);
-
-	$loading = true;
-
-	onMount(async () => {
-		// By waiting until after the first render to assign the needed variables,
-		// we bypass a complete render, so export script doesn't start crawling internal links.
-		creators = creatorsReceived;
-		spaces = spacesReceived;
-
-		$loading = false;
-	});
 
 	$: {
 		const { entity: newEntity, slug: newSlug, extract: newExtract = [] } = $page.params;
