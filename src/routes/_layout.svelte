@@ -57,7 +57,7 @@
 	const activeWindow = writable(activeParams.extract ? 'panel' : activeParams.slug || activeParams.entity ? 'gallery' : 'index');
 	setContext('activeWindow', activeWindow);
 
-	$loading = true;
+	// $loading = true;
 
 	onMount(async () => {
 		// By waiting until after the first render to assign the needed variables,
@@ -65,7 +65,7 @@
 		creators = creatorsReceived;
 		spaces = spacesReceived;
 
-		$loading = false;
+		// $loading = false;
 	});
 
 	$: {
@@ -118,23 +118,7 @@
 	<Index {creators} {spaces} />
 	<slot />
 </main>
-{:else if error}
-<Error {error} />
-{:else}
-<blockquote out:slide="{{duration: 1000}}">
-	I should have been a pair of ragged claws <br/>
-	Scuttling across the floors of silent seas.
-</blockquote>
 {/if}
-
-<style>
-	blockquote {
-		position: fixed;
-		left: 50%;
-		top: 50%;
-		transform: translate(-50%, -50%);
-		padding: 1rem;
-		border: 0;
-		background-color: var(--layer-bg);
-	}
-</style>
+{#if error}
+<Error {error} />
+{/if}
