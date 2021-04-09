@@ -4,8 +4,7 @@
 
 	import InternalLink from './InternalLink.svelte';
 	import Arrow from './icons/Arrow.svelte';
-	import { stores } from '@sapper/app';
-	const { page } = stores();
+	import { page } from '$app/stores';
 
 	// let secondarySort = 'alpha';
 	let primarySort = 'time';

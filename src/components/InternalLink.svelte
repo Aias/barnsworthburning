@@ -6,13 +6,12 @@
 	export let toFragment = '';
 	export let prefetch = false;
 
-	import { stores } from '@sapper/app';
+	import { page as appPage } from '$app/stores';
 	import { readable } from 'svelte/store';
 
-	const appStores = stores();
 	let page;
-	if(appStores) {
-		page = appStores.page;
+	if(appPage) {
+		page = appPage;
 	}
 	else {
 		page = readable({

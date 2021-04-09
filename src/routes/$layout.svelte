@@ -41,7 +41,7 @@
 	let spaces;
 	let error;
 
-	import { stores } from '@sapper/app';
+	import { page, session } from '$app/stores';
 	import { setContext, onMount, afterUpdate, tick } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { fade, slide } from 'svelte/transition';
@@ -52,7 +52,6 @@
 	import Loading from '../components/Loading.svelte';
 	import Error from '../components/Error.svelte';
 
-	let { page, session } = stores();
 	let activeParams = $page.params;
 	const activeWindow = writable(activeParams.extract ? 'panel' : activeParams.slug || activeParams.entity ? 'gallery' : 'index');
 	setContext('activeWindow', activeWindow);
