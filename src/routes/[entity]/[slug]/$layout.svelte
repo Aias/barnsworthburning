@@ -5,7 +5,6 @@
 
 		const { creator, space, extracts, error } = await fetch(`/airtable/gallery/${entity}/${slug}.json`).then(res => res.json());
 
-
 		return {
 			props: {
 				creator,
