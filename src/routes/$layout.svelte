@@ -1,38 +1,11 @@
 <script context="module">
-	import select from '../helpers/select';
-
 	export async function load({ fetch }) {
-		let creatorsReceived,
-		spacesReceived;
+		const { creators, spaces } = await fetch('/airtable/home.json').then(res => res.json());
 
-		const [ creatorsQuery, spacesQuery ] = await Promise.all([
-			select('creators', {
-				fields: ['full_name', 'last_name', 'extracts', 'spaces', 'last_updated', 'connections_last_updated', 'slug', 'num_extracts', 'num_fragments'],
-				view: 'By Count',
-				maxRecords: 200
-			})(fetch),
-			select('spaces', {
-				fields: ['topic', 'extracts', 'creators', 'last_updated', 'connections_last_updated'],
-				view: 'By Count',
-				maxRecords: 200
-			})(fetch)
-		]);
-		
-		if(creatorsQuery.error || spacesQuery.error) {
-			creatorsQuery.error ? error = creatorsQuery.error : error = spacesQuery.error;
-			return {
-				error
-			}
-		}
-		else {
-			creatorsReceived = creatorsQuery.records;
-			spacesReceived = spacesQuery.records;
-
-			return {
-				props: {
-					creatorsReceived, 
-					spacesReceived				
-				}
+		return {
+			props: {
+				creators, 
+				spaces				
 			}
 		}
 	}
@@ -40,10 +13,8 @@
 
 <script>
 	export let segment;
-	export let creatorsReceived;
-	export let spacesReceived;
-	let creators;
-	let spaces;
+	export let creators;
+	export let spaces;
 	let error;
 
 	import { page, session } from '$app/stores';
@@ -62,15 +33,6 @@
 	setContext('activeWindow', activeWindow);
 
 	// $loading = true;
-
-	onMount(async () => {
-		// By waiting until after the first render to assign the needed variables,
-		// we bypass a complete render, so export script doesn't start crawling internal links.
-		creators = creatorsReceived;
-		spaces = spacesReceived;
-
-		// $loading = false;
-	});
 
 	$: {
 		const { entity: newEntity, slug: newSlug, extract: newExtract = [] } = $page.params;

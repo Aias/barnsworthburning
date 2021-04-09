@@ -1,50 +1,21 @@
 <script context="module">
-	import select from '../../../helpers/select';
-
 	export async function load({ page, fetch }) {
 		const { params } = page;
 		const { entity, slug } = params;
-		let creator, space;
 
-		switch (entity) {
-			case 'creators':
-				const { records: creators, errorC } = await select('creators', {
-					filterByFormula: `slug = "${slug}"`
-				})(fetch);
-				if (creators) creator = creators[0]; // Reduce to single value (since select always returns an array).
-				break;
-			case 'spaces':
-				const { records: spaces, errorS } = await select('spaces', {
-					filterByFormula: `topic = "${slug}"`
-				})(fetch);
-				if (spaces) space = spaces[0];
-				break;
-			default:
-				console.error('Unknown entity!');
-		}
+		console.log("rendering gallery", entity, slug);
 
-		if(creator || space) {
-			const extractsArr = creator ? creator.extracts : space.extracts;
-			const extractIds = extractsArr.join(',');
+		const { creator, space, extracts, error } = await fetch(`/airtable/gallery/${entity}/${slug}.json`).then(res => res.json());
 
-			const { records: extracts, errorE } = await select('extracts', {
-				filterByFormula: `FIND(RECORD_ID(), "${extractIds}") > 0`,
-				view: 'By Relevance'
-			})(fetch);
 
-			return {
-				props: {
-					creator,
-					space,
-					extracts					
-				}
-			};			
-		}
-		else {
-			return {
-				error: new Error('Failed to fetch entity.')
-			};
-		}
+		return {
+			props: {
+				creator,
+				space,
+				extracts					
+			},
+			error
+		};
 	}
 </script>
 

@@ -20,6 +20,9 @@
 	"dependencies": {
 		"@sveltejs/adapter-netlify": "^1.0.0-next.4",
 		"@sveltejs/kit": "^1.0.0-next.71",
+		"airtable": "^0.10.1",
+		"dotenv": "^8.2.0",
+		"encoding": "^0.1.13",
 		"node-fetch": "^2.6.1",
 		"remarkable": "^2.0.1",
 		"remarkable-meta": "^1.0.1",
