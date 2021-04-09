@@ -18,8 +18,8 @@
 		"build": "svelte-kit build"
 	},
 	"dependencies": {
-		"@sveltejs/adapter-netlify": "^1.0.0-next.0",
-		"@sveltejs/kit": "^1.0.0-next.1",
+		"@sveltejs/adapter-netlify": "^1.0.0-next.4",
+		"@sveltejs/kit": "^1.0.0-next.71",
 		"node-fetch": "^2.6.1",
 		"remarkable": "^2.0.1",
 		"remarkable-meta": "^1.0.1",

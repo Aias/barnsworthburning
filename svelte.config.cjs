@@ -1,4 +1,5 @@
-/** @type {import('@sveltejs/kit').Config} */
+const netlify = require('@sveltejs/adapter-netlify');
+
 module.exports = {
 	// options passed to svelte.compile (https://svelte.dev/docs#svelte_compile)
 	compilerOptions: null,
@@ -7,9 +8,9 @@ module.exports = {
 	extensions: ['.svelte'],
 
 	kit: {
-		adapter: null,
+		adapter: netlify(),
 		amp: false,
-		appDir: '_app',
+		// appDir: '_app',
 		files: {
 			assets: 'static',
 			hooks: 'src/hooks',
@@ -18,13 +19,13 @@ module.exports = {
 			// serviceWorker: 'src/service-worker',
 			template: 'src/app.html'
 		},
-		host: null,
-		hostHeader: null,
+		// host: null,
+		// hostHeader: null,
 		hydrate: true,
-		paths: {
-			assets: '',
-			base: ''
-		},
+		// paths: {
+		// 	assets: '',
+		// 	base: ''
+		// },
 		prerender: {
 			crawl: true,
 			enabled: false,
@@ -32,9 +33,9 @@ module.exports = {
 			pages: ['*']
 		},
 		router: true,
-		ssr: true,
-		target: null,
-		vite: () => ({})
+		ssr: true
+		// target: null,
+		// vite: () => ({})
 	},
 
 	// options passed to svelte.preprocess (https://svelte.dev/docs#svelte_preprocess)
