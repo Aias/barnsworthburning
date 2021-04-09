@@ -1,6 +1,6 @@
 <script context="module">
-	export function preload({ params, query }) {
-		return this.fetch(`feed.xml`);
+	export async function load({ fetch }) {
+		return fetch(`feed.xml`);
 	}
 </script>
 

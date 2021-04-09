@@ -1,7 +1,8 @@
 <script context="module">
 	import select from '../../../helpers/select';
 
-	export async function preload({ params, query }, session) {
+	export async function load({ page, fetch }) {
+		const { params } = page;
 		const { entity, slug, extract } = params;
 		const [extractSlug, fragmentSlug] = extract;
 
@@ -9,13 +10,22 @@
 
 		const {records: extracts, error} = await select('extracts', {
 			filterByFormula: filterString
-		})(this.fetch);
+		})(fetch);
 
-		return {
-			extracts,
-			extractSlug,
-			fragmentSlug
-		};
+		if(error) {
+			return {
+				error
+			}
+		}
+		else {
+			return {
+				props: {
+					extracts,
+					extractSlug,
+					fragmentSlug				
+				}
+			};			
+		} 
 	}
 </script>
 

@@ -1,7 +1,7 @@
 <script context="module">
 	import select from '../helpers/select';
 
-	export async function preload({ params, query }, session) {
+	export async function load({ fetch }) {
 		let creatorsReceived,
 		spacesReceived;
 
@@ -10,25 +10,30 @@
 				fields: ['full_name', 'last_name', 'extracts', 'spaces', 'last_updated', 'connections_last_updated', 'slug', 'num_extracts', 'num_fragments'],
 				view: 'By Count',
 				maxRecords: 200
-			})(this.fetch),
+			})(fetch),
 			select('spaces', {
 				fields: ['topic', 'extracts', 'creators', 'last_updated', 'connections_last_updated'],
 				view: 'By Count',
 				maxRecords: 200
-			})(this.fetch)
+			})(fetch)
 		]);
 		
 		if(creatorsQuery.error || spacesQuery.error) {
 			creatorsQuery.error ? error = creatorsQuery.error : error = spacesQuery.error;
+			return {
+				error
+			}
 		}
 		else {
 			creatorsReceived = creatorsQuery.records;
 			spacesReceived = spacesQuery.records;
-		}
 
-		return {
-			creatorsReceived, 
-			spacesReceived
+			return {
+				props: {
+					creatorsReceived, 
+					spacesReceived				
+				}
+			}
 		}
 	}
 </script>

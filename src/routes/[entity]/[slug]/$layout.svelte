@@ -1,7 +1,8 @@
 <script context="module">
 	import select from '../../../helpers/select';
 
-	export async function preload({ params, query }, session) {
+	export async function load({ page, fetch }) {
+		const { params } = page;
 		const { entity, slug } = params;
 		let creator, space;
 
@@ -9,13 +10,13 @@
 			case 'creators':
 				const { records: creators, errorC } = await select('creators', {
 					filterByFormula: `slug = "${slug}"`
-				})(this.fetch);
+				})(fetch);
 				if (creators) creator = creators[0]; // Reduce to single value (since select always returns an array).
 				break;
 			case 'spaces':
 				const { records: spaces, errorS } = await select('spaces', {
 					filterByFormula: `topic = "${slug}"`
-				})(this.fetch);
+				})(fetch);
 				if (spaces) space = spaces[0];
 				break;
 			default:
@@ -29,16 +30,20 @@
 			const { records: extracts, errorE } = await select('extracts', {
 				filterByFormula: `FIND(RECORD_ID(), "${extractIds}") > 0`,
 				view: 'By Relevance'
-			})(this.fetch);
+			})(fetch);
 
 			return {
-				creator,
-				space,
-				extracts
+				props: {
+					creator,
+					space,
+					extracts					
+				}
 			};			
 		}
 		else {
-			return null;
+			return {
+				error: new Error('Failed to fetch entity.')
+			};
 		}
 	}
 </script>
