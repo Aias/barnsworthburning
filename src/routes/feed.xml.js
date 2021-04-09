@@ -167,7 +167,6 @@ export async function get(req, res, next) {
 	const { records: works } = await select('extracts', workOptions)(fetch);
 
 	if (!works || works.length === 0) {
-		next();
 		return null;
 	}
 
@@ -193,7 +192,12 @@ export async function get(req, res, next) {
 
 	const { records: extracts } = await select('extracts', extractOptions)(fetch);
 
-	res.setHeader('Content-Type', 'application/atom+xml');
-	res.setHeader('Cache-Control', `max-age=0, s-max-age=${3600}`);
-	res.end(atom(works, extracts));
+	return {
+		status: 200,
+		headers: {
+			'Content-Type': 'application/atom+xml',
+			'Cache-Control': `max-age=0, s-max-age=${3600}`
+		},
+		body: atom(works, extracts)
+	};
 }

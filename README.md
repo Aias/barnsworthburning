@@ -6,7 +6,7 @@ a commonplace book.
 
 ## built with / depending on
 
--   svelte / sapper
+-   svelte / sveltekit
 -   airtable
 -   netlify
 -   the knowledge of others

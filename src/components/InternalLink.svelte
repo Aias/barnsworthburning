@@ -57,6 +57,6 @@
 	$: isActive = destinationUrl === $page.path;
 </script>
 
-<a sapper:noscroll href="{destinationUrl}" class:active="{isActive}" sapper:prefetch="{prefetch}" {...$$restProps}>
+<a sveltekit:noscroll href="{destinationUrl}" class:active="{isActive}" sveltekit:prefetch="{prefetch}" {...$$restProps}>
 	<slot />
 </a>
