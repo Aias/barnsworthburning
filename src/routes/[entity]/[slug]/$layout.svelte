@@ -3,8 +3,6 @@
 		const { params } = page;
 		const { entity, slug } = params;
 
-		console.log("rendering gallery", entity, slug);
-
 		const { creator, space, extracts, error } = await fetch(`/airtable/gallery/${entity}/${slug}.json`).then(res => res.json());
 
 

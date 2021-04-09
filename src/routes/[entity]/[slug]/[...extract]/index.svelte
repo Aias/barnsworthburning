@@ -4,9 +4,7 @@
 		const { entity, slug, extract } = params;
 		const [extractSlug, fragmentSlug] = extract;
 
-		console.log("rendering extract", params);
-
-		const extracts = await fetch(`/airtable/extract/${extractSlug}/${fragmentSlug}`).then(res => res.json());
+		const extracts = await fetch(`/airtable/extract/${extractSlug}`).then(res => res.json());
 
 		return {
 			props: {
@@ -24,8 +22,8 @@
 	export let fragmentSlug;
 
 	import { setContext, getContext, tick, afterUpdate } from 'svelte';
-	import Extract from '../../../components/Extract.svelte';
-	import Card from '../../../components/Card.svelte';
+	import Extract from '../../../../components/Extract.svelte';
+	import Card from '../../../../components/Card.svelte';
 
 	let parentExtract, childExtracts = [];
 
