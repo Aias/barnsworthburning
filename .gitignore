@@ -7,3 +7,5 @@ functions
 _app
 .svelte
 .env
+__sapper__
+src/node_modules

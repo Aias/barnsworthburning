@@ -1,6 +1,6 @@
 <script context="module">
 	export async function load({ fetch }) {
-		const { creators, spaces } = await fetch('/airtable/home.json').then(res => res.json());
+		const { creators, spaces } = await fetch('/index.json').then(res => res.json());
 
 		return {
 			props: {
@@ -12,7 +12,6 @@
 </script>
 
 <script>
-	export let segment;
 	export let creators;
 	export let spaces;
 	let error;
@@ -80,9 +79,9 @@
 
 <Loading />
 {#if creators && spaces}
-<main id="layout" class="layout active--{$activeWindow}" in:fade="{{duration: 1000, delay: 500}}" class:segment="{segment}" class:panel-open="{activeParams.extract}">
+<main id="layout" class="layout active--{$activeWindow}" in:fade="{{duration: 1000, delay: 500}}" class:panel-open="{activeParams.extract}">
 	<Index {creators} {spaces} />
-	<slot />
+	<slot></slot>
 </main>
 {/if}
 {#if error}

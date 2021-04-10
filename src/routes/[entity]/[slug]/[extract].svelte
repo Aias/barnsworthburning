@@ -1,16 +1,14 @@
 <script context="module">
 	export async function load({ page, fetch }) {
 		const { params } = page;
-		const { entity, slug, extract } = params;
-		const [extractSlug, fragmentSlug] = extract;
+		const { entity, slug, extract: extractSlug } = params;
 
-		const extracts = await fetch(`/airtable/extract/${extractSlug}`).then(res => res.json());
+		const extracts = await fetch(`/${entity}/${slug}/${extractSlug}.json`).then(res => res.json());
 
 		return {
 			props: {
 				extracts,
-				extractSlug,
-				fragmentSlug				
+				extractSlug
 			}
 		};
 	}
@@ -19,11 +17,11 @@
 <script>
 	export let extracts = [];
 	export let extractSlug
-	export let fragmentSlug;
+	let fragmentSlug;
 
 	import { setContext, getContext, tick, afterUpdate } from 'svelte';
-	import Extract from '../../../../components/Extract.svelte';
-	import Card from '../../../../components/Card.svelte';
+	import Extract from '../../../components/Extract.svelte';
+	import Card from '../../../components/Card.svelte';
 
 	let parentExtract, childExtracts = [];
 

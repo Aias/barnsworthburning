@@ -3,7 +3,7 @@
 		const { params } = page;
 		const { entity, slug } = params;
 
-		const { creator, space, extracts, error } = await fetch(`/airtable/gallery/${entity}/${slug}.json`).then(res => res.json());
+		const { creator, space, extracts, error } = await fetch(`/${entity}/${slug}.json`).then(res => res.json());
 
 		return {
 			props: {
@@ -22,12 +22,11 @@
 	export let creator;
 	export let space;
 	export let extracts;
-	export let segment;
 </script>
 
 {#if creator || space}
-<div class="layout__gallery" class:segment="{segment}">
+<div class="layout__gallery">
 	<ExtractGallery {creator} {space} {extracts} />
 </div>
-<div class="layout__panel"><slot /></div>
+<div class="layout__panel"><slot></slot></div>
 {/if}

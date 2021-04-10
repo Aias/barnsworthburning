@@ -6,12 +6,12 @@
 	export let toFragment = '';
 	export let prefetch = false;
 
-	import { page as appPage } from '$app/stores';
+	import * as stores from '$app/stores';
 	import { readable } from 'svelte/store';
 
 	let page;
-	if(appPage) {
-		page = appPage;
+	if(stores && stores.page) {
+		page = stores.page;
 	}
 	else {
 		page = readable({
@@ -29,12 +29,7 @@
 			destinationUrl = '/';
 		}
 		else {
-			let { entity: currentType, slug: currentEntity, extract } = $page.params;
-			let currentExtract, currentFragment;
-			if(extract) {
-				currentExtract = extract[0];
-				currentFragment = extract[1];
-			}
+			let { entity: currentType, slug: currentEntity, extract: currentExtract } = $page.params;
 			
 			let destinationArray = [];
 			if(toType !== false && toEntity !== false) {
@@ -42,9 +37,6 @@
 
 				if(toExtract !== false) {
 					destinationArray = destinationArray.concat(toExtract || currentExtract);
-					if(toFragment) {
-						destinationArray = destinationArray.concat(toFragment || currentFragment);
-					}
 				}
 			}
 

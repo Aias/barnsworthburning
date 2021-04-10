@@ -1,18 +1,13 @@
 // Modeled after https://github.com/kball/speakwritelisten.com/blob/master/src/routes/feed.xml.js
 // and https://github.com/kball/speakwritelisten.com/blob/master/src/routes/index.svelte
 
-require('svelte/register');
-
 import Extract from '../components/Extract.svelte';
 
-import { SITE_URL, FULL_API } from '../config';
 import multiJoin from '../helpers/multiJoin';
-import select from '../helpers/select';
+import { airtableFetch } from './_requests';
 import slugify from '../helpers/slugify';
 import mapConnections from '../helpers/mapConnections';
 import { article } from '../helpers/isFirstLetterAVowel';
-
-import fetch from 'node-fetch';
 
 const generateLink = (creators = [], spaces = ['design']) => {
 	if (creators.length > 0) {
@@ -30,18 +25,19 @@ const meta = {
 		email: 'trombley.nick@gmail.com',
 		url: 'https://nicktrombley.design'
 	},
-	tags: ['design', 'knowledge', 'making']
+	tags: ['design', 'knowledge', 'making'],
+	url: 'https://barnsworthburning.net'
 };
 
 const atom = (recentWorks, extracts = []) => {
 	return `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>${SITE_URL}/feed</id>
+    <id>${meta.url}/feed</id>
     <title>${meta.title}</title>
     <subtitle>${meta.description}</subtitle>
-    <link href="${SITE_URL}/feed.xml" rel="self" />
-    <link href="${SITE_URL}" />
-    <icon>${SITE_URL}/favicon.png</icon>
+    <link href="${meta.url}/feed.xml" rel="self" />
+    <link href="${meta.url}" />
+    <icon>${meta.url}/favicon.png</icon>
     <author>
         <name>${meta.author.name}</name>
         <email>${meta.author.email}</email>
@@ -74,7 +70,7 @@ ${recentWorks
 			image_caption
 		}) => {
 			return `    <entry>
-        <id>${SITE_URL}/works/${slug}</id>
+        <id>${meta.url}/works/${slug}</id>
         <title><![CDATA[${title}]]></title>${
 				combined_creator_names
 					? combined_creator_names.map(
@@ -90,7 +86,7 @@ ${recentWorks
 			}.]]></summary>
         <published>${new Date(extracted_on).toISOString()}</published>
         <updated>${new Date(last_updated).toISOString()}</updated>
-        <link rel="alternate" href="${SITE_URL}/${generateLink(
+        <link rel="alternate" href="${meta.url}/${generateLink(
 				combined_creator_names,
 				combined_space_topics
 			)}/${slug}" />${
@@ -139,7 +135,7 @@ ${recentWorks
 </feed>`;
 };
 
-export async function get(req, res, next) {
+export async function get() {
 	const workOptions = {
 		view: 'Works',
 		maxRecords: 30,
@@ -164,7 +160,7 @@ export async function get(req, res, next) {
 		filterByFormula: `last_updated < DATEADD(NOW(), -1, 'day')`
 	};
 
-	const { records: works } = await select('extracts', workOptions)(fetch);
+	const works = await airtableFetch('extracts', workOptions);
 
 	if (!works || works.length === 0) {
 		return null;
@@ -190,7 +186,7 @@ export async function get(req, res, next) {
 		]
 	};
 
-	const { records: extracts } = await select('extracts', extractOptions)(fetch);
+	const extracts = await airtableFetch('extracts', extractOptions);
 
 	return {
 		status: 200,

@@ -1,4 +1,4 @@
-import { airtableFetch } from '../../_requests';
+import { airtableFetch } from '../_requests';
 
 export async function get({ params }) {
 	const { entity, slug } = params;

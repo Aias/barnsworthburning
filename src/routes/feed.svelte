@@ -1,6 +1,6 @@
 <script context="module">
 	export async function load({ fetch }) {
-		return fetch(`feed.xml`);
+		return fetch(`/feed.xml`);
 	}
 </script>
 
