@@ -28,7 +28,7 @@ module.exports = {
 		// },
 		prerender: {
 			crawl: true,
-			enabled: false,
+			enabled: true,
 			force: false,
 			pages: ['*']
 		},
@@ -36,8 +36,8 @@ module.exports = {
 		ssr: true
 		// target: null,
 		// vite: () => ({})
-	},
+	}
 
 	// options passed to svelte.preprocess (https://svelte.dev/docs#svelte_preprocess)
-	preprocess: null
+	// preprocess: null
 };
