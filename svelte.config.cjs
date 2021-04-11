@@ -37,7 +37,7 @@ module.exports = {
 		// target: null,
 		vite: () => ({
 			ssr: {
-				noExternal: ['remarkable', 'remarkable-meta']
+				noExternal: ['remarkable', 'remarkable-meta', 'airtable']
 			}
 		})
 	}
