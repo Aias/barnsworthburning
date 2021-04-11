@@ -28,7 +28,7 @@ module.exports = {
 		// },
 		prerender: {
 			crawl: true,
-			enabled: false,
+			enabled: true,
 			force: false,
 			pages: ['*']
 		},
@@ -37,7 +37,7 @@ module.exports = {
 		// target: null,
 		vite: () => ({
 			ssr: {
-				noExternal: ['remarkable', 'remarkable-meta', 'airtable', 'dotenv']
+				noExternal: ['remarkable', 'remarkable-meta', 'airtable']
 			}
 		})
 	}

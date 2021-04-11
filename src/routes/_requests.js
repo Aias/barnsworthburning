@@ -1,11 +1,8 @@
 import Airtable from 'airtable';
-import env from 'dotenv';
-
-env.config();
 
 Airtable.configure({
-	endpointUrl: process.env.AIRTABLE_API_URL,
-	apiKey: process.env.AIRTABLE_API_KEY
+	endpointUrl: 'https://api.airtable.com',
+	apiKey: import.meta.env.VITE_AIRTABLE_API_KEY
 });
 
 const base = Airtable.base('appHWZbECVKCSjquH');
