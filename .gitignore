@@ -9,3 +9,4 @@ _app
 .env
 __sapper__
 src/node_modules
+.vercel_build_output
