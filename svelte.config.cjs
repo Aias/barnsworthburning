@@ -33,13 +33,13 @@ module.exports = {
 			pages: ['*']
 		},
 		router: true,
-		ssr: true,
+		ssr: false
 		// target: null,
-		vite: () => ({
-			ssr: {
-				noExternal: ['remarkable', 'remarkable-meta', 'airtable']
-			}
-		})
+		// vite: () => ({
+		// 	ssr: {
+		// 		noExternal: ['remarkable', 'remarkable-meta', 'airtable']
+		// 	}
+		// })
 	}
 
 	// options passed to svelte.preprocess (https://svelte.dev/docs#svelte_preprocess)
