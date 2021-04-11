@@ -3,6 +3,6 @@
   publish = "build/"
   functions = "functions/"
 
-# [functions]
-#  node_bundler = "esbuild"
-#  external_node_modules = ["remarkable"]
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["remarkable", "remarkable-meta", "airtable"]
