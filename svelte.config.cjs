@@ -33,7 +33,7 @@ module.exports = {
 			pages: ['*']
 		},
 		router: true,
-		ssr: false
+		ssr: true
 		// target: null,
 		// vite: () => ({
 		// 	ssr: {
