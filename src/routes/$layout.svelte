@@ -1,47 +1,22 @@
 <script context="module">
-	import select from '../helpers/select';
-
-	export async function preload({ params, query }, session) {
-		let creatorsReceived,
-		spacesReceived;
-
-		const [ creatorsQuery, spacesQuery ] = await Promise.all([
-			select('creators', {
-				fields: ['full_name', 'last_name', 'extracts', 'spaces', 'last_updated', 'connections_last_updated', 'slug', 'num_extracts', 'num_fragments'],
-				view: 'By Count',
-				maxRecords: 200
-			})(this.fetch),
-			select('spaces', {
-				fields: ['topic', 'extracts', 'creators', 'last_updated', 'connections_last_updated'],
-				view: 'By Count',
-				maxRecords: 200
-			})(this.fetch)
-		]);
-		
-		if(creatorsQuery.error || spacesQuery.error) {
-			creatorsQuery.error ? error = creatorsQuery.error : error = spacesQuery.error;
-		}
-		else {
-			creatorsReceived = creatorsQuery.records;
-			spacesReceived = spacesQuery.records;
-		}
+	export async function load({ fetch }) {
+		const { creators, spaces } = await fetch('/index.json').then(res => res.json());
 
 		return {
-			creatorsReceived, 
-			spacesReceived
+			props: {
+				creators, 
+				spaces				
+			}
 		}
 	}
 </script>
 
 <script>
-	export let segment;
-	export let creatorsReceived;
-	export let spacesReceived;
-	let creators;
-	let spaces;
+	export let creators;
+	export let spaces;
 	let error;
 
-	import { stores } from '@sapper/app';
+	import { page, session } from '$app/stores';
 	import { setContext, onMount, afterUpdate, tick } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { fade, slide } from 'svelte/transition';
@@ -52,21 +27,11 @@
 	import Loading from '../components/Loading.svelte';
 	import Error from '../components/Error.svelte';
 
-	let { page, session } = stores();
 	let activeParams = $page.params;
 	const activeWindow = writable(activeParams.extract ? 'panel' : activeParams.slug || activeParams.entity ? 'gallery' : 'index');
 	setContext('activeWindow', activeWindow);
 
 	// $loading = true;
-
-	onMount(async () => {
-		// By waiting until after the first render to assign the needed variables,
-		// we bypass a complete render, so export script doesn't start crawling internal links.
-		creators = creatorsReceived;
-		spaces = spacesReceived;
-
-		// $loading = false;
-	});
 
 	$: {
 		const { entity: newEntity, slug: newSlug, extract: newExtract = [] } = $page.params;
@@ -114,9 +79,9 @@
 
 <Loading />
 {#if creators && spaces}
-<main id="layout" class="layout active--{$activeWindow}" in:fade="{{duration: 1000, delay: 500}}" class:segment="{segment}" class:panel-open="{activeParams.extract}">
+<main id="layout" class="layout active--{$activeWindow}" in:fade="{{duration: 1000, delay: 500}}" class:panel-open="{activeParams.extract}">
 	<Index {creators} {spaces} />
-	<slot />
+	<slot></slot>
 </main>
 {/if}
 {#if error}

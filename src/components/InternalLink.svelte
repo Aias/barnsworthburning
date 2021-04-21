@@ -6,13 +6,15 @@
 	export let toFragment = '';
 	export let prefetch = false;
 
-	import { stores } from '@sapper/app';
+	import { getContext } from 'svelte';
+	import { page as pageStore } from '$app/stores';
 	import { readable } from 'svelte/store';
 
-	const appStores = stores();
+	const fromRssFeed = getContext('fromRssFeed');
+
 	let page;
-	if(appStores) {
-		page = appStores.page;
+	if(!fromRssFeed) {
+		page = pageStore;
 	}
 	else {
 		page = readable({
@@ -30,12 +32,7 @@
 			destinationUrl = '/';
 		}
 		else {
-			let { entity: currentType, slug: currentEntity, extract } = $page.params;
-			let currentExtract, currentFragment;
-			if(extract) {
-				currentExtract = extract[0];
-				currentFragment = extract[1];
-			}
+			let { entity: currentType, slug: currentEntity, extract: currentExtract } = $page.params;
 			
 			let destinationArray = [];
 			if(toType !== false && toEntity !== false) {
@@ -43,9 +40,6 @@
 
 				if(toExtract !== false) {
 					destinationArray = destinationArray.concat(toExtract || currentExtract);
-					if(toFragment) {
-						destinationArray = destinationArray.concat(toFragment || currentFragment);
-					}
 				}
 			}
 
@@ -58,6 +52,6 @@
 	$: isActive = destinationUrl === $page.path;
 </script>
 
-<a sapper:noscroll href="{destinationUrl}" class:active="{isActive}" sapper:prefetch="{prefetch}" {...$$restProps}>
+<a sveltekit:noscroll href="{destinationUrl}" class:active="{isActive}" sveltekit:prefetch="{prefetch}" {...$$restProps}>
 	<slot />
 </a>

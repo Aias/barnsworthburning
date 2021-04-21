@@ -12,8 +12,7 @@
 	import mapConnections from '../helpers/mapConnections';
 
 	import { flip } from 'svelte/animate';
-	import { stores } from '@sapper/app';
-	const { page } = stores();
+	import { page } from '$app/stores';
 
 	$: params = $page.params;
 	$: selectedExtract = params.extract;

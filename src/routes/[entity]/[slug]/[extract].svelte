@@ -1,20 +1,15 @@
 <script context="module">
-	import select from '../../../helpers/select';
+	export async function load({ page, fetch }) {
+		const { params } = page;
+		const { entity, slug, extract: extractSlug } = params;
 
-	export async function preload({ params, query }, session) {
-		const { entity, slug, extract } = params;
-		const [extractSlug, fragmentSlug] = extract;
-
-		const filterString = `OR(CONCATENATE('-', slug, '-') = '-${extractSlug}-', FIND('${extractSlug}', parent_slug) = 1)`; // Returns true if an extract has the same slug (it is the parent) or if its parent has the same slug (it's a child of the extract we're looking for).
-
-		const {records: extracts, error} = await select('extracts', {
-			filterByFormula: filterString
-		})(this.fetch);
+		const extracts = await fetch(`/${entity}/${slug}/${extractSlug}.json`).then(res => res.json());
 
 		return {
-			extracts,
-			extractSlug,
-			fragmentSlug
+			props: {
+				extracts,
+				extractSlug
+			}
 		};
 	}
 </script>
@@ -22,7 +17,7 @@
 <script>
 	export let extracts = [];
 	export let extractSlug
-	export let fragmentSlug;
+	let fragmentSlug;
 
 	import { setContext, getContext, tick, afterUpdate } from 'svelte';
 	import Extract from '../../../components/Extract.svelte';

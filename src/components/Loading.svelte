@@ -1,10 +1,15 @@
 <script>
 	import { derived } from 'svelte/store';
-	import { stores } from '@sapper/app';
-	let { preloading } = stores();
+	import { navigating } from '$app/stores';
 	import { loading } from '../stores';
 
-	const loadingAll = derived([preloading, loading], ([$preloading, $loading]) => $preloading || $loading);
+	const loadingAll = derived([navigating, loading], ([$navigating, $loading]) => {
+		if ($navigating) {
+			return true;
+		} else {
+			return $loading;
+		}
+	});
 </script>
 
 {#if $loadingAll}
