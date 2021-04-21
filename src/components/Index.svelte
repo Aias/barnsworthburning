@@ -149,9 +149,11 @@
 					{node.num_extracts + node.num_fragments}
 				</span>
 				{:else}
-				<InternalLink toType="spaces" toEntity="{node.topic}"
-					><span class="screenreader">Subspace:</span>{node.topic}</InternalLink
-				>&nbsp;<span class="count text-secondary"> {node.extracts ? node.extracts.length : 0} </span>
+				<InternalLink toType="spaces" toEntity="{node.topic}">{node.topic}</InternalLink>&nbsp;<span
+					class="count text-secondary"
+				>
+					{node.extracts ? node.extracts.length : 0}
+				</span>
 				{/if}
 			</li>
 			{/each}
