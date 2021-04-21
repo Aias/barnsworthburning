@@ -6,12 +6,15 @@
 	export let toFragment = '';
 	export let prefetch = false;
 
-	import * as stores from '$app/stores';
+	import { getContext } from 'svelte';
+	import { page as pageStore } from '$app/stores';
 	import { readable } from 'svelte/store';
 
+	const fromRssFeed = getContext('fromRssFeed');
+
 	let page;
-	if(stores && stores.page) {
-		page = stores.page;
+	if(!fromRssFeed) {
+		page = pageStore;
 	}
 	else {
 		page = readable({

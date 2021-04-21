@@ -5,13 +5,16 @@
 	import Citation from './Citation.svelte';
 	import InternalLink from './InternalLink.svelte';
 	import ImageCarousel from './ImageCarousel.svelte';
+	import { setContext } from 'svelte';
 
 	export let extract = {};
 	export let suppressCitation = false;
 	export let idPrefix = '';
 	export let fromRssFeed = false;
 
-	const isWork = get(extract, 'is_work')
+	setContext('fromRssFeed', fromRssFeed);
+
+	const isWork = get(extract, 'is_work');
 
 	const title = get(extract, 'title');
 	const slug = get(extract, 'slug', slugify(title));
