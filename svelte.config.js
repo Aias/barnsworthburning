@@ -1,6 +1,6 @@
-const netlify = require('@sveltejs/adapter-netlify');
+import netlify from '@sveltejs/adapter-netlify';
 
-module.exports = {
+const config = {
 	// options passed to svelte.compile (https://svelte.dev/docs#svelte_compile)
 	compilerOptions: null,
 
@@ -45,3 +45,5 @@ module.exports = {
 	// options passed to svelte.preprocess (https://svelte.dev/docs#svelte_preprocess)
 	// preprocess: null
 };
+
+export default config;

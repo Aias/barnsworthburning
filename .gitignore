@@ -6,6 +6,7 @@ build
 functions
 _app
 .svelte
+.svelte-kit
 .env
 __sapper__
 src/node_modules

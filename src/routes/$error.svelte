@@ -11,8 +11,8 @@
 
 <h1>{status}</h1>
 
+{#if error}
 <p>{error.message}</p>
-
-{#if dev && error.stack}
+{/if} {#if dev && error && error.stack}
 <pre>{error.stack}</pre>
 {/if}
