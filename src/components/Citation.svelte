@@ -29,7 +29,7 @@
 	<div class="{isWork ? 'work' : 'extract'} text-mono">
 	{#if isWork}
 		<span>
-			{article(type)} <span class="extract-type">{type}</span>
+			{article(type)}&nbsp;<span class="extract-type">{type}</span>
 			{#if creatorNames.length > 0}
 			by <CreatorNames creatorNames="{creatorNames}" />
 			{/if}		
