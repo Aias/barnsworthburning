@@ -19,6 +19,7 @@ const config = {
 			// serviceWorker: 'src/service-worker',
 			template: 'src/app.html'
 		},
+		floc: false,
 		// host: null,
 		// hostHeader: null,
 		hydrate: true,

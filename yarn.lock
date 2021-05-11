@@ -10,37 +10,39 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
-"@sveltejs/adapter-netlify@^1.0.0-next.11":
-  version "1.0.0-next.11"
-  resolved "https://registry.yarnpkg.com/@sveltejs/adapter-netlify/-/adapter-netlify-1.0.0-next.11.tgz#b9dd9168d6dce51aa0a356895a1cf30bea75ebbc"
-  integrity sha512-e5oULLFpC61tI0ABfU6H0pUoBK2fXqCq6FJWHXlyq3HqC1AHgII+ZruQmf/rYoRC6/qArizQRYaXzLTVF5d0Yw==
+"@sveltejs/adapter-netlify@^1.0.0-next.12":
+  version "1.0.0-next.12"
+  resolved "https://registry.yarnpkg.com/@sveltejs/adapter-netlify/-/adapter-netlify-1.0.0-next.12.tgz#54947cb94e2ee7e49228ad819c67069e78d89a54"
+  integrity sha512-34+Xk2YmTDgDJWVliaZtAiDbtEsZurENwALxdD1dDQErxI0HPGZgmmwktLJjf2mU2/DcGJAXZxgq2RsGiDxAZA==
   dependencies:
-    "@sveltejs/kit" "1.0.0-next.98"
-    esbuild "^0.11.12"
+    "@sveltejs/kit" "1.0.0-next.103"
+    esbuild "^0.11.18"
     toml "^3.0.0"
 
-"@sveltejs/kit@1.0.0-next.98":
-  version "1.0.0-next.98"
-  resolved "https://registry.yarnpkg.com/@sveltejs/kit/-/kit-1.0.0-next.98.tgz#3327d9b32caec1cf75166f305b5af17c128b76d3"
-  integrity sha512-WAbxMLAmgJ1dwtmRm46dXSYewIIs8ykjl3yWwdqdPrOBY420HQyrvBjMmh9OVyBaCRy/He5blnMWRFDKUqNQng==
+"@sveltejs/kit@1.0.0-next.103":
+  version "1.0.0-next.103"
+  resolved "https://registry.yarnpkg.com/@sveltejs/kit/-/kit-1.0.0-next.103.tgz#9b79673e93f45be92f79fb769baf60259fec71c7"
+  integrity sha512-g3Q3AnYloJVpXu83yfQLddYcsTYJ5M/NaoRTyv0qCTMNea1L9HTGrI8grdi5kF8wbPCUcX9fLA9RYRDfEkjF/Q==
   dependencies:
     "@sveltejs/vite-plugin-svelte" "^1.0.0-next.9"
     cheap-watch "^1.0.3"
     sade "^1.7.4"
+    vite "^2.2.4"
 
-"@sveltejs/kit@^1.0.0-next.99":
-  version "1.0.0-next.99"
-  resolved "https://registry.yarnpkg.com/@sveltejs/kit/-/kit-1.0.0-next.99.tgz#2d7de449ea687dd6ca373b541116ea0d5a7e7e41"
-  integrity sha512-eLVo8/fE6DrNFRCx4fLU2MKolVhMPHlBkhA04kpsNaojC6PW9kW9w7DEpeK5WCYYzxhirvmABsUyw37pQfjZVA==
+"@sveltejs/kit@^1.0.0-next.104":
+  version "1.0.0-next.104"
+  resolved "https://registry.yarnpkg.com/@sveltejs/kit/-/kit-1.0.0-next.104.tgz#a80ebb9f28aea77184b90e10e11c4f26e3a74c2e"
+  integrity sha512-1ww5NvpGYJdKXR4bfxo04AM4izcJwTziFIVrImq3jqS2b4d8l3KfrJOqgv+e07RvW/WakrCRPAyZzeHpXLdkZg==
   dependencies:
     "@sveltejs/vite-plugin-svelte" "^1.0.0-next.9"
     cheap-watch "^1.0.3"
     sade "^1.7.4"
+    vite "^2.2.4"
 
 "@sveltejs/vite-plugin-svelte@^1.0.0-next.9":
-  version "1.0.0-next.9"
-  resolved "https://registry.yarnpkg.com/@sveltejs/vite-plugin-svelte/-/vite-plugin-svelte-1.0.0-next.9.tgz#409e20c030298e968c71d71bef141665c06e7bd9"
-  integrity sha512-ySB/GJsZV3h3jqjq5WIiaxVFkJK6vqtG9gS7Iw6SfUH9ZiFNw5JjQF69g68j9cNep3q4yRIYiG5/pI3YIdXEuA==
+  version "1.0.0-next.10"
+  resolved "https://registry.yarnpkg.com/@sveltejs/vite-plugin-svelte/-/vite-plugin-svelte-1.0.0-next.10.tgz#15526067ea2edd334420b1e14602e29b370be25e"
+  integrity sha512-ImvxbhPePm2hWNTKBSA3LHAYGwiEjHjvvgfPLXm4R87sfZ+BMXql9jBmDpzUC/URBLT4BB3Jxos/i523qkJBHg==
   dependencies:
     "@rollup/pluginutils" "^4.1.0"
     chalk "^4.1.1"
@@ -64,9 +66,9 @@ abort-controller@^3.0.0:
     event-target-shim "^5.0.0"
 
 abortcontroller-polyfill@^1.4.0:
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/abortcontroller-polyfill/-/abortcontroller-polyfill-1.7.1.tgz#27084bac87d78a7224c8ee78135d05df430c2d2f"
-  integrity sha512-yml9NiDEH4M4p0G4AcPkg8AAa4mF3nfYF28VQxaokpO67j9H7gWgmsVWJ/f1Rn+PzsnDYvzJzWIQzCqDKRvWlA==
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/abortcontroller-polyfill/-/abortcontroller-polyfill-1.7.3.tgz#1b5b487bd6436b5b764fd52a612509702c3144b5"
+  integrity sha512-zetDJxd89y3X99Kvo4qFx8GKlt6GsvN3UcRZHwU6iFA/0KiOmhkTVhe8oRoTBiTVPZu09x3vCra47+w8Yz1+2Q==
 
 airtable@^0.11.0:
   version "0.11.0"
@@ -137,10 +139,10 @@ debug@^4.3.2:
   dependencies:
     ms "2.1.2"
 
-esbuild@^0.11.12:
-  version "0.11.18"
-  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.11.18.tgz#b587ec9e84d2e291b545e3c6342b5b703fd009cb"
-  integrity sha512-KD7v4N9b5B8bxPUNn/3GA9r0HWo4nJk3iwjZ+2zG1ffg+r8ig+wqj7sW6zgI6Sn4/B2FnbzqWxcAokAGGM5zwQ==
+esbuild@^0.11.18:
+  version "0.11.20"
+  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.11.20.tgz#7cefa1aee8b372c184e42457885f7ce5d3e62a1e"
+  integrity sha512-QOZrVpN/Yz74xfat0H6euSgn3RnwLevY1mJTEXneukz1ln9qB+ieaerRMzSeETpz/UJWsBMzRVR/andBht5WKw==
 
 esbuild@^0.9.3:
   version "0.9.7"
@@ -190,9 +192,9 @@ hash-sum@^2.0.0:
   integrity sha512-WdZTbAByD+pHfl/g9QSsBIIwy8IT+EsPiKDs0KNX+zSHhdDLFKdZu0BQHljvO+0QI/BasbMSUa8wYNCZTvhslg==
 
 is-core-module@^2.2.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/is-core-module/-/is-core-module-2.3.0.tgz#d341652e3408bca69c4671b79a0954a3d349f887"
-  integrity sha512-xSphU2KG9867tsYdLD4RWQ1VqdFl4HTO9Thf3I/3dLEfr0dbPTWKsuCKrgqMljg4nPE+Gq0VCnzT3gr0CyBmsw==
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/is-core-module/-/is-core-module-2.4.0.tgz#8e9fc8e15027b011418026e98f0e6f4d86305cc1"
+  integrity sha512-6A2fkfq1rfeQZjxrZJGerpLCTHRNEBiSgnu0+obeJpEPZRUooHgsizvzv0ZjJwOz3iWIHdJtVWJ/tmPr3D21/A==
   dependencies:
     has "^1.0.3"
 
@@ -219,10 +221,10 @@ ms@2.1.2:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
-nanoid@^3.1.22:
-  version "3.1.22"
-  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.1.22.tgz#b35f8fb7d151990a8aebd5aa5015c03cf726f844"
-  integrity sha512-/2ZUaJX2ANuLtTvqTlgqBQNJoQO398KyJgZloL0PZkC0dpysjncRUPsFe3DUPzz/y3h+u7C46np8RMuvF3jsSQ==
+nanoid@^3.1.23:
+  version "3.1.23"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.1.23.tgz#f744086ce7c2bc47ee0a8472574d5c78e4183a81"
+  integrity sha512-FiB0kzdP0FFVGDKlRLEQ1BgDzU87dy5NnzjeW9YZNt+/c3+q82EQDUwniSAUxp/F0gFNI1ZhKU1FqYsMuqZVnw==
 
 node-fetch@^2.6.1:
   version "2.6.1"
@@ -240,12 +242,12 @@ picomatch@^2.2.2:
   integrity sha512-KpELjfwcCDUb9PeigTs2mBJzXUPzAuP2oPcA989He8Rte0+YUAjw1JVedDhuTKPkHjSYzMN3npC9luThGYEKdg==
 
 postcss@^8.2.1:
-  version "8.2.13"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.2.13.tgz#dbe043e26e3c068e45113b1ed6375d2d37e2129f"
-  integrity sha512-FCE5xLH+hjbzRdpbRb1IMCvPv9yZx2QnDarBEYSN0N0HYk+TcXsEhwdFcFb+SRWOKzKGErhIEbBK2ogyLdTtfQ==
+  version "8.2.15"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.2.15.tgz#9e66ccf07292817d226fc315cbbf9bc148fbca65"
+  integrity sha512-2zO3b26eJD/8rb106Qu2o7Qgg52ND5HPjcyQiK2B98O388h43A448LCslC0dI2P97wCAQRJsFvwTRcXxTKds+Q==
   dependencies:
     colorette "^1.2.2"
-    nanoid "^3.1.22"
+    nanoid "^3.1.23"
     source-map "^0.6.1"
 
 remarkable-meta@^1.0.1:
