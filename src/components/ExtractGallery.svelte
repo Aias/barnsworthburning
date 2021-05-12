@@ -44,7 +44,7 @@
 	{#each extracts as extract (extract.slug)}
 	<li animate:flip="{{duration: 500}}">
 		<Card>
-			<Extract {extract} />
+			<Extract {extract} idPrefix="gallery" />
 		</Card>			
 	</li>
 	{/each}		
