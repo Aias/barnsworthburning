@@ -24,6 +24,6 @@
 		"remarkable": "^2.0.1",
 		"remarkable-meta": "^1.0.1",
 		"svelte": "^3.38.2",
-		"vite": "^2.3.2"
+		"vite": "^2.3.3"
 	}
 }
