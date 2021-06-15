@@ -18,7 +18,7 @@
 		"build": "svelte-kit build"
 	},
 	"dependencies": {
-		"@sveltejs/adapter-netlify": "^1.0.0-next.17",
+		"@sveltejs/adapter-node": "^1.0.0-next.26",
 		"@sveltejs/kit": "^1.0.0-next.115",
 		"airtable": "^0.11.1",
 		"remarkable": "^2.0.1",

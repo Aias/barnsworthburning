@@ -1,4 +1,4 @@
-import netlify from '@sveltejs/adapter-netlify';
+import adapter from '@sveltejs/adapter-node';
 
 const config = {
 	// options passed to svelte.compile (https://svelte.dev/docs#svelte_compile)
@@ -8,7 +8,7 @@ const config = {
 	extensions: ['.svelte'],
 
 	kit: {
-		adapter: netlify(),
+		adapter: adapter(),
 		amp: false,
 		// appDir: '_app',
 		files: {

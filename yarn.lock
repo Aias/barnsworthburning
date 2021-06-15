@@ -2,11 +2,6 @@
 # yarn lockfile v1
 
 
-"@iarna/toml@^2.2.5":
-  version "2.2.5"
-  resolved "https://registry.yarnpkg.com/@iarna/toml/-/toml-2.2.5.tgz#b32366c89b43c6f8cefbdefac778b9c828e3ba8c"
-  integrity sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==
-
 "@rollup/pluginutils@^4.1.0":
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/@rollup/pluginutils/-/pluginutils-4.1.0.tgz#0dcc61c780e39257554feb7f77207dceca13c838"
@@ -15,12 +10,11 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
-"@sveltejs/adapter-netlify@^1.0.0-next.17":
-  version "1.0.0-next.17"
-  resolved "https://registry.yarnpkg.com/@sveltejs/adapter-netlify/-/adapter-netlify-1.0.0-next.17.tgz#51fed8ea7bbc80377d438f3f6b651c3941a73930"
-  integrity sha512-HDFdNKQ87d1pdh9da0vIKDUS4JSYLXZslk5vM2LU2Gwdm+CLRF+IDqZgavYdZsuMSZp/adFX82j7aV03gXABWQ==
+"@sveltejs/adapter-node@^1.0.0-next.26":
+  version "1.0.0-next.26"
+  resolved "https://registry.yarnpkg.com/@sveltejs/adapter-node/-/adapter-node-1.0.0-next.26.tgz#950aedce8b4c77f44a0f0921b740bb89ae6db4df"
+  integrity sha512-jhlCBJH/Gyge0u5sx67UgEEHzoBk69Z9pXXtvERXrDyfmbao5v55zEaroPucc089CHKQvLRQJ3mGU81QZmk31Q==
   dependencies:
-    "@iarna/toml" "^2.2.5"
     esbuild "^0.12.5"
 
 "@sveltejs/kit@^1.0.0-next.115":
