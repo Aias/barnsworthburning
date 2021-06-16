@@ -18,7 +18,7 @@ export async function get({ params }) {
 			if (spaces) space = spaces[0];
 			break;
 		default:
-			console.error('Unknown entity!');
+			console.error(`Unknown entity: ${entity}`);
 	}
 
 	if (creator || space) {
