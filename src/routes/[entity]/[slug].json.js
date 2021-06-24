@@ -39,7 +39,9 @@ export async function get({ params }) {
 		};
 	} else {
 		return {
-			error: 'Failed to fetch'
+			body: {
+				error: 'Failed to fetch.'
+			}
 		};
 	}
 }
