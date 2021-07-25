@@ -1,6 +1,8 @@
 <script context="module">
 	export async function load({ fetch }) {
-		const { creators, spaces } = await fetch('/index.json').then(res => res.json());
+		const { creators, spaces } = await fetch('/index.json').then(res => res.json()).catch(e => {
+			console.error('Failed to load index.')
+		});
 
 		return {
 			props: {
