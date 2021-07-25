@@ -157,7 +157,7 @@ export async function get() {
 			'extract_image',
 			'image_caption'
 		],
-		filterByFormula: `last_updated < DATEADD(NOW(), -2, 'hour')`
+		filterByFormula: `last_updated < DATEADD(NOW(), -12, 'hour')`
 	};
 
 	const works = await airtableFetch('extracts', workOptions);
