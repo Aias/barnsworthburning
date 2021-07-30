@@ -7,17 +7,19 @@
 	import { page } from '$app/stores';
 
 	// let secondarySort = 'alpha';
-	let primarySort = 'time';
+	let primarySort = 'alpha';
 
 	let entityType = 'all';
 
-	const filterList = (filter = 'all') => (node) => {
-		if (filter === 'all') {
-			return true;
-		} else {
-			return node.entity === filter;
-		}
-	};
+	const filterList =
+		(filter = 'all') =>
+		(node) => {
+			if (filter === 'all') {
+				return true;
+			} else {
+				return node.entity === filter;
+			}
+		};
 
 	$: index = creators
 		.map((c) => ({ ...c, entity: 'creator' }))
@@ -122,9 +124,9 @@
 			<li class="center">
 				<span class="text-tertiary">⁘  ⁘  ⁘</span>
 			</li>
-			<li class:selected="{primarySort === 'time'}" class="settings settings--primary-sort">
-				<button class="link" on:click="{() => {primarySort = 'time'}}">
-					<span class="settings-label">By&nbsp;</span>Time
+			<li class:selected="{primarySort === 'alpha'}" class="settings settings--primary-sort">
+				<button class="link" on:click="{() => {primarySort = 'alpha'}}">
+					<span class="settings-label">By&nbsp;</span>Name
 				</button>
 			</li>
 			<li class:selected="{primarySort === 'count'}" class="settings settings--primary-sort">
@@ -132,9 +134,9 @@
 					<span class="settings-label">By&nbsp;</span>Count
 				</button>
 			</li>
-			<li class:selected="{primarySort === 'alpha'}" class="settings settings--primary-sort">
-				<button class="link" on:click="{() => {primarySort = 'alpha'}}">
-					<span class="settings-label">By&nbsp;</span>Name
+			<li class:selected="{primarySort === 'time'}" class="settings settings--primary-sort">
+				<button class="link" on:click="{() => {primarySort = 'time'}}">
+					<span class="settings-label">By&nbsp;</span>Time
 				</button>
 			</li>
 			<li class="center">
