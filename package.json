@@ -18,12 +18,12 @@
 		"build": "svelte-kit build"
 	},
 	"dependencies": {
-		"@sveltejs/adapter-node": "^1.0.0-next.35",
-		"@sveltejs/kit": "^1.0.0-next.136",
+		"@sveltejs/adapter-node": "^1.0.0-next.43",
+		"@sveltejs/kit": "^1.0.0-next.155",
 		"airtable": "^0.11.1",
 		"remarkable": "^2.0.1",
 		"remarkable-meta": "^1.0.1",
-		"svelte": "^3.40.1",
-		"vite": "^2.4.3"
+		"svelte": "^3.42.2",
+		"vite": "^2.5.0"
 	}
 }
