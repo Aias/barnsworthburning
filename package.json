@@ -19,11 +19,11 @@
 	},
 	"dependencies": {
 		"@sveltejs/adapter-node": "^1.0.0-next.43",
-		"@sveltejs/kit": "^1.0.0-next.155",
+		"@sveltejs/kit": "^1.0.0-next.159",
 		"airtable": "^0.11.1",
 		"remarkable": "^2.0.1",
 		"remarkable-meta": "^1.0.1",
-		"svelte": "^3.42.2",
-		"vite": "^2.5.0"
+		"svelte": "^3.42.4",
+		"vite": "^2.5.1"
 	}
 }

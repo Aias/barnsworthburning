@@ -18,10 +18,10 @@
     esbuild "^0.12.5"
     tiny-glob "^0.2.9"
 
-"@sveltejs/kit@^1.0.0-next.155":
-  version "1.0.0-next.155"
-  resolved "https://registry.yarnpkg.com/@sveltejs/kit/-/kit-1.0.0-next.155.tgz#8abea1750d32f01dbe71434a2362404b28c05297"
-  integrity sha512-cAQxR0HS+ywEGPL8LvUdoWCsISYtdJ6d3fCNFhJxvDDMDUCnGxmueHNA0+jIkLaaLY6TCb0oJ54rRdqfn5gGEA==
+"@sveltejs/kit@^1.0.0-next.159":
+  version "1.0.0-next.159"
+  resolved "https://registry.yarnpkg.com/@sveltejs/kit/-/kit-1.0.0-next.159.tgz#6f1fc721ec652ebe5f1c2765535047e166b85eef"
+  integrity sha512-aSq2zgnPmTFgiVBMtlkv5X/wnVBJDAmM9coRzk+qAKZoSLmLEmDteJbFt4m6IcAS7YoNKx/smSfC8QkdGjjrdg==
   dependencies:
     "@sveltejs/vite-plugin-svelte" "^1.0.0-next.16"
     cheap-watch "^1.0.3"
@@ -279,10 +279,10 @@ svelte-hmr@^0.14.7:
   resolved "https://registry.yarnpkg.com/svelte-hmr/-/svelte-hmr-0.14.7.tgz#7fa8261c7b225d9409f0a86f3b9ea5c3ca6f6607"
   integrity sha512-pDrzgcWSoMaK6AJkBWkmgIsecW0GChxYZSZieIYfCP0v2oPyx2CYU/zm7TBIcjLVUPP714WxmViE9Thht4etog==
 
-svelte@^3.42.2:
-  version "3.42.2"
-  resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.42.2.tgz#0246c175c820c1aeca07300c48573a15aae3c1e4"
-  integrity sha512-FOyNYKXb8wdE0Ot+Ctt2/OyDLsNBP8+V6PUE9ag6ZKeLslIou0LnMu1fhtWUA+HjzKTbAM1yj+4PFLtg/3pMJA==
+svelte@^3.42.4:
+  version "3.42.4"
+  resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.42.4.tgz#838ed98fa7b26fc5fffe4df0d7ba345f1c54cf4f"
+  integrity sha512-DqC0AmDdBrrbIA+Kzl3yhBb6qCn4vZOAfxye2pTnIpinLegyagC5sLI8Pe9GPlXu9VpHBXIwpDDedpMfu++epA==
 
 tiny-glob@^0.2.9:
   version "0.2.9"
@@ -301,6 +301,18 @@ vite@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/vite/-/vite-2.5.0.tgz#111ba3679432d426e44566acf480005a7914cbd6"
   integrity sha512-Dn4B+g54PJsMG5WCc4QeFy1ygMXRdTtFrUPegqfk4+vzVQcbF/DqqmI/1bxezArzbujBJg/67QeT5wz8edfJVQ==
+  dependencies:
+    esbuild "^0.12.17"
+    postcss "^8.3.6"
+    resolve "^1.20.0"
+    rollup "^2.38.5"
+  optionalDependencies:
+    fsevents "~2.3.2"
+
+vite@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-2.5.1.tgz#953c71a034c07b3ae0448d57664ec9c6862f23a8"
+  integrity sha512-FwmLbbz8MB1pBs9dKoRDgpiqoijif8hSK1+NNUYc12/cnf+pM2UFhhQ1rcpXgbMhm/5c2USZdVAf0FSkSxaFDA==
   dependencies:
     esbuild "^0.12.17"
     postcss "^8.3.6"
