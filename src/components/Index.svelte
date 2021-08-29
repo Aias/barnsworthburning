@@ -159,6 +159,20 @@
 				{/if}
 			</li>
 			{/each}
+			<li class="center">
+				<span class="text-tertiary">⁘  ⁘  ⁘</span>
+			</li>
+			<li>
+				<InternalLink toType="creators" toEntity="nick-trombley" toExtract="barnsworthburningnet">
+					About
+				</InternalLink>
+			</li>
+			<li>
+				<a href="/feed.xml" target="_blank">RSS Feed</a>
+			</li>
+			<li>
+				<a href="https://github.com/Aias/barnsworthburning" target="_blank">Source</a>
+			</li>
 		</ol>
 	</nav>
 </aside>
