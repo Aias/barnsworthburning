@@ -50,7 +50,7 @@ const atom = (recentWorks, extracts = []) => {
     <author>
         <name>${meta.author.name}</name>
         <email>${meta.author.email}</email>
-        <url>${meta.author.url}</url>
+        <uri>${meta.author.url}</uri>
     </author>
     <updated>${(() => {
 		const mostRecentWork = recentWorks[0];
