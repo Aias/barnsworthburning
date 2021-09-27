@@ -6,6 +6,7 @@ import Extract from '../components/Extract.svelte';
 import multiJoin from '../helpers/multiJoin';
 import { airtableFetch } from './_requests';
 import slugify from '../helpers/slugify';
+import generateChildSortFunction from '../helpers/generateChildSortFunction';
 import mapConnections from '../helpers/mapConnections';
 import { article } from '../helpers/isFirstLetterAVowel';
 
@@ -15,6 +16,14 @@ const generateLink = (creators = [], spaces = ['design']) => {
 	} else {
 		return `spaces/${mapConnections(spaces)[0]}`;
 	}
+};
+
+const generateCategoryMarkup = (combined_space_topics = '') => {
+	return combined_space_topics
+		.split(',')
+		.filter((space) => !!space)
+		.map((space) => `<category term="${space}" />`)
+		.join('');
 };
 
 const meta = {
@@ -60,6 +69,8 @@ ${recentWorks
 			combined_creator_names,
 			source,
 			extract,
+			num_children,
+			children,
 			notes,
 			slug,
 			last_updated,
@@ -95,6 +106,7 @@ ${recentWorks
         <link rel="via" href="${source}" />`
 					: ''
 			}
+        ${generateCategoryMarkup(combined_space_topics)}
         <content><![CDATA[
 			${
 				Extract.render({
@@ -118,6 +130,7 @@ ${recentWorks
 			${(() => {
 				const workExtracts = extracts.filter((e) => e.parent_slug[0] === slug);
 				return workExtracts
+					.sort(generateChildSortFunction(children))
 					.map((extract) => {
 						const { html } = Extract.render({
 							extract,
@@ -145,6 +158,7 @@ export async function get() {
 			'slug',
 			'creators',
 			'combined_creator_names',
+			'children',
 			'num_children',
 			'source',
 			'extract',

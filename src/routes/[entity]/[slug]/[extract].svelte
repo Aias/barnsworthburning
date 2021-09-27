@@ -22,6 +22,7 @@
 	import { setContext, getContext, tick, afterUpdate } from 'svelte';
 	import Extract from '../../../components/Extract.svelte';
 	import Card from '../../../components/Card.svelte';
+	import generateChildSortFunction from '../../../helpers/generateChildSortFunction';
 
 	let parentExtract, childExtracts = [];
 
@@ -42,13 +43,7 @@
 
 			const childOrder = parentExtract.children || [];
 
-			childExtracts.sort((a, b) => {
-				const indexA = childOrder.indexOf(a.id);
-				const indexB = childOrder.indexOf(b.id);
-
-				if(indexA > indexB) return 1;
-				else return -1;
-			});			
+			childExtracts.sort(generateChildSortFunction(childOrder));			
 		}
 	}
 
