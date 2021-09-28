@@ -50,9 +50,11 @@
 	afterUpdate(async () => {
 		// Not quite perfect, something buggy here.
 		await tick();
+
 		if($activeWindow === 'panel') {
-			if(fragmentSlug) {
-				scrollPanel(fragmentSlug)
+			const currentHash = window.location.hash;
+			if(currentHash) {
+				scrollPanel(currentHash.substr(1))
 			}
 			else {
 				scrollPanel();

@@ -19,7 +19,7 @@
 	},
 	"dependencies": {
 		"@sveltejs/adapter-node": "^1.0.0-next.51",
-		"@sveltejs/kit": "^1.0.0-next.174",
+		"@sveltejs/kit": "^1.0.0-next.176",
 		"airtable": "^0.11.1",
 		"remarkable": "^2.0.1",
 		"remarkable-meta": "^1.0.1",

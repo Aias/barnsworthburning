@@ -31,14 +31,12 @@
 	const images = get(extract, 'extract_image');
 	const imageCaption = get(extract, 'image_caption');
 
-	const logClicks = false;
-
 	const maxChildren = 5;
 	let showAllChildren = false;
 	$: truncatedChildren = !showAllChildren && (childTitles && childTitles.length > maxChildren);
 </script>
 
-<article id="{elementId}" class="extract {isWork ? 'extract--work' : 'extract--fragment'}" on:click="{(e) => logClicks && console.log(extract) }">
+<article id="{elementId}" class="extract {isWork ? 'extract--work' : 'extract--fragment'}">
 	{#if title}
 	<header>
 		<h2 class="extract-title">

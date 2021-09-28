@@ -18,10 +18,10 @@
     esbuild "^0.12.28"
     tiny-glob "^0.2.9"
 
-"@sveltejs/kit@^1.0.0-next.174":
-  version "1.0.0-next.174"
-  resolved "https://registry.yarnpkg.com/@sveltejs/kit/-/kit-1.0.0-next.174.tgz#bdbf82fc556764be97025736f25f47c6665896fc"
-  integrity sha512-Kgtz5kZTyPnpPb8pjMMOo+uTDRBkiObRLnFaBDnYFd2ahUuhAPHHPlbcIDwO5psN4t6UbPdpdkoLNCAyDgBLdw==
+"@sveltejs/kit@^1.0.0-next.176":
+  version "1.0.0-next.176"
+  resolved "https://registry.yarnpkg.com/@sveltejs/kit/-/kit-1.0.0-next.176.tgz#4c8ed4782ad1e50ff1adf5b695ff67a79c4332aa"
+  integrity sha512-aFwZ1PjOcxOSAX93Py3jfJBgZgWmANO5Vt2fb8abvNGLTA/d6VVArdPXSccaSxLYCGmgzvx+CAr8P+P8FcJ+Ng==
   dependencies:
     "@sveltejs/vite-plugin-svelte" "^1.0.0-next.24"
     cheap-watch "^1.0.4"
