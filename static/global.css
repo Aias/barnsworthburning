@@ -315,6 +315,10 @@ select:focus {
 	color: var(--text-inverted) !important;
 }
 
+.text-primary {
+	color: var(--text-primary);
+}
+
 .text-secondary {
 	color: var(--text-secondary);
 }
@@ -400,8 +404,6 @@ select:focus {
 	display: inline-block;
 	margin-right: 2px;
 }
-
-.spaces-list 
 
 /*    LAYOUT    */
 html,
