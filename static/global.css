@@ -315,8 +315,8 @@ select:focus {
 	color: var(--text-inverted) !important;
 }
 
-.text-primary {
-	color: var(--text-primary);
+.theme-primary {
+	color: var(--theme-primary-text);
 }
 
 .text-secondary {
