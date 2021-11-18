@@ -84,12 +84,14 @@ ${recentWorks
         <id>${meta.url}/works/${slug}</id>
         <title><![CDATA[${title}]]></title>${
 				combined_creator_names
-					? combined_creator_names.map(
-							(creator) => `
+					? combined_creator_names
+							.map(
+								(creator) => `
         <author>
             <name><![CDATA[${creator}]]></name>
         </author>`
-					  )
+							)
+							.join('')
 					: ''
 			}
         <summary><![CDATA[${article(type)} ${type.toLowerCase()}${
