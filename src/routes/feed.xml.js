@@ -109,7 +109,7 @@ ${recentWorks
 					: ''
 			}
         ${generateCategoryMarkup(combined_space_topics)}
-        <content><![CDATA[
+        <content type="html"><![CDATA[
 			${
 				Extract.render({
 					extract: {
