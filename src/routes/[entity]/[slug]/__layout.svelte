@@ -1,6 +1,5 @@
 <script context="module">
-	export async function load({ page, fetch }) {
-		const { params } = page;
+	export async function load({ params, fetch }) {
 		const { entity, slug } = params;
 
 		const { creator, space, extracts, error } = await fetch(`/${entity}/${slug}.json`).then(res => res.json()).catch(e => {

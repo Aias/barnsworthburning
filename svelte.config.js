@@ -1,5 +1,6 @@
 import adapter from '@sveltejs/adapter-node';
 
+// https://kit.svelte.dev/docs#configuration
 const config = {
 	// options passed to svelte.compile (https://svelte.dev/docs#svelte_compile)
 	compilerOptions: null,
@@ -10,41 +11,23 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		amp: false,
-		// appDir: '_app',
 		files: {
 			assets: 'static',
 			hooks: 'src/hooks',
 			lib: 'src/lib',
 			routes: 'src/routes',
-			// serviceWorker: 'src/service-worker',
 			template: 'src/app.html'
 		},
 		floc: false,
-		// host: null,
-		// hostHeader: null,
 		hydrate: true,
-		// paths: {
-		// 	assets: '',
-		// 	base: ''
-		// },
 		prerender: {
 			crawl: true,
 			enabled: true,
 			onError: 'fail',
 			entries: ['*']
 		},
-		router: true,
-		ssr: true
-		// target: null,
-		// vite: () => ({
-		// 	ssr: {
-		// 		noExternal: ['remarkable', 'remarkable-meta', 'airtable']
-		// 	}
-		// })
+		router: true
 	}
-
-	// options passed to svelte.preprocess (https://svelte.dev/docs#svelte_preprocess)
-	// preprocess: null
 };
 
 export default config;

@@ -1,6 +1,5 @@
 <script context="module">
-	export async function load({ page, fetch }) {
-		const { params } = page;
+	export async function load({ params, fetch }) {
 		const { entity, slug, extract: extractSlug } = params;
 
 		const extracts = await fetch(`/${entity}/${slug}/${extractSlug}.json`).then(res => res.json());

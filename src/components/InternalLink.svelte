@@ -49,7 +49,7 @@
 		}
 	}
 
-	$: isActive = destinationUrl === $page.path;
+	$: isActive = destinationUrl === $page.url.pathname;
 </script>
 
 <a sveltekit:noscroll href="{destinationUrl}" class:active="{isActive}" sveltekit:prefetch="{prefetch}" {...$$restProps}>
