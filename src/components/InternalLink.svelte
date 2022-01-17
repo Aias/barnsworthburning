@@ -49,9 +49,9 @@
 		}
 	}
 
-	$: isActive = destinationUrl === $page.url.pathname;
+	$: isActive = destinationUrl === $page?.url?.pathname;
 </script>
 
-<a sveltekit:noscroll href="{destinationUrl}" class:active="{isActive}" sveltekit:prefetch="{prefetch}" {...$$restProps}>
+<a sveltekit:noscroll="{fromRssFeed ? null : true}" href="{destinationUrl}" class:active="{isActive}" sveltekit:prefetch="{fromRssFeed ? null : prefetch}" {...$$restProps}>
 	<slot />
 </a>

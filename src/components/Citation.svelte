@@ -30,18 +30,19 @@
 	{#if isWork}
 		<span>
 			{article(type)}&nbsp;<span class="extract-type">{type}</span>
+			{#if parentTitle && !suppressCitation}
+			from <InternalLink class="parent" toExtract="{parentSlug}" toFragment="{parentContainer === 'panel' ? slug : undefined}"><cite>{parentTitle}</cite></InternalLink>
+			{/if}
 			{#if creatorNames.length > 0}
 			by <CreatorNames creatorNames="{creatorNames}" />
 			{/if}		
 		</span>
 	{:else}
 		{#if creatorNames.length > 0}
-		<CreatorNames class="creator-names" creatorNames="{creatorNames}" />
+		<CreatorNames class="creator-names" creatorNames="{creatorNames}" />{#if parentTitle}<span>, </span>{/if}
 		{/if}
 		{#if parentTitle && !suppressCitation}
-		<span class="parent-name">
-			<InternalLink class="parent" toExtract="{parentSlug}" toFragment="{parentContainer === 'panel' ? slug : undefined}"><cite>{parentTitle}</cite></InternalLink>
-		</span>
+		<InternalLink class="parent" toExtract="{parentSlug}" toFragment="{parentContainer === 'panel' ? slug : undefined}"><cite>{parentTitle}</cite></InternalLink>
 		{/if}	
 	{/if}
 	{#if source}
@@ -55,10 +56,6 @@
 <style>
 	.extract-type {
 		text-transform: lowercase;
-	}
-
-	:global(.creator-names:not(:last-of-type)::after ) {
-		content: ', ';
 	}
 
 	cite {

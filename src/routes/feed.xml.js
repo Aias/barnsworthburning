@@ -4,6 +4,7 @@
 import Extract from '../components/Extract.svelte';
 
 import multiJoin from '../helpers/multiJoin';
+import cleanHtml from '../helpers/cleanHtml';
 import { airtableFetch } from './_requests';
 import slugify from '../helpers/slugify';
 import generateChildSortFunction from '../helpers/generateChildSortFunction';
@@ -34,7 +35,7 @@ const meta = {
 		email: 'trombley.nick@gmail.com',
 		url: 'https://nicktrombley.design'
 	},
-	tags: ['design', 'knowledge', 'making'],
+	tags: ['design', 'knowledge', 'making', 'architecture', 'art'],
 	url: 'https://barnsworthburning.net'
 };
 
@@ -76,6 +77,8 @@ ${recentWorks
 			last_updated,
 			extracted_on,
 			michelin_stars,
+			// space_topics,
+			// connection_titles,
 			combined_space_topics = ['design'],
 			extract_image,
 			image_caption
@@ -110,8 +113,8 @@ ${recentWorks
 			}
         ${generateCategoryMarkup(combined_space_topics)}
         <content type="html"><![CDATA[
-			${
-				Extract.render({
+			${(() => {
+				const { html } = Extract.render({
 					extract: {
 						type,
 						combined_creator_names,
@@ -125,10 +128,13 @@ ${recentWorks
 						is_work: true,
 						extract_image,
 						image_caption
+						// connection_titles,
+						// space_topics
 					},
 					fromRssFeed: true
-				}).html
-			}
+				});
+				return cleanHtml(html);
+			})()}
 			${(() => {
 				const workExtracts = extracts.filter((e) => e.parent_slug[0] === slug);
 				return workExtracts
@@ -139,7 +145,7 @@ ${recentWorks
 							suppressCitation: true,
 							fromRssFeed: true
 						});
-						return html;
+						return cleanHtml(html);
 					})
 					.join('\n');
 			})()}]]></content>
@@ -172,6 +178,8 @@ export async function get() {
 			'michelin_stars',
 			'extract_image',
 			'image_caption'
+			// 'connection_titles',
+			// 'space_topics'
 		],
 		filterByFormula: `last_updated < DATEADD(NOW(), -12, 'hour')`
 	};
@@ -199,6 +207,8 @@ export async function get() {
 			'parent_title',
 			'extract_image',
 			'image_caption'
+			// 'connection_titles',
+			// 'space_topics'
 		]
 	};
 
