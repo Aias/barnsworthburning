@@ -39,7 +39,7 @@
 		</span>
 	{:else}
 		{#if creatorNames.length > 0}
-		<CreatorNames class="creator-names" creatorNames="{creatorNames}" />{#if parentTitle}<span>, </span>{/if}
+		<CreatorNames class="creator-names" creatorNames="{creatorNames}" />{#if parentTitle && !suppressCitation}<span>, </span>{/if}
 		{/if}
 		{#if parentTitle && !suppressCitation}
 		<InternalLink class="parent" toExtract="{parentSlug}" toFragment="{parentContainer === 'panel' ? slug : undefined}"><cite>{parentTitle}</cite></InternalLink>

@@ -21,12 +21,12 @@
 		"build": "svelte-kit build"
 	},
 	"dependencies": {
-		"@sveltejs/adapter-node": "^1.0.0-next.62",
-		"@sveltejs/kit": "^1.0.0-next.232",
+		"@sveltejs/adapter-node": "^1.0.0-next.66",
+		"@sveltejs/kit": "^1.0.0-next.240",
 		"airtable": "^0.11.1",
 		"remarkable": "^2.0.1",
 		"remarkable-meta": "^1.0.1",
 		"svelte": "^3.46.2",
-		"vite": "^2.7.12"
+		"vite": "^2.7.13"
 	}
 }
