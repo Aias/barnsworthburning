@@ -1,6 +1,6 @@
-import { airtableFetch } from '../_requests';
+import { airtableFetch } from '$lib/server/requests';
 
-export async function get({ params }) {
+export async function load({ params }) {
 	const { entity, slug } = params;
 	let creator, space;
 
@@ -31,17 +31,13 @@ export async function get({ params }) {
 		});
 
 		return {
-			body: {
-				creator,
-				space,
-				extracts
-			}
+			creator,
+			space,
+			extracts
 		};
 	} else {
 		return {
-			body: {
-				error: 'Failed to fetch.'
-			}
+			error: 'Failed to fetch.'
 		};
 	}
 }

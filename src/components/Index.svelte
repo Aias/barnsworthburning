@@ -168,10 +168,10 @@
 				</InternalLink>
 			</li>
 			<li>
-				<a href="/feed.xml" target="_blank">RSS Feed</a>
+				<a href="/feed.xml" target="_blank" rel="noreferrer">RSS Feed</a>
 			</li>
 			<li>
-				<a href="https://github.com/Aias/barnsworthburning" target="_blank">Source</a>
+				<a href="https://github.com/Aias/barnsworthburning" target="_blank" rel="noreferrer">Source</a>
 			</li>
 		</ol>
 	</nav>

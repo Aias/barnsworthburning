@@ -1,5 +1,5 @@
 import { writable, readable } from 'svelte/store';
-import get from '../helpers/get';
+import get from '$helpers/get';
 
 // --------------------------------------
 // User connection quality.

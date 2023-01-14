@@ -1,15 +1,15 @@
 // Modeled after https://github.com/kball/speakwritelisten.com/blob/master/src/routes/feed.xml.js
 // and https://github.com/kball/speakwritelisten.com/blob/master/src/routes/index.svelte
 
-import Extract from '../components/Extract.svelte';
+import Extract from '$components/Extract.svelte';
 
-import multiJoin from '../helpers/multiJoin';
-import cleanHtml from '../helpers/cleanHtml';
-import { airtableFetch } from './_requests';
-import slugify from '../helpers/slugify';
-import generateChildSortFunction from '../helpers/generateChildSortFunction';
-import mapConnections from '../helpers/mapConnections';
-import { article } from '../helpers/isFirstLetterAVowel';
+import { airtableFetch } from '$lib/server/requests';
+import multiJoin from '$helpers/multiJoin';
+import cleanHtml from '$helpers/cleanHtml';
+import slugify from '$helpers/slugify';
+import generateChildSortFunction from '$helpers/generateChildSortFunction';
+import mapConnections from '$helpers/mapConnections';
+import { article } from '$helpers/isFirstLetterAVowel';
 
 const generateLink = (creators = [], spaces = ['design']) => {
 	if (creators.length > 0) {
@@ -156,9 +156,9 @@ ${recentWorks
 </feed>`;
 };
 
-export async function get() {
+export async function GET() {
 	const workOptions = {
-		view: 'Works',
+		view: 'RSS Feed',
 		maxRecords: 30,
 		fields: [
 			'title',
@@ -214,12 +214,14 @@ export async function get() {
 
 	const extracts = await airtableFetch('extracts', extractOptions);
 
-	return {
+	const responseBody = atom(works, extracts);
+	const responseOptions = {
 		status: 200,
 		headers: {
 			'Content-Type': 'application/atom+xml',
-			'Cache-Control': `max-age=0, s-max-age=${3600}`
-		},
-		body: atom(works, extracts)
+			'Cache-Control': `max-age=0, s-maxage=${3600}`
+		}
 	};
+
+	return new Response(responseBody, responseOptions);
 }

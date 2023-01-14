@@ -1,6 +1,6 @@
-import { airtableFetch } from './_requests';
+import { airtableFetch } from '$lib/server/requests';
 
-export async function get() {
+export async function load() {
 	const results = await Promise.all([
 		airtableFetch('creators', {
 			fields: [
@@ -25,10 +25,8 @@ export async function get() {
 	]);
 	if (results) {
 		return {
-			body: {
-				creators: results[0],
-				spaces: results[1]
-			}
+			creators: results[0],
+			spaces: results[1]
 		};
 	} else {
 		return {

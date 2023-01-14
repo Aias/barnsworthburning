@@ -116,12 +116,11 @@ html {
 
 html,
 body {
-	background-color: #fbf9f4;
+	background-color: var(--layer-bg);
 }
 
 .app {
-	font-size: 0.875rem;
-	/* 14px on most monitors. */
+	font-size: 0.875rem; /* 14px on most monitors. */
 }
 
 h1:first-child,
