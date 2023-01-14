@@ -1,27 +1,13 @@
-<script context="module">
-	export async function load({ params, fetch }) {
-		const { entity, slug, extract: extractSlug } = params;
-
-		const extracts = await fetch(`/${entity}/${slug}/${extractSlug}.json`).then(res => res.json());
-
-		return {
-			props: {
-				extracts,
-				extractSlug
-			}
-		};
-	}
-</script>
-
 <script>
-	export let extracts = [];
-	export let extractSlug
-	let fragmentSlug;
+	export let data;
+
+	$: extracts = data.extracts || [];
+	$: currentSlug = data.currentSlug;
 
 	import { setContext, getContext, tick, afterUpdate } from 'svelte';
-	import Extract from '../../../components/Extract.svelte';
-	import Card from '../../../components/Card.svelte';
-	import generateChildSortFunction from '../../../helpers/generateChildSortFunction';
+	import Extract from '$components/Extract.svelte';
+	import Card from '$components/Card.svelte';
+	import generateChildSortFunction from '$helpers/generateChildSortFunction';
 
 	let parentExtract, childExtracts = [];
 
@@ -32,7 +18,7 @@
 	$: {
 		if(extracts) {
 			let parentIndex = extracts.findIndex(e => {
-				return e.slug === extractSlug;
+				return e.slug === currentSlug;
 			});
 			if(parentIndex === -1) parentIndex = 0;
 

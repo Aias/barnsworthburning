@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="🌞">
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="x-ua-compatible" content="ie=edge" />
 		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
-		%svelte.head%
+		%sveltekit.head%
 		<link
 			href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap"
 			rel="stylesheet"
 		/>
-		<link rel="stylesheet" href="/global.css" />
-		<link rel="icon" type="image/png" href="/favicon.png" />
+		<link rel="stylesheet" href="%sveltekit.assets%/global.css" />
+		<link rel="icon" type="image/png" href="%sveltekit.assets%/favicon.png" />
 		<link rel="alternate" type="application/atom+xml" title="RSS Feed (Atom)" href="/feed.xml" />
 	</head>
-	<body id="🕹️" class="app 🌞">
-		%svelte.body%
+	<body data-sveltekit-preload-data="hover">
+		<div id="app" class="app" style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>

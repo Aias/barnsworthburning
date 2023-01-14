@@ -1,39 +1,25 @@
-<script context="module">
-	export async function load({ fetch }) {
-		const { creators, spaces } = await fetch('/index.json').then(res => res.json()).catch(e => {
-			console.error('Failed to load index.')
-		});
-
-		return {
-			props: {
-				creators, 
-				spaces				
-			}
-		}
-	}
-</script>
-
 <script>
-	export let creators;
-	export let spaces;
+	export let data;
+
+	$: creators = data.creators;
+	$: spaces = data.spaces;
+
 	let error;
 
-	import { page, session } from '$app/stores';
+	import { page } from '$app/stores';
 	import { setContext, onMount, afterUpdate, tick } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { fade, slide } from 'svelte/transition';
 	import { loading } from '../stores';
 
-	import SEO from '../components/SEO.svelte';
-	import Index from '../components/Index.svelte';
-	import Loading from '../components/Loading.svelte';
-	import Error from '../components/Error.svelte';
+	import SEO from '$components/SEO.svelte';
+	import Index from '$components/Index.svelte';
+	import Loading from '$components/Loading.svelte';
+	import Error from '$components/Error.svelte';
 
 	let activeParams = $page.params;
 	const activeWindow = writable(activeParams.extract ? 'panel' : activeParams.slug || activeParams.entity ? 'gallery' : 'index');
 	setContext('activeWindow', activeWindow);
-
-	// $loading = true;
 
 	$: {
 		const { entity: newEntity, slug: newSlug, extract: newExtract = [] } = $page.params;

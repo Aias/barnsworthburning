@@ -47,13 +47,15 @@
 		{#if totalImages > 1}
 		<div class="thumbnails">
 			{#each images as image, index (image.id)}
-			<div
+			<button
 				class="thumbnail-container"
 				class:selected="{index === currentIndex}"
 				on:click="{() => currentIndex = index}"
+				type="button"
 			>
 				<img src="{getImageUrl(image, 'large')}" alt="{image.filename}" />
-			</div>
+				<span class="screenreader">Show image {index}</span>
+			</button>
 			{/each}
 		</div>
 		{/if}
@@ -82,6 +84,7 @@
 	}
 
 	.thumbnail-container {
+		all: unset;
 		flex: 0 0 auto;
 		border: 1px solid rgba(0, 0, 0, 0.25);
 		margin: 0 1px;
