@@ -4,7 +4,6 @@
 	export let toEntity = '';
 	export let toExtract = '';
 	export let toFragment = '';
-	export let prefetch = false;
 
 	import { getContext } from 'svelte';
 	import { page as pageStore } from '$app/stores';
@@ -52,6 +51,6 @@
 	$: isActive = destinationUrl === $page?.url?.pathname;
 </script>
 
-<a sveltekit:noscroll="{fromRssFeed ? null : true}" href="{destinationUrl}" class:active="{isActive}" sveltekit:prefetch="{fromRssFeed ? null : prefetch}" {...$$restProps}>
+<a data-sveltekit-noscroll="{fromRssFeed ? false : true}" href="{destinationUrl}" class:active="{isActive}" data-sveltekit-preload-data="{fromRssFeed ? false : 'hover'}" {...$$restProps}>
 	<slot />
 </a>

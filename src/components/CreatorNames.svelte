@@ -2,7 +2,7 @@
 	export let creatorNames = [];
 
 	import InternalLink from './InternalLink.svelte';
-	import slugify from '../helpers/slugify';
+	import slugify from '$helpers/slugify';
 </script>
 
 <span {...$$restProps}>

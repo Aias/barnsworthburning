@@ -8,8 +8,8 @@
 	import Close from './icons/Close.svelte';
 	import Arrow from './icons/Arrow.svelte';
 	import InternalLink from './InternalLink.svelte';
-	import slugify from '../helpers/slugify';
-	import mapConnections from '../helpers/mapConnections';
+	import slugify from '$helpers/slugify';
+	import mapConnections from '$helpers/mapConnections';
 
 	import { flip } from 'svelte/animate';
 	import { page } from '$app/stores';

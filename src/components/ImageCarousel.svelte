@@ -2,7 +2,7 @@
 	export let images = [];
 	export let imageCaption;
 
-	import markdown from '../helpers/markdown';
+	import markdown from '$helpers/markdown';
 
 	let currentIndex = 0;
 	let expanded = false;

@@ -15,5 +15,9 @@
 		border: var(--container-border);
 		overflow: hidden;
 		transition: border-radius 0.5s, box-shadow 0.25s, background-color 0.25s;
+
+		&.inverted {
+			background-color: var(--layer-bg);
+		}
 	}
 </style>

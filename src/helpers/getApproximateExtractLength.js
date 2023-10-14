@@ -1,4 +1,4 @@
-import get from '../helpers/get';
+import get from './get';
 
 const fields = [
 	{ field: 'title', weight: 4 },

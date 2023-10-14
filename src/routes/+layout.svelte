@@ -7,10 +7,9 @@
 	let error;
 
 	import { page } from '$app/stores';
-	import { setContext, onMount, afterUpdate, tick } from 'svelte';
+	import { setContext, afterUpdate, tick } from 'svelte';
 	import { writable } from 'svelte/store';
-	import { fade, slide } from 'svelte/transition';
-	import { loading } from '../stores';
+	import { fade } from 'svelte/transition';
 
 	import SEO from '$components/SEO.svelte';
 	import Index from '$components/Index.svelte';

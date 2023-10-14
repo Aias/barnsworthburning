@@ -3,7 +3,6 @@
 	export let spaces = [];
 
 	import InternalLink from './InternalLink.svelte';
-	import Arrow from './icons/Arrow.svelte';
 	import { page } from '$app/stores';
 
 	// let secondarySort = 'alpha';

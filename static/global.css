@@ -14,7 +14,7 @@
 
 	--clr-yellow-30: #866b00;
 	--clr-yellow-50: #d5b712;
-	--clr-yellow-60: #ebcc20;
+	--clr-yellow-60: oklch(0.81 0.18 91);
 	--clr-yellow-base: var(--clr-yellow-60);
 
 	--clr-red-30: #a22205;
@@ -74,6 +74,7 @@
 	--clr-scrollbar: var(--clr-darker-20);
 	--divider: var(--clr-darker-20);
 	--container-border: 1px solid var(--divider);
+	--nav-collapsed: var(--text-secondary);
 }
 
 .🌒,
@@ -88,12 +89,13 @@
 	--theme-accent-bg: var(--clr-red-40);
 	--theme-accent-text: var(--clr-red-60);
 	--layer-bg: var(--clr-gray-10);
-	--layer-container: var(--clr-gray-20);
+	--layer-container: oklch(0.25 0 0 / 0.1);
 	--layer-container-hover: var(--clr-gray-25);
 	--layer-highlight: var(--clr-gray-20);
 	--clr-scrollbar: var(--clr-lighter-20);
-	--divider: var(--clr-lighter-40);
-	--container-border: 2px solid var(--clr-gray-0);
+	--divider: var(--clr-lighter-10);
+	--container-border: 1px solid var(--divider);
+	--nav-collapsed: var(--layer-container);
 }
 
 .🌞,
@@ -506,10 +508,10 @@ body,
 		width: 0;
 		padding-right: 0;
 		padding-left: var(--index-width);
-		background-color: var(--text-secondary);
+		background-color: var(--nav-collapsed);
 		transition: width 0.5s, background-color 0.5s, padding 0.5s;
 		z-index: 1;
-		border-right: 1px solid var(--text-primary);
+		border-right: 1px solid var(--divider);
 	}
 
 	.layout__index > * {

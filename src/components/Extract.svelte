@@ -1,7 +1,7 @@
 <script>
-	import markdown from '../helpers/markdown';
-	import slugify from '../helpers/slugify';
-	import get from '../helpers/get';
+	import markdown from '$helpers/markdown';
+	import slugify from '$helpers/slugify';
+	import get from '$helpers/get';
 	import Citation from './Citation.svelte';
 	import InternalLink from './InternalLink.svelte';
 	import ImageCarousel from './ImageCarousel.svelte';

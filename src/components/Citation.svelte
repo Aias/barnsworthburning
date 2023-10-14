@@ -1,8 +1,7 @@
 <script>
-	import slugify from '../helpers/slugify';
-	import get from '../helpers/get'
-	import { article } from '../helpers/isFirstLetterAVowel';
-	import domainOfUrl from '../helpers/domainOfUrl';
+	import get from '$helpers/get'
+	import { article } from '$helpers/isFirstLetterAVowel';
+	import domainOfUrl from '$helpers/domainOfUrl';
 	import CreatorNames from './CreatorNames.svelte';
 	import InternalLink from './InternalLink.svelte';
 	import { getContext } from 'svelte';
