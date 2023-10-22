@@ -1,76 +1,96 @@
 <script>
-	export let data;
+	import { mode, chroma, palette, useTriptych } from '$helpers/triptych'
 
-	$: creators = data.creators;
-	$: spaces = data.spaces;
-
-	let error;
-
-	import { page } from '$app/stores';
-	import { setContext, afterUpdate, tick } from 'svelte';
-	import { writable } from 'svelte/store';
-	import { fade } from 'svelte/transition';
-
-	import SEO from '$components/SEO.svelte';
-	import Index from '$components/Index.svelte';
-	import Loading from '$components/Loading.svelte';
-	import Error from '$components/Error.svelte';
-
-	let activeParams = $page.params;
-	const activeWindow = writable(activeParams.extract ? 'panel' : activeParams.slug || activeParams.entity ? 'gallery' : 'index');
-	setContext('activeWindow', activeWindow);
-
-	$: {
-		const { entity: newEntity, slug: newSlug, extract: newExtract = [] } = $page.params;
-		const { entity: activeEntity, slug: activeSlug, extract: activeExtract = [] } = activeParams;
-
-		let needsUpdate = false;
-		if(activeEntity && !newEntity) { // Navigating to index.
-			needsUpdate = true;
-			$activeWindow = 'index';
-		}
-		else if(newEntity !== activeEntity || newSlug !== activeSlug) {
-			needsUpdate = true;
-			$activeWindow = 'gallery';
-		}
-		else if(newExtract[0] !== activeExtract[0]) {
-			needsUpdate = true;
-			$activeWindow = 'panel';
-		}
-
-		if(needsUpdate) {
-			activeParams = $page.params;
-		}
+	$: appDefaults = {
+		mode: $mode,
+		palette: $palette,
+		chroma: $chroma
 	}
 
-	afterUpdate(async () => {
-		await tick();
-		try {
-			const container = document.getElementById("layout");
-			const child = document.querySelector(`.layout__${$activeWindow}`);
-			
-			if(container && child) {
-				container.scrollTo({
-					left: child.offsetLeft,
-					behavior: 'smooth'
-				});	
-			}
-		}
-		catch(error) {
-			console.log("Could not scroll.", error);
-		}
-	});
+	$: appClass = useTriptych(appDefaults);
 </script>
 
-<SEO />
+<div class={appClass}>
+	<slot />
+</div>
 
-<Loading />
-{#if creators && spaces}
-<main id="layout" class="layout active--{$activeWindow}" in:fade="{{duration: 1000, delay: 500}}" class:panel-open="{activeParams.extract}">
-	<Index {creators} {spaces} />
-	<slot></slot>
-</main>
-{/if}
-{#if error}
-<Error {error} />
-{/if}
+<style>
+	@import '@radix-ui/colors/black-alpha.css';
+	@import '@radix-ui/colors/white-alpha.css';
+
+	@import '@radix-ui/colors/mauve.css';
+	@import '@radix-ui/colors/mauve-alpha.css';
+	@import '@radix-ui/colors/mauve-dark.css';
+	@import '@radix-ui/colors/mauve-dark-alpha.css';
+
+	@import '@radix-ui/colors/slate.css';
+	@import '@radix-ui/colors/slate-alpha.css';
+	@import '@radix-ui/colors/slate-dark.css';
+	@import '@radix-ui/colors/slate-dark-alpha.css';
+
+	@import '@radix-ui/colors/sand.css';
+	@import '@radix-ui/colors/sand-alpha.css';
+	@import '@radix-ui/colors/sand-dark.css';
+	@import '@radix-ui/colors/sand-dark-alpha.css';
+
+	@import '@radix-ui/colors/olive.css';
+	@import '@radix-ui/colors/olive-alpha.css';
+	@import '@radix-ui/colors/olive-dark.css';
+	@import '@radix-ui/colors/olive-dark-alpha.css';
+
+	@import '@radix-ui/colors/sage.css';
+	@import '@radix-ui/colors/sage-alpha.css';
+	@import '@radix-ui/colors/sage-dark.css';
+	@import '@radix-ui/colors/sage-dark-alpha.css';
+
+	@import '@radix-ui/colors/tomato.css';
+	@import '@radix-ui/colors/tomato-alpha.css';
+	@import '@radix-ui/colors/tomato-dark.css';
+	@import '@radix-ui/colors/tomato-dark-alpha.css';
+
+	@import '@radix-ui/colors/red.css';
+	@import '@radix-ui/colors/red-alpha.css';
+	@import '@radix-ui/colors/red-dark.css';
+	@import '@radix-ui/colors/red-dark-alpha.css';
+
+	@import '@radix-ui/colors/purple.css';
+	@import '@radix-ui/colors/purple-alpha.css';
+	@import '@radix-ui/colors/purple-dark.css';
+	@import '@radix-ui/colors/purple-dark-alpha.css';
+
+	@import '@radix-ui/colors/indigo.css';
+	@import '@radix-ui/colors/indigo-alpha.css';
+	@import '@radix-ui/colors/indigo-dark.css';
+	@import '@radix-ui/colors/indigo-dark-alpha.css';
+
+	@import '@radix-ui/colors/sky.css';
+	@import '@radix-ui/colors/sky-alpha.css';
+	@import '@radix-ui/colors/sky-dark.css';
+	@import '@radix-ui/colors/sky-dark-alpha.css';
+
+	@import '@radix-ui/colors/jade.css';
+	@import '@radix-ui/colors/jade-alpha.css';
+	@import '@radix-ui/colors/jade-dark.css';
+	@import '@radix-ui/colors/jade-dark-alpha.css';
+
+	@import '@radix-ui/colors/grass.css';
+	@import '@radix-ui/colors/grass-alpha.css';
+	@import '@radix-ui/colors/grass-dark.css';
+	@import '@radix-ui/colors/grass-dark-alpha.css';
+
+	@import '@radix-ui/colors/amber.css';
+	@import '@radix-ui/colors/amber-alpha.css';
+	@import '@radix-ui/colors/amber-dark.css';
+	@import '@radix-ui/colors/amber-dark-alpha.css';
+
+	div {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		display: flex;
+		flex-direction: column;
+		background-color: var(--background);
+	}
+</style>
