@@ -1,32 +1,19 @@
+<svelte:options runes={true} />
+
 <script>
-	import triptych from '$helpers/triptych';
-	import { mode as modeStore } from '$helpers/triptych';
-
-	export let mode = undefined;
-	export let palette = undefined;
-	export let chroma = undefined;
-
-	const classes = triptych({
-		mode,
-		palette,
-		chroma
-	});
-
-	const switchMode = () => {
-		$modeStore = $modeStore === 'light' ? 'dark' : 'light';
-	}
+	let { title = 'Section Title' } = $props();
 </script>
 
-<section class={classes}>
-	<h1>{mode} {palette} {chroma}</h1>
+<section>
+	<h1>{title}</h1>
 	<p>
-		Here's some text I want you to read. <a class="text-accent" href="./">Show More</a>
-		<button on:click={switchMode}>Change Mode</button>
+		Here's some text I want you to read. <button>Do Something</button>
 	</p>
 	<p>
 		<slot />
 	</p>
 </section>
+
 
 <style>
 	h1 {

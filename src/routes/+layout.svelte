@@ -1,18 +1,27 @@
+<svelte:options runes={true} />
+
 <script>
-	import { mode, chroma, palette, useTriptych } from '$helpers/triptych'
+	import Triptych from "$components/Triptych.svelte";
+	import { setContext } from "svelte";
+	let appMode = $state('dark');
+	let appPalette = $state('tomato');
+	let appChroma = $state('neutral');
 
-	$: appDefaults = {
-		mode: $mode,
-		palette: $palette,
-		chroma: $chroma
+	$effect(() => {
+		setContext('mode', appMode);
+		setContext('palette', appPalette);
+		setContext('chroma', appChroma);
+	});
+
+	function toggleMode() {
+		appMode = appMode === 'dark' ? 'light' : 'dark';
 	}
-
-	$: appClass = useTriptych(appDefaults);
 </script>
 
-<div class={appClass}>
+<Triptych mode={appMode} palette={appPalette} chroma={appChroma}>
+	<button on:click={toggleMode}>Toggle Mode</button>
 	<slot />
-</div>
+</Triptych>
 
 <style>
 	@import '@radix-ui/colors/black-alpha.css';
