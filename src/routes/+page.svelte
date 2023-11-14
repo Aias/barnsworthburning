@@ -1,31 +1,44 @@
 <svelte:options runes={true} />
 
 <script>
-	import Testbench from '$components/Testbench.svelte';
 	import Triptych from '$components/Triptych.svelte';
+	import { setContext } from 'svelte';
+
+	let mode = $state('dark');
+
+	function toggle() {
+		console.log('Toggling Mode')
+		mode = mode === 'dark' ? 'light' : 'dark';
+	}
+
+	setContext('mode', mode);
+	setContext('palette', 'amber');
+	setContext('chroma', 'neutral');
 </script>
 
-<section>
-	<Testbench />
-	<Triptych>
-		<Testbench />
+<main>
+	<button on:click={toggle}>Toggle Mode from {mode}</button>
+	<Triptych palette="grass">
+		<Triptych chroma="chromatic">
+			<Triptych mode="light"></Triptych>
+		</Triptych>
 	</Triptych>
-	<Triptych palette="indigo" chroma="chromatic">
-		<Testbench />
-	</Triptych>
-	<Triptych mode="light" palette="amber" chroma="chromatic">
-		<Testbench>
-			<Triptych palette="indigo">
-				<Testbench />
-			</Triptych>
-		</Testbench>
-	</Triptych>	
-</section>
+	<Triptych mode="dark" />
+	<Triptych mode="dark" palette="tomato" />
+	<Triptych mode="dark" palette="tomato" chroma="chromatic" />
+	<Triptych mode="light" />
+	<Triptych mode="light" palette="indigo" />
+	<Triptych mode="light" palette="indigo" chroma="chromatic" />
+</main>
 
 <style>
-	section {
+	main {
+		height: 100%;
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
+		gap: 1rem;
+		padding: 1rem;
+		background-color: var(--background);
+		overflow: auto;
 	}
 </style>

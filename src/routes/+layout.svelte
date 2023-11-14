@@ -1,27 +1,4 @@
-<svelte:options runes={true} />
-
-<script>
-	import Triptych from "$components/Triptych.svelte";
-	import { setContext } from "svelte";
-	let appMode = $state('dark');
-	let appPalette = $state('tomato');
-	let appChroma = $state('neutral');
-
-	$effect(() => {
-		setContext('mode', appMode);
-		setContext('palette', appPalette);
-		setContext('chroma', appChroma);
-	});
-
-	function toggleMode() {
-		appMode = appMode === 'dark' ? 'light' : 'dark';
-	}
-</script>
-
-<Triptych mode={appMode} palette={appPalette} chroma={appChroma}>
-	<button on:click={toggleMode}>Toggle Mode</button>
-	<slot />
-</Triptych>
+<slot />
 
 <style>
 	@import '@radix-ui/colors/black-alpha.css';
@@ -91,15 +68,4 @@
 	@import '@radix-ui/colors/amber-alpha.css';
 	@import '@radix-ui/colors/amber-dark.css';
 	@import '@radix-ui/colors/amber-dark-alpha.css';
-
-	div {
-		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		display: flex;
-		flex-direction: column;
-		background-color: var(--background);
-	}
 </style>
