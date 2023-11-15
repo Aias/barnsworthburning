@@ -1,0 +1,20 @@
+@layer normalize, reset, variables, theme, defaults, utilities;
+
+@import 'normalize.css' layer(normalize);
+@import 'reset.css' layer(reset);
+@import 'radix.css' layer(variables);
+@import 'triptych.css' layer(theme);
+
+html {
+	height: 100vh;
+	min-height: 100vh;
+	font-family: 'IBM Plex Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+	font-size: 16px;
+}
+
+body {
+	height: 100%;
+	margin: 0;
+	color: var(--primary);
+	font-size: 0.875rem;
+}

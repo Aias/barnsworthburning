@@ -222,7 +222,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jridgewell/sourcemap-codec@npm:^1.4.10, @jridgewell/sourcemap-codec@npm:^1.4.14, @jridgewell/sourcemap-codec@npm:^1.4.15":
+"@jridgewell/sourcemap-codec@npm:^1.4.10, @jridgewell/sourcemap-codec@npm:^1.4.15":
   version: 1.4.15
   resolution: "@jridgewell/sourcemap-codec@npm:1.4.15"
   checksum: b881c7e503db3fc7f3c1f35a1dd2655a188cc51a3612d76efc8a6eb74728bef5606e6758ee77423e564092b4a518aba569bbb21c9bac5ab7a35b0c6ae7e344c8
@@ -351,9 +351,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/kit@npm:^1.27.5":
-  version: 1.27.5
-  resolution: "@sveltejs/kit@npm:1.27.5"
+"@sveltejs/kit@npm:^1.27.6":
+  version: 1.27.6
+  resolution: "@sveltejs/kit@npm:1.27.6"
   dependencies:
     "@sveltejs/vite-plugin-svelte": ^2.5.0
     "@types/cookie": ^0.5.1
@@ -373,7 +373,7 @@ __metadata:
     vite: ^4.0.0
   bin:
     svelte-kit: svelte-kit.js
-  checksum: b152f444b318a80d4366986b3aaa5b52bf740efdf88838ad3941c562fc1fbd716b26f863ba7b4e754093edef4ed002ee1cc81fc6d9d67c7abf3892d6b94c9b94
+  checksum: 6c2ed98f15da0fc837fc00ff7d76929ebf600c0031a6e5341cb5d6cd8a310b83a30bb0268e6a67268e833f2ecdc5accd3b8ab950a6382b679d3d660759de20b8
   languageName: node
   linkType: hard
 
@@ -440,13 +440,6 @@ __metadata:
   version: 14.18.36
   resolution: "@types/node@npm:14.18.36"
   checksum: da7f479b3fc996d585e60b8329987c6e310ddbf051e14f2d900ce04f7768f42fa7b760f0eb376008d3eca130ce9431018fb5c9e44027dcb7bb139c547e44b9c5
-  languageName: node
-  linkType: hard
-
-"@types/pug@npm:^2.0.6":
-  version: 2.0.8
-  resolution: "@types/pug@npm:2.0.8"
-  checksum: 5456afa5f67afd7640aa5a11010cdcd7b3af2b080c711472797adeb867f6b6c4485e5c4ea0125c6a26dca70fa60beff7f62de5283a97bd46730b3ff92e1321fc
   languageName: node
   linkType: hard
 
@@ -626,12 +619,12 @@ __metadata:
   dependencies:
     "@radix-ui/colors": ^3.0.0
     "@sveltejs/adapter-node": ^1.3.1
-    "@sveltejs/kit": ^1.27.5
+    "@sveltejs/kit": ^1.27.6
     airtable: ^0.12.2
+    normalize.css: ^8.0.1
     remarkable: ^2.0.1
     remarkable-meta: ^1.0.1
-    svelte: ^5.0.0-next.2
-    svelte-preprocess: ^5.1.0
+    svelte: next
     vite: ^4.5.0
   languageName: unknown
   linkType: soft
@@ -652,13 +645,6 @@ __metadata:
   dependencies:
     balanced-match: ^1.0.0
   checksum: a61e7cd2e8a8505e9f0036b3b6108ba5e926b4b55089eeb5550cd04a471fe216c96d4fe7e4c7f995c728c554ae20ddfc4244cad10aef255e72b62930afd233d1
-  languageName: node
-  linkType: hard
-
-"buffer-crc32@npm:^0.2.5":
-  version: 0.2.13
-  resolution: "buffer-crc32@npm:0.2.13"
-  checksum: 06252347ae6daca3453b94e4b2f1d3754a3b146a111d81c68924c22d91889a40623264e95e67955b1cb4a68cbedf317abeabb5140a9766ed248973096db5ce1c
   languageName: node
   linkType: hard
 
@@ -807,13 +793,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"detect-indent@npm:^6.1.0":
-  version: 6.1.0
-  resolution: "detect-indent@npm:6.1.0"
-  checksum: ab953a73c72dbd4e8fc68e4ed4bfd92c97eb6c43734af3900add963fd3a9316f3bc0578b018b24198d4c31a358571eff5f0656e81a1f3b9ad5c547d58b2d093d
-  languageName: node
-  linkType: hard
-
 "devalue@npm:^4.3.1":
   version: 4.3.2
   resolution: "devalue@npm:4.3.2"
@@ -862,13 +841,6 @@ __metadata:
   version: 2.0.3
   resolution: "err-code@npm:2.0.3"
   checksum: 8b7b1be20d2de12d2255c0bc2ca638b7af5171142693299416e6a9339bd7d88fc8d7707d913d78e0993176005405a236b066b45666b27b797252c771156ace54
-  languageName: node
-  linkType: hard
-
-"es6-promise@npm:^3.1.2":
-  version: 3.3.1
-  resolution: "es6-promise@npm:3.3.1"
-  checksum: ce4044009c2b78db18b15212338eb711cd8a4d485961bc9ec18bb24e8c1e91c96d3295b0fcf63066fc0fa1b0ade36da05e6657827d4336dece382be2429b8398
   languageName: node
   linkType: hard
 
@@ -1130,7 +1102,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graceful-fs@npm:^4.1.3, graceful-fs@npm:^4.2.6":
+"graceful-fs@npm:^4.2.6":
   version: 4.2.11
   resolution: "graceful-fs@npm:4.2.11"
   checksum: ac85f94da92d8eb6b7f5a8b20ce65e43d66761c55ce85ac96df6865308390da45a8d3f0296dd3a663de65d30ba497bd46c696cc1e248c72b13d6d567138a4fc7
@@ -1420,13 +1392,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"min-indent@npm:^1.0.0":
-  version: 1.0.1
-  resolution: "min-indent@npm:1.0.1"
-  checksum: bfc6dd03c5eaf623a4963ebd94d087f6f4bbbfd8c41329a7f09706b0cb66969c4ddd336abeb587bc44bc6f08e13bf90f0b374f9d71f9f01e04adc2cd6f083ef1
-  languageName: node
-  linkType: hard
-
 "minimatch@npm:^3.1.1":
   version: 3.1.2
   resolution: "minimatch@npm:3.1.2"
@@ -1451,13 +1416,6 @@ __metadata:
   dependencies:
     brace-expansion: ^2.0.1
   checksum: 253487976bf485b612f16bf57463520a14f512662e592e95c571afdab1442a6a6864b6c88f248ce6fc4ff0b6de04ac7aa6c8bb51e868e99d1d65eb0658a708b5
-  languageName: node
-  linkType: hard
-
-"minimist@npm:^1.2.0, minimist@npm:^1.2.6":
-  version: 1.2.8
-  resolution: "minimist@npm:1.2.8"
-  checksum: 75a6d645fb122dad29c06a7597bddea977258957ed88d7a6df59b5cd3fe4a527e253e9bbf2e783e4b73657f9098b96a5fe96ab8a113655d4109108577ecf85b0
   languageName: node
   linkType: hard
 
@@ -1542,17 +1500,6 @@ __metadata:
     minipass: ^3.0.0
     yallist: ^4.0.0
   checksum: f1fdeac0b07cf8f30fcf12f4b586795b97be856edea22b5e9072707be51fc95d41487faec3f265b42973a304fe3a64acd91a44a3826a963e37b37bafde0212c3
-  languageName: node
-  linkType: hard
-
-"mkdirp@npm:^0.5.1":
-  version: 0.5.6
-  resolution: "mkdirp@npm:0.5.6"
-  dependencies:
-    minimist: ^1.2.6
-  bin:
-    mkdirp: bin/cmd.js
-  checksum: 0c91b721bb12c3f9af4b77ebf73604baf350e64d80df91754dc509491ae93bf238581e59c7188360cec7cb62fc4100959245a42cfe01834efedc5e9d068376c2
   languageName: node
   linkType: hard
 
@@ -1652,6 +1599,13 @@ __metadata:
   bin:
     nopt: bin/nopt.js
   checksum: 82149371f8be0c4b9ec2f863cc6509a7fd0fa729929c009f3a58e4eb0c9e4cae9920e8f1f8eb46e7d032fec8fb01bede7f0f41a67eb3553b7b8e14fa53de1dac
+  languageName: node
+  linkType: hard
+
+"normalize.css@npm:^8.0.1":
+  version: 8.0.1
+  resolution: "normalize.css@npm:8.0.1"
+  checksum: 4698cae88ec35e3f3e82f9f9402e6ffb906c27ccd6373cad88e6b3f5634fc7a043cb38702472299e5edb73825cf8b18d5fd9283f58829eddda79ea97453049a2
   languageName: node
   linkType: hard
 
@@ -1816,17 +1770,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rimraf@npm:^2.5.2":
-  version: 2.7.1
-  resolution: "rimraf@npm:2.7.1"
-  dependencies:
-    glob: ^7.1.3
-  bin:
-    rimraf: ./bin.js
-  checksum: cdc7f6eacb17927f2a075117a823e1c5951792c6498ebcce81ca8203454a811d4cf8900314154d3259bb8f0b42ab17f67396a8694a54cae3283326e57ad250cd
-  languageName: node
-  linkType: hard
-
 "rimraf@npm:^3.0.2":
   version: 3.0.2
   resolution: "rimraf@npm:3.0.2"
@@ -1886,18 +1829,6 @@ __metadata:
   version: 2.1.2
   resolution: "safer-buffer@npm:2.1.2"
   checksum: cab8f25ae6f1434abee8d80023d7e72b598cf1327164ddab31003c51215526801e40b66c5e65d658a0af1e9d6478cadcb4c745f4bd6751f97d8644786c0978b0
-  languageName: node
-  linkType: hard
-
-"sander@npm:^0.5.0":
-  version: 0.5.1
-  resolution: "sander@npm:0.5.1"
-  dependencies:
-    es6-promise: ^3.1.2
-    graceful-fs: ^4.1.3
-    mkdirp: ^0.5.1
-    rimraf: ^2.5.2
-  checksum: 76da5b91dd7848de0c985adf035fc39ca76a3cd15d68bdae0a4672659a4bdef7b716747b31245af5dd769f19765a9e8e16ad577984b12cc041bdb09599921f3a
   languageName: node
   linkType: hard
 
@@ -1995,20 +1926,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sorcery@npm:^0.11.0":
-  version: 0.11.0
-  resolution: "sorcery@npm:0.11.0"
-  dependencies:
-    "@jridgewell/sourcemap-codec": ^1.4.14
-    buffer-crc32: ^0.2.5
-    minimist: ^1.2.0
-    sander: ^0.5.0
-  bin:
-    sorcery: bin/sorcery
-  checksum: b79a4194f5ab7ee1d19d5cd2a683bd605762d5cbeeb238f46a71af357a179a6193d64a92ef2af1e05e4261cb3797be8694ad9b7ecfea9ca0d8f14d98f449dff5
-  languageName: node
-  linkType: hard
-
 "source-map-js@npm:^1.0.2":
   version: 1.0.2
   resolution: "source-map-js@npm:1.0.2"
@@ -2081,15 +1998,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"strip-indent@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "strip-indent@npm:3.0.0"
-  dependencies:
-    min-indent: ^1.0.0
-  checksum: 18f045d57d9d0d90cd16f72b2313d6364fd2cb4bf85b9f593523ad431c8720011a4d5f08b6591c9d580f446e78855c5334a30fb91aa1560f5d9f95ed1b4a0530
-  languageName: node
-  linkType: hard
-
 "supports-preserve-symlinks-flag@npm:^1.0.0":
   version: 1.0.0
   resolution: "supports-preserve-symlinks-flag@npm:1.0.0"
@@ -2106,53 +2014,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte-preprocess@npm:^5.1.0":
-  version: 5.1.0
-  resolution: "svelte-preprocess@npm:5.1.0"
-  dependencies:
-    "@types/pug": ^2.0.6
-    detect-indent: ^6.1.0
-    magic-string: ^0.27.0
-    sorcery: ^0.11.0
-    strip-indent: ^3.0.0
-  peerDependencies:
-    "@babel/core": ^7.10.2
-    coffeescript: ^2.5.1
-    less: ^3.11.3 || ^4.0.0
-    postcss: ^7 || ^8
-    postcss-load-config: ^2.1.0 || ^3.0.0 || ^4.0.0
-    pug: ^3.0.0
-    sass: ^1.26.8
-    stylus: ^0.55.0
-    sugarss: ^2.0.0 || ^3.0.0 || ^4.0.0
-    svelte: ^3.23.0 || ^4.0.0-next.0 || ^4.0.0 || ^5.0.0-next.0
-    typescript: ">=3.9.5 || ^4.0.0 || ^5.0.0"
-  peerDependenciesMeta:
-    "@babel/core":
-      optional: true
-    coffeescript:
-      optional: true
-    less:
-      optional: true
-    postcss:
-      optional: true
-    postcss-load-config:
-      optional: true
-    pug:
-      optional: true
-    sass:
-      optional: true
-    stylus:
-      optional: true
-    sugarss:
-      optional: true
-    typescript:
-      optional: true
-  checksum: 25aa2fd3622510880be12afa10ec8adb1bd3646c3c3be4d5c15fa4fe75265bac10bfdc729ae2f3ee4be2f72d14a7838d6c8da93ab05b9772c914a6e18359c325
-  languageName: node
-  linkType: hard
-
-"svelte@npm:^5.0.0-next.2":
+"svelte@npm:next":
   version: 5.0.0-next.2
   resolution: "svelte@npm:5.0.0-next.2"
   dependencies:
