@@ -9,7 +9,9 @@
 	--link-active: var(--clr-link-active);
 }
 
-.light.neutral {
+.light,
+.light.neutral,
+.light .neutral {
 	--display: black;
 	--primary: var(--clr-a12);
 	--secondary: var(--clr-a11);
@@ -32,7 +34,8 @@
 	--shadow: var(--splash);
 }
 
-.light.chromatic {
+.light.chromatic,
+.light .chromatic {
 	--display: black;
 	--primary: var(--clr-a12);
 	--secondary: var(--clr-a11);
@@ -55,7 +58,9 @@
 	--shadow: var(--splash);
 }
 
-.dark.neutral {
+.dark,
+.dark.neutral,
+.dark .neutral {
 	--display: white;
 	--primary: var(--clr-a12);
 	--secondary: var(--clr-a11);
@@ -78,7 +83,8 @@
 	--shadow: var(--black-a4);
 }
 
-.dark.chromatic {
+.dark.chromatic,
+.dark .chromatic {
 	--display: white;
 	--primary: var(--clr-a12);
 	--secondary: var(--clr-a11);

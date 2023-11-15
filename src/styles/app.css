@@ -1,8 +1,8 @@
-@layer normalize, reset, variables, theme, defaults, utilities;
+@layer variables, normalize, reset, theme, defaults, utilities;
 
+@import 'radix.css' layer(variables);
 @import 'normalize.css' layer(normalize);
 @import 'reset.css' layer(reset);
-@import 'radix.css' layer(variables);
 @import 'triptych.css' layer(theme);
 
 html {
@@ -17,4 +17,15 @@ body {
 	margin: 0;
 	color: var(--primary);
 	font-size: 0.875rem;
+}
+
+a {
+	font-family: 'IBM Plex Mono', monospace;
+	color: var(--link);
+
+	&:hover {
+		color: var(--link-active);
+	}
+
+	transition: color 100ms;
 }
