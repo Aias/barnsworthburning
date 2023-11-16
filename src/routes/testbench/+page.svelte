@@ -2,20 +2,13 @@
 	const themes = [
 		{},
 		{palette: 'amber'},
-		{palette: 'tomato'},
+		{ palette: 'grass'},
 		{chroma: 'chromatic'},
-		{palette: 'purple', chroma: 'chromatic'},
-		{ palette: 'amber'},
-		{ palette: 'grass'},
-		{ chroma: 'chromatic'},
 		{ palette: 'amber', chroma: 'chromatic'},
-		{ palette: 'grass', chroma: 'chromatic'},
-		{ palette: 'amber'},
-		{ palette: 'grass'},
-		{ chroma: 'chromatic'},
-		{ palette: 'purple', chroma: 'chromatic'},
-		{ palette: 'amber', chroma: 'chromatic'},
-		{ palette: 'grass', chroma: 'chromatic'},
+		{ mode: 'light', palette: 'indigo'},
+		{ mode: 'light', palette: 'jade', chroma: 'chromatic'},
+		{ mode: 'dark', palette: 'tomato'},
+		{ mode: 'dark', palette: 'sky', chroma: 'chromatic'},
 	]
 </script>
 
@@ -32,12 +25,22 @@
 	</section>
 {/snippet}
 
+<main class="light">
+	{#each themes as theme}
+		{@render card(theme)}
+	{/each}
+</main>
 <main class="dark">
 	{#each themes as theme}
 		{@render card(theme)}
 	{/each}
 </main>
-<main class="light">
+<main class="light chromatic">
+	{#each themes as theme}
+		{@render card(theme)}
+	{/each}
+</main>
+<main class="dark chromatic">
 	{#each themes as theme}
 		{@render card(theme)}
 	{/each}

@@ -19,7 +19,7 @@ body {
 	font-size: 0.875rem;
 }
 
-a {
+:any-link {
 	font-family: 'IBM Plex Mono', monospace;
 	color: var(--link);
 
@@ -28,4 +28,9 @@ a {
 	}
 
 	transition: color 100ms;
+}
+
+:focus-visible {
+	outline: 1px solid var(--fill);
+	outline-offset: 2px;
 }

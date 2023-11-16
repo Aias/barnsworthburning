@@ -1,95 +1,97 @@
-.light,
-:where(.light) :where(.mauve, .tomato, .purple, .slate, .indigo, .sky, .sage, .jade, .olive, .grass, .sand, .amber) {
-	--display: var(--clr-max);
-	--primary: var(--clr-a12);
-	--secondary: var(--clr-a11);
-	--hint: var(--clr-a8);
-	--accent: var(--clr-a11);
+@scope (.light) to (.dark) {
+	:scope,
+	:where(.mauve, .tomato, .purple, .slate, .indigo, .sky, .sage, .jade, .olive, .grass, .sand, .amber) {
+		--display: var(--clr-max);
+		--primary: var(--clr-a12);
+		--secondary: var(--clr-a11);
+		--hint: var(--clr-a8);
+		--accent: var(--clr-a11);
 
-	--background: var(--clr-2);
-	--paper: var(--clr-1);
-	--container: var(--clr-3);
-	--float: white;
+		--background: var(--clr-2);
+		--paper: var(--clr-1);
+		--container: var(--clr-3);
+		--float: white;
 
-	--divider: var(--clr-7);
-	--border: var(--clr-7);
-	--boundary: var(--clr-8);
-	--edge: var(--clr-9);
+		--divider: var(--clr-7);
+		--border: var(--clr-7);
+		--boundary: var(--clr-8);
+		--edge: var(--clr-9);
 
-	--splash: var(--clr-a2);
-	--flood: var(--clr-a3);
-	--sink: var(--clr-a4);
-	--shadow: var(--splash);
+		--splash: var(--clr-a2);
+		--flood: var(--clr-a3);
+		--sink: var(--clr-a4);
+		--shadow: var(--splash);
+	}
+
+	.chromatic {
+		--display: var(--clr-max);
+		--primary: var(--clr-a12);
+		--secondary: var(--clr-a11);
+		--hint: var(--clr-a8);
+		--accent: var(--clr-a11);
+
+		--background: var(--clr-1);
+		--paper: var(--clr-2);
+		--container: var(--clr-3);
+		--float: var(--clr-3);
+
+		--divider: var(--clr-6);
+		--border: var(--clr-7);
+		--boundary: var(--clr-8);
+		--edge: var(--clr-9);
+
+		--splash: var(--clr-a2);
+		--flood: var(--clr-a3);
+		--sink: var(--clr-a4);
+		--shadow: var(--splash);
+	}
 }
 
-.light.chromatic,
-:where(.light .chromatic) {
-	--display: var(--clr-max);
-	--primary: var(--clr-a12);
-	--secondary: var(--clr-a11);
-	--hint: var(--clr-a8);
-	--accent: var(--clr-a11);
+@scope (.dark) to (.light) {
+	:scope,
+	:where(.mauve, .tomato, .purple, .slate, .indigo, .sky, .sage, .jade, .olive, .grass, .sand, .amber) {
+		--display: var(--clr-max);
+		--primary: var(--clr-a12);
+		--secondary: var(--clr-a11);
+		--hint: var(--clr-a8);
+		--accent: var(--clr-a11);
 
-	--background: var(--clr-1);
-	--paper: var(--clr-2);
-	--container: var(--clr-3);
-	--float: var(--clr-3);
+		--background: var(--clr-1);
+		--paper: var(--clr-2);
+		--container: var(--clr-3);
+		--float: var(--clr-3);
 
-	--divider: var(--clr-6);
-	--border: var(--clr-7);
-	--boundary: var(--clr-8);
-	--edge: var(--clr-9);
+		--divider: var(--clr-5);
+		--border: var(--clr-6);
+		--boundary: var(--clr-7);
+		--edge: var(--clr-8);
 
-	--splash: var(--clr-a2);
-	--flood: var(--clr-a3);
-	--sink: var(--clr-a4);
-	--shadow: var(--splash);
-}
+		--splash: var(--clr-a2);
+		--flood: var(--clr-a3);
+		--sink: var(--clr-a4);
+		--shadow: var(--black-a4);
+	}
 
-.dark,
-:where(.dark) :where(.mauve, .tomato, .purple, .slate, .indigo, .sky, .sage, .jade, .olive, .grass, .sand, .amber) {
-	--display: var(--clr-max);
-	--primary: var(--clr-a12);
-	--secondary: var(--clr-a11);
-	--hint: var(--clr-a8);
-	--accent: var(--clr-a11);
+	.chromatic {
+		--display: var(--clr-max);
+		--primary: var(--clr-a12);
+		--secondary: var(--clr-a11);
+		--hint: var(--clr-a8);
+		--accent: var(--clr-a11);
 
-	--background: var(--clr-1);
-	--paper: var(--clr-2);
-	--container: var(--clr-3);
-	--float: var(--clr-3);
+		--background: var(--clr-1);
+		--paper: var(--clr-2);
+		--container: var(--clr-3);
+		--float: var(--clr-3);
 
-	--divider: var(--clr-5);
-	--border: var(--clr-6);
-	--boundary: var(--clr-7);
-	--edge: var(--clr-8);
+		--divider: var(--clr-5);
+		--border: var(--clr-6);
+		--boundary: var(--clr-7);
+		--edge: var(--clr-8);
 
-	--splash: var(--clr-a2);
-	--flood: var(--clr-a3);
-	--sink: var(--clr-a4);
-	--shadow: var(--black-a4);
-}
-
-.dark.chromatic,
-:where(.dark .chromatic) {
-	--display: var(--clr-max);
-	--primary: var(--clr-a12);
-	--secondary: var(--clr-a11);
-	--hint: var(--clr-a8);
-	--accent: var(--clr-a11);
-
-	--background: var(--clr-1);
-	--paper: var(--clr-2);
-	--container: var(--clr-3);
-	--float: var(--clr-3);
-
-	--divider: var(--clr-5);
-	--border: var(--clr-6);
-	--boundary: var(--clr-7);
-	--edge: var(--clr-8);
-
-	--splash: var(--clr-a2);
-	--flood: var(--clr-a3);
-	--sink: var(--clr-a4);
-	--shadow: var(--black-a4);
+		--splash: var(--clr-a2);
+		--flood: var(--clr-a3);
+		--sink: var(--clr-a4);
+		--shadow: var(--black-a4);
+	}
 }
