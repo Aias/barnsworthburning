@@ -23,14 +23,13 @@ const airtableFetch = async (tableName = '', options = {}) =>
 		});
 
 const airtableFind = async (tableName = '', recordId = '') => {
-	const records = await airtableFetch(tableName, {
-		filterByFormula: `RECORD_ID() = '${recordId}'`
-	});
-	if (records && records.length) {
-		return records[0];
-	} else {
-		return null;
-	}
+	const record = await base
+		.find(recordId)
+		.then((record) => mapReceivedRecord(record))
+		.catch((error) => {
+			console.error(error);
+			return null;
+		});
 };
 
 export { airtableFetch, airtableFind };
