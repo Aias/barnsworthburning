@@ -39,8 +39,9 @@
 	--link-active: var(--clr-12);
 }
 
-@scope (.light) to (.dark) {
+@scope (.light, .light.neutral) to (.dark) {
 	:scope,
+	.neutral,
 	:where(
 			.gray,
 			.mauve,
@@ -96,33 +97,68 @@
 		--shadow: var(--splash);
 	}
 
-	:scope.chromatic,
-	.chromatic {
-		--display: var(--ramp-max);
-		--primary: var(--ramp-a12);
-		--secondary: var(--ramp-a11);
-		--hint: var(--ramp-a8);
-		--accent: var(--ramp-a11);
+	@scope (:scope.chromatic, .chromatic) to (.neutral, .dark) {
+		:scope,
+		:where(
+				.gray,
+				.mauve,
+				.slate,
+				.sage,
+				.olive,
+				.sand,
+				.bronze,
+				.gold,
+				.brown,
+				.orange,
+				.tomato,
+				.red,
+				.ruby,
+				.crimson,
+				.pink,
+				.plum,
+				.purple,
+				.violet,
+				.iris,
+				.indigo,
+				.blue,
+				.cyan,
+				.teal,
+				.jade,
+				.green,
+				.grass,
+				.sly,
+				.mint,
+				.lime,
+				.yellow,
+				.amber
+			) {
+			--display: var(--ramp-max);
+			--primary: var(--ramp-a12);
+			--secondary: var(--ramp-a11);
+			--hint: var(--ramp-a8);
+			--accent: var(--ramp-a11);
 
-		--background: var(--ramp-1);
-		--paper: var(--ramp-2);
-		--container: var(--ramp-3);
-		--float: var(--ramp-3);
+			--background: var(--ramp-1);
+			--paper: var(--ramp-2);
+			--container: var(--ramp-3);
+			--float: var(--ramp-3);
 
-		--divider: var(--ramp-6);
-		--border: var(--ramp-7);
-		--boundary: var(--ramp-8);
-		--edge: var(--ramp-9);
+			--divider: var(--ramp-6);
+			--border: var(--ramp-7);
+			--boundary: var(--ramp-8);
+			--edge: var(--ramp-9);
 
-		--splash: var(--ramp-a2);
-		--flood: var(--ramp-a3);
-		--sink: var(--ramp-a4);
-		--shadow: var(--splash);
+			--splash: var(--ramp-a2);
+			--flood: var(--ramp-a3);
+			--sink: var(--ramp-a4);
+			--shadow: var(--splash);
+		}
 	}
 }
 
-@scope (.dark) to (.light) {
+@scope (.dark, .dark.neutral) to (.light) {
 	:scope,
+	.neutral,
 	:where(
 			.gray,
 			.mauve,
@@ -178,27 +214,61 @@
 		--shadow: var(--black-a4);
 	}
 
-	:scope.chromatic,
-	.chromatic {
-		--display: var(--ramp-max);
-		--primary: var(--ramp-a12);
-		--secondary: var(--ramp-a11);
-		--hint: var(--ramp-a8);
-		--accent: var(--ramp-a11);
+	@scope (:scope.chromatic, .chromatic) to (.neutral, .light) {
+		:scope,
+		:where(
+				.gray,
+				.mauve,
+				.slate,
+				.sage,
+				.olive,
+				.sand,
+				.bronze,
+				.gold,
+				.brown,
+				.orange,
+				.tomato,
+				.red,
+				.ruby,
+				.crimson,
+				.pink,
+				.plum,
+				.purple,
+				.violet,
+				.iris,
+				.indigo,
+				.blue,
+				.cyan,
+				.teal,
+				.jade,
+				.green,
+				.grass,
+				.sly,
+				.mint,
+				.lime,
+				.yellow,
+				.amber
+			) {
+			--display: var(--ramp-max);
+			--primary: var(--ramp-a12);
+			--secondary: var(--ramp-a11);
+			--hint: var(--ramp-a8);
+			--accent: var(--ramp-a11);
 
-		--background: var(--ramp-1);
-		--paper: var(--ramp-2);
-		--container: var(--ramp-3);
-		--float: var(--ramp-3);
+			--background: var(--ramp-1);
+			--paper: var(--ramp-2);
+			--container: var(--ramp-3);
+			--float: var(--ramp-3);
 
-		--divider: var(--ramp-5);
-		--border: var(--ramp-6);
-		--boundary: var(--ramp-7);
-		--edge: var(--ramp-8);
+			--divider: var(--ramp-5);
+			--border: var(--ramp-6);
+			--boundary: var(--ramp-7);
+			--edge: var(--ramp-8);
 
-		--splash: var(--ramp-a2);
-		--flood: var(--ramp-a3);
-		--sink: var(--ramp-a4);
-		--shadow: var(--black-a4);
+			--splash: var(--ramp-a2);
+			--flood: var(--ramp-a3);
+			--sink: var(--ramp-a4);
+			--shadow: var(--black-a4);
+		}
 	}
 }
