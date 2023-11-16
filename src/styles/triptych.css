@@ -1,18 +1,6 @@
 .light,
-.dark,
-.neutral,
-.chromatic {
-	--fill: var(--clr-9);
-	--fill-active: var(--clr-10);
-	--on-fill: var(--clr-contrast);
-	--link: var(--clr-link);
-	--link-active: var(--clr-link-active);
-}
-
-.light,
-.light.neutral,
-.light .neutral {
-	--display: black;
+:where(.light) :where(.mauve, .tomato, .purple, .slate, .indigo, .sky, .sage, .jade, .olive, .grass, .sand, .amber) {
+	--display: var(--clr-max);
 	--primary: var(--clr-a12);
 	--secondary: var(--clr-a11);
 	--hint: var(--clr-a8);
@@ -35,8 +23,8 @@
 }
 
 .light.chromatic,
-.light .chromatic {
-	--display: black;
+:where(.light .chromatic) {
+	--display: var(--clr-max);
 	--primary: var(--clr-a12);
 	--secondary: var(--clr-a11);
 	--hint: var(--clr-a8);
@@ -59,9 +47,8 @@
 }
 
 .dark,
-.dark.neutral,
-.dark .neutral {
-	--display: white;
+:where(.dark) :where(.mauve, .tomato, .purple, .slate, .indigo, .sky, .sage, .jade, .olive, .grass, .sand, .amber) {
+	--display: var(--clr-max);
 	--primary: var(--clr-a12);
 	--secondary: var(--clr-a11);
 	--hint: var(--clr-a8);
@@ -84,8 +71,8 @@
 }
 
 .dark.chromatic,
-.dark .chromatic {
-	--display: white;
+:where(.dark .chromatic) {
+	--display: var(--clr-max);
 	--primary: var(--clr-a12);
 	--secondary: var(--clr-a11);
 	--hint: var(--clr-a8);

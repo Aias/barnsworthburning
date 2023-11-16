@@ -66,12 +66,19 @@
 @import '@radix-ui/colors/amber-dark.css';
 @import '@radix-ui/colors/amber-dark-alpha.css';
 
+.light {
+	--clr-max: black;
+}
+.dark {
+	--clr-max: white;
+}
+
 /* NEUTRALS */
 
 .mauve,
-.tomato.neutral,
-.purple.neutral {
-	--clr-contrast: white;
+.tomato,
+.purple,
+:where(.mauve, .tomato, .purple) :where(.light, .dark) {
 	--clr-1: var(--mauve-1);
 	--clr-2: var(--mauve-2);
 	--clr-3: var(--mauve-3);
@@ -98,15 +105,19 @@
 	--clr-a11: var(--mauve-a11);
 	--clr-a12: var(--mauve-a12);
 }
-.mauve {
-	--clr-link: var(--mauve-a11);
-	--clr-link-active: var(--mauve-a12);
+.mauve,
+:where(.mauve) :where(.light, .dark) {
+	--fill: var(--mauve-9);
+	--fill-active: var(--mauve-10);
+	--on-fill: white;
+	--link: var(--mauve-11);
+	--link-active: var(--mauve-12);
 }
 
 .slate,
-.indigo.neutral,
-.sky.neutral {
-	--clr-contrast: white;
+.indigo,
+.sky,
+:where(.slate, .indigo, .sky) :where(.light, .dark) {
 	--clr-1: var(--slate-1);
 	--clr-2: var(--slate-2);
 	--clr-3: var(--slate-3);
@@ -133,14 +144,18 @@
 	--clr-a11: var(--slate-a11);
 	--clr-a12: var(--slate-a12);
 }
-.slate {
-	--clr-link: var(--slate-a11);
-	--clr-link-active: var(--slate-a12);
+.slate,
+:where(.slate) :where(.light, .dark) {
+	--fill: var(--slate-9);
+	--fill-active: var(--slate-10);
+	--on-fill: white;
+	--link: var(--slate-11);
+	--link-active: var(--slate-12);
 }
 
 .sage,
-.jade.neutral {
-	--clr-contrast: white;
+.jade,
+:where(.sage, .jade) :where(.light, .dark) {
 	--clr-1: var(--sage-1);
 	--clr-2: var(--sage-2);
 	--clr-3: var(--sage-3);
@@ -167,14 +182,18 @@
 	--clr-a11: var(--sage-a11);
 	--clr-a12: var(--sage-a12);
 }
-.sage {
-	--clr-link: var(--sage-a11);
-	--clr-link-active: var(--sage-a12);
+.sage,
+:where(.sage) :where(.light, .dark) {
+	--fill: var(--sage-9);
+	--fill-active: var(--sage-10);
+	--on-fill: white;
+	--link: var(--sage-11);
+	--link-active: var(--sage-12);
 }
 
 .olive,
-.grass.neutral {
-	--clr-contrast: white;
+.grass,
+:where(.olive, .grass) :where(.light, .dark) {
 	--clr-1: var(--olive-1);
 	--clr-2: var(--olive-2);
 	--clr-3: var(--olive-3);
@@ -201,14 +220,18 @@
 	--clr-a11: var(--olive-a11);
 	--clr-a12: var(--olive-a12);
 }
-.olive {
-	--clr-link: var(--olive-a11);
-	--clr-link-active: var(--olive-a12);
+.olive,
+:where(.olive) :where(.light, .dark) {
+	--fill: var(--olive-9);
+	--fill-active: var(--olive-10);
+	--on-fill: white;
+	--link: var(--olive-11);
+	--link-active: var(--olive-12);
 }
 
 .sand,
-.amber.neutral {
-	--clr-contrast: white;
+.amber,
+:where(.amber, .sand) :where(.light, .dark) {
 	--clr-1: var(--sand-1);
 	--clr-2: var(--sand-2);
 	--clr-3: var(--sand-3);
@@ -235,16 +258,19 @@
 	--clr-a11: var(--sand-a11);
 	--clr-a12: var(--sand-a12);
 }
-.sand {
-	--clr-link: var(--sand-a11);
-	--clr-link-active: var(--sand-a12);
+.sand,
+:where(.sand) :where(.light, .dark) {
+	--fill: var(--sand-9);
+	--fill-active: var(--sand-10);
+	--on-fill: white;
+	--link: var(--sand-11);
+	--link-active: var(--sand-12);
 }
 
 /* COLORS */
 
-.tomato,
-.tomato.chromatic {
-	--clr-contrast: white;
+.tomato.chromatic,
+:where(.tomato .chromatic, .tomato .light, .tomato .dark) {
 	--clr-1: var(--tomato-1);
 	--clr-2: var(--tomato-2);
 	--clr-3: var(--tomato-3);
@@ -270,14 +296,18 @@
 	--clr-a10: var(--tomato-a10);
 	--clr-a11: var(--tomato-a11);
 	--clr-a12: var(--tomato-a12);
-
-	--clr-link: var(--tomato-a11);
-	--clr-link-active: var(--tomato-a12);
+}
+.tomato,
+:where(.tomato) :where(.light, .dark) {
+	--fill: var(--tomato-9);
+	--fill-active: var(--tomato-10);
+	--on-fill: white;
+	--link: var(--tomato-11);
+	--link-active: var(--tomato-12);
 }
 
-.purple,
-.purple.chromatic {
-	--clr-contrast: white;
+.purple.chromatic,
+:where(.purple .chromatic, .purple .light, .purple .dark) {
 	--clr-1: var(--purple-1);
 	--clr-2: var(--purple-2);
 	--clr-3: var(--purple-3);
@@ -303,14 +333,18 @@
 	--clr-a10: var(--purple-a10);
 	--clr-a11: var(--purple-a11);
 	--clr-a12: var(--purple-a12);
-
-	--clr-link: var(--purple-a11);
-	--clr-link-active: var(--purple-a12);
+}
+.purple,
+:where(.purple) :where(.light, .dark) {
+	--fill: var(--purple-9);
+	--fill-active: var(--purple-10);
+	--on-fill: white;
+	--link: var(--purple-11);
+	--link-active: var(--purple-12);
 }
 
-.indigo,
-.indigo.chromatic {
-	--clr-contrast: white;
+.indigo.chromatic,
+:where(.indigo .chromatic, .indigo .light, .indigo .dark) {
 	--clr-1: var(--indigo-1);
 	--clr-2: var(--indigo-2);
 	--clr-3: var(--indigo-3);
@@ -336,14 +370,18 @@
 	--clr-a10: var(--indigo-a10);
 	--clr-a11: var(--indigo-a11);
 	--clr-a12: var(--indigo-a12);
-
-	--clr-link: var(--indigo-a11);
-	--clr-link-active: var(--indigo-a12);
+}
+.indigo,
+:where(.indigo) :where(.light, .dark) {
+	--fill: var(--indigo-9);
+	--fill-active: var(--indigo-10);
+	--on-fill: white;
+	--link: var(--indigo-11);
+	--link-active: var(--indigo-12);
 }
 
-.sky,
-.sky.chromatic {
-	--clr-contrast: white;
+.sky.chromatic,
+:where(.sky .chromatic, .sky .light, .sky .dark) {
 	--clr-1: var(--sky-1);
 	--clr-2: var(--sky-2);
 	--clr-3: var(--sky-3);
@@ -369,14 +407,18 @@
 	--clr-a10: var(--sky-a10);
 	--clr-a11: var(--sky-a11);
 	--clr-a12: var(--sky-a12);
-
-	--clr-link: var(--sky-a11);
-	--clr-link-active: var(--sky-a12);
+}
+.sky,
+:where(.sky) :where(.light, .dark) {
+	--fill: var(--sky-9);
+	--fill-active: var(--sky-10);
+	--on-fill: white;
+	--link: var(--sky-11);
+	--link-active: var(--sky-12);
 }
 
-.jade,
-.jade.chromatic {
-	--clr-contrast: white;
+.jade.chromatic,
+:where(.jade .chromatic, .jade .light, .jade .dark) {
 	--clr-1: var(--jade-1);
 	--clr-2: var(--jade-2);
 	--clr-3: var(--jade-3);
@@ -402,14 +444,18 @@
 	--clr-a10: var(--jade-a10);
 	--clr-a11: var(--jade-a11);
 	--clr-a12: var(--jade-a12);
-
-	--clr-link: var(--jade-a11);
-	--clr-link-active: var(--jade-a12);
+}
+.jade,
+:where(.jade) :where(.light, .dark) {
+	--fill: var(--jade-9);
+	--fill-active: var(--jade-10);
+	--on-fill: white;
+	--link: var(--jade-11);
+	--link-active: var(--jade-12);
 }
 
-.grass,
-.grass.chromatic {
-	--clr-contrast: white;
+.grass.chromatic,
+:where(.grass .chromatic, .grass .light, .grass .dark) {
 	--clr-1: var(--grass-1);
 	--clr-2: var(--grass-2);
 	--clr-3: var(--grass-3);
@@ -435,14 +481,18 @@
 	--clr-a10: var(--grass-a10);
 	--clr-a11: var(--grass-a11);
 	--clr-a12: var(--grass-a12);
-
-	--clr-link: var(--grass-a11);
-	--clr-link-active: var(--grass-a12);
+}
+.grass,
+:where(.grass) :where(.light, .dark) {
+	--fill: var(--grass-9);
+	--fill-active: var(--grass-10);
+	--on-fill: white;
+	--link: var(--grass-11);
+	--link-active: var(--grass-12);
 }
 
-.amber,
-.amber.chromatic {
-	--clr-contrast: black;
+.amber.chromatic,
+:where(.amber .chromatic) {
 	--clr-1: var(--amber-1);
 	--clr-2: var(--amber-2);
 	--clr-3: var(--amber-3);
@@ -468,7 +518,12 @@
 	--clr-a10: var(--amber-a10);
 	--clr-a11: var(--amber-a11);
 	--clr-a12: var(--amber-a12);
-
-	--clr-link: var(--amber-a11);
-	--clr-link-active: var(--amber-a12);
+}
+.amber,
+:where(.amber) :where(.light, .dark) {
+	--fill: var(--amber-9);
+	--fill-active: var(--amber-10);
+	--on-fill: black;
+	--link: var(--amber-11);
+	--link-active: var(--amber-12);
 }
