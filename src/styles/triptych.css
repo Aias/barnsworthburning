@@ -96,6 +96,7 @@
 		--shadow: var(--splash);
 	}
 
+	:scope.chromatic,
 	.chromatic {
 		--display: var(--ramp-max);
 		--primary: var(--ramp-a12);
@@ -177,6 +178,7 @@
 		--shadow: var(--black-a4);
 	}
 
+	:scope.chromatic,
 	.chromatic {
 		--display: var(--ramp-max);
 		--primary: var(--ramp-a12);
