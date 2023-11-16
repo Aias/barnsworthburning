@@ -1,97 +1,202 @@
+:where(.dark, .light),
+:where(
+		.gray,
+		.mauve,
+		.slate,
+		.sage,
+		.olive,
+		.sand,
+		.bronze,
+		.gold,
+		.brown,
+		.orange,
+		.tomato,
+		.red,
+		.ruby,
+		.crimson,
+		.pink,
+		.plum,
+		.purple,
+		.violet,
+		.iris,
+		.indigo,
+		.blue,
+		.cyan,
+		.teal,
+		.jade,
+		.green,
+		.grass,
+		.sly,
+		.mint,
+		.lime,
+		.yellow,
+		.amber
+	) {
+	--main: var(--clr-9);
+	--main-active: var(--clr-10);
+	--main-contrast: var(--clr-contrast);
+	--link: var(--clr-11);
+	--link-active: var(--clr-12);
+}
+
 @scope (.light) to (.dark) {
 	:scope,
-	:where(.mauve, .tomato, .purple, .slate, .indigo, .sky, .sage, .jade, .olive, .grass, .sand, .amber) {
-		--display: var(--clr-max);
-		--primary: var(--clr-a12);
-		--secondary: var(--clr-a11);
-		--hint: var(--clr-a8);
-		--accent: var(--clr-a11);
+	:where(
+			.gray,
+			.mauve,
+			.slate,
+			.sage,
+			.olive,
+			.sand,
+			.bronze,
+			.gold,
+			.brown,
+			.orange,
+			.tomato,
+			.red,
+			.ruby,
+			.crimson,
+			.pink,
+			.plum,
+			.purple,
+			.violet,
+			.iris,
+			.indigo,
+			.blue,
+			.cyan,
+			.teal,
+			.jade,
+			.green,
+			.grass,
+			.sly,
+			.mint,
+			.lime,
+			.yellow,
+			.amber
+		) {
+		--display: var(--ramp-max);
+		--primary: var(--ramp-a12);
+		--secondary: var(--ramp-a11);
+		--hint: var(--ramp-a8);
+		--accent: var(--ramp-a11);
 
-		--background: var(--clr-2);
-		--paper: var(--clr-1);
-		--container: var(--clr-3);
+		--background: var(--ramp-2);
+		--paper: var(--ramp-1);
+		--container: var(--ramp-3);
 		--float: white;
 
-		--divider: var(--clr-7);
-		--border: var(--clr-7);
-		--boundary: var(--clr-8);
-		--edge: var(--clr-9);
+		--divider: var(--ramp-7);
+		--border: var(--ramp-7);
+		--boundary: var(--ramp-8);
+		--edge: var(--ramp-9);
 
-		--splash: var(--clr-a2);
-		--flood: var(--clr-a3);
-		--sink: var(--clr-a4);
+		--splash: var(--ramp-a2);
+		--flood: var(--ramp-a3);
+		--sink: var(--ramp-a4);
 		--shadow: var(--splash);
 	}
 
 	.chromatic {
-		--display: var(--clr-max);
-		--primary: var(--clr-a12);
-		--secondary: var(--clr-a11);
-		--hint: var(--clr-a8);
-		--accent: var(--clr-a11);
+		--display: var(--ramp-max);
+		--primary: var(--ramp-a12);
+		--secondary: var(--ramp-a11);
+		--hint: var(--ramp-a8);
+		--accent: var(--ramp-a11);
 
-		--background: var(--clr-1);
-		--paper: var(--clr-2);
-		--container: var(--clr-3);
-		--float: var(--clr-3);
+		--background: var(--ramp-1);
+		--paper: var(--ramp-2);
+		--container: var(--ramp-3);
+		--float: var(--ramp-3);
 
-		--divider: var(--clr-6);
-		--border: var(--clr-7);
-		--boundary: var(--clr-8);
-		--edge: var(--clr-9);
+		--divider: var(--ramp-6);
+		--border: var(--ramp-7);
+		--boundary: var(--ramp-8);
+		--edge: var(--ramp-9);
 
-		--splash: var(--clr-a2);
-		--flood: var(--clr-a3);
-		--sink: var(--clr-a4);
+		--splash: var(--ramp-a2);
+		--flood: var(--ramp-a3);
+		--sink: var(--ramp-a4);
 		--shadow: var(--splash);
 	}
 }
 
 @scope (.dark) to (.light) {
 	:scope,
-	:where(.mauve, .tomato, .purple, .slate, .indigo, .sky, .sage, .jade, .olive, .grass, .sand, .amber) {
-		--display: var(--clr-max);
-		--primary: var(--clr-a12);
-		--secondary: var(--clr-a11);
-		--hint: var(--clr-a8);
-		--accent: var(--clr-a11);
+	:where(
+			.gray,
+			.mauve,
+			.slate,
+			.sage,
+			.olive,
+			.sand,
+			.bronze,
+			.gold,
+			.brown,
+			.orange,
+			.tomato,
+			.red,
+			.ruby,
+			.crimson,
+			.pink,
+			.plum,
+			.purple,
+			.violet,
+			.iris,
+			.indigo,
+			.blue,
+			.cyan,
+			.teal,
+			.jade,
+			.green,
+			.grass,
+			.sly,
+			.mint,
+			.lime,
+			.yellow,
+			.amber
+		) {
+		--display: var(--ramp-max);
+		--primary: var(--ramp-a12);
+		--secondary: var(--ramp-a11);
+		--hint: var(--ramp-a8);
+		--accent: var(--ramp-a11);
 
-		--background: var(--clr-1);
-		--paper: var(--clr-2);
-		--container: var(--clr-3);
-		--float: var(--clr-3);
+		--background: var(--ramp-1);
+		--paper: var(--ramp-2);
+		--container: var(--ramp-3);
+		--float: var(--ramp-3);
 
-		--divider: var(--clr-5);
-		--border: var(--clr-6);
-		--boundary: var(--clr-7);
-		--edge: var(--clr-8);
+		--divider: var(--ramp-5);
+		--border: var(--ramp-6);
+		--boundary: var(--ramp-7);
+		--edge: var(--ramp-8);
 
-		--splash: var(--clr-a2);
-		--flood: var(--clr-a3);
-		--sink: var(--clr-a4);
+		--splash: var(--ramp-a2);
+		--flood: var(--ramp-a3);
+		--sink: var(--ramp-a4);
 		--shadow: var(--black-a4);
 	}
 
 	.chromatic {
-		--display: var(--clr-max);
-		--primary: var(--clr-a12);
-		--secondary: var(--clr-a11);
-		--hint: var(--clr-a8);
-		--accent: var(--clr-a11);
+		--display: var(--ramp-max);
+		--primary: var(--ramp-a12);
+		--secondary: var(--ramp-a11);
+		--hint: var(--ramp-a8);
+		--accent: var(--ramp-a11);
 
-		--background: var(--clr-1);
-		--paper: var(--clr-2);
-		--container: var(--clr-3);
-		--float: var(--clr-3);
+		--background: var(--ramp-1);
+		--paper: var(--ramp-2);
+		--container: var(--ramp-3);
+		--float: var(--ramp-3);
 
-		--divider: var(--clr-5);
-		--border: var(--clr-6);
-		--boundary: var(--clr-7);
-		--edge: var(--clr-8);
+		--divider: var(--ramp-5);
+		--border: var(--ramp-6);
+		--boundary: var(--ramp-7);
+		--edge: var(--ramp-8);
 
-		--splash: var(--clr-a2);
-		--flood: var(--clr-a3);
-		--sink: var(--clr-a4);
+		--splash: var(--ramp-a2);
+		--flood: var(--ramp-a3);
+		--sink: var(--ramp-a4);
 		--shadow: var(--black-a4);
 	}
 }

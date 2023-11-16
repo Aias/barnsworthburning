@@ -1,6 +1,6 @@
 @layer variables, normalize, reset, theme, defaults, utilities;
 
-@import 'radix.css' layer(variables);
+@import 'chroma.css' layer(variables);
 @import 'normalize.css' layer(normalize);
 @import 'reset.css' layer(reset);
 @import 'triptych.css' layer(theme);
