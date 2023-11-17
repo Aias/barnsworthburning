@@ -103,7 +103,7 @@
 		--shadow: var(--splash);
 	}
 
-	@scope (:scope.chromatic, .chromatic) to (.neutral) {
+	@scope (:scope.chromatic, .chromatic, .chromatic :scope:not(.neutral)) to (.neutral) {
 		:scope,
 		:where(
 				.gray,
@@ -224,7 +224,7 @@
 		--shadow: var(--black-a4);
 	}
 
-	@scope (:scope.chromatic, .chromatic) to (.neutral) {
+	@scope (:scope.chromatic, .chromatic, .chromatic :scope:not(.neutral)) to (.neutral) {
 		:scope,
 		:where(
 				.gray,

@@ -9,6 +9,9 @@
 		{ mode: 'light', palette: 'jade', chroma: 'chromatic'},
 		{ mode: 'dark', palette: 'tomato'},
 		{ mode: 'dark', palette: 'sky', chroma: 'chromatic'},
+		{ chroma: 'neutral'},
+		{ chroma: 'neutral', mode: 'dark'},
+		{ chroma: 'neutral', palette: 'green'}
 	]
 </script>
 
