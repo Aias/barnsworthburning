@@ -1,8 +1,6 @@
 <script>
 	import '$styles/app.css';
 
-	let { data } = $props();
-
 	function createMode() {
 		let mode = $state('dark');
 
@@ -56,9 +54,6 @@
 		document.documentElement.className = themeClass;
 	});
 
-	$effect(() => {
-		console.log(data)
-	})
 </script>
 
 <main>

@@ -1,6 +1,5 @@
-@layer variables, normalize, reset, theme, defaults, utilities;
+@layer theme, normalize, reset, defaults, utilities;
 
-@import 'chroma.css' layer(variables);
 @import 'triptych.css' layer(theme);
 @import 'normalize.css' layer(normalize);
 @import 'reset.css' layer(reset);
@@ -44,9 +43,11 @@ button {
 :any-link {
 	font-family: var(--font-stack-mono);
 	color: var(--link);
+	text-decoration: none;
 
 	&:hover {
 		color: var(--link-active);
+		text-decoration: underline;
 	}
 
 	transition: color 100ms;

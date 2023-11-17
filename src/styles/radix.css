@@ -92,7 +92,7 @@
 
 /* CLASS LIST */
 /* 
-.gray, .mauve, .slate, .sage, .olive, .sand, .bronze, .gold, .brown, .orange, .tomato, .red, .ruby, .crimson, .pink, .plum, .purple, .violet, .iris, .indigo, .blue, .cyan, .teal, .jade, .green, .grass, .sly, .mint, .lime, .yellow, .amber
+.gray, .mauve, .slate, .sage, .olive, .sand, .bronze, .gold, .brown, .orange, .tomato, .red, .ruby, .crimson, .pink, .plum, .purple, .violet, .iris, .indigo, .blue, .cyan, .teal, .jade, .green, .grass, .sky, .mint, .lime, .yellow, .amber
 */
 
 /* ============================== */
@@ -128,7 +128,7 @@
 	--clr-contrast: white;
 }
 
-.sly,
+.sky,
 .mint,
 .lime,
 .yellow,

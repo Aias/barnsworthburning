@@ -1,3 +1,5 @@
+@import './radix.css';
+
 :where(.dark, .light),
 :where(
 		.gray,
@@ -26,7 +28,7 @@
 		.jade,
 		.green,
 		.grass,
-		.sly,
+		.sky,
 		.mint,
 		.lime,
 		.yellow,
@@ -40,6 +42,10 @@
 }
 
 @scope (.light, .light.neutral) to (.dark) {
+	:scope {
+		--mode-contrast: black;
+	}
+
 	:scope,
 	.neutral,
 	:where(
@@ -69,35 +75,35 @@
 			.jade,
 			.green,
 			.grass,
-			.sly,
+			.sky,
 			.mint,
 			.lime,
 			.yellow,
 			.amber
 		) {
-		--display: var(--ramp-max);
-		--primary: var(--ramp-a12);
-		--secondary: var(--ramp-a11);
-		--hint: var(--ramp-a8);
-		--accent: var(--ramp-a11);
+		--display: var(--mode-contrast);
+		--primary: var(--neu-a12);
+		--secondary: var(--neu-a11);
+		--hint: var(--neu-a8);
+		--accent: var(--neu-a11);
 
-		--background: var(--ramp-2);
-		--paper: var(--ramp-1);
-		--container: var(--ramp-3);
+		--background: var(--neu-2);
+		--paper: var(--neu-1);
+		--container: var(--neu-3);
 		--float: white;
 
-		--divider: var(--ramp-7);
-		--border: var(--ramp-7);
-		--boundary: var(--ramp-8);
-		--edge: var(--ramp-9);
+		--divider: var(--neu-7);
+		--border: var(--neu-7);
+		--boundary: var(--neu-8);
+		--edge: var(--neu-9);
 
-		--splash: var(--ramp-a2);
-		--flood: var(--ramp-a3);
-		--sink: var(--ramp-a4);
+		--splash: var(--neu-a2);
+		--flood: var(--neu-a3);
+		--sink: var(--neu-a4);
 		--shadow: var(--splash);
 	}
 
-	@scope (:scope.chromatic, .chromatic) to (.neutral, .dark) {
+	@scope (:scope.chromatic, .chromatic) to (.neutral) {
 		:scope,
 		:where(
 				.gray,
@@ -126,37 +132,41 @@
 				.jade,
 				.green,
 				.grass,
-				.sly,
+				.sky,
 				.mint,
 				.lime,
 				.yellow,
 				.amber
 			) {
-			--display: var(--ramp-max);
-			--primary: var(--ramp-a12);
-			--secondary: var(--ramp-a11);
-			--hint: var(--ramp-a8);
-			--accent: var(--ramp-a11);
+			--display: var(--mode-contrast);
+			--primary: var(--clr-a12);
+			--secondary: var(--clr-a11);
+			--hint: var(--clr-a8);
+			--accent: var(--clr-a11);
 
-			--background: var(--ramp-1);
-			--paper: var(--ramp-2);
-			--container: var(--ramp-3);
-			--float: var(--ramp-3);
+			--background: var(--clr-1);
+			--paper: var(--clr-2);
+			--container: var(--clr-3);
+			--float: var(--clr-3);
 
-			--divider: var(--ramp-6);
-			--border: var(--ramp-7);
-			--boundary: var(--ramp-8);
-			--edge: var(--ramp-9);
+			--divider: var(--clr-6);
+			--border: var(--clr-7);
+			--boundary: var(--clr-8);
+			--edge: var(--clr-9);
 
-			--splash: var(--ramp-a2);
-			--flood: var(--ramp-a3);
-			--sink: var(--ramp-a4);
+			--splash: var(--clr-a2);
+			--flood: var(--clr-a3);
+			--sink: var(--clr-a4);
 			--shadow: var(--splash);
 		}
 	}
 }
 
 @scope (.dark, .dark.neutral) to (.light) {
+	:scope {
+		--mode-contrast: white;
+	}
+
 	:scope,
 	.neutral,
 	:where(
@@ -186,35 +196,35 @@
 			.jade,
 			.green,
 			.grass,
-			.sly,
+			.sky,
 			.mint,
 			.lime,
 			.yellow,
 			.amber
 		) {
-		--display: var(--ramp-max);
-		--primary: var(--ramp-a12);
-		--secondary: var(--ramp-a11);
-		--hint: var(--ramp-a8);
-		--accent: var(--ramp-a11);
+		--display: var(--mode-contrast);
+		--primary: var(--neu-a12);
+		--secondary: var(--neu-a11);
+		--hint: var(--neu-a8);
+		--accent: var(--neu-a11);
 
-		--background: var(--ramp-1);
-		--paper: var(--ramp-2);
-		--container: var(--ramp-3);
-		--float: var(--ramp-3);
+		--background: var(--neu-1);
+		--paper: var(--neu-2);
+		--container: var(--neu-3);
+		--float: var(--neu-3);
 
-		--divider: var(--ramp-5);
-		--border: var(--ramp-6);
-		--boundary: var(--ramp-7);
-		--edge: var(--ramp-8);
+		--divider: var(--neu-5);
+		--border: var(--neu-6);
+		--boundary: var(--neu-7);
+		--edge: var(--neu-8);
 
-		--splash: var(--ramp-a2);
-		--flood: var(--ramp-a3);
-		--sink: var(--ramp-a4);
+		--splash: var(--neu-a2);
+		--flood: var(--neu-a3);
+		--sink: var(--neu-a4);
 		--shadow: var(--black-a4);
 	}
 
-	@scope (:scope.chromatic, .chromatic) to (.neutral, .light) {
+	@scope (:scope.chromatic, .chromatic) to (.neutral) {
 		:scope,
 		:where(
 				.gray,
@@ -243,31 +253,31 @@
 				.jade,
 				.green,
 				.grass,
-				.sly,
+				.sky,
 				.mint,
 				.lime,
 				.yellow,
 				.amber
 			) {
-			--display: var(--ramp-max);
-			--primary: var(--ramp-a12);
-			--secondary: var(--ramp-a11);
-			--hint: var(--ramp-a8);
-			--accent: var(--ramp-a11);
+			--display: var(--mode-contrast);
+			--primary: var(--clr-a12);
+			--secondary: var(--clr-a11);
+			--hint: var(--clr-a8);
+			--accent: var(--clr-a11);
 
-			--background: var(--ramp-1);
-			--paper: var(--ramp-2);
-			--container: var(--ramp-3);
-			--float: var(--ramp-3);
+			--background: var(--clr-1);
+			--paper: var(--clr-2);
+			--container: var(--clr-3);
+			--float: var(--clr-3);
 
-			--divider: var(--ramp-5);
-			--border: var(--ramp-6);
-			--boundary: var(--ramp-7);
-			--edge: var(--ramp-8);
+			--divider: var(--clr-5);
+			--border: var(--clr-6);
+			--boundary: var(--clr-7);
+			--edge: var(--clr-8);
 
-			--splash: var(--ramp-a2);
-			--flood: var(--ramp-a3);
-			--sink: var(--ramp-a4);
+			--splash: var(--clr-a2);
+			--flood: var(--clr-a3);
+			--sink: var(--clr-a4);
 			--shadow: var(--black-a4);
 		}
 	}
