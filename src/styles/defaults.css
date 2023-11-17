@@ -1,0 +1,185 @@
+:root {
+	--font-size-small: 0.85em;
+	--font-size-body: 1em;
+	--font-size-heading: calc(4em / 3);
+	--font-size-title: calc(6em / 3);
+
+	--line-height: calc(1.5 / 0.875); /* 24px for base font size */
+
+	--reading-width-narrow: 65ch;
+	--reading-width-wide: 75ch;
+}
+
+html {
+	--font-stack-sans: 'IBM Plex Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+	--font-stack-serif: 'Palatino Linotype', Palatino, Palladio, 'URW Palladio L', 'Book Antiqua', Baskerville,
+		'Bookman Old Style', 'Bitstream Charter', 'Nimbus Roman No9 L', Garamond, 'Apple Garamond',
+		'ITC Garamond Narrow', 'New Century Schoolbook', 'Century Schoolbook', 'Century Schoolbook L', Georgia, serif;
+	--font-stack-mono: 'IBM Plex Mono', monospace;
+
+	height: 100vh;
+	min-height: 100vh;
+	font-family: var(--font-stack-sans);
+	font-weight: 400;
+	font-size: 16px;
+	font-feature-settings: 'liga';
+	background-color: var(--background);
+}
+
+body {
+	height: 100%;
+	margin: 0;
+	color: var(--primary);
+	font-size: 0.875rem;
+	line-height: var(--line-height);
+}
+
+h1 {
+	font-size: var(--font-size-title);
+	font-weight: 300;
+	line-height: 1.4;
+}
+h2 {
+	font-size: var(--font-size-heading);
+	font-weight: 300;
+	line-height: 1.5;
+}
+
+strong {
+	font-weight: 500;
+}
+
+small,
+.small {
+	font-size: var(--font-size-small);
+}
+
+.caption {
+	font-size: var(--font-size-small);
+	color: var(--secondary);
+}
+
+button {
+	font-family: var(--font-stack-mono);
+	background-color: var(--splash);
+	color: var(--accent);
+	border-width: 1px;
+	border-style: solid;
+	border-color: var(--border);
+	border-radius: 2px;
+	padding: 4px 8px;
+	margin: 0;
+	font-size: 0.925em;
+
+	&:hover {
+		background-color: var(--flood);
+		border-color: var(--boundary);
+	}
+}
+
+button.link {
+	appearance: none;
+	background: none;
+	border: none;
+	outline: none;
+	padding: 0;
+	margin: 0;
+}
+
+:any-link,
+.link {
+	color: var(--link);
+	text-decoration: none;
+
+	&:hover {
+		color: var(--link-active);
+		text-decoration: underline;
+		cursor: pointer;
+	}
+
+	transition: color 100ms;
+}
+
+a,
+.link,
+.text-mono,
+pre,
+code,
+kbd,
+samp {
+	font-family: var(--font-stack-mono);
+	/* The monospace fonts tend to be optically larger for a given font size. */
+	font-size: 0.933em;
+	line-height: calc((1.5 / 0.875) / 0.933);
+}
+
+.text-mono :is(.link, :any-link) {
+	font-size: 1em; /* Avoid compounding ensmallnesses. */
+}
+
+pre {
+	overflow-x: auto;
+}
+
+:focus-visible {
+	outline: 1px solid var(--fill);
+	outline-offset: 2px;
+}
+
+blockquote {
+	margin: 0;
+	padding-left: 1rem;
+	border-left: 4px solid var(--divider);
+	font-style: italic;
+	font-size: 1.1em;
+	font-family: var(--font-stack-serif);
+}
+
+:where(blockquote, article, section, figure, footer) > * + * {
+	--spacing: 1.5em;
+	margin-top: var(--spacing);
+}
+
+blockquote:not(.extract-text) em {
+	font-style: normal;
+}
+
+hr {
+	color: var(--divider);
+	margin: calc(1em * var(--line-height) - 1px) 0 0 0;
+	padding-top: calc(1em * var(--line-height));
+	border-style: solid;
+	border-bottom: none;
+	border-left: none;
+	border-right: none;
+}
+
+ul {
+	list-style-type: circle;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+tr:not(:first-child) {
+	border-top: 1px solid var(--divider);
+}
+
+th,
+td {
+	padding: 0.5rem 0.25rem;
+}
+
+th {
+	text-align: left;
+	font-weight: normal;
+	color: var(--secondary);
+	vertical-align: bottom;
+	white-space: nowrap;
+	padding-top: 0;
+}
+
+td {
+	vertical-align: baseline;
+}

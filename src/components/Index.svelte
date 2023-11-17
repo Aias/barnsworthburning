@@ -191,7 +191,7 @@
 		list-style-type: none;
 		column-width: 23ch;
 		column-gap: var(--padding);
-		font-size: var(--font-size-0);
+		font-size: var(--font-size-small);
 	}
 
 	li {
@@ -204,11 +204,11 @@
 
 	li.selected {
 		--border-width: 4px;
-		border-left: var(--border-width) solid var(--text-primary);
+		border-left: var(--border-width) solid var(--main);
 		margin-left: calc(-1 * var(--border-width));
 	}
 	li.selected button {
-		color: var(--text-primary);
+		color: var(--primary);
 		font-weight: 500;
 	}
 	li:not(.selected) .settings-label {
@@ -216,12 +216,11 @@
 	}
 
 	li.active {
-		background-color: var(--theme-primary);
-		--text-secondary: var(--clr-lighter-40);
+		background-color: var(--main);
 	}
 
 	li.active :global(a) {
-		color: var(--text-inverted);
+		color: var(--main-contrast);
 	}
 
 	li.active .count {

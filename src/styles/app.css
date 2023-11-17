@@ -1,59 +1,7 @@
 @layer theme, normalize, reset, defaults, utilities;
 
-@import 'triptych.css' layer(theme);
+@import './triptych.css' layer(theme);
 @import 'normalize.css' layer(normalize);
-@import 'reset.css' layer(reset);
-
-html {
-	--font-stack-sans: 'IBM Plex Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-	--font-stack-mono: 'IBM Plex Mono', monospace;
-
-	height: 100vh;
-	min-height: 100vh;
-	font-family: var(--font-stack-sans);
-	font-size: 16px;
-	background-color: var(--background);
-}
-
-body {
-	height: 100%;
-	margin: 0;
-	color: var(--primary);
-	font-size: 0.875rem;
-}
-
-button {
-	font-family: var(--font-stack-mono);
-	background-color: var(--splash);
-	color: var(--accent);
-	border-width: 1px;
-	border-style: solid;
-	border-color: var(--border);
-	border-radius: 2px;
-	padding: 4px 8px;
-	margin: 0;
-	font-size: 0.925em;
-
-	&:hover {
-		background-color: var(--flood);
-		border-color: var(--boundary);
-	}
-}
-
-:any-link {
-	font-family: var(--font-stack-mono);
-	color: var(--link);
-	text-decoration: none;
-
-	&:hover {
-		color: var(--link-active);
-		text-decoration: underline;
-	}
-
-	transition: color 100ms;
-}
-
-:focus-visible {
-	outline: 1px solid var(--fill);
-	outline-offset: 2px;
-}
+@import './reset.css' layer(reset);
+@import './defaults.css' layer(defaults);
+@import './utilities.css' layer(utilities);
