@@ -141,7 +141,7 @@
 
 {#snippet indexItem({active, href = "./", label, count})}
 	<li class:active={active} class="index-item">
-		<a {href}>{label}</a>&nbsp;<span class="count">{count}</span>
+		<a href={'/a-pattern-language'}>{label}</a>&nbsp;<span class="count">{count}</span>
 	</li>
 {/snippet}
 

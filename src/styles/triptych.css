@@ -92,7 +92,7 @@
 		--container: var(--neu-3);
 		--float: white;
 
-		--divider: var(--neu-7);
+		--divider: var(--neu-6);
 		--border: var(--neu-7);
 		--boundary: var(--neu-8);
 		--edge: var(--neu-9);
@@ -270,9 +270,9 @@
 			--container: var(--clr-3);
 			--float: var(--clr-3);
 
-			--divider: var(--clr-5);
-			--border: var(--clr-6);
-			--boundary: var(--clr-7);
+			--divider: var(--clr-4);
+			--border: var(--clr-5);
+			--boundary: var(--clr-6);
 			--edge: var(--clr-8);
 
 			--splash: var(--clr-a2);
