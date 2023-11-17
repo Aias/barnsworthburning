@@ -1,5 +1,8 @@
 <script>
 	import '$styles/app.css';
+	import Index from '$components/Index.svelte';
+	
+	let { data } = $props();
 
 	function createMode() {
 		let mode = $state('dark');
@@ -56,8 +59,27 @@
 
 </script>
 
-<main>
+<header>
 	<button on:click={mode.toggle}>Toggle Mode</button>
-	<button on:click={chroma.toggle}>Toggle Chroma</button>
+	<button on:click={chroma.toggle}>Toggle Chroma</button>		
+</header>
+<main>
+	<Index creators={data.creators} spaces={data.spaces} />
 	<slot />
 </main>
+
+<style>
+	header {
+		padding: 0.5rem;
+		border-bottom: 1px solid var(--divider);
+		background-color: var(--paper);
+		position: sticky;
+		top: 0;
+		z-index: 10;
+		display: flex;
+		gap: 0.5rem;
+	}
+	main { 
+		padding: var(--padding);
+	}
+</style>

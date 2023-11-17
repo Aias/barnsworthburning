@@ -6,6 +6,35 @@
 	let primarySort = $state('alpha');
 	let entityType = $state('all');
 
+	const entityFilters = [
+		{
+			label: 'Everything',
+			value: 'all'
+		},
+		{
+			label: 'Creators',
+			value: 'creator'
+		},
+		{
+			label: 'Spaces',
+			value: 'space'
+		}
+	];
+	const sortFilters = [
+		{
+			label: 'Name',
+			value: 'alpha'
+		},
+		{
+			label: 'Count',
+			value: 'count'
+		},
+		{
+			label: 'Time',
+			value: 'time'
+		}
+	];
+
 	const filterList =
 		(filter = 'all') =>
 		(node) => {
@@ -92,102 +121,93 @@
 
 	const isActive = (node, page) => {
 		const { params } = page;
-
-		return params.entity && params.entity.indexOf(node.entity) > -1 && getSlug(node) === params.slug;
+		
+		return false;
+		// return params.entity && params.entity.indexOf(node.entity) > -1 && getSlug(node) === params.slug;
 	};
 </script>
 
-<aside class="layout__index">
-	<nav>
-		<ol>
-			<li class:selected="{entityType === 'all'}" class="settings settings--entity-type">
-				<button class="link" on:click="{() => {entityType = 'all'}}">
-					<span class="settings-label">Show&nbsp;</span>Everything
-				</button>
-			</li>
-			<li class:selected="{entityType === 'creator'}" class="settings settings--entity-type">
-				<button class="link" on:click="{() => {entityType = 'creator'}}">
-					<span class="settings-label">Show&nbsp;</span>Creators
-				</button>
-			</li>
-			<li class:selected="{entityType === 'space'}" class="settings settings--entity-type">
-				<button class="link" on:click="{() => {entityType = 'space'}}">
-					<span class="settings-label">Show&nbsp;</span>Spaces
-				</button>
-			</li>
-			<li class="center">
-				<span class="text-tertiary">⁘  ⁘  ⁘</span>
-			</li>
-			<li class:selected="{primarySort === 'alpha'}" class="settings settings--primary-sort">
-				<button class="link" on:click="{() => {primarySort = 'alpha'}}">
-					<span class="settings-label">By&nbsp;</span>Name
-				</button>
-			</li>
-			<li class:selected="{primarySort === 'count'}" class="settings settings--primary-sort">
-				<button class="link" on:click="{() => {primarySort = 'count'}}">
-					<span class="settings-label">By&nbsp;</span>Count
-				</button>
-			</li>
-			<li class:selected="{primarySort === 'time'}" class="settings settings--primary-sort">
-				<button class="link" on:click="{() => {primarySort = 'time'}}">
-					<span class="settings-label">By&nbsp;</span>Time
-				</button>
-			</li>
-			<li class="center">
-				<span class="text-tertiary">⁘  ⁘  ⁘</span>
-			</li>
-			{#each index as node, i}
-			<li class:active="{isActive(node, $page)}">
-				{#if node.entity === 'creator'}
-				<a href="./">{lastFirst(node)}</a>&nbsp;<span
-					class="count text-secondary"
-				>
-					{node.num_extracts + node.num_fragments}
-				</span>
-				{:else}
-				<a href="./">{node.topic}</a>&nbsp;<span
-					class="count text-secondary"
-				>
-					{node.extracts ? node.extracts.length : 0}
-				</span>
-				{/if}
-			</li>
-			{/each}
-			<li class="center">
-				<span class="text-tertiary">⁘  ⁘  ⁘</span>
-			</li>
-			<li>
-				<a href="./">About</a>
-			</li>
-			<li>
-				<a href="/feed.xml" target="_blank" rel="noreferrer">RSS Feed</a>
-			</li>
-			<li>
-				<a href="https://github.com/Aias/barnsworthburning" target="_blank" rel="noreferrer">Source</a>
-			</li>
-		</ol>
-	</nav>
-</aside>
+{#snippet sectionSeparator()}
+	<li class="center text-hint">⁘&#8199;&#8199;⁘&#8199;&#8199;⁘</li>
+{/snippet}
 
-<style>
-	aside {
-		height: 100%;
-		overflow-y: hidden;
-		display: flex;
-		flex-direction: column;
-	}
+{#snippet settingsButton({selected, labelPrefix, label, onClick})}
+	<li class:selected={selected} class="settings-item unthemey">
+		<button class="settings-button link" on:click={onClick}>
+			<span class="label-prefix">{labelPrefix}</span>{label}
+		</button>
+	</li>
+{/snippet}
+
+{#snippet indexItem({active, href = "./", label, count})}
+	<li class:active={active} class="index-item">
+		<a {href}>{label}</a>&nbsp;<span class="count">{count}</span>
+	</li>
+{/snippet}
+
+<nav>
+	<menu>
+		{#each entityFilters as filter}
+			{@render settingsButton({
+				selected: entityType === filter.value,
+				labelPrefix: 'Show',
+				label: filter.label,
+				onClick: () => {entityType = filter.value}
+			})}
+		{/each}
+		{@render sectionSeparator()}
+		{#each sortFilters as filter}
+			{@render settingsButton({
+				selected: primarySort === filter.value,
+				labelPrefix: 'By',
+				label: filter.label,
+				onClick: () => {primarySort = filter.value}
+			})}
+		{/each}
+		{@render sectionSeparator()}
+		{#each index as node, i}
+			{#if node.entity === 'creator'}
+				{@render indexItem({
+					active: i === 3,
+					href: `/creators/${node.slug}`,
+					label: lastFirst(node),
+					count: node.num_extracts + node.num_fragments
+				})}
+			{:else}
+				{@render indexItem({
+					active: isActive(node, page),
+					href: `/spaces/${node.topic}`,
+					label: node.topic,
+					count: node.extracts ? node.extracts.length : 0
+				})}
+			{/if}
+		{/each}
+		{@render sectionSeparator()}
+		<li>
+			<a href="./">About</a>
+		</li>
+		<li>
+			<a href="/feed.xml" target="_blank" rel="noreferrer">RSS Feed</a>
+		</li>
+		<li>
+			<a href="https://github.com/Aias/barnsworthburning" target="_blank" rel="noreferrer">Source</a>
+		</li>
+	</menu>
+</nav>
+
+<style lang="scss">
 	nav {
+		--cantilever: 0.5rem;
+		--border-width: 0.25rem;
 		flex: 1;
 		overflow-y: auto;
-		padding-right: 0.5rem;
-		margin-right: -0.5rem;
-		padding-left: 1rem;
-		margin-left: -1rem;
+		padding: 0 calc(var(--cantilever) + var(--border-width));
+		margin: 0 calc(-1 * var(--cantilever) + var(--border-width));
 	}
 
-	ol {
-		--cantilever: 8px;
+	menu {
 		margin: 0 0 0 calc(-1 * var(--cantilever));
+		padding: 0;
 		list-style-type: none;
 		column-width: 23ch;
 		column-gap: var(--padding);
@@ -198,43 +218,54 @@
 		--indent: 1em;
 		padding-left: calc(var(--indent) + var(--cantilever));
 		padding-right: var(--cantilever);
+		padding-top: 1px;
+		padding-bottom: 1px;
 		text-indent: calc(-1 * var(--indent));
 		transition: background-color 0.25s;
 	}
 
-	li.selected {
-		--border-width: 4px;
+	.settings-item.selected {
 		border-left: var(--border-width) solid var(--main);
-		margin-left: calc(-1 * var(--border-width));
+		margin-left: calc(-1 * var(--border-width));		
 	}
-	li.selected button {
-		color: var(--primary);
-		font-weight: 500;
+	.settings-item.selected button {
+		color: var(--link);
+		font-weight: 500;		
 	}
-	li:not(.selected) .settings-label {
+	.settings-button {
+		white-space: nowrap;
+		text-decoration: none;
+	}
+	.label-prefix {
+		padding-right: 1ch;
 		visibility: hidden;
 	}
+	.settings-item.selected .label-prefix {
+		visibility: visible;
+	}
 
-	li.active {
+	.index-item.active {
 		background-color: var(--main);
 	}
 
-	li.active :global(a) {
+	.index-item.active :global(a) {
 		color: var(--main-contrast);
 	}
-
-	li.active .count {
-		opacity: 0.75;
-	}
-
+	
 	.count {
 		margin-left: 1em;
 		text-align: right;
+		color: var(--secondary);
 		opacity: 0.25;
-		transition: opacity 0.15s;
+		transition: opacity 150ms;
 	}
 
-	li:hover > .count {
+	.index-item.active .count {
+		color: var(--main-contrast);
+		opacity: 0.75;
+	}
+
+	.index-item:hover > .count {
 		opacity: 1;
 	}
 </style>

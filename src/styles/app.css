@@ -5,3 +5,8 @@
 @import './reset.css' layer(reset);
 @import './defaults.css' layer(defaults);
 @import './utilities.css' layer(utilities);
+
+.app {
+	--padding: 2rem;
+	position: relative;
+}

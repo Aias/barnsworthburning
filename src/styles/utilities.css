@@ -26,7 +26,7 @@
 	color: var(--secondary);
 }
 
-.text-tertiary {
+.text-hint {
 	color: var(--hint);
 }
 
@@ -45,4 +45,14 @@
 	--layer-highlight: var(--main);
 	--text-link: currentColor;
 	--text-link-hover: currentColor;
+}
+
+.unthemey {
+	:any-link,
+	.link {
+		color: var(--accent);
+		&:hover {
+			color: var(--primary);
+		}
+	}
 }
