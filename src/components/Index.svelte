@@ -224,48 +224,51 @@
 		transition: background-color 0.25s;
 	}
 
-	.settings-item.selected {
-		border-left: var(--border-width) solid var(--main);
-		margin-left: calc(-1 * var(--border-width));		
-	}
-	.settings-item.selected button {
-		color: var(--link);
-		font-weight: 500;		
-	}
-	.settings-button {
-		white-space: nowrap;
-		text-decoration: none;
-	}
-	.label-prefix {
-		padding-right: 1ch;
-		visibility: hidden;
-	}
-	.settings-item.selected .label-prefix {
-		visibility: visible;
+	.settings-item {
+		.settings-button {
+			white-space: nowrap;
+			text-decoration: none;
+		}
+		.label-prefix {
+			padding-right: 1ch;
+			visibility: hidden;
+		}
+
+		&.selected {
+			border-left: var(--border-width) solid var(--main);
+			margin-left: calc(-1 * var(--border-width));
+			.settings-button {
+				color: var(--link);
+				font-weight: 500;	
+			}
+			.label-prefix {
+				visibility: visible;
+			}
+		}
 	}
 
-	.index-item.active {
-		background-color: var(--main);
-	}
-
-	.index-item.active :global(a) {
-		color: var(--main-contrast);
-	}
-	
-	.count {
-		margin-left: 1em;
-		text-align: right;
-		color: var(--secondary);
-		opacity: 0.25;
-		transition: opacity 150ms;
-	}
-
-	.index-item.active .count {
-		color: var(--main-contrast);
-		opacity: 0.75;
-	}
-
-	.index-item:hover > .count {
-		opacity: 1;
+	.index-item {
+		.count {
+			margin-left: 1em;
+			text-align: right;
+			color: var(--secondary);
+			opacity: 0.25;
+			transition: opacity 150ms;
+		}
+		&.active {
+			background-color: var(--main);
+			:global(a) {
+				color: var(--main-contrast);
+			}
+			.count {
+				color: var(--main-contrast);
+				opacity: 0.75;
+			}
+		}
+		&:hover {
+			.count {
+				opacity: 1;
+			}
+		}
 	}
 </style>

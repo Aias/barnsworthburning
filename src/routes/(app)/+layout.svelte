@@ -68,7 +68,7 @@
 	<slot />
 </main>
 
-<style>
+<style lang="scss">
 	header {
 		padding: 0.5rem;
 		border-bottom: 1px solid var(--divider);
