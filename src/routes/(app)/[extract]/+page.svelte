@@ -29,10 +29,6 @@
 		}))
 	let parentExtract = $derived(parentIndex > -1 ? extracts[parentIndex] : extracts[0]);
 	let childExtracts = $derived(getChildren());
-
-	$effect(() => {
-		console.log(parentExtract, childExtracts)
-	})
 </script>
 
 <header class="card">

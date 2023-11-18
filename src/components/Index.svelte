@@ -1,7 +1,9 @@
 <script>
+	import { page } from '$app/stores';
 	let { creators, spaces } = $props();
 
-	import { page } from '$app/stores';
+	let muteLinks = $derived($page?.data?.currentSlug || $page?.data?.extracts);
+	let selectedEntity = $state();
 
 	let primarySort = $state('alpha');
 	let entityType = $state('all');
@@ -100,10 +102,6 @@
 		}
 	};
 
-	const getSlug = (obj) => {
-		return obj.entity === 'creator' ? obj.slug : obj.topic;
-	};
-
 	const lastFirst = (creator) => {
 		const last = creator.last_name;
 		const full = creator.full_name;
@@ -117,13 +115,6 @@
 		const firstPart = full.substring(0, lastLoc).trim();
 
 		return `${last}, ${firstPart}`;
-	};
-
-	const isActive = (node, page) => {
-		const { params } = page;
-		
-		return false;
-		// return params.entity && params.entity.indexOf(node.entity) > -1 && getSlug(node) === params.slug;
 	};
 </script>
 
@@ -139,13 +130,15 @@
 	</li>
 {/snippet}
 
-{#snippet indexItem({active, href = "./", label, count})}
-	<li class:active={active} class="index-item">
-		<a href={'/a-pattern-language'}>{label}</a>&nbsp;<span class="count">{count}</span>
+{#snippet indexItem({node, href = "./", label, count})}
+	<li class:active={selectedEntity && (node.topic === selectedEntity || node.slug === selectedEntity)} class="index-item">
+		<a href={'/a-pattern-language'} on:click={() => {
+			selectedEntity = node.topic || node.slug;
+		}}>{label}</a>&nbsp;<span class="count">{count}</span>
 	</li>
 {/snippet}
 
-<nav>
+<nav class:unthemey={muteLinks}>
 	<menu>
 		{#each entityFilters as filter}
 			{@render settingsButton({
@@ -168,14 +161,14 @@
 		{#each index as node, i}
 			{#if node.entity === 'creator'}
 				{@render indexItem({
-					active: i === 3,
+					node: node,
 					href: `/creators/${node.slug}`,
 					label: lastFirst(node),
 					count: node.num_extracts + node.num_fragments
 				})}
 			{:else}
 				{@render indexItem({
-					active: isActive(node, page),
+					node: node,
 					href: `/spaces/${node.topic}`,
 					label: node.topic,
 					count: node.extracts ? node.extracts.length : 0
