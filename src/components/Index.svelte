@@ -143,7 +143,7 @@
 		{#each entityFilters as filter}
 			{@render settingsButton({
 				selected: entityType === filter.value,
-				labelPrefix: 'Show',
+				labelPrefix: 'List',
 				label: filter.label,
 				onClick: () => {entityType = filter.value}
 			})}

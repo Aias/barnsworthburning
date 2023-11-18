@@ -147,7 +147,7 @@ blockquote {
 	font-family: var(--font-stack-serif);
 }
 
-:where(blockquote, article, section, figure, footer) > * + * {
+.content :where(blockquote, article, section, figure, footer) > * + * {
 	--spacing: 1em;
 	margin-top: var(--spacing);
 }

@@ -1,6 +1,8 @@
 <script>
 	import markdown from '$helpers/markdown';
 	import slugify from '$helpers/slugify';
+	import TopicList from './TopicList.svelte';
+	import RelationList from './RelationList.svelte';
 
 	let { extract, idPrefix = 'extract' } = $props();
 
@@ -20,14 +22,12 @@
 	slug = slug || slugify(title);
 	text = text || '';
 
-	const elementId = idPrefix ? `${idPrefix}--${slug}` : slug;
+	let hasRelations = childTitles || connectionTitles || topics;
 
-	const maxChildren = 5;
-	let showAllChildren = $state(false);
-	let truncatedChildren = $derived(!showAllChildren && (childTitles && childTitles.length > maxChildren));
+	const nodeId = idPrefix ? `${idPrefix}--${slug}` : slug;
 </script>
 
-<article id={elementId} class="extract {isWork ? 'extract--work' : 'extract--fragment'}">
+<article id={nodeId} class="extract {isWork ? 'extract--work' : 'extract--fragment'}">
 	{#if title}
 	<header>
 		<h2 class="extract-title">{title}</h2>
@@ -38,70 +38,45 @@
 		<img alt="yes" />
 		{/if}
 		{#if text}
-		<blockquote class="extract-text markdown-block" cite={extract.source}>
+		<blockquote class="extract-text content" cite={extract.source}>
 			{@html markdown.render(text)}
 		</blockquote>
 		{/if}
 		<figcaption class="extract-caption"><a href="/">Christopher Alexander</a></figcaption>
 	</figure>
-	{#if childTitles || connectionTitles || topics}
-	<section class="relations text-mono">
-		{#if childTitles}
-		<ol class="children">
-			{#each childTitles as child, i}
-			{#if truncatedChildren && i > maxChildren}
-			<!-- Don't render anything. -->
-			{:else if truncatedChildren && i === maxChildren}
-			<li><button on:click="{() => showAllChildren = true}" class="link caption">+{childTitles.length - maxChildren} More</button></li>
-			{:else}
-			<li>{child}</li>
-			{/if}
-			{/each}
-		</ol>
-		{/if}
-		{#if connectionTitles}
-		<ol class="connections">
-			{#each connectionTitles as connection}
-			<li>{connection}</li>
-			{/each}
-		</ol>
-		{/if}
-		{#if topics}
-		<ul class="spaces">
-			{#each topics as topic}
-			<li class="tag">{topic}</li>
-			{/each}
-		</ul>
-		{/if}
+	{#if hasRelations}
+	<section class="relations">
+		<RelationList items="{childTitles}" symbol="↳" label="Children" />
+		<RelationList items="{connectionTitles}" symbol="⮂" label="Connections" />
+		<TopicList {topics} />
 	</section>
 	{/if}
-	{#if notes}
-	<footer class="caption markdown-block">
-		{@html markdown.render(notes)}
+	{#if notes || true}
+	<footer class="caption content">
+		{@html markdown.render(notes)} Rather than 'UI is not UX!', consider instead, 'the interface <em>is</em> the experience.'
 	</footer>
 	{/if}
 </article>
 
 <style lang="scss">
+	.extract {
+		--layout-gap: 1em;
+		display: flex;
+		flex-direction: column;
+		gap: var(--layout-gap);
+	}
 	.extract-main {
 		display: flex;
 		flex-direction: column;
+		gap: 0.5em;
 	}
 
 	.extract--work .extract-caption {
 		order: -1;
 	}
 
-	.extract-caption:empty {
-		display: none;
-	}
-
 	.extract-text {
-		padding: 0;
-		border: none;
-		font-style: inherit;
-		font-size: inherit;
-		font-family: inherit;
+		all: inherit; /* Remove default blockquote styling as it's being used only as a semantic element. */
 	}
 
 	.relations {
@@ -109,73 +84,11 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.5em;
-
-		> :where(ul, ol) {
-			margin: 0;
-			padding: 0;
-			list-style-type: none;
-			display: block;
-		}
-
-		.children, .connections {
-			padding-left: 20px;
-			position: relative;
-			color: var(--link);
-
-			&::before {
-				position: absolute;
-				left: 0;
-				color: var(--hint);
-			}
-			
-			li {
-				display: inline;
-
-				& + li {
-					position: relative;
-					&::before {
-						content: ' / ';
-						color: var(--hint);
-						display: inline;
-					}
-				}
-			}
-		}
-
-		.children::before {
-			content: '↳';
-		}
-
-		.connections::before {
-			content: '⮂';
-		}
-
-		.spaces {
-			display: flex;
-			flex-wrap: wrap;
-			column-gap: 1em;
-			row-gap: 0;
-			margin-top: 0.5em;
-		}
-	}
-
-	.tag {
-		color: var(--accent);
-		text-transform: uppercase;
-		position: relative;
-
-		&::before {
-			content: '#';
-			display: inline;
-			margin-right: 0.5ch;
-			color: var(--hint);
-		}
 	}
 
 	footer {
 		border-top: 1px solid var(--divider);
-		padding-top: 1rem;
-		margin-top: 1rem;
+		padding-top: var(--layout-gap);
 	}
 </style>
 
