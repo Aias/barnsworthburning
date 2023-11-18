@@ -1,11 +1,12 @@
 <script>
 	import '$styles/app.css';
 	import Index from '$components/Index.svelte';
+	// import { getCookie, setCookie } from '$helpers/cookies';
 	
 	let { data } = $props();
 
-	function createMode() {
-		let mode = $state('dark');
+	function createMode(defaultMode) {
+		let mode = $state(defaultMode);
 
 		function toggle() {
 			mode = mode === 'dark' ? 'light' : 'dark';
@@ -18,8 +19,8 @@
 			toggle
 		}
 	}
-	function createChroma() {
-		let chroma = $state('neutral');
+	function createChroma(defaultChroma) {
+		let chroma = $state(defaultChroma);
 
 		function toggle() {
 			chroma = chroma === 'neutral' ? 'chromatic' : 'neutral';
@@ -32,29 +33,17 @@
 			toggle
 		}
 	}
-	function createPalette() {
-		let palette = $state('indigo');
-
-		function change(key) {
-			palette = key;
-		}
-
-		return {
-			get palette() {
-				return palette;
-			},
-			change
-		}
-	}
-
-	const mode = createMode();
-	const chroma = createChroma();
+	const mode = createMode('dark');
+	const chroma = createChroma('neutral');
 	let palette = $state('indigo');
 
 	let themeClass = $derived(`${mode.mode} ${chroma.chroma} ${palette}`);
 
 	$effect(() => {
 		document.documentElement.className = themeClass;
+		// setCookie('barnsworthburning-mode', mode.mode);
+		// setCookie('barnsworthburning-chroma', chroma.chroma);
+		// setCookie('barnsworthburning-palette', palette);
 	});
 
 </script>
@@ -120,7 +109,7 @@
 		margin-left: 0;
 		background-color: var(--background);
 		border-left: 1px solid var(--edge);
-		width: 25rem;
+		width: 30rem;
 
 		&:empty {
 			display: none;

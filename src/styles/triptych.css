@@ -44,6 +44,7 @@
 @scope (.light, .light.neutral) to (.dark) {
 	:scope {
 		--mode-contrast: black;
+		color-scheme: light;
 	}
 
 	:scope,
@@ -165,6 +166,7 @@
 @scope (.dark, .dark.neutral) to (.light) {
 	:scope {
 		--mode-contrast: white;
+		color-scheme: dark;
 	}
 
 	:scope,
