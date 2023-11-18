@@ -71,6 +71,10 @@ picture {
 	display: block;
 }
 
+figure {
+	margin: 0;
+}
+
 /* Inherit fonts for inputs and buttons */
 input,
 button,

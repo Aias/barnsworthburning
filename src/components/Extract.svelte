@@ -42,10 +42,10 @@
 			{@html markdown.render(text)}
 		</blockquote>
 		{/if}
-		<figcaption class="extract-caption">A person</figcaption>
+		<figcaption class="extract-caption"><a href="/">Christopher Alexander</a></figcaption>
 	</figure>
 	{#if childTitles || connectionTitles || topics}
-	<section class="relations">
+	<section class="relations text-mono">
 		{#if childTitles}
 		<ol class="children">
 			{#each childTitles as child, i}
@@ -69,7 +69,7 @@
 		{#if topics}
 		<ul class="spaces">
 			{#each topics as topic}
-			<li>{topic}</li>
+			<li class="tag">{topic}</li>
 			{/each}
 		</ul>
 		{/if}
@@ -105,18 +105,46 @@
 	}
 
 	.relations {
-		> * {
-			--spacing: 0.5em;
-			font-size: var(--font-size-small);
+		font-size: var(--font-size-small);
+		display: flex;
+		flex-direction: column;
+		gap: 0.5em;
+
+		> :where(ul, ol) {
+			margin: 0;
+			padding: 0;
+			list-style-type: none;
+			display: block;
 		}
+
 		.children, .connections {
 			padding-left: 20px;
+			position: relative;
+			color: var(--link);
 
 			&::before {
 				position: absolute;
 				left: 0;
-			}			
+				color: var(--hint);
+			}
+			
+			li {
+				display: inline;
+
+				& + li {
+					position: relative;
+					&::before {
+						content: '/';
+						color: var(--hint);
+						position: absolute;
+						left: -0.5ch;
+					}
+					margin-left: 1ch;
+					padding-left: 1ch;
+				}
+			}
 		}
+
 		.children::before {
 			content: '↳';
 		}
@@ -124,20 +152,19 @@
 		.connections::before {
 			content: '⮂';
 		}
+
+		.spaces {
+			display: flex;
+			flex-wrap: wrap;
+			column-gap: 1em;
+			row-gap: 0;
+			margin-top: 0.5em;
+		}
 	}
 
-	.spaces {
-		--spacing: 1em;
-		list-style-type: none;
-		margin-bottom: 0;
-		margin-left: calc(-1 * var(--spacing));
-		display: flex;
-		flex-wrap: wrap;
-		max-width: 100%;
-
-		> li {
-			margin-left: var(--spacing);
-		}
+	.tag {
+		color: var(--accent);
+		text-transform: uppercase;
 	}
 
 	footer {

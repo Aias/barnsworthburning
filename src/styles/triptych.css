@@ -141,7 +141,7 @@
 			--display: var(--mode-contrast);
 			--primary: var(--clr-a12);
 			--secondary: var(--clr-a11);
-			--hint: var(--clr-a8);
+			--hint: var(--clr-a7);
 			--accent: var(--clr-a11);
 
 			--background: var(--clr-1);
@@ -262,7 +262,7 @@
 			--display: var(--mode-contrast);
 			--primary: var(--clr-a12);
 			--secondary: var(--clr-a11);
-			--hint: var(--clr-a8);
+			--hint: var(--clr-a7);
 			--accent: var(--clr-a11);
 
 			--background: var(--clr-1);
