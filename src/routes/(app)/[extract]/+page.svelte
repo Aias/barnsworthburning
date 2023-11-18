@@ -1,13 +1,11 @@
 <script>
-	let { data, ...rest } = $props();
+	import Extract from '$components/Extract.svelte';
+	
+	let { data } = $props();
 
 	let extracts = data.extracts || [];
 	let currentSlug = data.currentSlug;
 
-	// import Extract from '$components/Extract.svelte';
-
-	let parentExtract = $state([]);
-	let childExtracts = $state([]);
 
 	const makeChildSortFunction = (childOrder = []) =>
 	(a, b) => {
@@ -18,30 +16,32 @@
 		else return -1;
 	};
 
+	const getChildren = () => {
+		let children = [...extracts];
+		children.splice(parentIndex, 1)
+		const childOrder = parentExtract.children || [];
+		
+		return children.sort(makeChildSortFunction(childOrder));
+	}
+	
+	let parentIndex = $derived(extracts.findIndex(e => {
+			return e.slug === currentSlug;
+		}))
+	let parentExtract = $derived(parentIndex > -1 ? extracts[parentIndex] : extracts[0]);
+	let childExtracts = $derived(getChildren());
+
 	$effect(() => {
-		if(extracts) {
-			let parentIndex = extracts.findIndex(e => {
-				return e.slug === currentSlug;
-			});
-			if(parentIndex === -1) parentIndex = 0;
-
-			parentExtract = extracts[parentIndex];
-			childExtracts = [...extracts].splice(parentIndex, 1);
-
-			const childOrder = parentExtract.children || [];
-
-			childExtracts.sort(makeChildSortFunction(childOrder));			
-		}
+		console.log(parentExtract, childExtracts)
 	})
 </script>
 
 <header class="card">
-	Some stuff in here.
+	<Extract extract={parentExtract} />
 </header>
 <ol>
 	{#each childExtracts as child (child.id)}
 	<li>
-		{child.slug}
+		<Extract extract={child} />
 	</li>
 	{/each}
 </ol>
