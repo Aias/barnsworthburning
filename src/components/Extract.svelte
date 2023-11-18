@@ -134,13 +134,10 @@
 				& + li {
 					position: relative;
 					&::before {
-						content: '/';
+						content: ' / ';
 						color: var(--hint);
-						position: absolute;
-						left: -0.5ch;
+						display: inline;
 					}
-					margin-left: 1ch;
-					padding-left: 1ch;
 				}
 			}
 		}
@@ -165,6 +162,14 @@
 	.tag {
 		color: var(--accent);
 		text-transform: uppercase;
+		position: relative;
+
+		&::before {
+			content: '#';
+			display: inline;
+			margin-right: 0.5ch;
+			color: var(--hint);
+		}
 	}
 
 	footer {

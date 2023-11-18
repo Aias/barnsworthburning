@@ -148,7 +148,7 @@ blockquote {
 }
 
 :where(blockquote, article, section, figure, footer) > * + * {
-	--spacing: 1.5em;
+	--spacing: 1em;
 	margin-top: var(--spacing);
 }
 
