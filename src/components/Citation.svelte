@@ -1,57 +1,49 @@
 <script>
-	import get from '$helpers/get'
-	import { article } from '$helpers/isFirstLetterAVowel';
-	import domainOfUrl from '$helpers/domainOfUrl';
-	import CreatorNames from './CreatorNames.svelte';
-	import { getContext } from 'svelte';
+	import { article } from '$helpers/grammar';
+	import CreatorList from './CreatorList.svelte';
 
-	const parentContainer = getContext('parentContainer');
+	let { extract = {}, suppressCitation = false } = $props();
 
-	export let extract = {};
-	export let suppressCitation = false;
+	const {
+		combined_creator_names: creatorNames = [],
+		parent_title: parentTitles = [],
+		type = 'Work',
+		source,
+		is_work: isWork
+	} = extract;
 
-	const combinedCreatorNames = get(extract, 'combined_creator_names', []);
-	const parentCreatorNames = get(extract, 'parent_creator_names', []);
-	const slug = get(extract, 'slug');
-	const parentTitle = get(extract, 'parent_title[0]');
-	const parentSlug = get(extract, 'parent_slug[0]');
-	const type = get(extract, 'type', 'Work');
-	const source = get(extract, 'source');
-	const isWork = get(extract, 'is_work');
-
-	$: creatorNames = suppressCitation ? combinedCreatorNames.filter(name => parentCreatorNames.indexOf(name) === -1) : combinedCreatorNames;
-	$: showCitation = isWork ? true : suppressCitation ? creatorNames.length > 0 : true;
+	const parentTitle = parentTitles && parentTitles[0];
 </script>
 
 {#if showCitation}
 	<div class="{isWork ? 'work' : 'extract'} text-mono">
 	{#if isWork}
 		<span>
-			{article(type)}&nbsp;<span class="extract-type">{type}</span>
+			{article(type)} <span class="extract-type">{type}</span>
 			{#if parentTitle && !suppressCitation}
-			from <InternalLink class="parent" toExtract="{parentSlug}" toFragment="{parentContainer === 'panel' ? slug : undefined}"><cite>{parentTitle}</cite></InternalLink>
+			from <cite>{parentTitle}</cite>
 			{/if}
 			{#if creatorNames.length > 0}
-			by <CreatorNames creatorNames="{creatorNames}" />
+			by <CreatorList {creatorNames} />
 			{/if}		
 		</span>
 	{:else}
 		{#if creatorNames.length > 0}
-		<CreatorNames class="creator-names" creatorNames="{creatorNames}" />{#if parentTitle && !suppressCitation}<span>, </span>{/if}
+		<CreatorList {creatorNames} />{#if parentTitle && !suppressCitation}<span>, </span>{/if}
 		{/if}
 		{#if parentTitle && !suppressCitation}
-		<InternalLink class="parent" toExtract="{parentSlug}" toFragment="{parentContainer === 'panel' ? slug : undefined}"><cite>{parentTitle}</cite></InternalLink>
+		<cite>{parentTitle}</cite>
 		{/if}	
 	{/if}
 	{#if source}
-		<div class="small extract-source">
-			<a href="{source}" target="_blank" rel="noreferrer">{domainOfUrl(source)}</a>
+		<div class="extract-source small">
+			<a href="{source}" target="_blank" rel="noreferrer">{new URL(source).hostname}</a>
 		</div>
 	{/if}
 	</div>
 {/if}
 
-<style>
+<style lang="scss">
 	.extract-type {
 		text-transform: lowercase;
 	}
@@ -62,22 +54,23 @@
 
 	.extract-source {
 		display: inline;
-		--opacity: 0.8;
+		--opacity: 0.75;
 		opacity: var(--opacity);
 		transition: opacity 0.25s;
 		margin-left: 0.25em;
-	}
 
-	.extract-source:hover {
-		opacity: 1;
-	}
+		::before, ::after {
+			opacity: var(--opacity);
+		}
+		::before {
+			content: '[';
+		}
+		::after {
+			content: ']';
+		}
 
-	.extract-source:before {
-		opacity: var(--opacity);
-		content: '[';
-	}
-	.extract-source:after {
-		opacity: var(--opacity);
-		content: ']';
+		&:hover {
+			opacity: 1;
+		}
 	}
 </style>
