@@ -31,7 +31,7 @@ html {
 body {
 	height: 100%;
 	margin: 0;
-	color: var(--primary);
+	color: var(--display);
 	font-size: 0.875rem;
 	line-height: var(--line-height);
 }
@@ -110,6 +110,18 @@ button.link {
 	}
 
 	transition: color 100ms;
+}
+
+button,
+select,
+input,
+label:has(> input),
+summary {
+	color: var(--accent);
+}
+svg,
+.icon {
+	fill: var(--secondary);
 }
 
 a,

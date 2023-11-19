@@ -1,8 +1,6 @@
 <script>
-	import { page } from '$app/stores';
-	let { creators, spaces } = $props();
+	let { creators, spaces, ...rest } = $props();
 
-	let muteLinks = $derived($page?.data?.currentSlug || $page?.data?.extracts);
 	let selectedEntity = $state();
 
 	let primarySort = $state('alpha');
@@ -138,7 +136,7 @@
 	</li>
 {/snippet}
 
-<nav class:unthemey={muteLinks}>
+<nav {...rest}>
 	<menu>
 		{#each entityFilters as filter}
 			{@render settingsButton({
