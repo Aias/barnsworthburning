@@ -15,7 +15,7 @@
 			<li><a href="/{item.id}">{item.name}</a></li>
 		{/each}
 		{#if isTruncated}
-			<li>
+			<li class="show-more">
 				<button onclick={expandList} class="link caption">+{items.length - maxChildren} More</button>
 			</li>
 		{/if}
@@ -30,6 +30,7 @@
 		padding: 0 0 0 20px;
 		list-style-type: none;
 		color: var(--link);
+		font-family: var(--font-stack-mono);
 
 		&::before {
 			content: attr(data-symbol);
@@ -40,14 +41,13 @@
 	}
 	li {
 		display: inline;
-
-		& + li {
-			position: relative;
-			&::before {
-				content: ' / ';
-				color: var(--hint);
-				display: inline;
-			}
+		& + li::before {
+			content: '/';
+			margin: 0 0.5em;
+			color: var(--hint);
 		}
+	}
+	.show-more {
+		margin-left: -1ch; // Remove extra white space.
 	}
 </style>

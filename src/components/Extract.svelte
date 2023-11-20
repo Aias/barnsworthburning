@@ -17,7 +17,7 @@
 		parentTitle, // Actually an array
 		creators: creatorIds,
 		creatorNames,
-		notes,
+		notes = "Here's a test of the caption color mix.",
 		spaces: spaceIds,
 		spaceTopics,
 		children: childIds,
@@ -94,6 +94,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.5em;
+		color: var(--display);
 	}
 
 	.extract--work .extract-caption {

@@ -82,7 +82,7 @@
 			.yellow,
 			.amber
 		) {
-		--display: var(--mode-contrast);
+		--display: color-mix(in oklch, var(--neu-a12), var(--mode-contrast));
 		--primary: var(--neu-a12);
 		--secondary: var(--neu-a11);
 		--hint: var(--neu-a8);
@@ -139,9 +139,9 @@
 				.yellow,
 				.amber
 			) {
-			--display: var(--mode-contrast);
+			--display: color-mix(in oklch, var(--clr-a12), var(--mode-contrast));
 			--primary: var(--clr-a12);
-			--secondary: var(--clr-a11);
+			--secondary: color-mix(in oklch, var(--clr-a9), var(--neu-a12));
 			--hint: var(--clr-a7);
 			--accent: var(--clr-a11);
 
@@ -204,7 +204,7 @@
 			.yellow,
 			.amber
 		) {
-		--display: var(--mode-contrast);
+		--display: color-mix(in oklch, var(--neu-a12), var(--mode-contrast));
 		--primary: var(--neu-a12);
 		--secondary: var(--neu-a11);
 		--hint: var(--neu-a8);
@@ -261,9 +261,9 @@
 				.yellow,
 				.amber
 			) {
-			--display: var(--mode-contrast);
+			--display: color-mix(in oklch, var(--clr-a12), var(--mode-contrast));
 			--primary: var(--clr-a12);
-			--secondary: var(--clr-a11);
+			--secondary: color-mix(in oklch, var(--clr-a12), var(--neu-a9));
 			--hint: var(--clr-a7);
 			--accent: var(--clr-a11);
 
