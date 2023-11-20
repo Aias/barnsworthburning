@@ -139,25 +139,25 @@
 				.yellow,
 				.amber
 			) {
-			--display: color-mix(in oklch, var(--clr-a12), var(--mode-contrast));
-			--primary: var(--clr-a12);
+			--display: var(--clr-a12);
+			--primary: color-mix(in oklch, var(--clr-a11), var(--neu-a12));
 			--secondary: color-mix(in oklch, var(--clr-a9), var(--neu-a12));
 			--hint: var(--clr-a7);
 			--accent: var(--clr-a11);
 
-			--background: var(--clr-1);
-			--paper: var(--clr-2);
-			--container: var(--clr-3);
-			--float: var(--clr-3);
+			--background: color-mix(in oklch, var(--clr-1), var(--clr-2));
+			--paper: color-mix(in oklch, var(--clr-2), var(--clr-3));
+			--container: color-mix(in oklch, var(--clr-3), var(--clr-4));
+			--float: var(--container);
 
 			--divider: var(--clr-6);
 			--border: var(--clr-7);
 			--boundary: var(--clr-8);
 			--edge: var(--clr-9);
 
-			--splash: var(--clr-a2);
-			--flood: var(--clr-a3);
-			--sink: var(--clr-a4);
+			--splash: var(--clr-a3);
+			--flood: var(--clr-a4);
+			--sink: var(--clr-a5);
 			--shadow: var(--splash);
 		}
 	}
