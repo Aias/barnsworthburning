@@ -48,13 +48,12 @@
 		<section class="relations">
 			<RelationList items={childTitles} symbol="↳" label="Children" />
 			<RelationList items={connectionTitles} symbol="⮂" label="Connections" />
-			<TopicList {spaceTopics} />
+			<TopicList topics={spaceTopics} />
 		</section>
 	{/if}
-	{#if notes || true}
+	{#if notes}
 		<footer class="caption content">
-			{@html markdown.render(notes)} Rather than 'UI is not UX!', consider instead, 'the interface <em>is</em> the
-			experience.'
+			{@html markdown.render(notes)}
 		</footer>
 	{/if}
 </article>
