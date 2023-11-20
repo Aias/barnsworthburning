@@ -1,32 +1,34 @@
 <script>
 	import Extract from '$components/Extract.svelte';
-	
+
 	let { data } = $props();
 
 	let extracts = data.extracts || [];
-	let currentSlug = data.currentSlug;
+	let currentId = data.currentId;
 
+	const makeChildSortFunction =
+		(childOrder = []) =>
+		(a, b) => {
+			const indexA = childOrder.indexOf(a.id);
+			const indexB = childOrder.indexOf(b.id);
 
-	const makeChildSortFunction = (childOrder = []) =>
-	(a, b) => {
-		const indexA = childOrder.indexOf(a.id);
-		const indexB = childOrder.indexOf(b.id);
-
-		if (indexA > indexB) return 1;
-		else return -1;
-	};
+			if (indexA > indexB) return 1;
+			else return -1;
+		};
 
 	const getChildren = () => {
 		let children = [...extracts];
-		children.splice(parentIndex, 1)
+		children.splice(parentIndex, 1);
 		const childOrder = parentExtract.children || [];
-		
+
 		return children.sort(makeChildSortFunction(childOrder));
-	}
-	
-	let parentIndex = $derived(extracts.findIndex(e => {
-			return e.slug === currentSlug;
-		}))
+	};
+
+	let parentIndex = $derived(
+		extracts.findIndex((e) => {
+			return e.id === currentId;
+		})
+	);
 	let parentExtract = $derived(parentIndex > -1 ? extracts[parentIndex] : extracts[0]);
 	let childExtracts = $derived(getChildren());
 </script>
@@ -36,9 +38,9 @@
 </header>
 <ol>
 	{#each childExtracts as child (child.id)}
-	<li>
-		<Extract extract={child} />
-	</li>
+		<li>
+			<Extract extract={child} />
+		</li>
 	{/each}
 </ol>
 

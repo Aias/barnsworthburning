@@ -3,11 +3,11 @@
 </script>
 
 {#if topics}
-<ul class="tag-list text-mono">
-	{#each topics as topic}
-	<li class="tag">{topic}</li>
-	{/each}
-</ul>
+	<ul class="tag-list text-mono">
+		{#each topics as topic}
+			<li class="tag">{topic}</li>
+		{/each}
+	</ul>
 {/if}
 
 <style lang="scss">

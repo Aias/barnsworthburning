@@ -5,8 +5,12 @@
 	import Header from '$components/Header.svelte';
 	import Index from '$components/Index.svelte';
 
+	const exists = (val) => {
+		return val !== undefined && val !== null;
+	};
+
 	let { data } = $props();
-	let muteLinks = $derived($page?.data?.currentSlug || $page?.data?.extracts);
+	let muteLinks = exists($page?.params.extractId);
 </script>
 
 <Header class="app-header" />

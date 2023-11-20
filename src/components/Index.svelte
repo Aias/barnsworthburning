@@ -130,7 +130,7 @@
 
 {#snippet indexItem({node, href = "./", label, count})}
 	<li class:active={selectedEntity && (node.topic === selectedEntity || node.slug === selectedEntity)} class="index-item">
-		<a href={'/a-pattern-language'} on:click={() => {
+		<a href={'/recYQmlvBMSUV0Pe0'} on:click={() => {
 			selectedEntity = node.topic || node.slug;
 		}}>{label}</a>&nbsp;<span class="count">{count}</span>
 	</li>

@@ -2,21 +2,24 @@
 	let { items = [], label, symbol, maxChildren = 5 } = $props();
 
 	let showAllChildren = $state(false);
-	let isTruncated = $derived(!showAllChildren && (items.length > maxChildren));
+	const expandList = () => {
+		showAllChildren = true;
+	};
+	let isTruncated = $derived(!showAllChildren && items.length > maxChildren);
 	let displayedItems = $derived(showAllChildren ? items.slice() : items.slice(0, maxChildren));
 </script>
 
 {#if items.length > 0}
-<ol class="relation-list text-mono" data-symbol={symbol} title={label} >
-	{#each displayedItems as child, i}
-		<li>{child}</li>
-	{/each}
-	{#if isTruncated}
-		<li>
-			<button on:click="{() => showAllChildren = true}" class="link caption">+{items.length - maxChildren} More</button>
-		</li>
-	{/if}
-</ol>
+	<ol class="relation-list text-mono" data-symbol={symbol} title={label}>
+		{#each displayedItems as child, i}
+			<li>{child}</li>
+		{/each}
+		{#if isTruncated}
+			<li>
+				<button onclick={expandList} class="link caption">+{items.length - maxChildren} More</button>
+			</li>
+		{/if}
+	</ol>
 {/if}
 
 <style lang="scss">

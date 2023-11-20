@@ -6,55 +6,56 @@
 
 	let { extract, idPrefix = 'extract' } = $props();
 
-	let { 
-		is_work: isWork, 
-		title, 
-		slug, 
-		extract: text, 
-		notes, 
-		space_topics: topics, 
-		child_titles: childTitles, 
-		connection_titles: connectionTitles, 
-		extract_image: images, 
-		image_caption: imageCaption
+	let {
+		isWork,
+		title,
+		slug,
+		extract: extractContent,
+		notes,
+		spaceTopics,
+		childTitles,
+		connectionTitles,
+		images,
+		imageCaption
 	} = extract;
 
 	slug = slug || slugify(title);
-	text = text || '';
+	extractContent = extractContent || '';
 
-	let hasRelations = childTitles || connectionTitles || topics;
+	let hasRelations = childTitles || connectionTitles || spaceTopics;
 
 	const nodeId = idPrefix ? `${idPrefix}--${slug}` : slug;
 </script>
 
 <article id={nodeId} class="extract {isWork ? 'extract--work' : 'extract--fragment'}">
 	{#if title}
-	<header>
-		<h2 class="extract-title">{title}</h2>
-	</header>
+		<header>
+			<h2 class="extract-title">{title}</h2>
+		</header>
 	{/if}
 	<figure class="extract-main">
 		{#if images}
-		<img alt="yes" />
+			<img alt="yes" />
 		{/if}
-		{#if text}
-		<blockquote class="extract-text content" cite={extract.source}>
-			{@html markdown.render(text)}
-		</blockquote>
+		{#if extractContent}
+			<blockquote class="extract-text content" cite={extract.source}>
+				{@html markdown.render(extractContent)}
+			</blockquote>
 		{/if}
 		<figcaption class="extract-caption"><a href="/">Christopher Alexander</a></figcaption>
 	</figure>
 	{#if hasRelations}
-	<section class="relations">
-		<RelationList items="{childTitles}" symbol="↳" label="Children" />
-		<RelationList items="{connectionTitles}" symbol="⮂" label="Connections" />
-		<TopicList {topics} />
-	</section>
+		<section class="relations">
+			<RelationList items={childTitles} symbol="↳" label="Children" />
+			<RelationList items={connectionTitles} symbol="⮂" label="Connections" />
+			<TopicList {spaceTopics} />
+		</section>
 	{/if}
 	{#if notes || true}
-	<footer class="caption content">
-		{@html markdown.render(notes)} Rather than 'UI is not UX!', consider instead, 'the interface <em>is</em> the experience.'
-	</footer>
+		<footer class="caption content">
+			{@html markdown.render(notes)} Rather than 'UI is not UX!', consider instead, 'the interface <em>is</em> the
+			experience.'
+		</footer>
 	{/if}
 </article>
 
@@ -91,4 +92,3 @@
 		padding-top: var(--layout-gap);
 	}
 </style>
-

@@ -17,29 +17,29 @@
 
 {#if showCitation}
 	<div class="{isWork ? 'work' : 'extract'} text-mono">
-	{#if isWork}
-		<span>
-			{article(type)} <span class="extract-type">{type}</span>
-			{#if parentTitle && !suppressCitation}
-			from <cite>{parentTitle}</cite>
-			{/if}
+		{#if isWork}
+			<span>
+				{article(type)} <span class="extract-type">{type}</span>
+				{#if parentTitle && !suppressCitation}
+					from <cite>{parentTitle}</cite>
+				{/if}
+				{#if creatorNames.length > 0}
+					by <CreatorList {creatorNames} />
+				{/if}
+			</span>
+		{:else}
 			{#if creatorNames.length > 0}
-			by <CreatorList {creatorNames} />
-			{/if}		
-		</span>
-	{:else}
-		{#if creatorNames.length > 0}
-		<CreatorList {creatorNames} />{#if parentTitle && !suppressCitation}<span>, </span>{/if}
+				<CreatorList {creatorNames} />{#if parentTitle && !suppressCitation}<span>, </span>{/if}
+			{/if}
+			{#if parentTitle && !suppressCitation}
+				<cite>{parentTitle}</cite>
+			{/if}
 		{/if}
-		{#if parentTitle && !suppressCitation}
-		<cite>{parentTitle}</cite>
-		{/if}	
-	{/if}
-	{#if source}
-		<div class="extract-source small">
-			<a href="{source}" target="_blank" rel="noreferrer">{new URL(source).hostname}</a>
-		</div>
-	{/if}
+		{#if source}
+			<div class="extract-source small">
+				<a href={source} target="_blank" rel="noreferrer">{new URL(source).hostname}</a>
+			</div>
+		{/if}
 	</div>
 {/if}
 
@@ -59,7 +59,8 @@
 		transition: opacity 0.25s;
 		margin-left: 0.25em;
 
-		::before, ::after {
+		::before,
+		::after {
 			opacity: var(--opacity);
 		}
 		::before {

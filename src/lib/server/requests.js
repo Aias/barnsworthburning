@@ -1,11 +1,14 @@
 import Airtable from 'airtable';
 
+// const BASE_ID = 'appHWZbECVKCSjquH';
+const BASE_ID = 'appNAUPSEyCYlPtvG';
+
 Airtable.configure({
 	endpointUrl: 'https://api.airtable.com',
-	apiKey: import.meta.env.VITE_AIRTABLE_API_KEY
+	apiKey: import.meta.env.VITE_AIRTABLE_ACCESS_TOKEN
 });
 
-const base = Airtable.base('appHWZbECVKCSjquH');
+const base = Airtable.base(BASE_ID);
 
 const mapReceivedRecord = (record) => ({
 	id: record.id,
