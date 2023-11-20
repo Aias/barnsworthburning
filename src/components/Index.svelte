@@ -1,6 +1,6 @@
 <script>
 	import { lastFirst } from '$helpers/names';
-	const { creators, spaces, ...rest } = $props();
+	let { creators, spaces, ...rest } = $props();
 
 	let selectedEntity = $state();
 

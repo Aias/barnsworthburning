@@ -1,7 +1,7 @@
 <script>
 	import Extract from '$components/Extract.svelte';
 
-	const { data } = $props();
+	let { data } = $props();
 
 	let extracts = $derived(data.extracts || []);
 	let currentId = $derived(data.currentId);

@@ -1,5 +1,5 @@
 <script>
-	const { items = [], label, symbol, maxChildren = 5 } = $props();
+	let { items = [], label, symbol, maxChildren = 5 } = $props();
 
 	let showAllChildren = $state(false);
 	const expandList = () => {

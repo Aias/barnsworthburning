@@ -2,7 +2,7 @@
 	import { article } from '$helpers/grammar';
 	import CreatorList from './CreatorList.svelte';
 
-	const { extract = {}, suppressCitation = false } = $props();
+	let { extract = {}, suppressCitation = false } = $props();
 
 	const {
 		combined_creator_names: creatorNames = [],

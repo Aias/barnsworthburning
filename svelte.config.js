@@ -11,7 +11,10 @@ const config = {
 			$styles: 'src/styles'
 		}
 	},
-	preprocess: preprocess()
+	preprocess: preprocess(),
+	compilerOptions: {
+		runes: true
+	}
 };
 
 export default config;

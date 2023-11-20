@@ -1,5 +1,5 @@
 <script>
-	const { creators = [], ...rest } = $props();
+	let { creators = [], ...rest } = $props();
 </script>
 
 {#if creators?.length > 0}

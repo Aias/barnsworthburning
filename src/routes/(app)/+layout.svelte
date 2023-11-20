@@ -1,17 +1,14 @@
 <script>
 	import '$styles/app.css';
+	import exists from '$helpers/exists';
 	import { page } from '$app/stores';
 
 	import Header from '$components/Header.svelte';
 	import Index from '$components/Index.svelte';
 
-	const { data } = $props();
+	let { data } = $props();
 
-	const exists = (val) => {
-		return val !== undefined && val !== null;
-	};
-
-	let muteLinks = exists($page?.params.extractId);
+	let muteLinks = $derived(exists($page?.params.extractId));
 </script>
 
 <Header class="app-header" />

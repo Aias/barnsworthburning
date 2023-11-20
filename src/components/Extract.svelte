@@ -6,7 +6,7 @@
 	import RelationList from './RelationList.svelte';
 	import CreatorList from './CreatorList.svelte';
 
-	const { extract, idPrefix = 'extract' } = $props();
+	let { extract, idPrefix = 'extract' } = $props();
 
 	let {
 		id,
@@ -26,17 +26,25 @@
 		connectionTitles,
 		images,
 		imageCaption
-	} = extract;
+	} = $derived(extract);
 
-	const parent = parentId ? { id: parentId[0], name: parentTitle[0] } : null;
-	const creators = zip(['id', 'name'], creatorIds, creatorNames);
-	const children = zip(['id', 'name'], childIds, childTitles);
-	const connections = zip(['id', 'name'], connectionIds, connectionTitles);
-	const spaces = zip(['id', 'name'], spaceIds, spaceTopics);
+	const parent = $derived(parentId ? { id: parentId[0], name: parentTitle[0] } : null);
 
-	let hasRelations = childTitles || connectionTitles || spaceTopics;
+	let creators = $state([]),
+		children = $state([]),
+		connections = $state([]),
+		spaces = $state([]);
 
-	const nodeId = idPrefix ? `${idPrefix}--${id}` : id;
+	$effect(() => {
+		creators = zip(['id', 'name'], creatorIds, creatorNames);
+		children = zip(['id', 'name'], childIds, childTitles);
+		connections = zip(['id', 'name'], connectionIds, connectionTitles);
+		spaces = zip(['id', 'name'], spaceIds, spaceTopics);
+	});
+
+	let hasRelations = $derived(childTitles || connectionTitles || spaceTopics);
+
+	const nodeId = $derived(idPrefix ? `${idPrefix}--${id}` : id);
 </script>
 
 <article id={nodeId} class="extract {isWork ? 'extract--work' : 'extract--fragment'}">
