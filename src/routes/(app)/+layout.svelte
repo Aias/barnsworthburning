@@ -5,11 +5,12 @@
 	import Header from '$components/Header.svelte';
 	import Index from '$components/Index.svelte';
 
+	const { data } = $props();
+
 	const exists = (val) => {
 		return val !== undefined && val !== null;
 	};
 
-	let { data } = $props();
 	let muteLinks = exists($page?.params.extractId);
 </script>
 

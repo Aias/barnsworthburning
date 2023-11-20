@@ -1,5 +1,5 @@
 <script>
-	let { items = [], label, symbol, maxChildren = 5 } = $props();
+	const { items = [], label, symbol, maxChildren = 5 } = $props();
 
 	let showAllChildren = $state(false);
 	const expandList = () => {
@@ -9,10 +9,10 @@
 	let displayedItems = $derived(showAllChildren ? items.slice() : items.slice(0, maxChildren));
 </script>
 
-{#if items.length > 0}
-	<ol class="relation-list text-mono" data-symbol={symbol} title={label}>
-		{#each displayedItems as child, i}
-			<li>{child}</li>
+{#if items?.length > 0}
+	<ol class="relation-list" data-symbol={symbol} title={label}>
+		{#each displayedItems as item (item.id)}
+			<li><a href="/{item.id}">{item.name}</a></li>
 		{/each}
 		{#if isTruncated}
 			<li>

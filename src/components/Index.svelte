@@ -1,6 +1,6 @@
 <script>
 	import { lastFirst } from '$helpers/names';
-	let { creators, spaces, ...rest } = $props();
+	const { creators, spaces, ...rest } = $props();
 
 	let selectedEntity = $state();
 
@@ -130,7 +130,7 @@
 			})}
 		{/each}
 		{@render sectionSeparator()}
-		{#each index as node, i}
+		{#each index as node (node.id)}
 			{@render indexItem({
 				node: node,
 				href: `/${node.entity}/${node.id}`,

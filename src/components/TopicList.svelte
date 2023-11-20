@@ -1,11 +1,11 @@
 <script>
-	let { topics } = $props();
+	const { topics = [] } = $props();
 </script>
 
-{#if topics}
-	<ul class="tag-list text-mono">
-		{#each topics as topic}
-			<li class="tag">{topic}</li>
+{#if topics?.length > 0}
+	<ul class="tag-list">
+		{#each topics as topic (topic.id)}
+			<li class="tag"><a href="/spaces/{topic.id}">{topic.name}</a></li>
 		{/each}
 	</ul>
 {/if}

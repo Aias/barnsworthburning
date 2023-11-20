@@ -1,6 +1,6 @@
 <script>
 	// import { getCookie, setCookie } from '$helpers/cookies';
-	let { ...rest } = $props();
+	const { ...rest } = $props();
 
 	function createMode(defaultMode) {
 		let mode = $state(defaultMode);

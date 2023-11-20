@@ -1,17 +1,22 @@
 <script>
 	import markdown from '$helpers/markdown';
-	import slugify from '$helpers/slugify';
+	import zip from '$helpers/zip';
+
 	import TopicList from './TopicList.svelte';
 	import RelationList from './RelationList.svelte';
+	import CreatorList from './CreatorList.svelte';
 
-	let { extract, idPrefix = 'extract' } = $props();
+	const { extract, idPrefix = 'extract' } = $props();
 
 	let {
+		id,
 		isWork,
 		title,
-		slug,
 		extract: extractContent,
-		parent: parentIds,
+		parent: parentId, // Actually an array
+		parentTitle, // Actually an array
+		creators: creatorIds,
+		creatorNames,
 		notes,
 		spaces: spaceIds,
 		spaceTopics,
@@ -23,12 +28,15 @@
 		imageCaption
 	} = extract;
 
-	slug = slug || slugify(title);
-	extractContent = extractContent || '';
+	const parent = parentId ? { id: parentId[0], name: parentTitle[0] } : null;
+	const creators = zip(['id', 'name'], creatorIds, creatorNames);
+	const children = zip(['id', 'name'], childIds, childTitles);
+	const connections = zip(['id', 'name'], connectionIds, connectionTitles);
+	const spaces = zip(['id', 'name'], spaceIds, spaceTopics);
 
 	let hasRelations = childTitles || connectionTitles || spaceTopics;
 
-	const nodeId = idPrefix ? `${idPrefix}--${slug}` : slug;
+	const nodeId = idPrefix ? `${idPrefix}--${id}` : id;
 </script>
 
 <article id={nodeId} class="extract {isWork ? 'extract--work' : 'extract--fragment'}">
@@ -40,19 +48,24 @@
 	<figure class="extract-main">
 		{#if images}
 			<img alt="yes" />
+			{#if imageCaption}
+				<p class="extract-image-caption">{imageCaption}</p>
+			{/if}
 		{/if}
 		{#if extractContent}
 			<blockquote class="extract-text content" cite={extract.source}>
 				{@html markdown.render(extractContent)}
 			</blockquote>
 		{/if}
-		<figcaption class="extract-caption"><a href="/">Christopher Alexander</a></figcaption>
+		<figcaption class="extract-caption">
+			<CreatorList {creators} />
+		</figcaption>
 	</figure>
 	{#if hasRelations}
 		<section class="relations">
-			<RelationList items={childTitles} symbol="↳" label="Children" />
-			<RelationList items={connectionTitles} symbol="⮂" label="Connections" />
-			<TopicList topics={spaceTopics} />
+			<RelationList items={children} symbol="↳" label="Children" />
+			<RelationList items={connections} symbol="⮂" label="Connections" />
+			<TopicList topics={spaces} />
 		</section>
 	{/if}
 	{#if notes}
