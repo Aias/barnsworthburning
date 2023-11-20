@@ -11,9 +11,13 @@
 		title,
 		slug,
 		extract: extractContent,
+		parent: parentIds,
 		notes,
+		spaces: spaceIds,
 		spaceTopics,
+		children: childIds,
 		childTitles,
+		connections: connectionIds,
 		connectionTitles,
 		images,
 		imageCaption

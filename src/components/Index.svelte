@@ -1,4 +1,5 @@
 <script>
+	import { lastFirst } from '$helpers/names';
 	let { creators, spaces, ...rest } = $props();
 
 	let selectedEntity = $state();
@@ -45,21 +46,27 @@
 			}
 		};
 
-	const getAlpha = (obj) => {
-		if (obj.entity === 'creator') {
-			return obj.last_name || '';
-		} else {
-			return obj.topic || '';
+	const getTime = (obj, type = 'connections') => {
+		switch (type) {
+			case 'record':
+				return new Date(obj.lastUpdated);
+			case 'connections':
+			default:
+				return new Date(obj.lastUpdated);
 		}
 	};
+
+	const getCount = (obj) => obj.numExtracts
 
 	const compareFields = (sort = 'alpha') => {
 		switch (sort) {
 			case 'alpha':
 				return (a, b) => {
-					return getAlpha(a).toLowerCase() > getAlpha(b).toLowerCase()
+					const aName = (a.indexName || '').toLowerCase();
+					const bName = (b.indexName || '').toLowerCase();
+					return aName > bName
 						? 1
-						: getAlpha(a).toLowerCase() < getAlpha(b).toLowerCase()
+						: aName < bName
 						? -1
 						: 0;
 				};
@@ -77,43 +84,10 @@
 	};
 
 	let index = $derived(creators
-		.map((c) => ({ ...c, entity: 'creator' }))
-		.concat(spaces.map((s) => ({ ...s, entity: 'space' })))
+		.map((creator) => ({ ...creator, entity: 'creator', indexName: creator.sortAsIs ? creator.name : lastFirst(creator.name) }))
+		.concat(spaces.map((space) => ({ ...space, entity: 'space', indexName: space.topic })))
 		.filter(filterList(entityType))
 		.sort(compareFields(primarySort)))
-
-	const getTime = (obj, type = 'connections') => {
-		switch (type) {
-			case 'record':
-				return new Date(obj.last_updated);
-			case 'connections':
-			default:
-				return new Date(obj.connections_last_updated);
-		}
-	};
-
-	const getCount = (obj) => {
-		if (obj.entity === 'creator') {
-			return obj.num_extracts + obj.num_fragments;
-		} else {
-			return obj.extracts.length;
-		}
-	};
-
-	const lastFirst = (creator) => {
-		const last = creator.last_name;
-		const full = creator.full_name;
-
-		if (last === full) {
-			// e.g., single-word names like Homer or Virgil
-			return full;
-		}
-
-		const lastLoc = full.indexOf(last);
-		const firstPart = full.substring(0, lastLoc).trim();
-
-		return `${last}, ${firstPart}`;
-	};
 </script>
 
 {#snippet sectionSeparator()}
@@ -157,21 +131,12 @@
 		{/each}
 		{@render sectionSeparator()}
 		{#each index as node, i}
-			{#if node.entity === 'creator'}
-				{@render indexItem({
-					node: node,
-					href: `/creators/${node.slug}`,
-					label: lastFirst(node),
-					count: node.num_extracts + node.num_fragments
-				})}
-			{:else}
-				{@render indexItem({
-					node: node,
-					href: `/spaces/${node.topic}`,
-					label: node.topic,
-					count: node.extracts ? node.extracts.length : 0
-				})}
-			{/if}
+			{@render indexItem({
+				node: node,
+				href: `/${node.entity}/${node.id}`,
+				label: node.indexName,
+				count: node.numExtracts
+			})}
 		{/each}
 		{@render sectionSeparator()}
 		<li>
