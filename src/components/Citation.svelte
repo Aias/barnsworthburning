@@ -1,77 +1,59 @@
 <script>
 	import { article } from '$helpers/grammar';
+	import zip from '$helpers/zip';
 	import CreatorList from './CreatorList.svelte';
 
-	let { extract = {}, suppressCitation = false } = $props();
+	let { extract = {} } = $props();
 
-	const {
-		combined_creator_names: creatorNames = [],
-		parent_title: parentTitles = [],
+	let {
+		creators: creatorIds = [],
+		creatorNames = [],
+		parentCreators: parentCreatorIds = [],
+		parentCreatorNames = [],
+		parent: parentIds = [],
+		parentTitle: parentTitles = [],
 		type = 'Work',
 		source,
-		is_work: isWork
-	} = extract;
+		isWork
+	} = $derived(extract);
 
-	const parentTitle = parentTitles && parentTitles[0];
+	let creators = $state([]),
+		parentCreators = $state([]);
+
+	$effect.pre(() => {
+		creators = zip(['id', 'name'], creatorIds, creatorNames);
+		parentCreators = zip(['id', 'name'], parentCreatorIds, parentCreatorNames);
+	});
+	let parentTitle = $derived(parentTitles && parentTitles[0]);
 </script>
 
-{#if showCitation}
-	<div class="{isWork ? 'work' : 'extract'} text-mono">
-		{#if isWork}
-			<span>
-				{article(type)} <span class="extract-type">{type}</span>
-				{#if parentTitle && !suppressCitation}
-					from <cite>{parentTitle}</cite>
-				{/if}
-				{#if creatorNames.length > 0}
-					by <CreatorList {creatorNames} />
-				{/if}
-			</span>
-		{:else}
-			{#if creatorNames.length > 0}
-				<CreatorList {creatorNames} />{#if parentTitle && !suppressCitation}<span>, </span>{/if}
-			{/if}
-			{#if parentTitle && !suppressCitation}
-				<cite>{parentTitle}</cite>
-			{/if}
+<div class="citation">
+	<div class="text-mono">
+		<span class="article">{article(type)}</span>
+		<span class="type">{type}</span>
+		{#if parentIds.length > 0}
+			<span class="parent">from <a href="/{parentIds[0]}"><cite>{parentTitle}</cite></a></span>
 		{/if}
-		{#if source}
-			<div class="extract-source small">
-				<a href={source} target="_blank" rel="noreferrer">{new URL(source).hostname}</a>
-			</div>
-		{/if}
+		<span class="creators">by <CreatorList creators={creators.length > 0 ? creators : parentCreators} /></span>
 	</div>
-{/if}
+	{#if source}
+		<div class="source small unthemey">
+			<a href={source} target="_blank" rel="noreferrer">{new URL(source).hostname}</a>
+		</div>
+	{/if}
+</div>
 
 <style lang="scss">
-	.extract-type {
+	.citation {
+		display: contents;
+		color: var(--secondary);
+	}
+
+	.type {
 		text-transform: lowercase;
 	}
 
 	cite {
 		font-style: italic;
-	}
-
-	.extract-source {
-		display: inline;
-		--opacity: 0.75;
-		opacity: var(--opacity);
-		transition: opacity 0.25s;
-		margin-left: 0.25em;
-
-		::before,
-		::after {
-			opacity: var(--opacity);
-		}
-		::before {
-			content: '[';
-		}
-		::after {
-			content: ']';
-		}
-
-		&:hover {
-			opacity: 1;
-		}
 	}
 </style>

@@ -2,9 +2,9 @@
 	import markdown from '$helpers/markdown';
 	import zip from '$helpers/zip';
 
+	import Citation from './Citation.svelte';
 	import TopicList from './TopicList.svelte';
 	import RelationList from './RelationList.svelte';
-	import CreatorList from './CreatorList.svelte';
 
 	let { extract, idPrefix = 'extract' } = $props();
 
@@ -30,13 +30,11 @@
 
 	const parent = $derived(parentId ? { id: parentId[0], name: parentTitle[0] } : null);
 
-	let creators = $state([]),
-		children = $state([]),
+	let children = $state([]),
 		connections = $state([]),
 		spaces = $state([]);
 
 	$effect(() => {
-		creators = zip(['id', 'name'], creatorIds, creatorNames);
 		children = zip(['id', 'name'], childIds, childTitles);
 		connections = zip(['id', 'name'], connectionIds, connectionTitles);
 		spaces = zip(['id', 'name'], spaceIds, spaceTopics);
@@ -66,7 +64,7 @@
 			</blockquote>
 		{/if}
 		<figcaption class="extract-caption">
-			<CreatorList {creators} />
+			<Citation {extract} />
 		</figcaption>
 	</figure>
 	{#if hasRelations}
@@ -97,7 +95,7 @@
 		color: var(--display);
 	}
 
-	.extract--work .extract-caption {
+	.extract-caption {
 		order: -1;
 	}
 
