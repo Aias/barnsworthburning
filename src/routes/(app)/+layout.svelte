@@ -8,7 +8,11 @@
 
 	export let data;
 
-	let muteLinks = exists($page?.params.extractId);
+	$: muteLinks = exists($page?.params.extractId);
+
+	$: {
+		console.log(muteLinks);
+	}
 </script>
 
 <Header class="app-header" />
@@ -17,12 +21,26 @@
 	<article class="extract-panel chromatic"><slot /></article>
 </main>
 
-<style lang="scss">
+<style lang="scss" global>
+	.app {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		flex: 0 0 auto;
+	}
 	.app-content {
 		padding: var(--padding);
 		display: flex;
 		flex-direction: row;
 		gap: var(--padding);
+		height: 100%;
+		flex-grow: 1;
+		overflow: hidden;
+		align-items: stretch;
+
+		> * {
+			overflow-y: auto;
+		}
 	}
 	.extract-panel {
 		padding: var(--padding);

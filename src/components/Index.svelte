@@ -94,7 +94,7 @@
 		.sort(compareFields(primarySort));
 </script>
 
-<nav {...$$restProps} class="index-container">
+<nav {...$$restProps} class:index-container={true}>
 	<menu class="index">
 		{#each entityFilters as filter}
 			<SettingsButton
