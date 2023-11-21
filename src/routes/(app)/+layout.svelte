@@ -9,10 +9,6 @@
 	export let data;
 
 	$: muteLinks = exists($page?.params.extractId);
-
-	$: {
-		console.log(muteLinks);
-	}
 </script>
 
 <Header class="app-header" />
