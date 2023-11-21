@@ -3,28 +3,21 @@
 	import zip from '$helpers/zip';
 	import CreatorList from './CreatorList.svelte';
 
-	let { extract = {} } = $props();
+	export let extract = {};
 
-	let {
-		creators: creatorIds = [],
-		creatorNames = [],
-		parentCreators: parentCreatorIds = [],
-		parentCreatorNames = [],
-		parent: parentIds = [],
-		parentTitle: parentTitles = [],
-		type = 'Work',
-		source,
-		isWork
-	} = $derived(extract);
+	$: creatorIds = extract.creators || [];
+	$: creatorNames = extract.creatorNames || [];
+	$: parentCreatorIds = extract.parentCreators || [];
+	$: parentCreatorNames = extract.parentCreatorNames || [];
+	$: parentIds = extract.parent || [];
+	$: parentTitles = extract.parentTitle || [];
+	$: type = extract.type || 'Work';
+	$: source = extract.source;
+	$: isWork = extract.isWork;
 
-	let creators = $state([]),
-		parentCreators = $state([]);
-
-	$effect.pre(() => {
-		creators = zip(['id', 'name'], creatorIds, creatorNames);
-		parentCreators = zip(['id', 'name'], parentCreatorIds, parentCreatorNames);
-	});
-	let parentTitle = $derived(parentTitles && parentTitles[0]);
+	$: creators = zip(['id', 'name'], creatorIds, creatorNames);
+	$: parentCreators = zip(['id', 'name'], parentCreatorIds, parentCreatorNames);
+	$: parentTitle = parentTitles && parentTitles[0];
 </script>
 
 <div class="citation">

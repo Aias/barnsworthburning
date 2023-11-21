@@ -1,10 +1,12 @@
 <script>
 	import Extract from '$components/Extract.svelte';
 
-	let { data } = $props();
+	export let data;
 
-	let extracts = $derived(data.extracts || []);
-	let currentId = $derived(data.currentId);
+	$: extracts = data.extracts || [];
+	$: currentId = data.currentId;
+	let parentExtract,
+		childExtracts = [];
 
 	const makeChildSortFunction =
 		(childOrder = []) =>
@@ -16,7 +18,7 @@
 			else return -1;
 		};
 
-	const getChildren = () => {
+	const getChildren = (extracts, parentIndex) => {
 		if (!parentExtract.children) return [];
 
 		let children = [...extracts];
@@ -26,13 +28,17 @@
 		return children.sort(makeChildSortFunction(childOrder));
 	};
 
-	let parentIndex = $derived(
-		extracts.findIndex((e) => {
-			return e.id === currentId;
-		})
-	);
-	let parentExtract = $derived(parentIndex > -1 ? extracts[parentIndex] : extracts[0]);
-	let childExtracts = $derived(getChildren());
+	$: {
+		if (extracts) {
+			let parentIndex = extracts.findIndex((e) => {
+				return e.id === currentId;
+			});
+			if (parentIndex === -1) parentIndex = 0;
+
+			parentExtract = extracts[parentIndex];
+			childExtracts = getChildren(extracts, parentIndex);
+		}
+	}
 </script>
 
 <header class="card">

@@ -1,70 +1,61 @@
 <script>
-	// import { getCookie, setCookie } from '$helpers/cookies';
-	let { ...rest } = $props();
+	import { getCookie, setCookie } from '$helpers/cookies';
+	import { writable } from 'svelte/store';
+	import { onMount } from 'svelte';
 
-	function createMode(defaultMode) {
-		let mode = $state(defaultMode);
+	const mode = writable('dark');
+	const chroma = writable('neutral');
+	const palette = writable('indigo');
+	const themes = ['indigo', 'tomato', 'amber', 'sky', 'grass'];
 
-		function toggle() {
-			mode = mode === 'dark' ? 'light' : 'dark';
+	const toggleMode = () => {
+		mode.update((currentMode) => (currentMode === 'dark' ? 'light' : 'dark'));
+		setCookie('barnsworthburning-mode', $mode);
+	};
+	const toggleChroma = () => {
+		chroma.update((currentChroma) => (currentChroma === 'neutral' ? 'chromatic' : 'neutral'));
+		setCookie('barnsworthburning-chroma', $chroma);
+	};
+	const setPalette = (e) => {
+		palette.set(e.target.value);
+		setCookie('barnsworthburning-palette', $palette);
+	};
+
+	$: themeClass = `${$mode} ${$chroma} ${$palette}`;
+
+	onMount(() => {
+		const storedMode = getCookie('barnsworthburning-mode');
+		const storedChroma = getCookie('barnsworthburning-chroma');
+		const storedPalette = getCookie('barnsworthburning-palette');
+
+		if (storedMode) {
+			$mode = storedMode;
 		}
-
-		return {
-			get mode() {
-				return mode;
-			},
-			toggle
-		};
-	}
-	function createChroma(defaultChroma) {
-		let chroma = $state(defaultChroma);
-
-		function toggle() {
-			chroma = chroma === 'neutral' ? 'chromatic' : 'neutral';
+		if (storedChroma) {
+			$chroma = storedChroma;
 		}
-
-		return {
-			get chroma() {
-				return chroma;
-			},
-			toggle
-		};
-	}
-	const mode = createMode('dark');
-	const chroma = createChroma('neutral');
-	let palette = $state('indigo');
-
-	let themeClass = $derived(`${mode.mode} ${chroma.chroma} ${palette}`);
-
-	$effect(() => {
-		document.documentElement.className = themeClass;
-		// setCookie('barnsworthburning-mode', mode.mode);
-		// setCookie('barnsworthburning-chroma', chroma.chroma);
-		// setCookie('barnsworthburning-palette', palette);
+		if (storedPalette) {
+			$palette = storedPalette;
+		}
 	});
+	$: {
+		if (typeof window !== 'undefined') {
+			document.documentElement.className = themeClass;
+		}
+	}
 </script>
 
-<header {...rest}>
-	<button on:click={mode.toggle}>Toggle Mode</button>
-	<button on:click={chroma.toggle}>Toggle Chroma</button>
+<header {...$$restProps}>
+	<button on:click={toggleMode}>Toggle Mode</button>
+	<button on:click={toggleChroma}>Toggle Chroma</button>
 	<div class="theme-selector">
 		<span class="text-secondary">Theme:</span>
-		<label>
-			<input type="radio" name="theme" value="indigo" bind:group={palette} />
-			Indigo
-		</label>
-		<label>
-			<input type="radio" name="theme" value="tomato" bind:group={palette} />
-			Tomato
-		</label>
-		<label>
-			<input type="radio" name="theme" value="amber" bind:group={palette} />
-			Amber
-		</label>
-		<label>
-			<input type="radio" name="theme" value="sky" bind:group={palette} />
-			Sky
-		</label>
+		{#each themes as theme (theme)}
+			<label>
+				<input type="radio" name="theme" value={theme} on:change={setPalette} checked={$palette === theme} />
+				{theme}
+			</label>
+		{/each}
 	</div>
 	<a class="home" href="/">Go Home</a>
 </header>
@@ -85,6 +76,10 @@
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
+
+		label {
+			text-transform: capitalize;
+		}
 	}
 	.home {
 		margin-left: auto;

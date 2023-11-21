@@ -6,43 +6,29 @@
 	import TopicList from './TopicList.svelte';
 	import RelationList from './RelationList.svelte';
 
-	let { extract, idPrefix = 'extract' } = $props();
+	export let extract,
+		idPrefix = 'extract';
 
-	let {
-		id,
-		isWork,
-		title,
-		extract: extractContent,
-		parent: parentId, // Actually an array
-		parentTitle, // Actually an array
-		creators: creatorIds,
-		creatorNames,
-		notes = "Here's a test of the caption color mix.",
-		spaces: spaceIds,
-		spaceTopics,
-		children: childIds,
-		childTitles,
-		connections: connectionIds,
-		connectionTitles,
-		images,
-		imageCaption
-	} = $derived(extract);
+	$: id = extract.id;
+	$: isWork = extract.isWork;
+	$: title = extract.title;
+	$: extractContent = extract.extract;
+	$: notes = extract.notes || "Here's a test of the caption color mix.";
+	$: spaceIds = extract.spaces;
+	$: spaceTopics = extract.spaceTopics;
+	$: childIds = extract.children;
+	$: childTitles = extract.childTitles;
+	$: connectionIds = extract.connections;
+	$: connectionTitles = extract.connectionTitles;
+	$: images = extract.images;
+	$: imageCaption = extract.imageCaption;
 
-	const parent = $derived(parentId ? { id: parentId[0], name: parentTitle[0] } : null);
+	$: children = zip(['id', 'name'], childIds, childTitles);
+	$: connections = zip(['id', 'name'], connectionIds, connectionTitles);
+	$: spaces = zip(['id', 'name'], spaceIds, spaceTopics);
 
-	let children = $state([]),
-		connections = $state([]),
-		spaces = $state([]);
-
-	$effect(() => {
-		children = zip(['id', 'name'], childIds, childTitles);
-		connections = zip(['id', 'name'], connectionIds, connectionTitles);
-		spaces = zip(['id', 'name'], spaceIds, spaceTopics);
-	});
-
-	let hasRelations = $derived(childTitles || connectionTitles || spaceTopics);
-
-	const nodeId = $derived(idPrefix ? `${idPrefix}--${id}` : id);
+	$: hasRelations = childTitles || connectionTitles || spaceTopics;
+	$: nodeId = idPrefix ? `${idPrefix}--${id}` : id;
 </script>
 
 <article id={nodeId} class="extract {isWork ? 'extract--work' : 'extract--fragment'}">

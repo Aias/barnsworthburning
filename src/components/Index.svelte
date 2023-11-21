@@ -1,11 +1,15 @@
 <script>
 	import { lastFirst } from '$helpers/names';
-	let { creators, spaces, ...rest } = $props();
+	import SectionSeparator from './Index.SectionSeparator.svelte';
+	import SettingsButton from './Index.SettingsButton.svelte';
+	import IndexItem from './Index.IndexItem.svelte';
 
-	let selectedEntity = $state();
+	export let creators, spaces;
 
-	let primarySort = $state('alpha');
-	let entityType = $state('all');
+	let selectedEntity;
+
+	let primarySort = 'alpha';
+	let entityType = 'all';
 
 	const entityFilters = [
 		{
@@ -56,7 +60,7 @@
 		}
 	};
 
-	const getCount = (obj) => obj.numExtracts
+	const getCount = (obj) => obj.numExtracts;
 
 	const compareFields = (sort = 'alpha') => {
 		switch (sort) {
@@ -64,11 +68,7 @@
 				return (a, b) => {
 					const aName = (a.indexName || '').toLowerCase();
 					const bName = (b.indexName || '').toLowerCase();
-					return aName > bName
-						? 1
-						: aName < bName
-						? -1
-						: 0;
+					return aName > bName ? 1 : aName < bName ? -1 : 0;
 				};
 			case 'time':
 				return (a, b) => {
@@ -83,62 +83,53 @@
 		}
 	};
 
-	let index = $derived(creators
-		.map((creator) => ({ ...creator, entity: 'creator', indexName: creator.sortAsIs ? creator.name : lastFirst(creator.name) }))
+	$: index = creators
+		.map((creator) => ({
+			...creator,
+			entity: 'creator',
+			indexName: creator.sortAsIs ? creator.name : lastFirst(creator.name)
+		}))
 		.concat(spaces.map((space) => ({ ...space, entity: 'space', indexName: space.topic })))
 		.filter(filterList(entityType))
-		.sort(compareFields(primarySort)))
+		.sort(compareFields(primarySort));
 </script>
 
-{#snippet sectionSeparator()}
-	<li class="center text-hint">⁘&#8199;&#8199;⁘&#8199;&#8199;⁘</li>
-{/snippet}
-
-{#snippet settingsButton({selected, labelPrefix, label, onClick})}
-	<li class:selected={selected} class="settings-item unthemey">
-		<button class="settings-button link" on:click={onClick}>
-			<span class="label-prefix">{labelPrefix}</span>{label}
-		</button>
-	</li>
-{/snippet}
-
-{#snippet indexItem({node, href = "./", label, count})}
-	<li class:active={selectedEntity && (node.topic === selectedEntity || node.slug === selectedEntity)} class="index-item">
-		<a href={'/recYQmlvBMSUV0Pe0'} on:click={() => {
-			selectedEntity = node.topic || node.slug;
-		}}>{label}</a>&nbsp;<span class="count">{count}</span>
-	</li>
-{/snippet}
-
-<nav {...rest}>
-	<menu>
+<nav {...$$restProps} class="index-container">
+	<menu class="index">
 		{#each entityFilters as filter}
-			{@render settingsButton({
-				selected: entityType === filter.value,
-				labelPrefix: 'List',
-				label: filter.label,
-				onClick: () => {entityType = filter.value}
-			})}
+			<SettingsButton
+				selected={entityType === filter.value}
+				labelPrefix="List"
+				label={filter.label}
+				onClick={() => {
+					entityType = filter.value;
+				}}
+			/>
 		{/each}
-		{@render sectionSeparator()}
+		<SectionSeparator />
 		{#each sortFilters as filter}
-			{@render settingsButton({
-				selected: primarySort === filter.value,
-				labelPrefix: 'By',
-				label: filter.label,
-				onClick: () => {primarySort = filter.value}
-			})}
+			<SettingsButton
+				selected={primarySort === filter.value}
+				labelPrefix="By"
+				label={filter.label}
+				onClick={() => {
+					primarySort = filter.value;
+				}}
+			/>
 		{/each}
-		{@render sectionSeparator()}
+		<SectionSeparator />
 		{#each index as node (node.id)}
-			{@render indexItem({
-				node: node,
-				href: `/${node.entity}/${node.id}`,
-				label: node.indexName,
-				count: node.numExtracts
-			})}
+			<IndexItem
+				active={node.id === selectedEntity}
+				onClick={() => {
+					selectedEntity = node.id;
+				}}
+				href={`/${node.entity}/${node.id}`}
+				label={node.indexName}
+				count={node.numExtracts}
+			/>
 		{/each}
-		{@render sectionSeparator()}
+		<SectionSeparator />
 		<li>
 			<a href="./">About</a>
 		</li>
@@ -170,7 +161,7 @@
 		font-size: var(--font-size-small);
 	}
 
-	li {
+	.index > :global(li) {
 		--indent: 1em;
 		padding-left: calc(var(--indent) + var(--cantilever));
 		padding-right: var(--cantilever);
@@ -178,53 +169,5 @@
 		padding-bottom: 1px;
 		text-indent: calc(-1 * var(--indent));
 		transition: background-color 0.25s;
-	}
-
-	.settings-item {
-		.settings-button {
-			white-space: nowrap;
-			text-decoration: none;
-		}
-		.label-prefix {
-			padding-right: 1ch;
-			visibility: hidden;
-		}
-
-		&.selected {
-			border-left: var(--border-width) solid var(--main);
-			margin-left: calc(-1 * var(--border-width));
-			.settings-button {
-				color: var(--link);
-				font-weight: 500;	
-			}
-			.label-prefix {
-				visibility: visible;
-			}
-		}
-	}
-
-	.index-item {
-		.count {
-			margin-left: 1em;
-			text-align: right;
-			color: var(--secondary);
-			opacity: 0.25;
-			transition: opacity 150ms;
-		}
-		&.active {
-			background-color: var(--main);
-			:global(a) {
-				color: var(--main-contrast);
-			}
-			.count {
-				color: var(--main-contrast);
-				opacity: 0.75;
-			}
-		}
-		&:hover {
-			.count {
-				opacity: 1;
-			}
-		}
 	}
 </style>

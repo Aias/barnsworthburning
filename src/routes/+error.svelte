@@ -1,5 +1,5 @@
 <script>
-	let { status, error } = $props();
+	export let status, error;
 
 	const dev = process.env.NODE_ENV === 'development';
 </script>
@@ -11,7 +11,8 @@
 <h1>{status}</h1>
 
 {#if error}
-<p>{error.message}</p>
-{/if} {#if dev && error && error.stack}
-<pre>{error.stack}</pre>
+	<p>{error.message}</p>
+{/if}
+{#if dev && error && error.stack}
+	<pre>{error.stack}</pre>
 {/if}

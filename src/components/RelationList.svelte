@@ -1,12 +1,15 @@
 <script>
-	let { items = [], label, symbol, maxChildren = 5 } = $props();
+	export let items = [],
+		label,
+		symbol,
+		maxChildren = 5;
 
-	let showAllChildren = $state(false);
+	let showAllChildren = false;
 	const expandList = () => {
 		showAllChildren = true;
 	};
-	let isTruncated = $derived(!showAllChildren && items.length > maxChildren);
-	let displayedItems = $derived(showAllChildren ? items.slice() : items.slice(0, maxChildren));
+	$: isTruncated = !showAllChildren && items.length > maxChildren;
+	$: displayedItems = showAllChildren ? items.slice() : items.slice(0, maxChildren);
 </script>
 
 {#if items?.length > 0}
@@ -16,7 +19,7 @@
 		{/each}
 		{#if isTruncated}
 			<li class="show-more">
-				<button onclick={expandList} class="link caption">+{items.length - maxChildren} More</button>
+				<button on:click={expandList} class="link caption">+{items.length - maxChildren} More</button>
 			</li>
 		{/if}
 	</ol>

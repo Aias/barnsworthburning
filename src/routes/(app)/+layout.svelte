@@ -6,9 +6,9 @@
 	import Header from '$components/Header.svelte';
 	import Index from '$components/Index.svelte';
 
-	let { data } = $props();
+	export let data;
 
-	let muteLinks = $derived(exists($page?.params.extractId));
+	let muteLinks = exists($page?.params.extractId);
 </script>
 
 <Header class="app-header" />

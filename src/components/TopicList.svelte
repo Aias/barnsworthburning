@@ -1,5 +1,5 @@
 <script>
-	let { topics = [] } = $props();
+	export let topics = [];
 </script>
 
 {#if topics?.length > 0}
