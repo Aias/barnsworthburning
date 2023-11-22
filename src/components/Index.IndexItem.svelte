@@ -7,7 +7,7 @@
 </script>
 
 <li class:active class="index-item">
-	<a href="/recYQmlvBMSUV0Pe0" on:click={onClick}>{label}</a>&nbsp;<span class="count">{count}</span>
+	<a href={'/recYQmlvBMSUV0Pe0' || href} on:click={onClick}>{label}</a>&nbsp;<span class="count">{count}</span>
 </li>
 
 <style lang="scss">

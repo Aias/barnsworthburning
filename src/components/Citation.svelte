@@ -23,30 +23,52 @@
 <div class="citation">
 	<div class="text-mono">
 		<span class="article">{article(type)}</span>
-		<span class="type">{type}</span>
+		<strong class="type">{type}</strong>
 		{#if parentIds.length > 0}
 			<span class="parent">from <a href="/{parentIds[0]}"><cite>{parentTitle}</cite></a></span>
 		{/if}
 		<span class="creators">by <CreatorList creators={creators.length > 0 ? creators : parentCreators} /></span>
+		{#if source}
+			<div class="source">
+				<a href={source} target="_blank" rel="noreferrer">{new URL(source).hostname}</a>
+			</div>
+		{/if}
 	</div>
-	{#if source}
-		<div class="source small unthemey">
-			<a href={source} target="_blank" rel="noreferrer">{new URL(source).hostname}</a>
-		</div>
-	{/if}
 </div>
 
 <style lang="scss">
 	.citation {
 		display: contents;
-		color: var(--secondary);
+		color: var(--primary);
 	}
 
 	.type {
 		text-transform: lowercase;
+		color: var(--display);
 	}
 
 	cite {
 		font-style: italic;
+	}
+
+	.source {
+		display: inline-flex;
+		white-space: nowrap;
+		padding: 0 0.5em;
+		background-color: var(--splash);
+		border: 1px solid var(--divider);
+		border-radius: 2px;
+		font-size: 0.75em;
+		line-height: inherit;
+
+		a {
+			color: var(--accent);
+			text-decoration: none;
+		}
+
+		&:hover {
+			background-color: var(--flood);
+			cursor: pointer;
+		}
 	}
 </style>

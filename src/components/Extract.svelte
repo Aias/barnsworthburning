@@ -13,7 +13,7 @@
 	$: isWork = extract.isWork;
 	$: title = extract.title;
 	$: extractContent = extract.extract;
-	$: notes = extract.notes || "Here's a test of the caption color mix.";
+	$: notes = extract.notes;
 	$: spaceIds = extract.spaces;
 	$: spaceTopics = extract.spaceTopics;
 	$: childIds = extract.children;
