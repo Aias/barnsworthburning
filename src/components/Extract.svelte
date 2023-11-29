@@ -1,6 +1,5 @@
 <script>
 	import markdown from '$helpers/markdown';
-	import zip from '$helpers/zip';
 
 	import Citation from './Citation.svelte';
 	import TopicList from './TopicList.svelte';
@@ -14,20 +13,14 @@
 	$: title = extract.title;
 	$: extractContent = extract.extract;
 	$: notes = extract.notes;
-	$: spaceIds = extract.spaces;
-	$: spaceTopics = extract.spaceTopics;
-	$: childIds = extract.children;
-	$: childTitles = extract.childTitles;
-	$: connectionIds = extract.connections;
-	$: connectionTitles = extract.connectionTitles;
 	$: images = extract.images;
 	$: imageCaption = extract.imageCaption;
 
-	$: children = zip(['id', 'name'], childIds, childTitles);
-	$: connections = zip(['id', 'name'], connectionIds, connectionTitles);
-	$: spaces = zip(['id', 'name'], spaceIds, spaceTopics);
+	$: children = extract.children;
+	$: connections = extract.connections;
+	$: spaces = extract.spaces;
 
-	$: hasRelations = childTitles || connectionTitles || spaceTopics;
+	$: hasRelations = children || connections || spaces;
 	$: nodeId = idPrefix ? `${idPrefix}--${id}` : id;
 </script>
 

@@ -1,4 +1,5 @@
 import { airtableFetch } from '$lib/server/requests';
+import { mapExtract } from '$helpers/mapping.js';
 
 export async function load({ params }) {
 	const { extractId } = params;
@@ -11,7 +12,7 @@ export async function load({ params }) {
 
 	if (records) {
 		return {
-			extracts: records,
+			extracts: records.map(mapExtract),
 			currentId: extractId
 		};
 	} else {

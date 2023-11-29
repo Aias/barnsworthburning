@@ -1,5 +1,5 @@
 <script>
-	export let items = [],
+	export let items,
 		label,
 		symbol,
 		maxChildren = 5;
@@ -8,8 +8,8 @@
 	const expandList = () => {
 		showAllChildren = true;
 	};
-	$: isTruncated = !showAllChildren && items.length > maxChildren;
-	$: displayedItems = showAllChildren ? items.slice() : items.slice(0, maxChildren);
+	$: isTruncated = !showAllChildren && items?.length > maxChildren;
+	$: displayedItems = showAllChildren ? items?.slice() : items?.slice(0, maxChildren);
 </script>
 
 {#if items?.length > 0}

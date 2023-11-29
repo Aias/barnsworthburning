@@ -1,27 +1,28 @@
 <script>
 	import { getCookie, setCookie } from '$helpers/cookies';
-	import { writable } from 'svelte/store';
 	import { onMount } from 'svelte';
 
-	const mode = writable('dark');
-	const chroma = writable('neutral');
-	const palette = writable('indigo');
-	const themes = ['indigo', 'tomato', 'amber', 'sky', 'grass'];
+	let { ...restProps } = $props();
+
+	let mode = $state('dark');
+	let chroma = $state('neutral');
+	let paletteOptions = ['indigo', 'tomato', 'amber', 'sky', 'grass'];
+	let palette = $state(paletteOptions[0]);
 
 	const toggleMode = () => {
-		mode.update((currentMode) => (currentMode === 'dark' ? 'light' : 'dark'));
-		setCookie('barnsworthburning-mode', $mode);
+		mode = mode === 'dark' ? 'light' : 'dark';
+		setCookie('barnsworthburning-mode', mode);
 	};
 	const toggleChroma = () => {
-		chroma.update((currentChroma) => (currentChroma === 'neutral' ? 'chromatic' : 'neutral'));
-		setCookie('barnsworthburning-chroma', $chroma);
+		chroma = chroma === 'neutral' ? 'chromatic' : 'neutral';
+		setCookie('barnsworthburning-chroma', chroma);
 	};
 	const setPalette = (e) => {
-		palette.set(e.target.value);
-		setCookie('barnsworthburning-palette', $palette);
+		palette = e.target.value;
+		setCookie('barnsworthburning-palette', palette);
 	};
 
-	$: themeClass = `${$mode} ${$chroma} ${$palette}`;
+	let themeClass = $derived(`${mode} ${chroma} ${palette}`);
 
 	onMount(() => {
 		const storedMode = getCookie('barnsworthburning-mode');
@@ -29,31 +30,37 @@
 		const storedPalette = getCookie('barnsworthburning-palette');
 
 		if (storedMode) {
-			$mode = storedMode;
+			mode = storedMode;
 		}
 		if (storedChroma) {
-			$chroma = storedChroma;
+			chroma = storedChroma;
 		}
 		if (storedPalette) {
-			$palette = storedPalette;
+			palette = storedPalette;
 		}
 	});
-	$: {
+	$effect.pre(() => {
 		if (typeof window !== 'undefined') {
 			document.documentElement.className = themeClass;
 		}
-	}
+	});
 </script>
 
-<header {...$$restProps}>
+<header {...restProps}>
 	<button on:click={toggleMode}>Toggle Mode</button>
 	<button on:click={toggleChroma}>Toggle Chroma</button>
 	<div class="theme-selector">
 		<span class="text-secondary">Theme:</span>
-		{#each themes as theme (theme)}
+		{#each paletteOptions as paletteKey (paletteKey)}
 			<label>
-				<input type="radio" name="theme" value={theme} on:change={setPalette} checked={$palette === theme} />
-				{theme}
+				<input
+					type="radio"
+					name="paletteKey"
+					value={paletteKey}
+					on:change={setPalette}
+					checked={palette === paletteKey}
+				/>
+				{paletteKey}
 			</label>
 		{/each}
 	</div>

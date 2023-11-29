@@ -1,135 +1,25 @@
 <script>
-	import { lastFirst } from '$helpers/names';
-	import SectionSeparator from './Index.SectionSeparator.svelte';
-	import SettingsButton from './Index.SettingsButton.svelte';
-	import IndexItem from './Index.IndexItem.svelte';
+	let { entries, class: className } = $props();
 
-	export let creators, spaces;
-
-	let selectedEntity;
-
-	let primarySort = 'alpha';
-	let entityType = 'all';
-
-	const entityFilters = [
-		{
-			label: 'Everything',
-			value: 'all'
-		},
-		{
-			label: 'Creators',
-			value: 'creator'
-		},
-		{
-			label: 'Spaces',
-			value: 'space'
-		}
-	];
-	const sortFilters = [
-		{
-			label: 'Name',
-			value: 'alpha'
-		},
-		{
-			label: 'Count',
-			value: 'count'
-		},
-		{
-			label: 'Time',
-			value: 'time'
-		}
-	];
-
-	const filterList =
-		(filter = 'all') =>
-		(node) => {
-			if (filter === 'all') {
-				return true;
-			} else {
-				return node.entity === filter;
-			}
-		};
-
-	const getTime = (obj, type = 'connections') => {
-		switch (type) {
-			case 'record':
-				return new Date(obj.lastUpdated);
-			case 'connections':
-			default:
-				return new Date(obj.lastUpdated);
-		}
-	};
-
-	const getCount = (obj) => obj.numExtracts;
-
-	const compareFields = (sort = 'alpha') => {
-		switch (sort) {
-			case 'alpha':
-				return (a, b) => {
-					const aName = (a.indexName || '').toLowerCase();
-					const bName = (b.indexName || '').toLowerCase();
-					return aName > bName ? 1 : aName < bName ? -1 : 0;
-				};
-			case 'time':
-				return (a, b) => {
-					return getTime(b) - getTime(a) === 0
-						? getTime(b, 'record') - getTime(a, 'record')
-						: getTime(b) - getTime(a);
-				};
-			case 'count':
-				return (a, b) => {
-					return getCount(b) - getCount(a);
-				};
-		}
-	};
-
-	$: index = creators
-		.map((creator) => ({
-			...creator,
-			entity: 'creator',
-			indexName: creator.sortAsIs ? creator.name : lastFirst(creator.name)
-		}))
-		.concat(spaces.map((space) => ({ ...space, entity: 'space', indexName: space.topic })))
-		.filter(filterList(entityType))
-		.sort(compareFields(primarySort));
+	let selectedEntity = $state();
 </script>
 
-<nav {...$$restProps} class:index-container={true}>
+<nav class={className} class:index-container={true}>
 	<menu class="index">
-		{#each entityFilters as filter}
-			<SettingsButton
-				selected={entityType === filter.value}
-				labelPrefix="List"
-				label={filter.label}
-				onClick={() => {
-					entityType = filter.value;
-				}}
-			/>
+		{#snippet indexEntry({ href, label, count, active, onClick})}
+		<li class:active class="index-item">
+			<a href={'/recYQmlvBMSUV0Pe0' || href} on:click={onClick}>{label}</a>&nbsp;<span class="count">{count}</span>
+		</li>
+		{/snippet}
+
+		{#snippet sectionSeparator()}
+		<li class="center text-hint">⁘&#8199;&#8199;⁘&#8199;&#8199;⁘</li>
+		{/snippet}
+
+		{#each entries as entry (entry.id)}
+			{@render indexEntry({ href: `/${entry.entity}/${entry.id}`, label: entry.label, count: entry.count, active: entry.id === selectedEntity, onClick: () => { selectedEntity = entry.id; } })}
 		{/each}
-		<SectionSeparator />
-		{#each sortFilters as filter}
-			<SettingsButton
-				selected={primarySort === filter.value}
-				labelPrefix="By"
-				label={filter.label}
-				onClick={() => {
-					primarySort = filter.value;
-				}}
-			/>
-		{/each}
-		<SectionSeparator />
-		{#each index as node (node.id)}
-			<IndexItem
-				active={node.id === selectedEntity}
-				onClick={() => {
-					selectedEntity = node.id;
-				}}
-				href={`/${node.entity}/${node.id}`}
-				label={node.indexName}
-				count={node.numExtracts}
-			/>
-		{/each}
-		<SectionSeparator />
+		{@render sectionSeparator()}
 		<li>
 			<a href="./">About</a>
 		</li>
@@ -169,5 +59,30 @@
 		padding-bottom: 1px;
 		text-indent: calc(-1 * var(--indent));
 		transition: background-color 0.25s;
+	}
+
+	.index-item {
+		.count {
+			margin-left: 1em;
+			text-align: right;
+			color: var(--secondary);
+			opacity: 0.25;
+			transition: opacity 150ms;
+		}
+		&.active {
+			background-color: var(--main);
+			:global(a) {
+				color: var(--main-contrast);
+			}
+			.count {
+				color: var(--main-contrast);
+				opacity: 0.75;
+			}
+		}
+		&:hover {
+			.count {
+				opacity: 1;
+			}
+		}
 	}
 </style>

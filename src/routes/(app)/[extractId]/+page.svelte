@@ -11,15 +11,15 @@
 	const makeChildSortFunction =
 		(childOrder = []) =>
 		(a, b) => {
-			const indexA = childOrder.indexOf(a.id);
-			const indexB = childOrder.indexOf(b.id);
+			const indexA = childOrder.findIndex((val) => val.id === a.id);
+			const indexB = childOrder.findIndex((val) => val.id === b.id);
 
 			if (indexA > indexB) return 1;
 			else return -1;
 		};
 
 	const getChildren = (extracts, parentIndex) => {
-		if (!parentExtract.children) return [];
+		if (!parentExtract.children) return undefined;
 
 		let children = [...extracts];
 		children.splice(parentIndex, 1);
@@ -44,7 +44,7 @@
 <header class="card">
 	<Extract extract={parentExtract} />
 </header>
-{#if childExtracts.length > 0}
+{#if childExtracts}
 	<ol>
 		{#each childExtracts as child (child.id)}
 			<li>

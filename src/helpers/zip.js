@@ -1,6 +1,6 @@
 export default function zip(keys = [], ...arrays) {
 	const length = arrays[0]?.length;
-	if (!length) return [];
+	if (!length) return undefined;
 	const zippedArray = [];
 
 	for (let i = 0; i < length; i++) {

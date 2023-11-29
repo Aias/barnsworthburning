@@ -1,19 +1,42 @@
 <script>
 	import '$styles/app.css';
 	import exists from '$helpers/exists';
+	import { lastFirst } from '$helpers/names';
 	import { page } from '$app/stores';
 
 	import Header from '$components/Header.svelte';
 	import Index from '$components/Index.svelte';
 
-	export let data;
+	let { data } = $props();
+	let creators = $derived(
+		data.creators.map(({ sortAsIs, name, id, lastUpdated, numExtracts, ...creator }) => ({
+			id,
+			type: 'creator',
+			label: sortAsIs ? name : lastFirst(name),
+			count: numExtracts,
+			time: new Date(lastUpdated),
+			...creator
+		}))
+	);
+	let spaces = $derived(
+		data.spaces.map(({ topic, id, numExtracts, lastUpdated, ...space }) => ({
+			id,
+			type: 'space',
+			label: topic,
+			count: numExtracts,
+			time: new Date(lastUpdated),
+			...space
+		}))
+	);
 
-	$: muteLinks = exists($page?.params.extractId);
+	let indexEntries = $derived(creators.concat(spaces).sort((a, b) => a.label.localeCompare(b.label)));
+
+	let muteLinks = $derived(exists($page?.params.extractId));
 </script>
 
 <Header class="app-header" />
 <main class="app-content">
-	<Index creators={data.creators} spaces={data.spaces} class={`index ${muteLinks ? 'unthemey' : ''}`} />
+	<Index entries={indexEntries} class={`index ${muteLinks ? 'unthemey' : ''}`} />
 	<article class="extract-panel chromatic"><slot /></article>
 </main>
 

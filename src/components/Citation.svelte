@@ -1,33 +1,21 @@
 <script>
 	import { article } from '$helpers/grammar';
-	import zip from '$helpers/zip';
 	import CreatorList from './CreatorList.svelte';
 
-	export let extract = {};
+	let { extract } = $props();
 
-	$: creatorIds = extract.creators || [];
-	$: creatorNames = extract.creatorNames || [];
-	$: parentCreatorIds = extract.parentCreators || [];
-	$: parentCreatorNames = extract.parentCreatorNames || [];
-	$: parentIds = extract.parent || [];
-	$: parentTitles = extract.parentTitle || [];
-	$: type = extract.type || 'Work';
-	$: source = extract.source;
-	$: isWork = extract.isWork;
-
-	$: creators = zip(['id', 'name'], creatorIds, creatorNames);
-	$: parentCreators = zip(['id', 'name'], parentCreatorIds, parentCreatorNames);
-	$: parentTitle = parentTitles && parentTitles[0];
+	let type = $derived(extract.type || 'Work');
+	let { parent, parentCreators, creators, source } = $derived(extract);
 </script>
 
 <div class="citation">
 	<div class="text-mono">
 		<span class="article">{article(type)}</span>
 		<strong class="type">{type}</strong>
-		{#if parentIds.length > 0}
-			<span class="parent">from <a href="/{parentIds[0]}"><cite>{parentTitle}</cite></a></span>
+		{#if parent}
+			<span class="parent">from <a href="/{parent.id}"><cite>{parent.name}</cite></a></span>
 		{/if}
-		<span class="creators">by <CreatorList creators={creators.length > 0 ? creators : parentCreators} /></span>
+		<span class="creators">by <CreatorList creators={creators ? creators : parentCreators} /></span>
 		{#if source}
 			<div class="source">
 				<a href={source} target="_blank" rel="noreferrer">{new URL(source).hostname}</a>
