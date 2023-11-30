@@ -5,9 +5,8 @@
 	let { extract } = $props();
 
 	let type = $derived(extract?.type || 'Work');
-	let creators = $derived(extract?.creators);
+	let creators = $derived(extract?.creators || extract?.parentCreators);
 	let parent = $derived(extract?.parent);
-	let parentCreators = $derived(extract?.parentCreators);
 	let source = $derived(extract?.source);
 </script>
 
@@ -18,7 +17,9 @@
 		{#if parent}
 			<span class="parent">from <a href="/{parent.id}"><cite>{parent.name}</cite></a></span>
 		{/if}
-		<span class="creators">by <CreatorList creators={creators ? creators : parentCreators} /></span>
+		{#if creators}
+			<span class="creators">by <CreatorList {creators} /></span>
+		{/if}
 		{#if source}
 			<div class="source">
 				<a href={source} target="_blank" rel="noreferrer">{new URL(source).hostname}</a>

@@ -5,23 +5,22 @@
 	import TopicList from './TopicList.svelte';
 	import RelationList from './RelationList.svelte';
 
-	export let extract,
-		idPrefix = 'extract';
+	let { extract, idPrefix = 'extract' } = $props();
 
-	$: id = extract.id;
-	$: isWork = extract.isWork;
-	$: title = extract.title;
-	$: extractContent = extract.extract;
-	$: notes = extract.notes;
-	$: images = extract.images;
-	$: imageCaption = extract.imageCaption;
+	let id = $derived(extract?.id);
+	let isWork = $derived(extract?.isWork);
+	let title = $derived(extract?.title);
+	let extractContent = $derived(extract?.extract);
+	let notes = $derived(extract?.notes);
+	let images = $derived(extract?.images?.[0]);
+	let imageCaption = $derived(extract?.imageCaption);
 
-	$: children = extract.children;
-	$: connections = extract.connections;
-	$: spaces = extract.spaces;
+	let children = $derived(extract?.children);
+	let connections = $derived(extract?.connections);
+	let spaces = $derived(extract?.spaces);
 
-	$: hasRelations = children || connections || spaces;
-	$: nodeId = idPrefix ? `${idPrefix}--${id}` : id;
+	let hasRelations = $derived(children || connections || spaces);
+	let nodeId = $derived(idPrefix ? `${idPrefix}--${id}` : id);
 </script>
 
 <article id={nodeId} class="extract {isWork ? 'extract--work' : 'extract--fragment'}">
@@ -32,9 +31,11 @@
 	{/if}
 	<figure class="extract-main">
 		{#if images}
-			<img alt="yes" />
+			<img class="extract-image" alt={images.filename} src={images.url} />
 			{#if imageCaption}
-				<p class="extract-image-caption">{imageCaption}</p>
+				<div class="extract-image-caption caption content">
+					{@html markdown.render(imageCaption)}
+				</div>
 			{/if}
 		{/if}
 		{#if extractContent}
@@ -72,6 +73,10 @@
 		flex-direction: column;
 		gap: 0.5em;
 		color: var(--display);
+	}
+
+	.extract-image {
+		border: 1px solid var(--divider);
 	}
 
 	.extract-caption {
