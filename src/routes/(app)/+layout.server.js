@@ -1,4 +1,5 @@
 import { airtableFetch } from '$lib/server/requests';
+import { mapIndex } from '$helpers/mapping';
 
 const MAX_RECORDS = 200;
 
@@ -16,9 +17,9 @@ export async function load() {
 		})
 	]);
 	if (results) {
+		const index = mapIndex(results[0], results[1]);
 		return {
-			creators: results[0],
-			spaces: results[1]
+			index
 		};
 	} else {
 		return {
