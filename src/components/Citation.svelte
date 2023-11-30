@@ -4,8 +4,11 @@
 
 	let { extract } = $props();
 
-	let type = $derived(extract.type || 'Work');
-	let { parent, parentCreators, creators, source } = $derived(extract);
+	let type = $derived(extract?.type || 'Work');
+	let creators = $derived(extract?.creators);
+	let parent = $derived(extract?.parent);
+	let parentCreators = $derived(extract?.parentCreators);
+	let source = $derived(extract?.source);
 </script>
 
 <div class="citation">

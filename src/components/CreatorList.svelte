@@ -1,9 +1,9 @@
 <script>
-	export let creators = [];
+	let { creators, ...restProps } = $props();
 </script>
 
-{#if creators?.length > 0}
-	<span {...$$restProps}>
+{#if creators}
+	<span {...restProps}>
 		{#each creators as creator, i (creator.id)}{i > 0 ? (i + 1 === creators.length ? ' & ' : ', ') : ''}
 			<a href="/creators/{creator.id}">{creator.name}</a>
 		{/each}
