@@ -1,26 +1,64 @@
 <script>
 	import '$styles/app.css';
-	import exists from '$helpers/exists';
 	import { page } from '$app/stores';
 
 	import Header from '$components/Header.svelte';
+	import Extract from '$components/Extract.svelte';
 	import Index from '$components/Index.svelte';
 
 	let { data } = $props();
 
+	let pageParams = $derived($page?.params || {});
+	let hasParams = $derived(Object.keys(pageParams).length > 0);
+	let searchParams = $derived($page.url.searchParams);
+	let creator = $derived(searchParams.get('creator'));
+	let space = $derived(searchParams.get('space'));
+
+	let gallery = $state();
+	let meta = $state();
+
 	let indexEntries = $derived(data.index.sort((a, b) => a.label.localeCompare(b.label)));
 
-	let muteLinks = $derived(exists($page?.params.extractId));
+	let muteLinks = $derived(hasParams || creator || space);
+
+	$effect(async () => {
+		if (creator) {
+			const data = await getGallery('creator', creator);
+			meta = data.creator;
+			gallery = data.gallery;
+		} else if (space) {
+			const data = await getGallery('space', space);
+			meta = data.space;
+			gallery = data.gallery;
+		}
+	});
+
+	async function getGallery(entityType, entityId) {
+		const response = await fetch(`/api/gallery/${entityType}/${entityId}`)
+			.then((r) => r.json())
+			.catch(console.error);
+		if (response) {
+			return response;
+		}
+	}
 </script>
 
 <Header class="app-header" />
 <main class="app-content">
 	<Index entries={indexEntries} class={`index ${muteLinks ? 'unthemey' : ''}`} />
+	{#if (creator || space) && gallery}
+		<div class="gallery">
+			{#each gallery as extract (extract.id)}
+				<Extract {extract} contextId="gallery" class="card" />
+			{/each}
+		</div>
+	{/if}
 	<article class="extract-panel chromatic"><slot /></article>
 </main>
 
 <style lang="scss" global>
 	.app {
+		--padding: 1.5rem;
 		display: flex;
 		flex-direction: column;
 		height: 100%;
@@ -33,20 +71,39 @@
 		gap: var(--padding);
 		height: 100%;
 		flex-grow: 1;
-		overflow: hidden;
+		overflow-x: auto;
+		overflow-y: hidden;
 		align-items: stretch;
 
 		> * {
 			overflow-y: auto;
 		}
 	}
+	.index {
+		min-width: 12rem;
+	}
+	.gallery {
+		--gallery-gap: 1rem;
+
+		flex: 0 1 100%;
+		padding-inline: calc(var(--padding) / 1.5);
+		margin-inline: calc(-1 * var(--padding) / 1.5);
+		min-width: 35ch;
+		column-width: 35ch;
+		column-gap: var(--gallery-gap);
+
+		> * {
+			margin-bottom: var(--gallery-gap);
+		}
+	}
 	.extract-panel {
 		padding: var(--padding);
 		margin: calc(-1 * var(--padding));
-		margin-left: 0;
+		margin-inline-start: 0;
 		background-color: var(--background);
 		border-left: 1px solid var(--edge);
-		width: 30rem;
+		flex: 0 1 30rem;
+		min-width: 25rem;
 
 		&:empty {
 			display: none;

@@ -25,14 +25,13 @@ const airtableFetch = async (tableName = '', options = {}) =>
 			return null;
 		});
 
-const airtableFind = async (tableName = '', recordId = '') => {
-	const record = await base
+const airtableFind = async (tableName = '', recordId = '') =>
+	base(tableName)
 		.find(recordId)
 		.then((record) => mapReceivedRecord(record))
 		.catch((error) => {
 			console.error(error);
 			return null;
 		});
-};
 
 export { airtableFetch, airtableFind };

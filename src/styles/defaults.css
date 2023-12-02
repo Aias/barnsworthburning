@@ -9,7 +9,6 @@
 
 	--reading-width-narrow: 65ch;
 	--reading-width-wide: 75ch;
-	--padding: 2rem;
 }
 
 html {
@@ -23,7 +22,6 @@ html {
 	min-height: 100vh;
 	font-family: var(--font-stack-sans);
 	font-weight: 400;
-	font-size: 16px;
 	font-feature-settings: 'liga';
 	hanging-punctuation: first last;
 	background-color: var(--background);

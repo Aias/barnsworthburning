@@ -1,3 +1,4 @@
+import { error } from '@sveltejs/kit';
 import { airtableFetch } from '$lib/server/requests';
 import { mapIndex } from '$helpers/mapping';
 
@@ -16,14 +17,12 @@ export async function load() {
 			maxRecords: MAX_RECORDS
 		})
 	]);
-	if (results) {
-		const index = mapIndex(results[0], results[1]);
-		return {
-			index
-		};
-	} else {
-		return {
-			error: 'Failed to fetch records.'
-		};
+	if (!results) {
+		throw error(404, {
+			message: 'Failed to build index.'
+		});
 	}
+
+	const index = mapIndex(results[0], results[1]);
+	return { index };
 }

@@ -16,7 +16,7 @@
 		
 		{#snippet indexEntry({ href, label, count, active, onClick})}
 		<li class:active class="index-item">
-			<a href={'/recYQmlvBMSUV0Pe0' || href} on:click={onClick}>{label}</a>&nbsp;<span class="count">{count}</span>
+			<a href={`?creator=${href}`} on:click={onClick}>{label}</a>&nbsp;<span class="count">{count}</span>
 		</li>
 		{/snippet}
 
@@ -25,7 +25,7 @@
 		{/snippet}
 
 		{#each entries as entry (entry.id)}
-			{@render indexEntry({ href: `/${entry.entity}/${entry.id}`, label: entry.label, count: entry.count, active: entry.id === selectedEntity, onClick: () => { selectedEntity = entry.id; } })}
+			{@render indexEntry({ href: entry.id, label: entry.label, count: entry.count, active: entry.id === selectedEntity, onClick: () => { selectedEntity = entry.id; } })}
 		{/each}
 		{@render sectionSeparator()}
 		<li>

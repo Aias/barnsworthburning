@@ -5,7 +5,7 @@
 	import TopicList from './TopicList.svelte';
 	import RelationList from './RelationList.svelte';
 
-	let { extract, idPrefix = 'extract' } = $props();
+	let { extract, contextId = 'panel', class: className } = $props();
 
 	let id = $derived(extract?.id);
 	let isWork = $derived(extract?.isWork);
@@ -20,10 +20,10 @@
 	let spaces = $derived(extract?.spaces);
 
 	let hasRelations = $derived(children || connections || spaces);
-	let nodeId = $derived(idPrefix ? `${idPrefix}--${id}` : id);
+	let nodeId = $derived(contextId ? `${contextId}--${id}` : id);
 </script>
 
-<article id={nodeId} class="extract {isWork ? 'extract--work' : 'extract--fragment'}">
+<article id={nodeId} class:extract class={className}>
 	{#if title}
 		<header>
 			<h2 class="extract-title">{title}</h2>

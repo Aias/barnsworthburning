@@ -1,5 +1,48 @@
 import zip from './zip';
 import { lastFirst } from './names';
+import exists from './exists';
+
+// const EXTRACT_FIELDS = [
+// 	'title',
+// 	'type',
+// 	'source',
+// 	'extract',
+// 	'creators',
+// 	'creatorNames',
+// 	'parent',
+// 	'parentTitle',
+// 	'parentCreators',
+// 	'parentCreatorNames',
+// 	'children',
+// 	'childTitles',
+// 	'numChildren',
+// 	'spaces',
+// 	'spaceTopics',
+// 	'connections',
+// 	'connectionTitles',
+// 	'starred',
+// 	'michelinStars',
+// 	'images',
+// 	'imageCaption',
+// 	'notes',
+// 	'extractedOn',
+// 	'lastUpdated',
+// 	'isWork',
+// 	'numFragments',
+// ]
+
+const mapCreator = (creator = {}) => {
+	const { extracts: extractIds, extractTitles, spaceIds, spaceTopics, ...rest } = creator;
+
+	const extracts = zip(['id', 'name'], extractIds, extractTitles);
+	const spaces = zip(['id', 'name'], spaceIds.filter(exists), spaceTopics.filter(exists));
+
+	return {
+		...rest,
+		extracts,
+		spaces
+	};
+};
 
 const mapExtract = (extract = {}) => {
 	const {
@@ -26,7 +69,7 @@ const mapExtract = (extract = {}) => {
 	const connections = zip(['id', 'name'], connectionIds, connectionTitles);
 
 	return {
-		...extract,
+		...rest,
 		creators: creators,
 		parentCreators: parentCreators,
 		spaces: spaces,
@@ -55,4 +98,4 @@ const mapIndex = (creators = [], spaces = []) => {
 	return creatorMap.concat(spacesMap);
 };
 
-export { mapExtract, mapIndex };
+export { mapExtract, mapCreator, mapIndex };
