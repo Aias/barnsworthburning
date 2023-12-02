@@ -5,7 +5,15 @@
 </script>
 
 <nav class={className} class:index-container={true}>
-	<menu class="index">
+	<menu>
+		{#snippet settingsItem({ active, labelPrefix, label, onClick})}
+		<li class:active class="settings-item unthemey">
+			<button class="settings-button link" on:click={onClick}>
+				<span class="label-prefix">{labelPrefix}</span>{label}
+			</button>
+		</li>
+		{/snippet}
+		
 		{#snippet indexEntry({ href, label, count, active, onClick})}
 		<li class:active class="index-item">
 			<a href={'/recYQmlvBMSUV0Pe0' || href} on:click={onClick}>{label}</a>&nbsp;<span class="count">{count}</span>
@@ -51,7 +59,7 @@
 		font-size: var(--font-size-small);
 	}
 
-	.index > :global(li) {
+	menu > li {
 		--indent: 1em;
 		padding-left: calc(var(--indent) + var(--cantilever));
 		padding-right: var(--cantilever);
@@ -59,6 +67,29 @@
 		padding-bottom: 1px;
 		text-indent: calc(-1 * var(--indent));
 		transition: background-color 0.25s;
+	}
+
+	.settings-item {
+		.settings-button {
+			white-space: nowrap;
+			text-decoration: none;
+		}
+		.label-prefix {
+			padding-right: 1ch;
+			visibility: hidden;
+		}
+
+		&.active {
+			border-left: var(--border-width) solid var(--main);
+			margin-left: calc(-1 * var(--border-width));
+			.settings-button {
+				color: var(--link);
+				font-weight: 500;
+			}
+			.label-prefix {
+				visibility: visible;
+			}
+		}
 	}
 
 	.index-item {

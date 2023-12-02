@@ -1,5 +1,5 @@
 <script>
-	export let status, error;
+	let { status, error } = $props();
 
 	const dev = process.env.NODE_ENV === 'development';
 </script>

@@ -1,15 +1,17 @@
 <script>
-	export let items,
-		label,
-		symbol,
-		maxChildren = 5;
+	let { items, label, symbol, maxChildren = 5 } = $props();
 
-	let showAllChildren = false;
+	let showAllChildren = $state(false);
 	const expandList = () => {
 		showAllChildren = true;
 	};
-	$: isTruncated = !showAllChildren && items?.length > maxChildren;
-	$: displayedItems = showAllChildren ? items?.slice() : items?.slice(0, maxChildren);
+	let isTruncated = $derived(!showAllChildren && items?.length > maxChildren);
+	let displayedItems = $derived(showAllChildren ? items?.slice() : items?.slice(0, maxChildren));
+
+	$effect(() => {
+		items;
+		showAllChildren = false;
+	});
 </script>
 
 {#if items?.length > 0}
