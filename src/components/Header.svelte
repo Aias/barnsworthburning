@@ -39,7 +39,7 @@
 			palette = storedPalette;
 		}
 	});
-	$effect.pre(() => {
+	$effect(() => {
 		if (typeof window !== 'undefined') {
 			document.documentElement.className = themeClass;
 		}
