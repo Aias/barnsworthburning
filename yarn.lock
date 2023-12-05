@@ -435,9 +435,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/kit@npm:^1.27.6":
-  version: 1.27.6
-  resolution: "@sveltejs/kit@npm:1.27.6"
+"@sveltejs/kit@npm:^1.27.7":
+  version: 1.27.7
+  resolution: "@sveltejs/kit@npm:1.27.7"
   dependencies:
     "@sveltejs/vite-plugin-svelte": ^2.5.0
     "@types/cookie": ^0.5.1
@@ -457,7 +457,7 @@ __metadata:
     vite: ^4.0.0
   bin:
     svelte-kit: svelte-kit.js
-  checksum: 6c2ed98f15da0fc837fc00ff7d76929ebf600c0031a6e5341cb5d6cd8a310b83a30bb0268e6a67268e833f2ecdc5accd3b8ab950a6382b679d3d660759de20b8
+  checksum: 48016158758f93e96efa11af464baae1294f333bddf135d01eada73db2decfddf42012151235e49b2dc7b18d7df056e1b9a62319b6cf5f043d54a60c4e64e58f
   languageName: node
   linkType: hard
 
@@ -729,15 +729,15 @@ __metadata:
   dependencies:
     "@radix-ui/colors": ^3.0.0
     "@sveltejs/adapter-node": ^1.3.1
-    "@sveltejs/kit": ^1.27.6
+    "@sveltejs/kit": ^1.27.7
     airtable: ^0.12.2
     normalize.css: ^8.0.1
     remarkable: ^2.0.1
     remarkable-meta: ^1.0.1
     sass: ^1.69.5
-    svelte: ^5.0.0-next.17
+    svelte: ^5.0.0-next.18
     svelte-preprocess: ^5.1.1
-    vite: ^5.0.4
+    vite: ^5.0.5
   languageName: unknown
   linkType: soft
 
@@ -1809,12 +1809,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^3.3.6":
-  version: 3.3.6
-  resolution: "nanoid@npm:3.3.6"
+"nanoid@npm:^3.3.7":
+  version: 3.3.7
+  resolution: "nanoid@npm:3.3.7"
   bin:
     nanoid: bin/nanoid.cjs
-  checksum: 7d0eda657002738aa5206107bd0580aead6c95c460ef1bdd0b1a87a9c7ae6277ac2e9b945306aaa5b32c6dcb7feaf462d0f552e7f8b5718abfc6ead5c94a71b3
+  checksum: d36c427e530713e4ac6567d488b489a36582ef89da1d6d4e3b87eded11eb10d7042a877958c6f104929809b2ab0bafa17652b076cdf84324aa75b30b722204f2
   languageName: node
   linkType: hard
 
@@ -1960,14 +1960,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.31":
-  version: 8.4.31
-  resolution: "postcss@npm:8.4.31"
+"postcss@npm:^8.4.32":
+  version: 8.4.32
+  resolution: "postcss@npm:8.4.32"
   dependencies:
-    nanoid: ^3.3.6
+    nanoid: ^3.3.7
     picocolors: ^1.0.0
     source-map-js: ^1.0.2
-  checksum: 1d8611341b073143ad90486fcdfeab49edd243377b1f51834dc4f6d028e82ce5190e4f11bb2633276864503654fb7cab28e67abdc0fbf9d1f88cad4a0ff0beea
+  checksum: 220d9d0bf5d65be7ed31006c523bfb11619461d296245c1231831f90150aeb4a31eab9983ac9c5c89759a3ca8b60b3e0d098574964e1691673c3ce5c494305ae
   languageName: node
   linkType: hard
 
@@ -2440,9 +2440,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte@npm:^5.0.0-next.17":
-  version: 5.0.0-next.17
-  resolution: "svelte@npm:5.0.0-next.17"
+"svelte@npm:^5.0.0-next.18":
+  version: 5.0.0-next.18
+  resolution: "svelte@npm:5.0.0-next.18"
   dependencies:
     "@ampproject/remapping": ^2.2.1
     "@jridgewell/sourcemap-codec": ^1.4.15
@@ -2456,7 +2456,7 @@ __metadata:
     locate-character: ^3.0.0
     magic-string: ^0.30.4
     zimmerframe: ^1.1.0
-  checksum: 8d0c14ce986fc19ad89bbf4f3ddcba43c53f9476a04cfccdd5fdc8f86aeb691f6713cbf4d362630e8124d3cd3246f22280201f304300eb32c437d592b1ace585
+  checksum: b3536dde10b29c75bd28564ee4657aa146c648694246a56582218c5536905bd7432bcbed236d343508b91e781e867e452048838ed5ae2f6bb4ee880fd984fe70
   languageName: node
   linkType: hard
 
@@ -2548,13 +2548,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.0.4":
-  version: 5.0.4
-  resolution: "vite@npm:5.0.4"
+"vite@npm:^5.0.5":
+  version: 5.0.5
+  resolution: "vite@npm:5.0.5"
   dependencies:
     esbuild: ^0.19.3
     fsevents: ~2.3.3
-    postcss: ^8.4.31
+    postcss: ^8.4.32
     rollup: ^4.2.0
   peerDependencies:
     "@types/node": ^18.0.0 || >=20.0.0
@@ -2584,7 +2584,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: baa088f02f610bf0c7e48931e693781dae7367c1836ed19c202aace0e90fa5f6156669f562ba466585f3fdc50d9d75e82697456e1529cc8c2880af420a010ef3
+  checksum: 8df70302934de39ad6fda4f28246e07850f849c2bd197b7af93615f5f39955be460dd19940a46ec5bf2adf81bc32b60985eb5990142212754c733eba4fe3bfa3
   languageName: node
   linkType: hard
 
