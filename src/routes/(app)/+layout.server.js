@@ -7,7 +7,7 @@ const MAX_RECORDS = 200;
 export async function load() {
 	const results = await Promise.all([
 		airtableFetch('creators', {
-			fields: ['name', 'numExtracts', 'lastUpdated', 'sortAsIs'],
+			fields: ['name', 'numExtracts', 'lastUpdated'],
 			view: 'By Count',
 			maxRecords: MAX_RECORDS
 		}),

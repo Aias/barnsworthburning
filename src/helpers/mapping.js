@@ -1,41 +1,11 @@
 import zip from './zip';
-import { lastFirst } from './names';
 import exists from './exists';
 
-// const EXTRACT_FIELDS = [
-// 	'title',
-// 	'type',
-// 	'source',
-// 	'extract',
-// 	'creators',
-// 	'creatorNames',
-// 	'parent',
-// 	'parentTitle',
-// 	'parentCreators',
-// 	'parentCreatorNames',
-// 	'children',
-// 	'childTitles',
-// 	'numChildren',
-// 	'spaces',
-// 	'spaceTopics',
-// 	'connections',
-// 	'connectionTitles',
-// 	'starred',
-// 	'michelinStars',
-// 	'images',
-// 	'imageCaption',
-// 	'notes',
-// 	'extractedOn',
-// 	'lastUpdated',
-// 	'isWork',
-// 	'numFragments',
-// ]
-
 const mapCreator = (creator = {}) => {
-	const { extracts: extractIds, extractTitles, spaceIds, spaceTopics, ...rest } = creator;
+	const { extractIds, extractTitles, spaceIds, spaceTopics, ...rest } = creator;
 
-	const extracts = zip(['id', 'name'], extractIds, extractTitles);
-	const spaces = zip(['id', 'name'], spaceIds.filter(exists), spaceTopics.filter(exists));
+	const extracts = extractIds ? zip(['id', 'name'], extractIds, extractTitles) : null;
+	const spaces = spaceIds ? zip(['id', 'name'], spaceIds.filter(exists), spaceTopics.filter(exists)) : null;
 
 	return {
 		...rest,
@@ -44,19 +14,30 @@ const mapCreator = (creator = {}) => {
 	};
 };
 
+const mapSpace = (space = {}) => {
+	const { extractIds, extractTitles, ...rest } = space;
+
+	const extracts = extractIds ? zip(['id', 'name'], extractIds, extractTitles) : null;
+
+	return {
+		...rest,
+		extracts
+	};
+};
+
 const mapExtract = (extract = {}) => {
 	const {
-		creators: creatorIds,
+		creatorIds,
 		creatorNames,
-		parent: parentIds,
+		parentId: parentIds,
 		parentTitle: parentTitles,
-		parentCreators: parentCreatorIds,
+		parentCreatorIds,
 		parentCreatorNames,
-		spaces: spaceIds,
+		spaceIds,
 		spaceTopics,
-		children: childIds,
+		childIds,
 		childTitles,
-		connections: connectionIds,
+		connectionIds,
 		connectionTitles,
 		...rest
 	} = extract;
@@ -80,10 +61,10 @@ const mapExtract = (extract = {}) => {
 };
 
 const mapIndex = (creators = [], spaces = []) => {
-	let creatorMap = creators.map(({ sortAsIs, name, id, lastUpdated, numExtracts, ...creator }) => ({
+	let creatorMap = creators.map(({ name, id, numExtracts, lastUpdated, ...creator }) => ({
 		id,
 		type: 'creator',
-		label: sortAsIs ? name : lastFirst(name),
+		label: name,
 		count: numExtracts,
 		time: new Date(lastUpdated)
 	}));
@@ -98,4 +79,4 @@ const mapIndex = (creators = [], spaces = []) => {
 	return creatorMap.concat(spacesMap);
 };
 
-export { mapExtract, mapCreator, mapIndex };
+export { mapExtract, mapCreator, mapSpace, mapIndex };
