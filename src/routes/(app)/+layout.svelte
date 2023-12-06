@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 
 	import Header from '$components/Header.svelte';
-	import Extract from '$components/Extract.svelte';
+	import Gallery from '$components/Gallery.svelte';
 	import Index from '$components/Index.svelte';
 
 	let { data } = $props();
@@ -46,12 +46,8 @@
 <Header class="app-header" />
 <main class="app-content">
 	<Index entries={indexEntries} class={`index ${muteLinks ? 'unthemey' : ''}`} />
-	{#if (creator || space) && gallery}
-		<div class="gallery">
-			{#each gallery as extract (extract.id)}
-				<Extract {extract} contextId="gallery" class="card" />
-			{/each}
-		</div>
+	{#if creator || space}
+		<Gallery {gallery} {meta} class="gallery" />
 	{/if}
 	<article class="extract-panel chromatic"><slot /></article>
 </main>
@@ -83,18 +79,7 @@
 		min-width: 12rem;
 	}
 	.gallery {
-		--gallery-gap: 1rem;
-
 		flex: 0 1 100%;
-		padding-inline: calc(var(--padding) / 1.5);
-		margin-inline: calc(-1 * var(--padding) / 1.5);
-		min-width: 35ch;
-		column-width: 35ch;
-		column-gap: var(--gallery-gap);
-
-		> * {
-			margin-bottom: var(--gallery-gap);
-		}
 	}
 	.extract-panel {
 		padding: var(--padding);

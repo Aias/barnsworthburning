@@ -43,11 +43,11 @@ const mapExtract = (extract = {}) => {
 	} = extract;
 
 	const creators = zip(['id', 'name'], creatorIds, creatorNames);
-	const parentCreators = zip(['id', 'name'], parentCreatorIds, parentCreatorNames);
-	const spaces = zip(['id', 'name'], spaceIds, spaceTopics);
 	const parents = zip(['id', 'name'], parentIds, parentTitles);
+	const parentCreators = zip(['id', 'name'], parentCreatorIds, parentCreatorNames);
 	const children = zip(['id', 'name'], childIds, childTitles);
 	const connections = zip(['id', 'name'], connectionIds, connectionTitles);
+	const spaces = zip(['id', 'name'], spaceIds, spaceTopics);
 
 	return {
 		...rest,
