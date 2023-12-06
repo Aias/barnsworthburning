@@ -7,7 +7,7 @@
 
 	let { extract, contextId = 'panel', class: className } = $props();
 
-	extract;
+	extract; // I do not know why this declaration is necessary, but it appears to prevent errors when a prop is updated via an async API call.
 
 	let id = $derived(extract?.id);
 	let title = $derived(extract?.title);

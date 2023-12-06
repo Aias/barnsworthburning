@@ -51,12 +51,12 @@ const mapExtract = (extract = {}) => {
 
 	return {
 		...rest,
-		creators: creators,
-		parentCreators: parentCreators,
-		spaces: spaces,
+		creators,
 		parent: parents?.[0],
-		children: children,
-		connections: connections
+		parentCreators,
+		children,
+		connections,
+		spaces
 	};
 };
 

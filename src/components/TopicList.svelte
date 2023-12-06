@@ -5,7 +5,7 @@
 {#if topics?.length > 0}
 	<ul class="tag-list">
 		{#each topics as topic (topic.id)}
-			<li class="tag"><a href="/spaces/{topic.id}">{topic.name}</a></li>
+			<li class="tag"><a href="?space={topic.id}">{topic.name}</a></li>
 		{/each}
 	</ul>
 {/if}

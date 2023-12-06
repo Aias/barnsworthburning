@@ -88,7 +88,7 @@
 		background-color: var(--background);
 		border-left: 1px solid var(--edge);
 		flex: 0 1 30rem;
-		min-width: 25rem;
+		min-width: 30rem;
 
 		&:empty {
 			display: none;
