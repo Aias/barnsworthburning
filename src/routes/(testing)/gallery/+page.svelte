@@ -8,15 +8,15 @@
 	let creator = $derived(searchParams.get('creator'));
 	let space = $derived(searchParams.get('space'));
 
-	let gallery = $state([]);
+	let gallery = $state();
 
 	$effect(async () => {
 		if (creator) {
 			const data = await getGallery('creator', creator);
-			gallery = [...data.gallery];
+			gallery = data.gallery;
 		} else if (space) {
 			const data = await getGallery('space', space);
-			gallery = [...data.gallery];
+			gallery = data.gallery;
 		}
 	});
 
@@ -36,7 +36,7 @@
 	<li><a href="?creator=rec97tRUYZBhAs6rZ">Nick Trombley</a></li>
 </ul>
 
-{#if creator && gallery.length > 0}
+{#if creator && gallery}
 	<Component extract={gallery[0]} />
 {:else}
 	<Component />
