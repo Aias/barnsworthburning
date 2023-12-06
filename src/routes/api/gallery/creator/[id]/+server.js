@@ -1,4 +1,4 @@
-import { error } from '@sveltejs/kit';
+import { error, json } from '@sveltejs/kit';
 import { airtableFetch, airtableFind } from '$lib/server/requests.js';
 import { mapExtract, mapCreator } from '$helpers/mapping.js';
 
@@ -33,5 +33,5 @@ export async function GET({ params }) {
 		gallery: extracts?.map(mapExtract)
 	};
 
-	return new Response(JSON.stringify(data));
+	return json(data);
 }
