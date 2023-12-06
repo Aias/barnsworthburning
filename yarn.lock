@@ -735,7 +735,7 @@ __metadata:
     remarkable: ^2.0.1
     remarkable-meta: ^1.0.1
     sass: ^1.69.5
-    svelte: ^5.0.0-next.18
+    svelte: ^5.0.0-next.19
     svelte-preprocess: ^5.1.1
     vite: ^5.0.5
   languageName: unknown
@@ -2440,9 +2440,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte@npm:^5.0.0-next.18":
-  version: 5.0.0-next.18
-  resolution: "svelte@npm:5.0.0-next.18"
+"svelte@npm:^5.0.0-next.19":
+  version: 5.0.0-next.19
+  resolution: "svelte@npm:5.0.0-next.19"
   dependencies:
     "@ampproject/remapping": ^2.2.1
     "@jridgewell/sourcemap-codec": ^1.4.15
@@ -2456,7 +2456,7 @@ __metadata:
     locate-character: ^3.0.0
     magic-string: ^0.30.4
     zimmerframe: ^1.1.0
-  checksum: b3536dde10b29c75bd28564ee4657aa146c648694246a56582218c5536905bd7432bcbed236d343508b91e781e867e452048838ed5ae2f6bb4ee880fd984fe70
+  checksum: f48a2ecbb4b91f4aa577e08c61ccaba9d7d651e5bf1ece64963524cd91c0b23bd80ed057f80ad59755521514b0b44da20defd6c8f9827f4996f40abc8eb36781
   languageName: node
   linkType: hard
 

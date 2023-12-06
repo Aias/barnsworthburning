@@ -1,10 +1,11 @@
 <script>
 	import Extract from './Extract.svelte';
 	let { gallery, meta, class: className } = $props();
+	let layout = 'layout';
 </script>
 
 {#if gallery}
-	<div class="layout" class={className}>
+	<div class:layout class={className}>
 		{#each gallery as extract (extract.id)}
 			<Extract {extract} contextId="gallery" class="card" />
 		{/each}

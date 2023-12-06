@@ -41,7 +41,7 @@
 </nav>
 
 <style lang="scss">
-	nav {
+	.index-container {
 		--cantilever: 0.5rem;
 		--border-width: 0.25rem;
 		flex: 1;
