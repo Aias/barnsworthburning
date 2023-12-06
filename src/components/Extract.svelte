@@ -7,6 +7,8 @@
 
 	let { extract, contextId = 'panel', class: className } = $props();
 
+	extract;
+
 	let id = $derived(extract?.id);
 	let title = $derived(extract?.title);
 	let extractContent = $derived(extract?.extract);

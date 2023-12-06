@@ -2,7 +2,7 @@
 	import '$styles/app.css';
 	import { page } from '$app/stores';
 
-	import Component from './Component.svelte';
+	import Extract from '$components/Extract.svelte';
 
 	let searchParams = $derived($page.url.searchParams);
 	let creator = $derived(searchParams.get('creator'));
@@ -36,8 +36,20 @@
 	<li><a href="?creator=rec97tRUYZBhAs6rZ">Nick Trombley</a></li>
 </ul>
 
-{#if creator && gallery}
-	{#each gallery as extract (extract.id)}
-		<Component {extract} />
-	{/each}
-{/if}
+<div class="layout">
+	{#if creator && gallery}
+		{#each gallery as extract (extract.id)}
+			<!-- <Component {extract} /> -->
+			<Extract {extract} class="card" />
+		{/each}
+	{/if}
+</div>
+
+<style>
+	.layout {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		padding: 1rem;
+	}
+</style>
