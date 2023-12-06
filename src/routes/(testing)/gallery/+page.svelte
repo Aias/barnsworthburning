@@ -37,7 +37,7 @@
 </ul>
 
 {#if creator && gallery}
-	<Component extract={gallery[0]} />
-{:else}
-	<Component />
+	{#each gallery as extract (extract.id)}
+		<Component {extract} />
+	{/each}
 {/if}
