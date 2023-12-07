@@ -1,10 +1,10 @@
 <script>
 	import Extract from './Extract.svelte';
-	const { gallery, meta, class: className } = $props();
+	const { gallery, meta, componentClass } = $props();
 </script>
 
 {#if gallery}
-	<div class={className} class:gallery>
+	<div class={componentClass} class:gallery>
 		<header class="gallery-meta">
 			{#snippet creatorMeta({ name, profession, organization, site, nationality })}
 			<h1>{name}</h1>
@@ -22,7 +22,7 @@
 		</header>
 		<div class="gallery-grid">
 			{#each gallery as extract (extract.id)}
-				<Extract {extract} contextId="gallery" class="card" />
+				<Extract {extract} contextId="gallery" componentClass="card" />
 			{/each}
 		</div>	
 	</div>

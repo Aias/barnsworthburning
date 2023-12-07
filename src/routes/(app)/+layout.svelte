@@ -17,7 +17,7 @@
 	let gallery = $state();
 	let meta = $state();
 
-	const indexEntries = $derived(data.index.sort((a, b) => a.label.localeCompare(b.label)));
+	const indexEntries = $derived(data?.index ? [...data.index].sort((a, b) => a.label.localeCompare(b.label)) : []);
 
 	const muteLinks = $derived(hasPageParams || creator || space);
 
@@ -51,9 +51,9 @@
 
 <Header class="app-header" />
 <main class="app-content">
-	<Index entries={indexEntries} class={`index ${muteLinks ? 'unthemey' : ''}`} />
+	<Index entries={indexEntries} componentClass={`index ${muteLinks ? 'unthemey' : ''}`} />
 	{#if creator || space}
-		<Gallery {gallery} {meta} class="gallery" />
+		<Gallery {gallery} {meta} componentClass="gallery" />
 	{/if}
 	<article class="extract-panel chromatic"><slot /></article>
 </main>

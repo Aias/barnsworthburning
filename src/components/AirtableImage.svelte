@@ -1,9 +1,7 @@
 <script>
-	const { image } = $props();
+	const { image = {} } = $props();
 
 	image;
-
-	$inspect(image);
 
 	const thumbnailLarge = $derived(image?.thumbnails?.large);
 	const img = $derived(thumbnailLarge || image);
