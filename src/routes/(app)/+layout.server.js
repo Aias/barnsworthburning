@@ -21,6 +21,7 @@ export async function load() {
 		throw error(404, {
 			message: 'Failed to build index.'
 		});
+		return null;
 	}
 
 	const index = mapIndex(results[0], results[1]);

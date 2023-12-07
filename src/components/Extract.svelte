@@ -4,6 +4,7 @@
 	import Citation from './Citation.svelte';
 	import TopicList from './TopicList.svelte';
 	import RelationList from './RelationList.svelte';
+	import AirtableImage from './AirtableImage.svelte';
 
 	const { extract, contextId = 'panel', class: className } = $props();
 
@@ -13,7 +14,7 @@
 	const title = $derived(extract?.title);
 	const extractContent = $derived(extract?.extract);
 	const notes = $derived(extract?.notes);
-	const images = $derived(extract?.images?.[0]);
+	const images = $derived(extract?.images);
 	const imageCaption = $derived(extract?.imageCaption);
 
 	const children = $derived(extract?.children);
@@ -32,7 +33,7 @@
 	{/if}
 	<figure class="extract-main">
 		{#if images}
-			<img class="extract-image" alt={images.filename} src={images.url} />
+			<AirtableImage image={images[0]} />
 			{#if imageCaption}
 				<div class="extract-image-caption caption content">
 					{@html markdown.render(imageCaption)}

@@ -15,6 +15,7 @@ export async function load({ params }) {
 		throw error(404, {
 			message: 'Failed to load extract.'
 		});
+		return null;
 	}
 
 	return {
