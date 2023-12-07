@@ -1,22 +1,15 @@
 <script>
-	let { entries, class: className } = $props();
+	import Link from './Link.svelte';
+	const { entries, class: className } = $props();
 
 	let selectedEntity = $state();
 </script>
 
 <nav class={className} class:index-container={true}>
-	<menu>
-		{#snippet settingsItem({ active, labelPrefix, label, onClick})}
-		<li class:active class="settings-item unthemey">
-			<button class="settings-button link" on:click={onClick}>
-				<span class="label-prefix">{labelPrefix}</span>{label}
-			</button>
-		</li>
-		{/snippet}
-		
-		{#snippet indexEntry({ type, id, label, count, active, onClick})}
-		<li class:active class="index-item">
-			<a href={`?${type}=${id}`} on:click={onClick}>{label}</a>&nbsp;<span class="count">{count}</span>
+	<menu>	
+		{#snippet indexEntry({ type, id, label, count })}
+		<li class="index-item">
+			<Link toCreator={type === 'creator' ? id : undefined} toSpace={type === 'space' ? id : undefined}>{label}</Link>&nbsp;<span class="count">{count}</span>
 		</li>
 		{/snippet}
 
@@ -29,7 +22,7 @@
 		{/each}
 		{@render sectionSeparator()}
 		<li>
-			<a href="./">About</a>
+			<a href="/about">About</a>
 		</li>
 		<li>
 			<a href="/feed.xml" target="_blank" rel="noreferrer">RSS Feed</a>
@@ -100,7 +93,12 @@
 			opacity: 0.25;
 			transition: opacity 150ms;
 		}
-		&.active {
+		&:hover {
+			.count {
+				opacity: 1;
+			}
+		}
+		&:has(.active) {
 			background-color: var(--main);
 			:global(a) {
 				color: var(--main-contrast);
@@ -108,11 +106,6 @@
 			.count {
 				color: var(--main-contrast);
 				opacity: 0.75;
-			}
-		}
-		&:hover {
-			.count {
-				opacity: 1;
 			}
 		}
 	}

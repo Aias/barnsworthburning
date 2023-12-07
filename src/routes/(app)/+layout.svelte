@@ -6,29 +6,35 @@
 	import Gallery from '$components/Gallery.svelte';
 	import Index from '$components/Index.svelte';
 
-	let { data } = $props();
+	const { data } = $props();
 
-	let pageParams = $derived($page?.params || {});
-	let hasParams = $derived(Object.keys(pageParams).length > 0);
-	let searchParams = $derived($page.url.searchParams);
-	let creator = $derived(searchParams.get('creator'));
-	let space = $derived(searchParams.get('space'));
+	const pageParams = $derived($page?.params || {});
+	const hasPageParams = $derived(Object.keys(pageParams).length > 0);
+	const searchParams = $derived($page.url.searchParams);
+	const creator = $derived(searchParams.get('creator'));
+	const space = $derived(searchParams.get('space'));
 
 	let gallery = $state();
 	let meta = $state();
 
-	let indexEntries = $derived(data.index.sort((a, b) => a.label.localeCompare(b.label)));
+	const indexEntries = $derived(data.index.sort((a, b) => a.label.localeCompare(b.label)));
 
-	let muteLinks = $derived(hasParams || creator || space);
+	const muteLinks = $derived(hasPageParams || creator || space);
 
 	$effect(async () => {
 		if (creator) {
 			const data = await getGallery('creator', creator);
-			meta = data.creator;
+			meta = {
+				type: 'creator',
+				creator: data.creator
+			};
 			gallery = data.gallery;
 		} else if (space) {
 			const data = await getGallery('space', space);
-			meta = data.space;
+			meta = {
+				type: 'space',
+				space: data.space
+			};
 			gallery = data.gallery;
 		}
 	});
@@ -88,7 +94,7 @@
 		background-color: var(--background);
 		border-left: 1px solid var(--edge);
 		flex: 0 1 30rem;
-		min-width: 30rem;
+		min-width: 26rem;
 
 		&:empty {
 			display: none;

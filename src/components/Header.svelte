@@ -2,7 +2,7 @@
 	import { getCookie, setCookie } from '$helpers/cookies';
 	import { onMount } from 'svelte';
 
-	let { ...restProps } = $props();
+	const { ...restProps } = $props();
 
 	let mode = $state('dark');
 	let chroma = $state('neutral');
@@ -22,7 +22,7 @@
 		setCookie('barnsworthburning-palette', palette);
 	};
 
-	let themeClass = $derived(`${mode} ${chroma} ${palette}`);
+	const themeClass = $derived(`${mode} ${chroma} ${palette}`);
 
 	onMount(() => {
 		const storedMode = getCookie('barnsworthburning-mode');

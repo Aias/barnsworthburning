@@ -4,9 +4,9 @@
 
 	import Extract from '$components/Extract.svelte';
 
-	let searchParams = $derived($page.url.searchParams);
-	let creator = $derived(searchParams.get('creator'));
-	let space = $derived(searchParams.get('space'));
+	const searchParams = $derived($page.url.searchParams);
+	const creator = $derived(searchParams.get('creator'));
+	const space = $derived(searchParams.get('space'));
 
 	let gallery = $state();
 

@@ -5,23 +5,23 @@
 	import TopicList from './TopicList.svelte';
 	import RelationList from './RelationList.svelte';
 
-	let { extract, contextId = 'panel', class: className } = $props();
+	const { extract, contextId = 'panel', class: className } = $props();
 
 	extract; // I do not know why this declaration is necessary, but it appears to prevent errors when a prop is updated via an async API call.
 
-	let id = $derived(extract?.id);
-	let title = $derived(extract?.title);
-	let extractContent = $derived(extract?.extract);
-	let notes = $derived(extract?.notes);
-	let images = $derived(extract?.images?.[0]);
-	let imageCaption = $derived(extract?.imageCaption);
+	const id = $derived(extract?.id);
+	const title = $derived(extract?.title);
+	const extractContent = $derived(extract?.extract);
+	const notes = $derived(extract?.notes);
+	const images = $derived(extract?.images?.[0]);
+	const imageCaption = $derived(extract?.imageCaption);
 
-	let children = $derived(extract?.children);
-	let connections = $derived(extract?.connections);
-	let spaces = $derived(extract?.spaces);
+	const children = $derived(extract?.children);
+	const connections = $derived(extract?.connections);
+	const spaces = $derived(extract?.spaces);
 
-	let hasRelations = $derived(children || connections || spaces);
-	let nodeId = $derived(contextId ? `${contextId}--${id}` : id);
+	const hasRelations = $derived(children || connections || spaces);
+	const nodeId = $derived(contextId ? `${contextId}--${id}` : id);
 </script>
 
 <article id={nodeId} class:extract class={className}>

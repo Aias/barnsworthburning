@@ -1,20 +1,47 @@
 <script>
 	import Extract from './Extract.svelte';
-	let { gallery, meta, class: className } = $props();
+	const { gallery, meta, class: className } = $props();
 </script>
 
 {#if gallery}
-	<div class={className}>
-		{#each gallery as extract (extract.id)}
-			<Extract {extract} contextId="gallery" class="card" />
-		{/each}
+	<div class={className} class:gallery>
+		<header class="gallery-meta">
+			{#snippet creatorMeta({ name, profession, organization, site, nationality })}
+			<h1>{name}</h1>
+			{/snippet}
+
+			{#snippet spaceMeta({ topic, icon, title, description })}
+			<h1>{topic}</h1>
+			{/snippet}
+
+			{#if meta?.type === 'creator'}
+			{@render creatorMeta(meta.creator)}
+			{:else if meta?.type === 'space'}
+			{@render spaceMeta(meta.space)}
+			{/if}
+		</header>
+		<div class="gallery-grid">
+			{#each gallery as extract (extract.id)}
+				<Extract {extract} contextId="gallery" class="card" />
+			{/each}
+		</div>	
 	</div>
 {:else}
 	<progress />
 {/if}
 
 <style lang="scss">
-	div {
+	.gallery {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+	.gallery-meta {
+		h1 {
+			text-transform: capitalize;
+		}
+	}
+	.gallery-grid {
 		--gallery-gap: 1rem;
 
 		padding-inline: calc(var(--padding) / 1.5);

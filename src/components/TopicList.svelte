@@ -1,11 +1,12 @@
 <script>
-	let { topics = [] } = $props();
+	import Link from './Link.svelte';
+	const { topics } = $props();
 </script>
 
-{#if topics?.length > 0}
+{#if topics}
 	<ul class="tag-list">
 		{#each topics as topic (topic.id)}
-			<li class="tag"><a href="?space={topic.id}">{topic.name}</a></li>
+			<li class="tag"><Link toSpace={topic.id}>{topic.name}</Link></li>
 		{/each}
 	</ul>
 {/if}

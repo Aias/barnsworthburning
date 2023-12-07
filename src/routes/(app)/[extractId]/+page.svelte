@@ -1,13 +1,13 @@
 <script>
 	import Extract from '$components/Extract.svelte';
 
-	let { data } = $props();
+	const { data } = $props();
 
-	let extracts = $derived(data.extracts || []);
-	let currentId = $derived(data.currentId);
+	const extracts = $derived(data.extracts || []);
+	const currentId = $derived(data.currentId);
 
-	let parentExtract = $derived(extracts.find((e) => e.id === currentId));
-	let childExtracts = $derived(parentExtract?.children?.map((c) => extracts.find((e) => e.id === c.id)));
+	const parentExtract = $derived(extracts.find((e) => e.id === currentId));
+	const childExtracts = $derived(parentExtract?.children?.map((c) => extracts.find((e) => e.id === c.id)));
 </script>
 
 {#if parentExtract}

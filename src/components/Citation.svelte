@@ -1,13 +1,14 @@
 <script>
 	import { article } from '$helpers/grammar';
 	import CreatorList from './CreatorList.svelte';
+	import Link from './Link.svelte';
 
-	let { extract } = $props();
+	const { extract } = $props();
 
-	let type = $derived(extract?.type || 'Work');
-	let creators = $derived(extract?.creators || extract?.parentCreators);
-	let parent = $derived(extract?.parent);
-	let source = $derived(extract?.source);
+	const type = $derived(extract?.type || 'Work');
+	const creators = $derived(extract?.creators || extract?.parentCreators);
+	const parent = $derived(extract?.parent);
+	const source = $derived(extract?.source);
 </script>
 
 <div class="citation">
@@ -15,7 +16,7 @@
 		<span class="article">{article(type)}</span>
 		<strong class="type">{type}</strong>
 		{#if parent}
-			<span class="parent">from <a href="/{parent.id}"><cite>{parent.name}</cite></a></span>
+			<span class="parent">from <Link toExtract={parent.id}><cite>{parent.name}</cite></Link></span>
 		{/if}
 		{#if creators}
 			<span class="creators">by <CreatorList {creators} /></span>

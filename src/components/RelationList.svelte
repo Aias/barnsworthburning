@@ -1,12 +1,13 @@
 <script>
-	let { items, label, symbol, maxChildren = 5 } = $props();
+	import Link from './Link.svelte';
+	const { items, label, symbol, maxChildren = 5 } = $props();
 
 	let showAllChildren = $state(false);
 	const expandList = () => {
 		showAllChildren = true;
 	};
-	let isTruncated = $derived(!showAllChildren && items?.length > maxChildren);
-	let displayedItems = $derived(showAllChildren ? items?.slice() : items?.slice(0, maxChildren));
+	const isTruncated = $derived(!showAllChildren && items?.length > maxChildren);
+	const displayedItems = $derived(showAllChildren ? items?.slice() : items?.slice(0, maxChildren));
 
 	$effect(() => {
 		items;
@@ -17,7 +18,7 @@
 {#if items?.length > 0}
 	<ol class="relation-list" data-symbol={symbol} title={label}>
 		{#each displayedItems as item (item.id)}
-			<li><a href="/{item.id}">{item.name}</a></li>
+			<li><Link toExtract={item.id}>{item.name}</Link></li>
 		{/each}
 		{#if isTruncated}
 			<li class="show-more">
