@@ -1,26 +1,21 @@
 <script>
 	import Link from './Link.svelte';
-	const { entries, componentClass } = $props();
 
-	let selectedEntity = $state();
+	export let entries;
+	export let componentClass;
 </script>
 
 <nav class={componentClass} class:index-container={true}>
-	<menu>	
-		{#snippet indexEntry({ type, id, label, count })}
-		<li class="index-item">
-			<Link toCreator={type === 'creator' ? id : undefined} toSpace={type === 'space' ? id : undefined}>{label}</Link>&nbsp;<span class="count">{count}</span>
-		</li>
-		{/snippet}
-
-		{#snippet sectionSeparator()}
-		<li class="center text-hint">⁘&#8199;&#8199;⁘&#8199;&#8199;⁘</li>
-		{/snippet}
-
+	<menu>
 		{#each entries as entry (entry.id)}
-			{@render indexEntry({ ...entry, active: entry.id === selectedEntity, onClick: () => { selectedEntity = entry.id; } })}
+			<li class="index-item">
+				<Link
+					toCreator={entry.type === 'creator' ? entry.id : undefined}
+					toSpace={entry.type === 'space' ? entry.id : undefined}>{entry.label}</Link
+				>&nbsp;<span class="count">{entry.count}</span>
+			</li>
 		{/each}
-		{@render sectionSeparator()}
+		<li class="center text-hint">⁘&#8199;&#8199;⁘&#8199;&#8199;⁘</li>
 		<li>
 			<a href="/about">About</a>
 		</li>
@@ -60,29 +55,6 @@
 		padding-bottom: 1px;
 		text-indent: calc(-1 * var(--indent));
 		transition: background-color 0.25s;
-	}
-
-	.settings-item {
-		.settings-button {
-			white-space: nowrap;
-			text-decoration: none;
-		}
-		.label-prefix {
-			padding-right: 1ch;
-			visibility: hidden;
-		}
-
-		&.active {
-			border-left: var(--border-width) solid var(--main);
-			margin-left: calc(-1 * var(--border-width));
-			.settings-button {
-				color: var(--link);
-				font-weight: 500;
-			}
-			.label-prefix {
-				visibility: visible;
-			}
-		}
 	}
 
 	.index-item {

@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
 import { airtableFetch } from '$lib/server/requests';
-import { mapIndex } from '$helpers/mapping';
+import { mapIndex } from '$schema';
 
 const MAX_RECORDS = 200;
 

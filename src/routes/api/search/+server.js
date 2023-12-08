@@ -1,6 +1,6 @@
 import { error, json } from '@sveltejs/kit';
 import { airtableFetch, airtableFind } from '$lib/server/requests.js';
-import { mapExtract, mapSpace, mapCreator } from '$helpers/mapping.js';
+import { mapExtract, mapSpace, mapCreator } from '$schema';
 
 export async function GET({ params }) {
 	const id = params?.id;

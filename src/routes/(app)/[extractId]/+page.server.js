@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
 import { airtableFetch } from '$lib/server/requests';
-import { mapExtract } from '$helpers/mapping.js';
+import { mapExtract } from '$schema';
 
 export async function load({ params }) {
 	const { extractId } = params;

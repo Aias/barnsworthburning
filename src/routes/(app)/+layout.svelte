@@ -6,45 +6,37 @@
 	import Gallery from '$components/Gallery.svelte';
 	import Index from '$components/Index.svelte';
 
-	const { data } = $props();
+	export let data;
 
-	const pageParams = $derived($page?.params || {});
-	const hasPageParams = $derived(Object.keys(pageParams).length > 0);
-	const searchParams = $derived($page.url.searchParams);
-	const creator = $derived(searchParams.get('creator'));
-	const space = $derived(searchParams.get('space'));
+	$: pageParams = $page?.params || {};
+	$: hasPageParams = Object.keys(pageParams).length > 0;
+	$: searchParams = $page?.url?.searchParams || {};
+	$: creator = searchParams.get('creator');
+	$: space = searchParams.get('space');
 
-	let gallery = $state();
-	let meta = $state();
+	let gallery, meta;
 
-	const indexEntries = $derived(data?.index ? [...data.index].sort((a, b) => a.label.localeCompare(b.label)) : []);
+	$: indexEntries = data?.index ? [...data.index].sort((a, b) => a.label.localeCompare(b.label)) : [];
+	$: muteLinks = hasPageParams || creator || space;
 
-	const muteLinks = $derived(hasPageParams || creator || space);
-
-	$effect(async () => {
+	$: {
 		if (creator) {
-			const data = await getGallery('creator', creator);
-			meta = {
-				type: 'creator',
-				creator: data.creator
-			};
-			gallery = data.gallery;
+			getGallery('creator', creator);
 		} else if (space) {
-			const data = await getGallery('space', space);
-			meta = {
-				type: 'space',
-				space: data.space
-			};
-			gallery = data.gallery;
+			getGallery('space', space);
 		}
-	});
+	}
 
 	async function getGallery(entityType, entityId) {
 		const response = await fetch(`/api/gallery/${entityType}/${entityId}`)
 			.then((r) => r.json())
 			.catch(console.error);
 		if (response) {
-			return response;
+			meta = {
+				type: entityType,
+				[entityType]: response[entityType]
+			};
+			gallery = response.gallery;
 		}
 	}
 </script>
@@ -52,10 +44,10 @@
 <Header class="app-header" />
 <main class="app-content">
 	<Index entries={indexEntries} componentClass={`index ${muteLinks ? 'unthemey' : ''}`} />
-	{#if creator || space}
+	<!-- {#if creator || space}
 		<Gallery {gallery} {meta} componentClass="gallery" />
 	{/if}
-	<article class="extract-panel chromatic"><slot /></article>
+	<article class="extract-panel chromatic"><slot /></article> -->
 </main>
 
 <style lang="scss" global>

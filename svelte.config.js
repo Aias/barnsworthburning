@@ -8,13 +8,14 @@ const config = {
 		alias: {
 			$components: 'src/components',
 			$helpers: 'src/helpers',
-			$styles: 'src/styles'
+			$styles: 'src/styles',
+			$schema: 'src/schema'
 		}
 	},
-	preprocess: preprocess(),
-	compilerOptions: {
-		runes: true
-	}
+	preprocess: preprocess()
+	// compilerOptions: {
+	// 	runes: true
+	// }
 };
 
 export default config;
