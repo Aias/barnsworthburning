@@ -1,3 +1,5 @@
+import zip from '$helpers/zip';
+
 export const mapSpace = (space = {}) => {
 	const { extractIds, extractTitles, ...rest } = space;
 

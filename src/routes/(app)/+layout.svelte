@@ -1,6 +1,7 @@
 <script>
 	import '$styles/app.css';
 	import { page } from '$app/stores';
+	import { browser } from '$app/environment';
 
 	import Header from '$components/Header.svelte';
 	import Gallery from '$components/Gallery.svelte';
@@ -20,10 +21,13 @@
 	$: muteLinks = hasPageParams || creator || space;
 
 	$: {
-		if (creator) {
-			getGallery('creator', creator);
-		} else if (space) {
-			getGallery('space', space);
+		if (browser) {
+			// https://github.com/sveltejs/kit/issues/8536#issuecomment-1402504905
+			if (creator) {
+				getGallery('creator', creator);
+			} else if (space) {
+				getGallery('space', space);
+			}
 		}
 	}
 
@@ -46,8 +50,8 @@
 	<Index entries={indexEntries} componentClass={`index ${muteLinks ? 'unthemey' : ''}`} />
 	<!-- {#if creator || space}
 		<Gallery {gallery} {meta} componentClass="gallery" />
-	{/if}
-	<article class="extract-panel chromatic"><slot /></article> -->
+	{/if} -->
+	<article class="extract-panel chromatic"><slot /></article>
 </main>
 
 <style lang="scss" global>

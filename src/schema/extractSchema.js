@@ -1,3 +1,5 @@
+import zip from '$helpers/zip';
+
 export const mapExtract = (extract = {}) => {
 	const {
 		creatorIds,
