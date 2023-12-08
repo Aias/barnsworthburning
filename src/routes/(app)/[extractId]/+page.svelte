@@ -1,5 +1,6 @@
 <script>
 	import Extract from '$components/Extract.svelte';
+	import exists from '$helpers/exists';
 
 	export let data;
 
@@ -7,7 +8,7 @@
 	$: currentId = data.currentId;
 
 	$: parentExtract = extracts.find((e) => e.id === currentId);
-	$: childExtracts = parentExtract?.children?.map((c) => extracts.find((e) => e.id === c.id));
+	$: childExtracts = parentExtract?.children?.map((c) => extracts.find((e) => e.id === c.id)).filter(exists);
 </script>
 
 {#if parentExtract}
