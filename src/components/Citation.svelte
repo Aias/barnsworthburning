@@ -3,12 +3,12 @@
 	import CreatorList from './CreatorList.svelte';
 	import Link from './Link.svelte';
 
-	const { extract } = $props();
+	export let extract = undefined;
 
-	const type = $derived(extract?.type || 'Work');
-	const creators = $derived(extract?.creators || extract?.parentCreators);
-	const parent = $derived(extract?.parent);
-	const source = $derived(extract?.source);
+	$: type = extract?.type || 'Work';
+	$: creators = extract?.creators || extract?.parentCreators;
+	$: parent = extract?.parent;
+	$: source = extract?.source;
 </script>
 
 <div class="citation">

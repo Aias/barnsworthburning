@@ -17,7 +17,7 @@
 		</header>
 		<div class="gallery-grid">
 			{#each gallery as extract (extract.id)}
-				<!-- <Extract {extract} contextId="gallery" componentClass="card" /> -->
+				<Extract {extract} contextId="gallery" componentClass="card" />
 			{/each}
 		</div>
 	</div>

@@ -1,11 +1,9 @@
 <script>
-	const { image = {} } = $props();
+	export let image = {};
 
-	image;
-
-	const thumbnailLarge = $derived(image?.thumbnails?.large);
-	const img = $derived(thumbnailLarge || image);
-	const aspectRatio = $derived((img.width / img.height) * 100);
+	$: thumbnailLarge = image?.thumbnails?.large;
+	$: img = thumbnailLarge || image;
+	$: aspectRatio = (img.width / img.height) * 100;
 </script>
 
 <div class="image-container" style={`--aspect-ratio: ${aspectRatio}%`}>

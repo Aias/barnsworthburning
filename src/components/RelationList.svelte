@@ -1,18 +1,24 @@
 <script>
 	import Link from './Link.svelte';
-	const { items, label, symbol, maxChildren = 5 } = $props();
 
-	let showAllChildren = $state(false);
+	export let items;
+	export let label;
+	export let symbol;
+	export let maxChildren = 5;
+
+	let showAllChildren = false;
+
 	const expandList = () => {
 		showAllChildren = true;
 	};
-	const isTruncated = $derived(!showAllChildren && items?.length > maxChildren);
-	const displayedItems = $derived(showAllChildren ? items?.slice() : items?.slice(0, maxChildren));
 
-	$effect(() => {
+	$: isTruncated = items?.length > maxChildren;
+	$: displayedItems = showAllChildren ? items?.slice() : items?.slice(0, maxChildren);
+
+	$: {
 		items;
 		showAllChildren = false;
-	});
+	}
 </script>
 
 {#if items?.length > 0}

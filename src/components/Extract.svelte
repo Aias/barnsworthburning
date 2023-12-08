@@ -6,26 +6,26 @@
 	import RelationList from './RelationList.svelte';
 	import AirtableImage from './AirtableImage.svelte';
 
-	const { extract, contextId = 'panel', class: className } = $props();
+	export let extract = undefined;
+	export let contextId = 'panel';
+	export let componentClass = undefined;
 
-	extract; // I do not know why this declaration is necessary, but it appears to prevent errors when a prop is updated via an async API call.
+	$: id = extract?.id;
+	$: title = extract?.title;
+	$: extractContent = extract?.extract;
+	$: notes = extract?.notes;
+	$: images = extract?.images;
+	$: imageCaption = extract?.imageCaption;
 
-	const id = $derived(extract?.id);
-	const title = $derived(extract?.title);
-	const extractContent = $derived(extract?.extract);
-	const notes = $derived(extract?.notes);
-	const images = $derived(extract?.images);
-	const imageCaption = $derived(extract?.imageCaption);
+	$: children = extract?.children;
+	$: connections = extract?.connections;
+	$: spaces = extract?.spaces;
 
-	const children = $derived(extract?.children);
-	const connections = $derived(extract?.connections);
-	const spaces = $derived(extract?.spaces);
-
-	const hasRelations = $derived(children || connections || spaces);
-	const nodeId = $derived(contextId ? `${contextId}--${id}` : id);
+	$: hasRelations = children || connections || spaces;
+	$: nodeId = contextId ? `${contextId}--${id}` : id;
 </script>
 
-<article id={nodeId} class:extract class={className}>
+<article id={nodeId} class:extract class={componentClass}>
 	{#if title}
 		<header>
 			<h2 class="extract-title">{title}</h2>
