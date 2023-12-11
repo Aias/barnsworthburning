@@ -18,12 +18,13 @@
 	$: images = extract?.images;
 	$: imageCaption = extract?.imageCaption;
 
+	$: parent = extract?.parent;
 	$: children = extract?.children;
 	$: connections = extract?.connections;
 	$: spaces = extract?.spaces;
 
 	$: hasRelations = children || connections || spaces;
-	$: nodeId = contextId ? `${contextId}--${id}` : id;
+	$: nodeId = `${contextId}--${id}`;
 
 	let mouseDownTime;
 	let mouseUpTime;
@@ -54,7 +55,13 @@
 >
 	{#if title}
 		<header>
-			<h2 class="extract-title"><Link bind:ref={linkRef} toExtract={id}>{title}</Link></h2>
+			<h2 class="extract-title">
+				{#if parent}
+					<Link bind:ref={linkRef} toExtract={parent.id} childAnchor={`panel--${id}`}>{title}</Link>
+				{:else}
+					<Link bind:ref={linkRef} toExtract={id}>{title}</Link>
+				{/if}
+			</h2>
 		</header>
 	{/if}
 	<figure class="extract-main">

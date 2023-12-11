@@ -51,52 +51,5 @@
 	{#if creator || space}
 		<Gallery {gallery} {meta} componentClass="gallery" />
 	{/if}
-	<article class="extract-panel chromatic"><slot /></article>
+	<slot />
 </main>
-
-<style lang="scss" global>
-	.app {
-		--padding: 1.5rem;
-		--column-width: 30rem;
-		display: flex;
-		flex-direction: column;
-		height: 100%;
-		flex: 0 0 auto;
-	}
-	.app-content {
-		padding: var(--padding);
-		display: flex;
-		flex-direction: row;
-		gap: var(--padding);
-		height: 100%;
-		flex-grow: 1;
-		overflow-x: auto;
-		overflow-y: hidden;
-		align-items: stretch;
-
-		> * {
-			overflow-y: auto;
-			overflow-x: hidden;
-		}
-	}
-	.index {
-		min-width: 12rem;
-	}
-	.gallery {
-		flex: 0 1 100%;
-		min-width: var(--column-width);
-	}
-	.extract-panel {
-		padding: var(--padding);
-		margin: calc(-1 * var(--padding));
-		margin-inline-start: 0;
-		background-color: var(--background);
-		border-left: 1px solid var(--edge);
-		flex: 0 1 var(--column-width);
-		min-width: var(--column-width);
-
-		&:empty {
-			display: none;
-		}
-	}
-</style>

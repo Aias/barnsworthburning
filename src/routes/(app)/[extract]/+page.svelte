@@ -1,30 +1,41 @@
 <script>
+	import { page } from '$app/stores';
 	import Extract from '$components/Extract.svelte';
 	import exists from '$helpers/exists';
 
 	export let data;
+
+	let panelRef;
 
 	$: extracts = data.extracts || [];
 	$: currentId = data.currentId;
 
 	$: parentExtract = extracts.find((e) => e.id === currentId);
 	$: childExtracts = parentExtract?.children?.map((c) => extracts.find((e) => e.id === c.id)).filter(exists);
+
+	$: {
+		if (panelRef) {
+			panelRef.scrollTop = 0;
+		}
+	}
 </script>
 
-{#if parentExtract}
-	<header class="card">
-		<Extract extract={parentExtract} />
-	</header>
-	{#if childExtracts}
-		<ol>
-			{#each childExtracts as child (child.id)}
-				<li>
-					<Extract extract={child} />
-				</li>
-			{/each}
-		</ol>
+<article class="extract-panel chromatic" bind:this={panelRef}>
+	{#if parentExtract}
+		<header class="card">
+			<Extract extract={parentExtract} />
+		</header>
+		{#if childExtracts}
+			<ol>
+				{#each childExtracts as child (child.id)}
+					<li>
+						<Extract extract={child} />
+					</li>
+				{/each}
+			</ol>
+		{/if}
 	{/if}
-{/if}
+</article>
 
 <style>
 	header + ol {
