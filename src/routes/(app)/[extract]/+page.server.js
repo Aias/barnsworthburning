@@ -3,9 +3,9 @@ import { airtableFetch } from '$lib/server/requests';
 import { mapExtract } from '$schema';
 
 export async function load({ params }) {
-	const { extractId } = params;
+	const { extract } = params;
 
-	const filterString = `OR(id = '${extractId}', parentId = '${extractId}')`;
+	const filterString = `OR(id = '${extract}', parentId = '${extract}')`;
 
 	const records = await airtableFetch('extracts', {
 		filterByFormula: filterString
@@ -20,6 +20,6 @@ export async function load({ params }) {
 
 	return {
 		extracts: records.map(mapExtract),
-		currentId: extractId
+		currentId: extract
 	};
 }

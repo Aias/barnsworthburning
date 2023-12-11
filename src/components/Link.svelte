@@ -7,7 +7,7 @@
 	export let ref = undefined;
 
 	$: currentSearchParamsString = $page.url.searchParams?.toString();
-	$: currentExtract = $page.params?.extractId;
+	$: currentExtract = $page.params?.extract;
 	$: currentCreator = $page.url.searchParams?.get('creator');
 	$: currentSpace = $page.url.searchParams?.get('space');
 
