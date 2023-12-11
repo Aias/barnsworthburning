@@ -3,10 +3,9 @@
 
 	$: thumbnailLarge = image?.thumbnails?.large;
 	$: img = thumbnailLarge || image;
-	$: aspectRatio = (img.width / img.height) * 100;
 </script>
 
-<div class="image-container" style={`--aspect-ratio: ${aspectRatio}%`}>
+<div class="image-container" style={`--aspect-ratio: ${img.width} / ${img.height}`}>
 	<img alt={image.filename} src={img.url} />
 </div>
 
