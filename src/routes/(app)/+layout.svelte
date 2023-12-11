@@ -57,6 +57,7 @@
 <style lang="scss" global>
 	.app {
 		--padding: 1.5rem;
+		--column-width: 30rem;
 		display: flex;
 		flex-direction: column;
 		height: 100%;
@@ -83,7 +84,7 @@
 	}
 	.gallery {
 		flex: 0 1 100%;
-		min-width: 20rem;
+		min-width: var(--column-width);
 	}
 	.extract-panel {
 		padding: var(--padding);
@@ -91,8 +92,8 @@
 		margin-inline-start: 0;
 		background-color: var(--background);
 		border-left: 1px solid var(--edge);
-		flex: 0 1 30rem;
-		min-width: 30rem;
+		flex: 0 1 var(--column-width);
+		min-width: var(--column-width);
 
 		&:empty {
 			display: none;

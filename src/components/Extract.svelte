@@ -42,9 +42,8 @@
 	};
 </script>
 
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <section
-	role="link"
-	tabindex="0"
 	id={nodeId}
 	class:extract={true}
 	class:interactive={true}
