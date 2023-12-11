@@ -30,16 +30,16 @@
 
 <style lang="scss">
 	.index-container {
-		--cantilever: 0.5rem;
-		--border-width: 0.25rem;
+		--item-padding: 0.5rem;
 		flex: 1;
 		overflow-y: auto;
-		padding: 0 calc(var(--cantilever) + var(--border-width));
-		margin: 0 calc(-1 * var(--cantilever) + var(--border-width));
+		overflow-x: hidden;
+		padding: 0 1rem;
+		margin: 0 -1rem;
 	}
 
 	menu {
-		margin: 0 0 0 calc(-1 * var(--cantilever));
+		margin: 0;
 		padding: 0;
 		list-style-type: none;
 		column-width: 23ch;
@@ -48,12 +48,12 @@
 	}
 
 	menu > li {
-		--indent: 1em;
-		padding-left: calc(var(--indent) + var(--cantilever));
-		padding-right: var(--cantilever);
+		--indent: 1.5em;
+		text-indent: calc(-1 * var(--indent));
+		padding-left: calc(var(--indent) + var(--item-padding));
+		padding-right: var(--item-padding);
 		padding-top: 1px;
 		padding-bottom: 1px;
-		text-indent: calc(-1 * var(--indent));
 		transition: background-color 0.25s;
 	}
 

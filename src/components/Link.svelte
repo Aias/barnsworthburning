@@ -4,6 +4,7 @@
 	export let toExtract = undefined;
 	export let toCreator = undefined;
 	export let toSpace = undefined;
+	export let ref = undefined;
 
 	$: currentSearchParamsString = $page.url.searchParams?.toString();
 	$: currentExtract = $page.params?.extract;
@@ -30,4 +31,4 @@
 	}
 </script>
 
-<a {href} class:active={isActive} {...$$restProps}><slot /></a>
+<a {href} class:active={isActive} {...$$restProps} bind:this={ref}><slot /></a>

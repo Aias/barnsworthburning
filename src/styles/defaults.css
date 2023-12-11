@@ -169,16 +169,12 @@ blockquote:not(.extract-text) em {
 
 hr {
 	color: var(--divider);
-	margin: calc(1em * var(--line-height) - 1px) 0 0 0;
-	padding-top: calc(1em * var(--line-height));
+	margin: 1px 0 0 0;
+	padding-top: 1px;
 	border-style: solid;
 	border-bottom: none;
 	border-left: none;
 	border-right: none;
-}
-
-ul {
-	list-style-type: circle;
 }
 
 table {

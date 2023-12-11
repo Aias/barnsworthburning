@@ -33,6 +33,10 @@ ol[role='list'] {
 	list-style: none;
 }
 
+ul {
+	list-style-type: circle;
+}
+
 /* Set core body defaults */
 body {
 	min-height: 100vh;

@@ -75,6 +75,7 @@
 
 		> * {
 			overflow-y: auto;
+			overflow-x: hidden;
 		}
 	}
 	.index {
@@ -82,6 +83,7 @@
 	}
 	.gallery {
 		flex: 0 1 100%;
+		min-width: 20rem;
 	}
 	.extract-panel {
 		padding: var(--padding);
@@ -90,7 +92,7 @@
 		background-color: var(--background);
 		border-left: 1px solid var(--edge);
 		flex: 0 1 30rem;
-		min-width: 26rem;
+		min-width: 30rem;
 
 		&:empty {
 			display: none;

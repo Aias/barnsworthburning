@@ -1,6 +1,7 @@
 <script>
 	import markdown from '$helpers/markdown';
 
+	import Link from './Link.svelte';
 	import Citation from './Citation.svelte';
 	import TopicList from './TopicList.svelte';
 	import RelationList from './RelationList.svelte';
@@ -23,12 +24,38 @@
 
 	$: hasRelations = children || connections || spaces;
 	$: nodeId = contextId ? `${contextId}--${id}` : id;
+
+	let mouseDownTime;
+	let mouseUpTime;
+
+	let containerRef;
+	let linkRef;
+
+	const handleMouseDown = () => {
+		mouseDownTime = Date.now();
+	};
+	const handleMouseUp = () => {
+		mouseUpTime = Date.now();
+		if (mouseUpTime - mouseDownTime < 200) {
+			linkRef.click();
+		}
+	};
 </script>
 
-<article id={nodeId} class:extract class={componentClass}>
+<section
+	role="link"
+	tabindex="0"
+	id={nodeId}
+	class:extract={true}
+	class:interactive={true}
+	class={componentClass}
+	bind:this={containerRef}
+	on:mousedown={handleMouseDown}
+	on:mouseup={handleMouseUp}
+>
 	{#if title}
 		<header>
-			<h2 class="extract-title">{title}</h2>
+			<h2 class="extract-title"><Link bind:ref={linkRef} toExtract={id}>{title}</Link></h2>
 		</header>
 	{/if}
 	<figure class="extract-main">
@@ -50,18 +77,18 @@
 		</figcaption>
 	</figure>
 	{#if hasRelations}
-		<section class="relations">
+		<nav class="relations">
 			<RelationList items={children} symbol="↳" label="Children" />
 			<RelationList items={connections} symbol="⮂" label="Connections" />
 			<TopicList topics={spaces} />
-		</section>
+		</nav>
 	{/if}
 	{#if notes}
 		<footer class="caption content">
 			{@html markdown.render(notes)}
 		</footer>
 	{/if}
-</article>
+</section>
 
 <style lang="scss">
 	.extract {
@@ -69,7 +96,20 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--layout-gap);
+		position: relative;
+		isolation: isolate;
 	}
+
+	.extract-title {
+		> :global(a) {
+			all: inherit;
+			display: inline-block;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+
 	.extract-main {
 		display: flex;
 		flex-direction: column;

@@ -30,6 +30,8 @@
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
+		padding: 0 1rem;
+		margin: 0 -1rem;
 	}
 	.gallery-meta {
 		h1 {
@@ -41,7 +43,7 @@
 
 		padding-inline: calc(var(--padding) / 1.5);
 		margin-inline: calc(-1 * var(--padding) / 1.5);
-		min-width: 35ch;
+
 		column-width: 35ch;
 		column-gap: var(--gallery-gap);
 
