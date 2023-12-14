@@ -51,9 +51,9 @@
 
 <Header class="app-header" />
 <main class="app-content">
-	<Index entries={indexEntries} componentClass={`index ${muteLinks ? 'unthemey' : ''}`} />
+	<Index entries={indexEntries} class={`index ${muteLinks ? 'unthemey' : ''}`} />
 	{#if creator || space}
-		<Gallery {gallery} {meta} componentClass="gallery" />
+		<Gallery {gallery} {meta} class="gallery" />
 	{/if}
 	<article class="extract-panel chromatic"><slot /></article>
 </main>

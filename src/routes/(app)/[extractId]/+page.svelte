@@ -1,5 +1,6 @@
 <script>
 	import Extract from '$components/Extract.svelte';
+	import exists from '$helpers/exists';
 
 	const { data } = $props();
 
@@ -7,7 +8,9 @@
 	const currentId = $derived(data.currentId);
 
 	const parentExtract = $derived(extracts.find((e) => e.id === currentId));
-	const childExtracts = $derived(parentExtract?.children?.map((c) => extracts.find((e) => e.id === c.id)));
+	const childExtracts = $derived(
+		parentExtract?.children?.map((c) => extracts.find((e) => e.id === c.id)).filter(exists)
+	);
 </script>
 
 {#if parentExtract}

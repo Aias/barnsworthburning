@@ -1,11 +1,11 @@
 <script>
 	import Link from './Link.svelte';
-	const { entries, componentClass } = $props();
+	const { entries, class:className } = $props();
 
 	let selectedEntity = $state();
 </script>
 
-<nav class={componentClass} class:index-container={true}>
+<nav class={className} class:index-container={true}>
 	<menu>	
 		{#snippet indexEntry({ type, id, label, count })}
 		<li class="index-item">

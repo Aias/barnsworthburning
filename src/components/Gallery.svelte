@@ -1,19 +1,21 @@
 <script>
 	import Extract from './Extract.svelte';
-	const { gallery, meta, componentClass } = $props();
+	const { gallery, meta, class: className } = $props();
 </script>
 
+<template>
+	{#snippet creatorMeta({ name, profession, organization, site, nationality })}
+	<h1>{name}</h1>
+	{/snippet}
+
+	{#snippet spaceMeta({ topic, icon, title, description })}
+	<h1>{topic}</h1>
+	{/snippet}
+</template>
+
 {#if gallery}
-	<div class={componentClass} class:gallery>
+	<div class={className} class:gallery>
 		<header class="gallery-meta">
-			{#snippet creatorMeta({ name, profession, organization, site, nationality })}
-			<h1>{name}</h1>
-			{/snippet}
-
-			{#snippet spaceMeta({ topic, icon, title, description })}
-			<h1>{topic}</h1>
-			{/snippet}
-
 			{#if meta?.type === 'creator'}
 			{@render creatorMeta(meta.creator)}
 			{:else if meta?.type === 'space'}
@@ -22,7 +24,7 @@
 		</header>
 		<div class="gallery-grid">
 			{#each gallery as extract (extract.id)}
-				<Extract {extract} contextId="gallery" componentClass="card" />
+				<Extract {extract} contextId="gallery" class="card" />
 			{/each}
 		</div>	
 	</div>
