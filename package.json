@@ -21,11 +21,11 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-node": "^1.3.1",
-		"@sveltejs/kit": "^1.27.7",
+		"@sveltejs/kit": "^1.30.3",
 		"sass": "^1.69.5",
-		"svelte": "^5.0.0-next.22",
-		"svelte-preprocess": "^5.1.1",
-		"vite": "^5.0.6"
+		"svelte": "^5.0.0-next.24",
+		"svelte-preprocess": "^5.1.2",
+		"vite": "^5.0.8"
 	},
 	"type": "module",
 	"dependencies": {
