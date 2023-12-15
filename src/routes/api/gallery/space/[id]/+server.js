@@ -5,9 +5,9 @@ import { mapExtract, mapSpace } from '$schema';
 export async function GET({ params }) {
 	const id = params?.id;
 	if (!id) {
-		throw error(404, {
-			message: 'Missing space ID.'
-		});
+		error(404, {
+        			message: 'Missing space ID.'
+        		});
 	}
 
 	const extractFilter = `FIND('${id}', ARRAYJOIN(spaceIds, ',')) > 0`;
@@ -23,9 +23,9 @@ export async function GET({ params }) {
 	const extracts = results[1];
 
 	if (!space) {
-		throw error(404, {
-			message: 'Unknown space.'
-		});
+		error(404, {
+        			message: 'Unknown space.'
+        		});
 	}
 
 	const data = {

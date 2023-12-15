@@ -5,9 +5,9 @@ import { mapExtract, mapCreator } from '$schema';
 export async function GET({ params }) {
 	const id = params?.id;
 	if (!id) {
-		throw error(404, {
-			message: 'Missing creator ID.'
-		});
+		error(404, {
+        			message: 'Missing creator ID.'
+        		});
 	}
 
 	const extractFilter = `FIND('${id}', ARRAYJOIN(creatorIds, ',')) > 0`;
@@ -23,9 +23,9 @@ export async function GET({ params }) {
 	const extracts = results[1];
 
 	if (!creator) {
-		throw error(404, {
-			message: 'Unknown creator.'
-		});
+		error(404, {
+        			message: 'Unknown creator.'
+        		});
 	}
 
 	const data = {
