@@ -12,9 +12,9 @@ export async function load({ params }) {
 	});
 
 	if (!records) {
-		throw error(404, {
-			message: 'Failed to load extract.'
-		});
+		error(404, {
+        			message: 'Failed to load extract.'
+        		});
 		return null;
 	}
 

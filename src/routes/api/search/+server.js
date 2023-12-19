@@ -5,9 +5,9 @@ import { mapExtract, mapSpace, mapCreator } from '$helpers/mapping.js';
 export async function GET({ params }) {
 	const id = params?.id;
 	if (!id) {
-		throw error(404, {
-			message: 'Missing search query.'
-		});
+		error(404, {
+        			message: 'Missing search query.'
+        		});
 	}
 
 	const extractFilter = `FIND('${id}', ARRAYJOIN(spaceIds, ',')) > 0`;

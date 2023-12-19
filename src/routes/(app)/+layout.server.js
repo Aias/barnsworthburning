@@ -19,9 +19,9 @@ export async function load() {
 	]);
 	const [creators, spaces] = results;
 	if (!(creators && spaces)) {
-		throw error(404, {
-			message: 'Failed to build index.'
-		});
+		error(404, {
+        			message: 'Failed to build index.'
+        		});
 		return null;
 	}
 
