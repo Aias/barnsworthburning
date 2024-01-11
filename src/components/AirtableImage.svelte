@@ -6,7 +6,7 @@
 </script>
 
 <div class="image-container" style={`--aspect-ratio: ${img.width} / ${img.height}`}>
-	<img alt={image.filename} src={img.url} />
+	<img alt={image.filename} src={img.url} loading="lazy" />
 </div>
 
 <style lang="scss">
