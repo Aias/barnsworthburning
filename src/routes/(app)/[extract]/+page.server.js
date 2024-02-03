@@ -13,8 +13,8 @@ export async function load({ params }) {
 
 	if (!records) {
 		error(404, {
-        			message: 'Failed to load extract.'
-        		});
+			message: 'Failed to load extract.'
+		});
 		return null;
 	}
 
