@@ -2,10 +2,12 @@
 	import { getCookie, setCookie } from '$helpers/cookies';
 	import { onMount } from 'svelte';
 
-	let mode = 'dark';
-	let chroma = 'neutral';
+	let { ...restProps } = $props();
+
+	let mode = $state('dark');
+	let chroma = $state('neutral');
 	const paletteOptions = ['indigo', 'tomato', 'amber', 'sky', 'grass'];
-	let palette = paletteOptions[0];
+	let palette = $state(paletteOptions[0]);
 
 	const toggleMode = () => {
 		mode = mode === 'dark' ? 'light' : 'dark';
@@ -20,7 +22,7 @@
 		setCookie('barnsworthburning-palette', palette);
 	};
 
-	$: themeClass = `${mode} ${chroma} ${palette}`;
+	let themeClass = $derived(`${mode} ${chroma} ${palette}`);
 
 	onMount(() => {
 		const storedMode = getCookie('barnsworthburning-mode');
@@ -37,14 +39,12 @@
 			palette = storedPalette;
 		}
 	});
-	$: {
-		if (typeof window !== 'undefined') {
-			document.documentElement.className = themeClass;
-		}
-	}
+	$effect(() => {
+		document.documentElement.className = themeClass;
+	});
 </script>
 
-<header {...$$restProps}>
+<header {...restProps}>
 	<button on:click={toggleMode}>Toggle Mode</button>
 	<button on:click={toggleChroma}>Toggle Chroma</button>
 	<div class="theme-selector">

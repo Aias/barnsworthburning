@@ -25,6 +25,7 @@ html {
 	font-feature-settings: 'liga';
 	hanging-punctuation: first last;
 	background-color: var(--background);
+	accent-color: var(--accent);
 }
 
 body {
