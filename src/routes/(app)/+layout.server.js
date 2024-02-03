@@ -19,7 +19,7 @@ export async function load() {
 	}
 
 	return {
-		extracts: records.map((record) => ({
+		index: records.map((record) => ({
 			...record,
 			creators: zip(['id', 'name'], record.creators, record.creatorNames),
 			spaces: zip(['id', 'name'], record.spaces, record.spaceTopics),

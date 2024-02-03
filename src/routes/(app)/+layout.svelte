@@ -1,7 +1,6 @@
 <script>
-	let { children, data } = $props();
-
-	$inspect(data);
+	import '../../styles/app.css';
+	let { children } = $props();
 </script>
 
 {@render children()}
