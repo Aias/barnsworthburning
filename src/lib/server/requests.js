@@ -1,11 +1,14 @@
 import Airtable from 'airtable';
 
+// const BASE_ID = 'appHWZbECVKCSjquH';
+const BASE_ID = 'appNAUPSEyCYlPtvG';
+
 Airtable.configure({
 	endpointUrl: 'https://api.airtable.com',
-	apiKey: import.meta.env.VITE_AIRTABLE_API_KEY
+	apiKey: import.meta.env.VITE_AIRTABLE_ACCESS_TOKEN
 });
 
-const base = Airtable.base('appHWZbECVKCSjquH');
+const base = Airtable.base(BASE_ID);
 
 const mapReceivedRecord = (record) => ({
 	id: record.id,
@@ -22,15 +25,13 @@ const airtableFetch = async (tableName = '', options = {}) =>
 			return null;
 		});
 
-const airtableFind = async (tableName = '', recordId = '') => {
-	const records = await airtableFetch(tableName, {
-		filterByFormula: `RECORD_ID() = '${recordId}'`
-	});
-	if (records && records.length) {
-		return records[0];
-	} else {
-		return null;
-	}
-};
+const airtableFind = async (tableName = '', recordId = '') =>
+	base(tableName)
+		.find(recordId)
+		.then((record) => mapReceivedRecord(record))
+		.catch((error) => {
+			console.error(error);
+			return null;
+		});
 
 export { airtableFetch, airtableFind };

@@ -1,4 +1,5 @@
 import adapter from '@sveltejs/adapter-node';
+import preprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -6,8 +7,13 @@ const config = {
 		adapter: adapter(),
 		alias: {
 			$components: 'src/components',
-			$helpers: 'src/helpers'
+			$helpers: 'src/helpers',
+			$styles: 'src/styles'
 		}
+	},
+	preprocess: preprocess(),
+	compilerOptions: {
+		runes: true
 	}
 };
 
