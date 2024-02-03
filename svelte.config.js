@@ -12,10 +12,10 @@ const config = {
 			$schema: 'src/schema'
 		}
 	},
-	preprocess: preprocess()
-	// compilerOptions: {
-	// 	runes: true
-	// }
+	preprocess: preprocess(),
+	compilerOptions: {
+		runes: true
+	}
 };
 
 export default config;
