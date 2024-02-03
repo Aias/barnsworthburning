@@ -48,13 +48,13 @@
 </script>
 
 <div class="index">
-	<h2>Index</h2>
+	<h2>In Recent Memory</h2>
 	<section>
 		<h3>Types</h3>
 		<ul>
 			{#each typesByCount as type}
 				<li>
-					<span class="name">{type.name}</span>
+					<span class="name">{type.name}s</span>
 					<span class="count">{type.count}</span>
 				</li>
 			{/each}
