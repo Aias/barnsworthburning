@@ -10,10 +10,12 @@ Airtable.configure({
 
 const base = Airtable.base(BASE_ID);
 
-const mapReceivedRecord = (record) => ({
-	id: record.id,
-	...record.fields
-});
+const mapReceivedRecord = (record) => {
+	return {
+		id: record.id,
+		...record.fields
+	};
+};
 
 const airtableFetch = async (tableName = '', options = {}) =>
 	base(tableName)

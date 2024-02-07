@@ -7,9 +7,7 @@
 	import RelationList from './RelationList.svelte';
 	import AirtableImage from './AirtableImage.svelte';
 
-	export let extract = undefined;
-	export let contextId = 'panel';
-	export let componentClass = undefined;
+	let { extract, contextId = 'panel', componentClass } = $props();
 
 	$: id = extract?.id;
 	$: title = extract?.title;
