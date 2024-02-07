@@ -836,7 +836,7 @@ __metadata:
     remarkable: ^2.0.1
     remarkable-meta: ^1.0.1
     sass: ^1.70.0
-    svelte: ^5.0.0-next.45
+    svelte: ^5.0.0-next.50
     svelte-preprocess: ^5.1.3
     vite: ^5.0.12
   languageName: unknown
@@ -2570,9 +2570,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte@npm:^5.0.0-next.45":
-  version: 5.0.0-next.45
-  resolution: "svelte@npm:5.0.0-next.45"
+"svelte@npm:^5.0.0-next.50":
+  version: 5.0.0-next.50
+  resolution: "svelte@npm:5.0.0-next.50"
   dependencies:
     "@ampproject/remapping": ^2.2.1
     "@jridgewell/sourcemap-codec": ^1.4.15
@@ -2586,8 +2586,8 @@ __metadata:
     is-reference: ^3.0.2
     locate-character: ^3.0.0
     magic-string: ^0.30.5
-    zimmerframe: ^1.1.0
-  checksum: 1f517d7f03d1a32b05b9b34ec54286ab1bf5bdac719a80873be7ef3875477a9652b0bf5360dc3998bd185c221ae87547ad69639bab0f1a19712af82eef022e43
+    zimmerframe: ^1.1.2
+  checksum: 59b5297dee061a2886cb11801f9206d13b0b54a8f4eb910e8e8f8c573e1dedc708bed259819d25895be2cb051a43703f58234626711472d994bc33aa5b3928fd
   languageName: node
   linkType: hard
 
@@ -2795,9 +2795,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zimmerframe@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "zimmerframe@npm:1.1.0"
-  checksum: 57748aba16d5777badff50cfca32056cfe723659bc5c2b4f78f689931b0f6d5ba2f70861ca583aa5da643c9b2ef6cff5d290d50b5ae7ed607a0d771a6ac725c7
+"zimmerframe@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "zimmerframe@npm:1.1.2"
+  checksum: 83b05c0b73ae45c520af7f0c856c1ea56728047d41dcec6b86a2016ad8cbe8694e8efdb0ea973f55fa72bbb851fbceaadcba748c0fd000ef17d095e7ee366f00
   languageName: node
   linkType: hard
