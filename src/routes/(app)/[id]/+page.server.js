@@ -4,7 +4,7 @@ import { mapExtractRecord } from '$helpers/mapping';
 
 export async function load({ params }) {
 	const { id } = params;
-	const filterExtractsByCreatorId = `OR(FIND('${id}', ARRAYJOIN(creatorIds, ','))  = 1, FIND('${id}', ARRAYJOIN(parentCreatorIds, ','))  = 1)`;
+	const filterExtractsByCreatorId = `FIND('${id}', allCreatorIds)  > 0`;
 	const records = await airtableFetch('extracts', {
 		view: 'viwCvae2rXQscUap6', // Best
 		filterByFormula: filterExtractsByCreatorId,
