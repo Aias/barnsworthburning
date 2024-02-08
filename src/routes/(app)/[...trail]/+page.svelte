@@ -20,12 +20,22 @@
 	}
 
 	$inspect(screens[0]);
+
+	// Create a string of star emojis given a count
+	function starRating(count) {
+		return '⭐️'.repeat(count);
+	}
 </script>
 
 
-{#snippet extractCard({title, extract, images})}
+{#snippet extractCard({title, extract, images, michelinStars, notes})}
 <article>
-	<h3>{title}</h3>
+	<h3>
+		{#if michelinStars}
+		<span>{starRating(michelinStars)}</span>
+		{/if}
+		<span>{title}</span>
+	</h3>
 	{#if images}
 		{#each images as image}
 			<AirtableImage image={image} />
@@ -34,6 +44,9 @@
 	{#if extract}
 		<p>{trimString(extract, previewLength)}</p>
 	{/if}
+	{#if notes}
+	<small>{trimString(notes, previewLength)}</small>
+{/if}
 </article>
 {/snippet}
 
@@ -56,18 +69,30 @@
 		gap: 1em;
 	}
 	.looseleaf {
-		--gap: 0.25em;
+		--gallery-gap: 0.25em;
 		font-size: 0.5em;
 		column-width: 15em;
-		column-gap: var(--gap);
+		column-gap: var(--gallery-gap);
 	}
 	article {
+		--extract-gap: 1em;
 		border: 1px solid var(--divider);
 		padding: 1em;
-		margin-bottom: var(--gap);
+		margin-bottom: var(--gallery-gap);
 		display: flex;
 		flex-direction: column;
-		gap: 1em;
+		gap: var(--extract-gap);
 		break-inside: avoid;
+		word-wrap: break-word;
+
+		p, small {
+			font-weight: 300;
+		}
+
+		small {
+			color: var(--secondary);
+			border-top: 1px solid var(--divider);
+			padding-top: var(--extract-gap);
+		}
 	}
 </style>
