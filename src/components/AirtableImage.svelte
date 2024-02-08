@@ -1,8 +1,8 @@
 <script>
-	export let image = {};
+	let { image = {} } = $props();
 
-	$: thumbnailLarge = image?.thumbnails?.large;
-	$: img = thumbnailLarge || image;
+	let thumbnailLarge = $derived(image?.thumbnails?.large);
+	let img = $derived(thumbnailLarge || image);
 </script>
 
 <div class="image-container" style={`--aspect-ratio: ${img.width} / ${img.height}`}>

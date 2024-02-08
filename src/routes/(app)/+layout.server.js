@@ -2,7 +2,7 @@ import { error } from '@sveltejs/kit';
 import { airtableFetch } from '$lib/server/requests';
 import { mapExtractRecord } from '../../helpers/mapping';
 
-const MAX_RECORDS = 200;
+const MAX_RECORDS = 100;
 
 export async function load() {
 	const records = await airtableFetch('extracts', {

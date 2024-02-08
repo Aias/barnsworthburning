@@ -1,4 +1,5 @@
 import Airtable from 'airtable';
+import { error } from '@sveltejs/kit';
 
 // const BASE_ID = 'appHWZbECVKCSjquH';
 const BASE_ID = 'appNAUPSEyCYlPtvG';
@@ -23,7 +24,9 @@ const airtableFetch = async (tableName = '', options = {}) =>
 		.all()
 		.then((records) => records.map(mapReceivedRecord))
 		.catch((error) => {
-			console.error(error);
+			error(500, {
+				message: error
+			});
 			return null;
 		});
 
@@ -32,7 +35,9 @@ const airtableFind = async (tableName = '', recordId = '') =>
 		.find(recordId)
 		.then((record) => mapReceivedRecord(record))
 		.catch((error) => {
-			console.error(error);
+			error(500, {
+				message: error
+			});
 			return null;
 		});
 
