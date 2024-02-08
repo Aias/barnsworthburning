@@ -1,7 +1,8 @@
 <script>
 	import '$styles/app.css';
 	import Header from '$components/Header.svelte';
-	import { encodeId } from '$helpers/params'
+	import Looseleaf from '$components/Looseleaf.svelte';
+	import { encodeId } from '$helpers/params';
 	let { children, data } = $props();
 
 	let index = $derived(
@@ -54,6 +55,9 @@
 <main class="app-content">
 	<div class="index">
 		<h2>In Recent Memory</h2>
+		<section class="looseleaf">
+			<Looseleaf extracts={data.index} />
+		</section>
 		<section>
 			<h3>Types</h3>
 			<ul>
@@ -96,6 +100,11 @@
 		display: flex;
 		flex-direction: column;
 		gap: 1em;
+	}
+	.looseleaf {
+		flex: 1 0 auto;
+		max-height: 25vh;
+		overflow-y: auto;
 	}
 	section {
 		display: flex;
