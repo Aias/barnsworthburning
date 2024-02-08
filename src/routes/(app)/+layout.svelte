@@ -1,6 +1,7 @@
 <script>
 	import '$styles/app.css';
 	import Header from '$components/Header.svelte';
+	import { encodeId } from '$helpers/params'
 	let { children, data } = $props();
 
 	let index = $derived(
@@ -58,7 +59,7 @@
 			<ul>
 				{#each typesByCount as type}
 					<li>
-						<span class="name">{type.name}s</span>
+						<a class="name" href={`${encodeId('type', type.name)}`}>{type.name}</a>
 						<span class="count">{type.count}</span>
 					</li>
 				{/each}
@@ -69,7 +70,7 @@
 			<ul>
 				{#each creatorsByCount as creator}
 					<li>
-						<a class="name" href={`/${creator.id}`}>{creator.name}</a>
+						<a class="name" href={`${encodeId('creator', creator.id)}`}>{creator.name}</a>
 						<span class="count">{creator.count}</span>
 					</li>
 				{/each}
@@ -80,7 +81,7 @@
 			<ul class="spaces">
 				{#each spacesByCount as space}
 					<li>
-						<a class="name" href={`/${space.id}`}>{space.name}</a>
+						<a class="name" href={`${encodeId('space', space.id)}`}>{space.name}</a>
 						<span class="count">{space.count}</span>
 					</li>
 				{/each}

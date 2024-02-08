@@ -1,11 +1,12 @@
 <script>
 	import { page } from '$app/stores';
+	import { decodeId} from '$helpers/params'
 	import AirtableImage from '../../../components/AirtableImage.svelte';
 
-	let trail = $derived($page.params.trail.split('/'));
+	let trail = $derived($page.params.trail.split('/').map(decodeId));
 	let data = $derived($page.data);
 
-	let screens = $derived(trail.map((id) => data[id]));
+	let screens = $derived(trail.map((step) => data[step.id]));
 
 	const previewLength = 280;
 
@@ -19,14 +20,11 @@
 		}
 	}
 
-	$inspect(screens[0]);
-
 	// Create a string of star emojis given a count
 	function starRating(count) {
 		return '⭐️'.repeat(count);
 	}
 </script>
-
 
 {#snippet extractCard({title, extract, images, michelinStars, notes})}
 <article>
@@ -52,7 +50,7 @@
 
 {#each trail as step, i (step)}
 	<section>
-		<h2>{step}</h2>
+		<h2>{step.id} ({step.type})</h2>
 		<div class="looseleaf">
 			{#each screens[i] as extract}
 				{@render extractCard(extract)}
