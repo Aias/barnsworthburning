@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
 import { airtableFetch } from '$lib/server/requests';
-import { mapExtractRecord } from '../../helpers/mapping';
+import { mapExtractRecord } from '$helpers/mapping';
 
 const MAX_RECORDS = 100;
 

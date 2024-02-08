@@ -1,6 +1,6 @@
 <script>
 	import Link from './Link.svelte';
-	export let topics;
+	let { topics } = $props();
 </script>
 
 {#if topics}

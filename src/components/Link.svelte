@@ -1,19 +1,15 @@
 <script>
 	import { page } from '$app/stores';
 
-	export let toExtract = undefined;
-	export let childAnchor = undefined;
-	export let toCreator = undefined;
-	export let toSpace = undefined;
-	export let ref = undefined;
+	let { toExtract, childAnchor, toCreator, toSpace, ref, ...restProps } = $props();
 
-	let href;
+	let href = $state();
 
-	$: currentExtract = $page.params?.extract;
-	$: currentCreator = $page.url.searchParams?.get('creator');
-	$: currentSpace = $page.url.searchParams?.get('space');
+	let currentExtract = $derived($page.params?.extract);
+	let currentCreator = $derived($page.url.searchParams?.get('creator'));
+	let currentSpace = $derived($page.url.searchParams?.get('space'));
 
-	$: {
+	$effect(() => {
 		let url = new URL($page.url);
 
 		if (toExtract === null) {
@@ -43,12 +39,13 @@
 		}
 
 		href = url.pathname + url.search + url.hash;
-	}
+	});
 
-	$: isActive =
+	let isActive = $derived(
 		(currentExtract && currentExtract === toExtract) ||
-		(currentCreator && currentCreator === toCreator) ||
-		(currentSpace && currentSpace === toSpace);
+			(currentCreator && currentCreator === toCreator) ||
+			(currentSpace && currentSpace === toSpace)
+	);
 </script>
 
-<a {href} class:active={isActive} {...$$restProps} bind:this={ref}><slot /></a>
+<a {href} class:active={isActive} {...restProps} bind:this={ref}><slot /></a>

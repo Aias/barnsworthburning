@@ -1,12 +1,14 @@
 <script>
 	let { extract } = $props();
 	import AirtableImage from '$components/AirtableImage.svelte';
+	import TopicList from './TopicList.svelte';
 
 	let michelinStars = $derived(extract.michelinStars);
 	let title = $derived(extract.title);
 	let images = $derived(extract.images);
 	let notes = $derived(extract.notes);
 	let extractText = $derived(extract.extract);
+	let spaces = $derived(extract.spaces);
 
 	let previewLength = 280;
 
@@ -43,6 +45,9 @@
 	{/if}
 	{#if notes}
 		<small>{trimString(notes, previewLength)}</small>
+	{/if}
+	{#if spaces}
+		<TopicList topics={spaces} />
 	{/if}
 </article>
 

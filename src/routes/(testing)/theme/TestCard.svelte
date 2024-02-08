@@ -1,7 +1,5 @@
 <script>
-	export let mode;
-	export let palette;
-	export let chroma;
+	let { mode, palette, chroma } = $props();
 </script>
 
 <article class={`${mode || ''} ${palette || ''} ${chroma || ''}`}>

@@ -22,7 +22,7 @@
 
 <style lang="scss">
 	section {
-		flex: 0 0 480px;
+		flex: 0 0 540px;
 		display: flex;
 		flex-direction: column;
 		gap: 1em;
