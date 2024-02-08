@@ -1,0 +1,13 @@
+{
+	"extends": "./.svelte-kit/tsconfig.json",
+	// "compilerOptions": {
+	// 	"paths": {
+	// 		"$components/*": ["src/components/*"],
+	// 		"$helpers/*": ["src/helpers/*"],
+	// 		"$styles/*": ["src/styles/*"],
+	// 		"$lib/*": ["src/lib/*"]
+	// 	}
+	// },
+	"include": ["src/**/*"],
+	"exclude": ["node_modules/*", ".svelte-kit/*", "static/*"]
+}

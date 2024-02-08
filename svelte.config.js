@@ -8,8 +8,7 @@ const config = {
 		alias: {
 			$components: 'src/components',
 			$helpers: 'src/helpers',
-			$styles: 'src/styles',
-			$schema: 'src/schema'
+			$styles: 'src/styles'
 		}
 	},
 	preprocess: preprocess(),

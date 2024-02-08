@@ -32,7 +32,8 @@ export async function load({ params }) {
 
 	const records = await airtableFetch('extracts', {
 		view: 'viwCvae2rXQscUap6', // Best
-		filterByFormula: filterFormula
+		filterByFormula: filterFormula,
+		maxRecords: 300
 	});
 
 	if (!records) {
