@@ -836,9 +836,9 @@ __metadata:
     remarkable: ^2.0.1
     remarkable-meta: ^1.0.1
     sass: ^1.70.0
-    svelte: ^5.0.0-next.50
+    svelte: ^5.0.0-next.52
     svelte-preprocess: ^5.1.3
-    vite: ^5.1.0
+    vite: ^5.1.1
   languageName: unknown
   linkType: soft
 
@@ -2570,9 +2570,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte@npm:^5.0.0-next.50":
-  version: 5.0.0-next.50
-  resolution: "svelte@npm:5.0.0-next.50"
+"svelte@npm:^5.0.0-next.52":
+  version: 5.0.0-next.52
+  resolution: "svelte@npm:5.0.0-next.52"
   dependencies:
     "@ampproject/remapping": ^2.2.1
     "@jridgewell/sourcemap-codec": ^1.4.15
@@ -2587,7 +2587,7 @@ __metadata:
     locate-character: ^3.0.0
     magic-string: ^0.30.5
     zimmerframe: ^1.1.2
-  checksum: 59b5297dee061a2886cb11801f9206d13b0b54a8f4eb910e8e8f8c573e1dedc708bed259819d25895be2cb051a43703f58234626711472d994bc33aa5b3928fd
+  checksum: eeab557d9baba47c5f262ba1ab3e3b654f1ea54e90509ffa865c04a2396d0bb3fcfae52a4c2d56549d0521f8cde7ce0fece3468988bdb362b2738ed4c69b27fb
   languageName: node
   linkType: hard
 
@@ -2670,9 +2670,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.1.0":
-  version: 5.1.0
-  resolution: "vite@npm:5.1.0"
+"vite@npm:^5.1.1":
+  version: 5.1.1
+  resolution: "vite@npm:5.1.1"
   dependencies:
     esbuild: ^0.19.3
     fsevents: ~2.3.3
@@ -2706,7 +2706,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 36b289414c2cc91f03b2e88dbac68b2714c50b1fbc5735f48987f2ba34dd18eb91dc2604e8cbccda776649a1d49d171db5239377e54941bc3a8a705c50a65474
+  checksum: 6aa7133ed1b455c63a164ba29e6627f4178884e74ec79937bf28492d95a4b9b3a30ce85d3162bb1854217b3adeb1f74bca87d38f394d5696df44f482c4bd3591
   languageName: node
   linkType: hard
 
