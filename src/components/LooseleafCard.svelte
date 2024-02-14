@@ -25,7 +25,8 @@
 
 	function makeMarkdown(string) {
 		const trimmed = trimString(string, previewLength);
-		return markdown.render(trimmed);
+		const html = markdown.render(trimmed);
+		return html;
 	}
 
 	// Create a string of star emojis given a count
@@ -47,10 +48,12 @@
 		{/each}
 	{/if}
 	{#if extractText}
-		<p>{@html makeMarkdown(extractText)}</p>
+		<section class="extract">{@html makeMarkdown(extractText)}</section>
 	{/if}
 	{#if notes}
-		<small>{@html makeMarkdown(notes)}</small>
+		<section class="notes">
+			<small>{@html makeMarkdown(notes)}</small>
+		</section>
 	{/if}
 	{#if spaces}
 		<TopicList topics={spaces} />
