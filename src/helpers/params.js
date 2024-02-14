@@ -3,25 +3,29 @@ export const entities = {
 		id: 'creator',
 		title: 'Creator',
 		plural: 'Creators',
-		prefix: 'creator'
+		prefix: 'creator',
+		description: 'A person, group, or organization that creates or contributes to a work.'
 	},
 	space: {
 		id: 'space',
 		title: 'Space',
 		plural: 'Spaces',
-		prefix: 'space'
+		prefix: 'space',
+		description: 'A topic, category, or tag that a work or extract is associated with.'
 	},
 	extract: {
 		id: 'extract',
 		title: 'Extract',
 		plural: 'Extracts',
-		prefix: 'extract'
+		prefix: 'extract',
+		description: 'A small fragment or larger work that has been extracted from a source.'
 	},
 	format: {
 		id: 'format',
 		title: 'Format',
 		plural: 'Formats',
-		prefix: 'format'
+		prefix: 'format',
+		description: 'A type of work or extract, or its medium, such as a book, article, or video.'
 	}
 };
 

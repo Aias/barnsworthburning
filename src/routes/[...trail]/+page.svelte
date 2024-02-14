@@ -6,12 +6,12 @@
 	let trail = $derived($page.params.trail.split('/').map(decodeSegment));
 	let data = $derived($page.data);
 
-	let screens = $derived(trail.map((step) => data[step.id]));
+	let screens = $derived(trail.map((segment) => data[segment.id]));
 </script>
 
-{#each trail as step, i (step)}
+{#each trail as segment, i (segment)}
 	<section>
-		<h2>{step.id} ({step.entity.title})</h2>
+		<h2>{segment.id} ({segment.entity.title})</h2>
 		<Looseleaf extracts={screens[i]} />
 	</section>
 {/each}
