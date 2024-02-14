@@ -1,4 +1,4 @@
-const getLastName = (fullName) => {
+const getLastName = (fullName: string): string => {
 	// Split the full name into an array of individual names
 	const names = fullName.split(' ');
 
@@ -22,7 +22,7 @@ const getLastName = (fullName) => {
 	return lastName.trim();
 };
 
-const lastFirst = (fullName) => {
+const lastFirst = (fullName: string): string => {
 	const lastName = getLastName(fullName);
 
 	if (lastName === fullName) {

@@ -1,4 +1,12 @@
-export const entities = {
+type Entity = {
+	id: string;
+	title: string;
+	plural: string;
+	prefix: string;
+	description: string;
+};
+
+export const entities: Record<string, Entity> = {
 	creator: {
 		id: 'creator',
 		title: 'Creator',
@@ -31,11 +39,13 @@ export const entities = {
 
 const segmentSeparator = '.';
 
-const getEntityByPrefix = (prefix) => Object.values(entities).find((entity) => entity.prefix === prefix);
+const getEntityByPrefix = (prefix: string): Entity | undefined =>
+	Object.values(entities).find((entity) => entity.prefix === prefix);
 
-export const encodeSegment = (entity, recordId) => `${entity.prefix}${segmentSeparator}${encodeURIComponent(recordId)}`;
+export const encodeSegment = (entity: Entity, recordId: string): string =>
+	`${entity.prefix}${segmentSeparator}${encodeURIComponent(recordId)}`;
 
-export const decodeSegment = (segment = '') => {
+export const decodeSegment = (segment = ''): { entity: Entity | undefined; id: string } => {
 	const [prefix, idString] = segment.split(segmentSeparator);
 	return {
 		entity: getEntityByPrefix(prefix),
