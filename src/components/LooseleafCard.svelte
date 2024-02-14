@@ -1,6 +1,7 @@
 <script>
 	let { extract } = $props();
 	import AirtableImage from '$components/AirtableImage.svelte';
+	import markdown from '$helpers/markdown';
 	import TopicList from './TopicList.svelte';
 
 	let michelinStars = $derived(extract.michelinStars);
@@ -10,7 +11,7 @@
 	let extractText = $derived(extract.extract);
 	let spaces = $derived(extract.spaces);
 
-	let previewLength = 280;
+	const previewLength = 280;
 
 	// Function to trim a string to a certain length
 	function trimString(string, length) {
@@ -20,6 +21,11 @@
 		} else {
 			return string;
 		}
+	}
+
+	function makeMarkdown(string) {
+		const trimmed = trimString(string, previewLength);
+		return markdown.render(trimmed);
 	}
 
 	// Create a string of star emojis given a count
@@ -41,10 +47,10 @@
 		{/each}
 	{/if}
 	{#if extractText}
-		<p>{trimString(extractText, previewLength)}</p>
+		<p>{@html makeMarkdown(extractText)}</p>
 	{/if}
 	{#if notes}
-		<small>{trimString(notes, previewLength)}</small>
+		<small>{@html makeMarkdown(notes)}</small>
 	{/if}
 	{#if spaces}
 		<TopicList topics={spaces} />
