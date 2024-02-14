@@ -51,7 +51,7 @@ export const mapExtractRecord = (record = {}) => {
 		spaceTopics,
 		spaces,
 		title,
-		type
+		format
 	} = record;
 
 	return {
@@ -74,6 +74,6 @@ export const mapExtractRecord = (record = {}) => {
 		source,
 		spaces: zip(['id', 'name'], spaces, spaceTopics),
 		title,
-		type
+		format
 	};
 };

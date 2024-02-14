@@ -1,27 +1,30 @@
 import { error } from '@sveltejs/kit';
 import { airtableFetch, airtableFind } from '$lib/server/requests';
 import { mapExtractRecord } from '$helpers/mapping';
-import { decodeId } from '$helpers/params';
+import { decodeSegment, entities } from '$helpers/params';
 
 const makeCreatorFilter = (id) => `FIND('${id}', creatorsLookup)  > 0`;
 const makeSpaceFilter = (id) => `FIND('${id}', spacesLookup)  > 0`;
 
 export async function load({ params }) {
 	const { trail } = params;
-	const steps = trail.split('/').map((id) => decodeId(id));
-	const { id, type } = steps[0];
+	const steps = trail.split('/').map((id) => decodeSegment(id));
+	const { entity, id } = steps[0];
 
 	let filterFormula;
 
-	switch (type) {
-		case 'creator':
+	switch (entity) {
+		case entities.creator:
 			filterFormula = makeCreatorFilter(id);
 			break;
-		case 'space':
+		case entities.space:
 			filterFormula = makeSpaceFilter(id);
 			break;
-		case 'type':
-			filterFormula = `type = '${id}'`;
+		case entities.format:
+			filterFormula = `format = '${id}'`;
+			break;
+		case entities.extract:
+			filterFormula = `RECORD_ID() = '${id}'`;
 			break;
 		default:
 			error(404, {
@@ -38,7 +41,7 @@ export async function load({ params }) {
 
 	if (!records) {
 		error(404, {
-			message: 'Failed to load extract.'
+			message: 'Failed to load records.'
 		});
 		return null;
 	}

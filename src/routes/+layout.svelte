@@ -2,18 +2,18 @@
 	import '$styles/app.css';
 	import Header from '$components/Header.svelte';
 	import Looseleaf from '$components/Looseleaf.svelte';
-	import { encodeId } from '$helpers/params';
+	import { encodeSegment, entities } from '$helpers/params';
 	let { children, data } = $props();
 
 	let index = $derived(
 		data.index.reduce(
 			(acc, item) => {
-				let { creators = [], spaces = [], type } = item;
+				let { creators = [], spaces = [], format } = item;
 
-				if (acc.types[type]) {
-					acc.types[type].count++;
+				if (acc.formats[format]) {
+					acc.formats[format].count++;
 				} else {
-					acc.types[type] = { name: type, count: 1 };
+					acc.formats[format] = { name: format, count: 1 };
 				}
 
 				creators.forEach((creator) => {
@@ -34,7 +34,7 @@
 
 				return acc;
 			},
-			{ creators: {}, spaces: {}, types: {} }
+			{ creators: {}, spaces: {}, formats: {} }
 		)
 	);
 
@@ -48,7 +48,7 @@
 
 	let creatorsByCount = $derived(Object.values(index.creators).sort(sortByCountThenName));
 	let spacesByCount = $derived(Object.values(index.spaces).sort(sortByCountThenName));
-	let typesByCount = $derived(Object.values(index.types).sort(sortByCountThenName));
+	let formatsByCount = $derived(Object.values(index.formats).sort(sortByCountThenName));
 </script>
 
 <Header class="app-header" />
@@ -59,33 +59,33 @@
 			<Looseleaf extracts={data.index} />
 		</section>
 		<section>
-			<h3>Types</h3>
+			<h3>{entities.format.plural}</h3>
 			<ul>
-				{#each typesByCount as type}
+				{#each formatsByCount as format}
 					<li>
-						<a class="name" href={`${encodeId('type', type.name)}`}>{type.name}</a>
-						<span class="count">{type.count}</span>
+						<a class="name" href={`${encodeSegment(entities.format, format.name)}`}>{format.name}</a>
+						<span class="count">{format.count}</span>
 					</li>
 				{/each}
 			</ul>
 		</section>
 		<section>
-			<h3>Creators</h3>
+			<h3>{entities.creator.plural}</h3>
 			<ul>
 				{#each creatorsByCount as creator}
 					<li>
-						<a class="name" href={`${encodeId('creator', creator.id)}`}>{creator.name}</a>
+						<a class="name" href={`${encodeSegment(entities.creator, creator.id)}`}>{creator.name}</a>
 						<span class="count">{creator.count}</span>
 					</li>
 				{/each}
 			</ul>
 		</section>
 		<section>
-			<h3>Spaces</h3>
+			<h3>{entities.space.plural}</h3>
 			<ul class="spaces">
 				{#each spacesByCount as space}
 					<li>
-						<a class="name" href={`${encodeId('space', space.id)}`}>{space.name}</a>
+						<a class="name" href={`${encodeSegment(entities.space, space.id)}`}>{space.name}</a>
 						<span class="count">{space.count}</span>
 					</li>
 				{/each}

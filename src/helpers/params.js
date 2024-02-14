@@ -1,18 +1,40 @@
-export const prefixes = {
-	creator: 'creator',
-	space: 'space',
-	extract: 'extract',
-	type: 'type'
+export const entities = {
+	creator: {
+		id: 'creator',
+		title: 'Creator',
+		plural: 'Creators',
+		prefix: 'creator'
+	},
+	space: {
+		id: 'space',
+		title: 'Space',
+		plural: 'Spaces',
+		prefix: 'space'
+	},
+	extract: {
+		id: 'extract',
+		title: 'Extract',
+		plural: 'Extracts',
+		prefix: 'extract'
+	},
+	format: {
+		id: 'format',
+		title: 'Format',
+		plural: 'Formats',
+		prefix: 'format'
+	}
 };
 
 const segmentSeparator = '.';
 
-export const encodeId = (type, id) => `${prefixes[type]}${segmentSeparator}${encodeURIComponent(id)}`;
+const getEntityByPrefix = (prefix) => Object.values(entities).find((entity) => entity.prefix === prefix);
 
-export const decodeId = (id) => {
-	const [type, idString] = id.split(segmentSeparator);
+export const encodeSegment = (entity, recordId) => `${entity.prefix}${segmentSeparator}${encodeURIComponent(recordId)}`;
+
+export const decodeSegment = (segment = '') => {
+	const [prefix, idString] = segment.split(segmentSeparator);
 	return {
-		type: Object.keys(prefixes).find((key) => prefixes[key] === type),
+		entity: getEntityByPrefix(prefix),
 		id: decodeURIComponent(idString)
 	};
 };
