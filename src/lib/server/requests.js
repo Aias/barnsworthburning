@@ -23,9 +23,9 @@ const airtableFetch = async (tableName = '', options = {}) =>
 		.select(options)
 		.all()
 		.then((records) => records.map(mapReceivedRecord))
-		.catch((error) => {
+		.catch((err) => {
 			error(500, {
-				message: error
+				message: err
 			});
 			return null;
 		});
@@ -34,9 +34,9 @@ const airtableFind = async (tableName = '', recordId = '') =>
 	base(tableName)
 		.find(recordId)
 		.then((record) => mapReceivedRecord(record))
-		.catch((error) => {
+		.catch((err) => {
 			error(500, {
-				message: error
+				message: err
 			});
 			return null;
 		});

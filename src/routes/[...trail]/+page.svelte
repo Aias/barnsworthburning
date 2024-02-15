@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { page } from '$app/stores';
 	import { decodeSegment } from '$helpers/params';
 	import Looseleaf from '$components/Looseleaf.svelte';
@@ -11,7 +11,7 @@
 
 {#each trail as segment, i (segment)}
 	<section>
-		<h2>{segment.id} ({segment.entity.title})</h2>
+		<h2>{segment.id} ({segment.entity?.title})</h2>
 		<Looseleaf extracts={screens[i]} />
 	</section>
 {/each}

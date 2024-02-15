@@ -1,5 +1,5 @@
 import { error } from '@sveltejs/kit';
-import { airtableFetch, airtableFind } from '$lib/server/requests';
+import { airtableFetch } from '$lib/server/requests';
 import { mapExtractRecord } from '$helpers/mapping';
 import { decodeSegment, entities } from '$helpers/params';
 

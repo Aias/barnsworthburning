@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import '$styles/app.css';
 	import Header from '$components/Header.svelte';
 	import Looseleaf from '$components/Looseleaf.svelte';
@@ -63,7 +63,9 @@
 			<ul>
 				{#each formatsByCount as format}
 					<li>
-						<a class="name" href={`${encodeSegment(entities.format, format.name)}`}>{format.name}</a>
+						<a class="name" href={`${encodeSegment(entities.format, format.name)}`}
+							>{format.name}</a
+						>
 						<span class="count">{format.count}</span>
 					</li>
 				{/each}
@@ -74,7 +76,9 @@
 			<ul>
 				{#each creatorsByCount as creator}
 					<li>
-						<a class="name" href={`${encodeSegment(entities.creator, creator.id)}`}>{creator.name}</a>
+						<a class="name" href={`${encodeSegment(entities.creator, creator.id)}`}
+							>{creator.name}</a
+						>
 						<span class="count">{creator.count}</span>
 					</li>
 				{/each}
@@ -85,7 +89,9 @@
 			<ul class="spaces">
 				{#each spacesByCount as space}
 					<li>
-						<a class="name" href={`${encodeSegment(entities.space, space.id)}`}>{space.name}</a>
+						<a class="name" href={`${encodeSegment(entities.space, space.id)}`}
+							>{space.name}</a
+						>
 						<span class="count">{space.count}</span>
 					</li>
 				{/each}

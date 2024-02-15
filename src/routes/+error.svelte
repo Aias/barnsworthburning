@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	let { status, error } = $props();
 
 	const dev = process.env.NODE_ENV === 'development';
