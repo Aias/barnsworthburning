@@ -28,14 +28,14 @@
 		"@radix-ui/colors": "^3.0.0",
 		"airtable": "^0.12.2",
 		"normalize.css": "^8.0.1",
-		"remarkable": "^2.0.1",
-		"remarkable-meta": "^1.0.1"
+		"remarkable": "^2.0.1"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-node": "^4.0.1",
 		"@sveltejs/kit": "^2.5.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.2",
 		"@types/eslint": "8.56.0",
+		"@types/remarkable": "^2.0.8",
 		"@typescript-eslint/eslint-plugin": "^6.0.0",
 		"@typescript-eslint/parser": "^6.0.0",
 		"eslint": "^8.56.0",

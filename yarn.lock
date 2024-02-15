@@ -769,6 +769,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/remarkable@npm:^2.0.8":
+  version: 2.0.8
+  resolution: "@types/remarkable@npm:2.0.8"
+  checksum: 9c67f96cf1b880b8ac5c6dd9e8916889aa29f70036dbd30ca8d1e16563a57e6505b0a557a2e0b5be41398d9945fb7f27760e5d18ad47717c819ec24a0ef723ad
+  languageName: node
+  linkType: hard
+
 "@types/resolve@npm:1.20.2":
   version: 1.20.2
   resolution: "@types/resolve@npm:1.20.2"
@@ -1073,7 +1080,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"argparse@npm:^1.0.10, argparse@npm:^1.0.7":
+"argparse@npm:^1.0.10":
   version: 1.0.10
   resolution: "argparse@npm:1.0.10"
   dependencies:
@@ -1139,6 +1146,7 @@ __metadata:
     "@sveltejs/kit": ^2.5.0
     "@sveltejs/vite-plugin-svelte": ^3.0.2
     "@types/eslint": 8.56.0
+    "@types/remarkable": ^2.0.8
     "@typescript-eslint/eslint-plugin": ^6.0.0
     "@typescript-eslint/parser": ^6.0.0
     airtable: ^0.12.2
@@ -1149,7 +1157,6 @@ __metadata:
     prettier: ^3.1.1
     prettier-plugin-svelte: ^3.1.2
     remarkable: ^2.0.1
-    remarkable-meta: ^1.0.1
     sass: ^1.70.0
     svelte: ^5.0.0-next.54
     svelte-check: ^3.6.0
@@ -1712,16 +1719,6 @@ __metadata:
     acorn-jsx: ^5.3.2
     eslint-visitor-keys: ^3.4.1
   checksum: eb8c149c7a2a77b3f33a5af80c10875c3abd65450f60b8af6db1bfcfa8f101e21c1e56a561c6dc13b848e18148d43469e7cd208506238554fb5395a9ea5a1ab9
-  languageName: node
-  linkType: hard
-
-"esprima@npm:^4.0.0":
-  version: 4.0.1
-  resolution: "esprima@npm:4.0.1"
-  bin:
-    esparse: ./bin/esparse.js
-    esvalidate: ./bin/esvalidate.js
-  checksum: b45bc805a613dbea2835278c306b91aff6173c8d034223fa81498c77dcbce3b2931bf6006db816f62eacd9fd4ea975dfd85a5b7f3c6402cfd050d4ca3c13a628
   languageName: node
   linkType: hard
 
@@ -2335,18 +2332,6 @@ __metadata:
     "@pkgjs/parseargs":
       optional: true
   checksum: 8add557045eb51f619d247ac9786dbfa7ee4d52a0eb3fb488c2637aecfd15d12c284a4ff7dead2c1aba34d6228d9452e4509fb771daae87793a48786b095ee07
-  languageName: node
-  linkType: hard
-
-"js-yaml@npm:^3.2.3":
-  version: 3.14.1
-  resolution: "js-yaml@npm:3.14.1"
-  dependencies:
-    argparse: ^1.0.7
-    esprima: ^4.0.0
-  bin:
-    js-yaml: bin/js-yaml.js
-  checksum: bef146085f472d44dee30ec34e5cf36bf89164f5d585435a3d3da89e52622dff0b188a580e4ad091c3341889e14cb88cac6e4deb16dc5b1e9623bb0601fc255c
   languageName: node
   linkType: hard
 
@@ -3034,15 +3019,6 @@ __metadata:
   dependencies:
     picomatch: ^2.2.1
   checksum: 1ced032e6e45670b6d7352d71d21ce7edf7b9b928494dcaba6f11fba63180d9da6cd7061ebc34175ffda6ff529f481818c962952004d273178acd70f7059b320
-  languageName: node
-  linkType: hard
-
-"remarkable-meta@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "remarkable-meta@npm:1.0.1"
-  dependencies:
-    js-yaml: ^3.2.3
-  checksum: e31d32f61dc6c466b7a152ccebc414a464dba36861f959b14e32ceed1379607120445e3ff3e572db7635cda322b9af0c56ba615672ca7a13706c9a8d840c9a6d
   languageName: node
   linkType: hard
 
