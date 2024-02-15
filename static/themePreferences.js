@@ -6,7 +6,13 @@ const MODES = {
 	DARK: 'dark',
 	LIGHT: 'light'
 };
-const DEFAULT_MODE = MODES.DARK;
+
+const prefersSystemDarkMode =
+	window.matchMedia &&
+	(window.matchMedia('(prefers-color-scheme: dark)').matches ||
+		window.matchMedia('(prefers-color-scheme: no-preference)').matches);
+
+const DEFAULT_MODE = prefersSystemDarkMode ? MODES.DARK : MODES.LIGHT;
 
 const CHROMA_COOKIE = 'barnsworthburning-chroma';
 const CHROMA = {
@@ -40,19 +46,11 @@ const siteModePreference = getCookie(MODE_COOKIE);
 const siteChromaPreference = getCookie(CHROMA_COOKIE);
 const sitePalettePreference = getCookie(PALETTE_COOKIE);
 
-const prefersSystemDarkMode =
-	window.matchMedia &&
-	(window.matchMedia('(prefers-color-scheme: dark)').matches ||
-		window.matchMedia('(prefers-color-scheme: no-preference)').matches);
-
 if (siteModePreference) {
 	document.documentElement.classList.add(siteModePreference);
-} else if (prefersSystemDarkMode) {
-	document.documentElement.classList.add(MODES.DARK);
-	setCookie(MODE_COOKIE, MODES.LIGHT);
 } else {
-	document.documentElement.classList.add(MODES.LIGHT);
-	setCookie(MODE_COOKIE, MODES.LIGHT);
+	document.documentElement.classList.add(DEFAULT_MODE);
+	setCookie(MODE_COOKIE, DEFAULT_MODE);
 }
 
 if (siteChromaPreference) {

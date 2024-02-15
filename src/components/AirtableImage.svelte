@@ -1,13 +1,25 @@
-<script>
-	let { image = {} } = $props();
+<script lang="ts">
+	import type { Attachment } from 'airtable';
 
-	let thumbnailLarge = $derived(image?.thumbnails?.large);
-	let img = $derived(thumbnailLarge || image);
+	// Define a props type
+	interface AirtableImageProps {
+		image: Attachment;
+	}
+
+	let { image } = $props<AirtableImageProps>();
+
+	let thumbnail = $derived(image.thumbnails?.large);
 </script>
 
-<div class="image-container" style={`--aspect-ratio: ${img.width} / ${img.height}`}>
-	<img alt={image.filename} src={img.url} loading="lazy" />
-</div>
+{#if thumbnail}
+	<div class="image-container" style={`--aspect-ratio: ${thumbnail.width} / ${thumbnail.height}`}>
+		<img alt={image.filename} src={thumbnail.url} loading="lazy" />
+	</div>
+{:else}
+	<div class="image-container">
+		<img alt={image.filename} src={image.url} loading="lazy" />
+	</div>
+{/if}
 
 <style lang="scss">
 	.image-container {
