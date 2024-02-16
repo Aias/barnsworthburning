@@ -1,7 +1,7 @@
-export function getCookie(name) {
-	let cookieArr = document.cookie.split(';');
+export function getCookie(name: string) {
+	const cookieArr = document.cookie.split(';');
 	for (let i = 0; i < cookieArr.length; i++) {
-		let cookiePair = cookieArr[i].split('=').map((cookie) => cookie.trim());
+		const cookiePair = cookieArr[i].split('=').map((cookie) => cookie.trim());
 
 		if (name == cookiePair[0]) {
 			return decodeURIComponent(cookiePair[1]);
@@ -11,7 +11,7 @@ export function getCookie(name) {
 	return null;
 }
 
-export function setCookie(name, value) {
-	let expires = 'Fri, 31 Dec 9999 23:59:59 GMT';
+export function setCookie(name: string, value: string) {
+	const expires = 'Fri, 31 Dec 9999 23:59:59 GMT';
 	document.cookie = `${name}=${value || ''}; expires=${expires}; path=/`;
 }

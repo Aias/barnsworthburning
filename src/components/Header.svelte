@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { getCookie, setCookie } from '$helpers/cookies';
 	import { onMount } from 'svelte';
 
@@ -17,8 +17,8 @@
 		chroma = chroma === 'neutral' ? 'chromatic' : 'neutral';
 		setCookie('barnsworthburning-chroma', chroma);
 	};
-	const setPalette = (e) => {
-		palette = e.target.value;
+	const setPalette = (event: Event) => {
+		palette = (event.target as HTMLInputElement).value;
 		setCookie('barnsworthburning-palette', palette);
 	};
 
@@ -45,8 +45,8 @@
 </script>
 
 <header {...restProps}>
-	<button on:click={toggleMode}>Toggle Mode</button>
-	<button on:click={toggleChroma}>Toggle Chroma</button>
+	<button onclick={toggleMode}>Toggle Mode</button>
+	<button onclick={toggleChroma}>Toggle Chroma</button>
 	<div class="theme-selector">
 		<span class="text-secondary">Theme:</span>
 		{#each paletteOptions as paletteKey (paletteKey)}
@@ -55,7 +55,7 @@
 					type="radio"
 					name="paletteKey"
 					value={paletteKey}
-					on:change={setPalette}
+					onchange={setPalette}
 					checked={palette === paletteKey}
 				/>
 				{paletteKey}
