@@ -7,6 +7,8 @@
 
 	let { children, data } = $props();
 
+	$inspect(data.index);
+
 	type IndexEntity = { id: string; name: string; count: number };
 
 	type Index = {
@@ -131,6 +133,7 @@
 		flex: 1 0 auto;
 		max-height: 25vh;
 		overflow-y: auto;
+		font-size: 0.25em;
 	}
 	section {
 		display: flex;

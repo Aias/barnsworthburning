@@ -1,8 +1,14 @@
-<script>
-	let { extract } = $props();
+<script lang="ts">
+	import type { Extract } from '$types/Extract';
 	import AirtableImage from '$components/AirtableImage.svelte';
 	import markdown from '$helpers/markdown';
 	import TopicList from './TopicList.svelte';
+
+	interface LooseleafCardProps {
+		extract: Extract;
+	}
+
+	let { extract } = $props<LooseleafCardProps>();
 
 	let michelinStars = $derived(extract.michelinStars);
 	let title = $derived(extract.title);
@@ -14,8 +20,7 @@
 	const previewLength = 280;
 
 	// Function to trim a string to a certain length
-	function trimString(string, length) {
-		if (!string) return;
+	function trimString(string: string, length: number) {
 		if (string.length > length) {
 			return string.substring(0, length) + '...';
 		} else {
@@ -23,14 +28,14 @@
 		}
 	}
 
-	function makeMarkdown(string) {
+	function makeMarkdown(string: string) {
 		const trimmed = trimString(string, previewLength);
 		const html = markdown.render(trimmed);
 		return html;
 	}
 
 	// Create a string of star emojis given a count
-	function starRating(count) {
+	function starRating(count: number) {
 		return '⭐️'.repeat(count);
 	}
 </script>
@@ -62,7 +67,7 @@
 
 <style lang="scss">
 	article {
-		--extract-gap: 1em;
+		--extract-gap: 0.75em;
 		border: 1px solid var(--divider);
 		padding: 1em;
 		display: flex;

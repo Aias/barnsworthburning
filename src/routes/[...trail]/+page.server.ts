@@ -2,9 +2,10 @@ import { error } from '@sveltejs/kit';
 import { airtableFetch } from '$lib/server/requests';
 import { mapExtractRecord } from '$helpers/mapping';
 import { decodeSegment, entities } from '$helpers/params';
+import type { RawExtract } from '$types/Extract';
 
-const makeCreatorFilter = (id) => `FIND('${id}', creatorsLookup)  > 0`;
-const makeSpaceFilter = (id) => `FIND('${id}', spacesLookup)  > 0`;
+const makeCreatorFilter = (id: string) => `FIND('${id}', creatorsLookup)  > 0`;
+const makeSpaceFilter = (id: string) => `FIND('${id}', spacesLookup)  > 0`;
 
 export async function load({ params }) {
 	const { trail } = params;
@@ -30,20 +31,18 @@ export async function load({ params }) {
 			error(404, {
 				message: 'Invalid trail.'
 			});
-			return null;
 	}
 
-	const records = await airtableFetch('extracts', {
+	const records = (await airtableFetch('extracts', {
 		view: 'viwCvae2rXQscUap6', // Best
 		filterByFormula: filterFormula,
 		maxRecords: 300
-	});
+	})) as RawExtract[];
 
 	if (!records) {
 		error(404, {
 			message: 'Failed to load records.'
 		});
-		return null;
 	}
 
 	return {

@@ -12,9 +12,8 @@ export interface RawExtract {
 	extractedOn: string;
 	imageCaption?: string;
 	images?: Attachment[];
-	isWork: number;
 	lastUpdated: string;
-	michelinStars: number;
+	michelinStars?: number;
 	notes?: string;
 	numChildren: number;
 	numFragments: number;
@@ -32,24 +31,23 @@ export interface RawExtract {
 
 export interface Extract {
 	id: string;
-	children?: Record<string, string>[];
-	connections?: Record<string, string>[];
+	title?: string;
 	creators?: Record<string, string>[];
-	extract?: string;
-	extractedOn: Date;
-	imageCaption?: string;
-	images?: Attachment[];
-	isWork: number;
-	lastUpdated: Date;
-	michelinStars: number;
-	notes?: string;
-	numChildren: number;
-	numFragments: number;
+	spaces?: Record<string, string>[];
+	connections?: Record<string, string>[];
 	parent?: Record<string, string>;
 	parentCreators?: Record<string, string>[];
+	children?: Record<string, string>[];
+	extract?: string;
+	notes?: string;
+	images?: Attachment[];
+	imageCaption?: string;
+	michelinStars?: number;
+	numChildren: number;
+	numFragments: number;
 	source?: string;
-	spaces?: Record<string, string>[];
-	title?: string;
 	format?: string;
+	extractedOn: Date;
+	lastUpdated: Date;
 	_original: RawExtract;
 }

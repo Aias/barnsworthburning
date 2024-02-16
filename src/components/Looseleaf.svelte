@@ -18,7 +18,6 @@
 <style lang="scss">
 	.looseleaf {
 		--gallery-gap: 0.25em;
-		font-size: 0.5em;
 		column-width: 15em;
 		column-gap: var(--gallery-gap);
 
