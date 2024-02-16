@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import markdown from '$helpers/markdown';
 
 	import Link from './Link.svelte';
@@ -6,58 +6,41 @@
 	import TopicList from './TopicList.svelte';
 	import RelationList from './RelationList.svelte';
 	import AirtableImage from './AirtableImage.svelte';
+	import type { Extract } from '$types/Extract';
 
-	let { extract, contextId = 'panel', componentClass } = $props();
+	interface ExtractProps {
+		extract: Extract;
+		contextId?: string;
+		componentClass?: string;
+	}
 
-	$: id = extract?.id;
-	$: title = extract?.title;
-	$: extractContent = extract?.extract;
-	$: notes = extract?.notes;
-	$: images = extract?.images;
-	$: imageCaption = extract?.imageCaption;
+	let { extract, contextId = 'panel', componentClass } = $props<ExtractProps>();
 
-	$: parent = extract?.parent;
-	$: children = extract?.children;
-	$: connections = extract?.connections;
-	$: spaces = extract?.spaces;
+	let id = $derived(extract.id);
+	let title = $derived(extract.title);
+	let extractContent = $derived(extract.extract);
+	let notes = $derived(extract.notes);
+	let images = $derived(extract.images);
+	let imageCaption = $derived(extract.imageCaption);
 
-	$: hasRelations = children || connections || spaces;
-	$: nodeId = `${contextId}--${id}`;
+	let parent = $derived(extract.parent);
+	let children = $derived(extract.children);
+	let connections = $derived(extract.connections);
+	let spaces = $derived(extract.spaces);
 
-	let mouseDownTime;
-	let mouseUpTime;
-
-	let containerRef;
-	let linkRef;
-
-	const handleMouseDown = () => {
-		mouseDownTime = Date.now();
-	};
-	const handleMouseUp = () => {
-		mouseUpTime = Date.now();
-		if (mouseUpTime - mouseDownTime < 200) {
-			linkRef.click();
-		}
-	};
+	let hasRelations = $derived(children || connections || spaces);
+	let nodeId = $derived(`${contextId}--${id}`);
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<section
-	id={nodeId}
-	class:extract={true}
-	class:interactive={true}
-	class={componentClass}
-	bind:this={containerRef}
-	on:mousedown={handleMouseDown}
-	on:mouseup={handleMouseUp}
->
+<section id={nodeId} class:extract={true} class:interactive={true} class={componentClass}>
 	{#if title}
 		<header>
 			<h2 class="extract-title">
 				{#if parent}
-					<Link bind:ref={linkRef} toExtract={parent.id} childAnchor={`panel--${id}`}>{title}</Link>
+					<Link toExtract={parent.id} childAnchor={`panel--${id}`}>{title}</Link>
 				{:else}
-					<Link bind:ref={linkRef} toExtract={id}>{title}</Link>
+					<Link toExtract={id}>{title}</Link>
 				{/if}
 			</h2>
 		</header>

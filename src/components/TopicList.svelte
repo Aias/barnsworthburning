@@ -1,6 +1,11 @@
 <script lang="ts">
 	import Link from './Link.svelte';
-	let { topics } = $props();
+	import type { ZippedRecord } from '$helpers/mapping';
+
+	interface TopicListProps {
+		topics: ZippedRecord[];
+	}
+	let { topics } = $props<TopicListProps>();
 </script>
 
 {#if topics}

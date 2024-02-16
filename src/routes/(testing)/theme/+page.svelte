@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import '$styles/app.css';
 	import TestCard from './TestCard.svelte';
 

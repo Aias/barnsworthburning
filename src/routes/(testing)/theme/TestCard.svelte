@@ -1,5 +1,10 @@
-<script>
-	let { mode, palette, chroma } = $props();
+<script lang="ts">
+	interface TestCardProps {
+		mode?: string;
+		palette?: string;
+		chroma?: string;
+	}
+	let { mode, palette, chroma } = $props<TestCardProps>();
 </script>
 
 <article class={`${mode || ''} ${palette || ''} ${chroma || ''}`}>

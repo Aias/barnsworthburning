@@ -1,6 +1,11 @@
 import zip from './zip';
 import type { RawExtract, Extract } from '../types/Extract';
 
+export interface ZippedRecord {
+	id: string;
+	name: string;
+}
+
 export const mapExtractRecord = (record: RawExtract): Extract => {
 	const {
 		childTitles = [],

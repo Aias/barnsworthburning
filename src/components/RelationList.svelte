@@ -1,10 +1,14 @@
-<script>
+<script lang="ts">
 	import Link from './Link.svelte';
 
-	export let items;
-	export let label;
-	export let symbol;
-	export let maxChildren = 5;
+	interface RelationListProps {
+		items: { id: string; name: string }[];
+		label: string;
+		symbol: string;
+		maxChildren?: number;
+	}
+
+	let { items, label, symbol, maxChildren = 5 } = $props<RelationListProps>();
 
 	let showAllChildren = false;
 
@@ -12,13 +16,13 @@
 		showAllChildren = true;
 	};
 
-	$: isTruncated = items?.length > maxChildren;
-	$: displayedItems = showAllChildren ? items?.slice() : items?.slice(0, maxChildren);
+	let isTruncated = $derived(items?.length > maxChildren);
+	let displayedItems = $derived(showAllChildren ? items?.slice() : items?.slice(0, maxChildren));
 
-	$: {
+	$effect(() => {
 		items;
 		showAllChildren = false;
-	}
+	});
 </script>
 
 {#if items?.length > 0}
@@ -28,7 +32,9 @@
 		{/each}
 		{#if isTruncated}
 			<li class="show-more">
-				<button on:click={expandList} class="link caption">+{items.length - maxChildren} More</button>
+				<button on:click={expandList} class="link caption"
+					>+{items.length - maxChildren} More</button
+				>
 			</li>
 		{/if}
 	</ol>

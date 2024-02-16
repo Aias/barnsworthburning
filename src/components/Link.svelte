@@ -1,9 +1,17 @@
-<script>
+<script lang="ts">
 	import { page } from '$app/stores';
 
-	let { toExtract, childAnchor, toCreator, toSpace, ref, ...restProps } = $props();
+	interface LinkProps {
+		toExtract?: string;
+		childAnchor?: string;
+		toCreator?: string;
+		toSpace?: string;
+	}
 
-	let href = $state();
+	let { toExtract, childAnchor, toCreator, toSpace, children, ...restProps } =
+		$props<LinkProps>();
+
+	let href = $state<string>();
 
 	let currentExtract = $derived($page.params?.extract);
 	let currentCreator = $derived($page.url.searchParams?.get('creator'));
@@ -29,13 +37,11 @@
 			url.searchParams.delete('creator');
 			url.searchParams.delete('space');
 		} else if (toCreator) {
-			let newCreator = toCreator || currentCreator;
 			url.searchParams.delete('space');
-			url.searchParams.set('creator', newCreator);
+			url.searchParams.set('creator', toCreator);
 		} else if (toSpace) {
-			let newSpace = toSpace || currentSpace;
 			url.searchParams.delete('creator');
-			url.searchParams.set('space', newSpace);
+			url.searchParams.set('space', toSpace);
 		}
 
 		href = url.pathname + url.search + url.hash;
@@ -48,4 +54,4 @@
 	);
 </script>
 
-<a {href} class:active={isActive} {...restProps} bind:this={ref}><slot /></a>
+<a {href} class:active={isActive} {...restProps}>{@render children()}</a>
