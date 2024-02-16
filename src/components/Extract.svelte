@@ -32,7 +32,6 @@
 	let nodeId = $derived(`${contextId}--${id}`);
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
 <section id={nodeId} class:extract={true} class:interactive={true} class={componentClass}>
 	{#if title}
 		<header>
@@ -47,7 +46,9 @@
 	{/if}
 	<figure class="extract-main">
 		{#if images}
-			<AirtableImage image={images[0]} />
+			{#each images as image (image.id)}
+				<AirtableImage {image} />
+			{/each}
 			{#if imageCaption}
 				<div class="extract-image-caption caption content">
 					{@html markdown.render(imageCaption)}
@@ -65,9 +66,13 @@
 	</figure>
 	{#if hasRelations}
 		<nav class="relations">
-			<RelationList items={children} symbol="↳" label="Children" />
-			<RelationList items={connections} symbol="⮂" label="Connections" />
-			<TopicList topics={spaces} />
+			{#if children}<RelationList items={children} symbol="↳" label="Children" />{/if}
+			{#if connections}<RelationList
+					items={connections}
+					symbol="⮂"
+					label="Connections"
+				/>{/if}
+			{#if spaces}<TopicList topics={spaces} />{/if}
 		</nav>
 	{/if}
 	{#if notes}

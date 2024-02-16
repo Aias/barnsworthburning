@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import type { Snippet } from 'svelte';
 
 	interface LinkProps {
 		toExtract?: string;
 		childAnchor?: string;
 		toCreator?: string;
 		toSpace?: string;
+		children: Snippet;
 	}
 
 	let { toExtract, childAnchor, toCreator, toSpace, children, ...restProps } =

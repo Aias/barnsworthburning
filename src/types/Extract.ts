@@ -1,4 +1,5 @@
 import type { Attachment } from 'airtable';
+import type { LinkedRecord } from './LinkedRecord';
 
 export interface RawExtract {
 	id: string;
@@ -32,12 +33,12 @@ export interface RawExtract {
 export interface Extract {
 	id: string;
 	title?: string;
-	creators?: Record<string, string>[];
-	spaces?: Record<string, string>[];
-	connections?: Record<string, string>[];
-	parent?: Record<string, string>;
-	parentCreators?: Record<string, string>[];
-	children?: Record<string, string>[];
+	creators?: LinkedRecord[];
+	spaces?: LinkedRecord[];
+	connections?: LinkedRecord[];
+	parent?: LinkedRecord;
+	parentCreators?: LinkedRecord[];
+	children?: LinkedRecord[];
 	extract?: string;
 	notes?: string;
 	images?: Attachment[];

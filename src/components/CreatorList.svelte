@@ -1,9 +1,9 @@
 <script lang="ts">
 	import Link from './Link.svelte';
-	import type { ZippedRecord } from '$helpers/mapping';
+	import type { LinkedRecord } from '$types/LinkedRecord';
 
 	interface CreatorListProps {
-		creators: ZippedRecord[];
+		creators: LinkedRecord[];
 	}
 
 	let { creators, ...restProps } = $props<CreatorListProps>();

@@ -1,8 +1,9 @@
 <script lang="ts">
 	import Link from './Link.svelte';
+	import type { LinkedRecord } from '$types/LinkedRecord';
 
 	interface RelationListProps {
-		items: { id: string; name: string }[];
+		items: LinkedRecord[];
 		label: string;
 		symbol: string;
 		maxChildren?: number;

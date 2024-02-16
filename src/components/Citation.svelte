@@ -1,22 +1,29 @@
-<script>
+<script lang="ts">
 	import { article } from '$helpers/grammar';
 	import CreatorList from './CreatorList.svelte';
 	import Link from './Link.svelte';
+	import type { Extract } from '$types/Extract';
 
-	export let extract = undefined;
+	interface CitationProps {
+		extract: Extract;
+	}
 
-	$: type = extract?.type || 'Work';
-	$: creators = extract?.creators || extract?.parentCreators;
-	$: parent = extract?.parent;
-	$: source = extract?.source;
+	let { extract } = $props<CitationProps>();
+
+	let format = $derived(extract.format || 'Extract');
+	let creators = $derived(extract.creators || extract.parentCreators);
+	let parent = $derived(extract.parent);
+	let source = $derived(extract.source);
 </script>
 
 <div class="citation">
 	<div class="text-mono">
-		<span class="article">{article(type)}</span>
-		<strong class="type">{type}</strong>
+		<span class="article">{article(format)}</span>
+		<strong class="format">{format}</strong>
 		{#if parent}
-			<span class="parent">from <Link toExtract={parent.id}><cite>{parent.name}</cite></Link></span>
+			<span class="parent"
+				>from <Link toExtract={parent.id}><cite>{parent.name}</cite></Link></span
+			>
 		{/if}
 		{#if creators}
 			<span class="creators">by <CreatorList {creators} /></span>

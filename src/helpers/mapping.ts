@@ -1,10 +1,6 @@
 import zip from './zip';
 import type { RawExtract, Extract } from '../types/Extract';
-
-export interface ZippedRecord {
-	id: string;
-	name: string;
-}
+import type { LinkedRecord } from '$types/LinkedRecord';
 
 export const mapExtractRecord = (record: RawExtract): Extract => {
 	const {
@@ -35,12 +31,18 @@ export const mapExtractRecord = (record: RawExtract): Extract => {
 		format
 	} = record;
 
-	const mappedChildren = zip(['id', 'name'], children, childTitles);
-	const mappedConnections = zip(['id', 'name'], connections, connectionTitles);
-	const mappedCreators = zip(['id', 'name'], creators, creatorNames);
-	const mappedParent = zip(['id', 'name'], parent, parentTitle);
-	const mappedParentCreators = zip(['id', 'name'], parentCreatorIds, parentCreatorNames);
-	const mappedSpaces = zip(['id', 'name'], spaces, spaceTopics);
+	const mappedChildren = zip(['id', 'name'], children, childTitles) as LinkedRecord[] | undefined;
+	const mappedConnections = zip(['id', 'name'], connections, connectionTitles) as
+		| LinkedRecord[]
+		| undefined;
+	const mappedCreators = zip(['id', 'name'], creators, creatorNames) as
+		| LinkedRecord[]
+		| undefined;
+	const mappedParent = zip(['id', 'name'], parent, parentTitle) as LinkedRecord[] | undefined;
+	const mappedParentCreators = zip(['id', 'name'], parentCreatorIds, parentCreatorNames) as
+		| LinkedRecord[]
+		| undefined;
+	const mappedSpaces = zip(['id', 'name'], spaces, spaceTopics) as LinkedRecord[] | undefined;
 
 	return {
 		id,

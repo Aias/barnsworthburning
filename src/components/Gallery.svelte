@@ -1,9 +1,14 @@
-<script>
+<script lang="ts">
 	import Extract from './Extract.svelte';
+	import type { Extract as ExtractType } from '$types/Extract';
 
-	export let gallery;
-	export let meta;
-	export let componentClass;
+	interface GalleryProps {
+		gallery: ExtractType[];
+		meta: any;
+		componentClass: string;
+	}
+
+	let { gallery, meta, componentClass } = $props<GalleryProps>();
 </script>
 
 {#if gallery}
