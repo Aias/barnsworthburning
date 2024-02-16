@@ -45,11 +45,11 @@ export interface Extract {
 	notes?: string;
 	numChildren: number;
 	numFragments: number;
-	parent?: Record<string, string>[];
+	parent?: Record<string, string>;
 	parentCreators?: Record<string, string>[];
 	source?: string;
 	spaces?: Record<string, string>[];
 	title?: string;
 	format?: string;
-	original: RawExtract;
+	_original: RawExtract;
 }

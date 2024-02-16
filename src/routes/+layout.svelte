@@ -5,6 +5,8 @@
 	import { encodeSegment, entities } from '$helpers/params';
 	let { children, data } = $props();
 
+	$inspect(data);
+
 	let index = $derived(
 		data.index.reduce(
 			(acc, item) => {

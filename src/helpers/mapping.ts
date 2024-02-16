@@ -31,27 +31,34 @@ export const mapExtractRecord = (record: RawExtract): Extract => {
 		format
 	} = record;
 
+	const mappedChildren = zip(['id', 'name'], children, childTitles);
+	const mappedConnections = zip(['id', 'name'], connections, connectionTitles);
+	const mappedCreators = zip(['id', 'name'], creators, creatorNames);
+	const mappedParent = zip(['id', 'name'], parent, parentTitle);
+	const mappedParentCreators = zip(['id', 'name'], parentCreatorIds, parentCreatorNames);
+	const mappedSpaces = zip(['id', 'name'], spaces, spaceTopics);
+
 	return {
-		children: zip(['id', 'name'], children, childTitles),
-		connections: zip(['id', 'name'], connections, connectionTitles),
-		creators: zip(['id', 'name'], creators, creatorNames),
-		extract,
-		extractedOn: new Date(extractedOn),
 		id,
-		imageCaption,
+		title,
+		format,
+		extract,
+		spaces: mappedSpaces,
+		connections: mappedConnections,
+		creators: mappedCreators,
+		children: mappedChildren,
+		parent: mappedParent ? mappedParent[0] : undefined,
+		parentCreators: mappedParentCreators,
 		images,
+		imageCaption,
 		isWork,
-		lastUpdated: new Date(lastUpdated),
 		michelinStars,
 		notes,
 		numChildren,
 		numFragments,
-		parent: zip(['id', 'name'], parent, parentTitle),
-		parentCreators: zip(['id', 'name'], parentCreatorIds, parentCreatorNames),
 		source,
-		spaces: zip(['id', 'name'], spaces, spaceTopics),
-		title,
-		format,
-		original: record
+		lastUpdated: new Date(lastUpdated),
+		extractedOn: new Date(extractedOn),
+		_original: record
 	};
 };
