@@ -3,36 +3,54 @@
 	import Header from '$components/Header.svelte';
 	import Looseleaf from '$components/Looseleaf.svelte';
 	import { encodeSegment, entities } from '$helpers/params';
+	import type { Extract } from '../types/Extract';
+
 	let { children, data } = $props();
 
-	$inspect(data);
+	type IndexEntity = { id: string; name: string; count: number };
 
-	let index = $derived(
+	type Index = {
+		formats: { [id: string]: IndexEntity };
+		creators: { [id: string]: IndexEntity };
+		spaces: { [id: string]: IndexEntity };
+	};
+
+	let index: Index = $derived(
 		data.index.reduce(
-			(acc, item) => {
-				let { creators = [], spaces = [], format } = item;
+			(acc: Index, item: Extract) => {
+				let { creators, spaces, format } = item;
 
-				if (acc.formats[format]) {
-					acc.formats[format].count++;
-				} else {
-					acc.formats[format] = { name: format, count: 1 };
+				if (format) {
+					if (acc.formats[format]) {
+						acc.formats[format].count++;
+					} else {
+						acc.formats[format] = { id: format, name: format, count: 1 };
+					}
 				}
 
-				creators.forEach((creator) => {
-					if (acc.creators[creator.id]) {
-						acc.creators[creator.id].count++;
-					} else {
-						acc.creators[creator.id] = { ...creator, count: 1 };
-					}
-				});
+				if (creators) {
+					creators.forEach((creator) => {
+						if (acc.creators[creator.id]) {
+							acc.creators[creator.id].count++;
+						} else {
+							acc.creators[creator.id] = {
+								id: creator.id,
+								name: creator.name,
+								count: 1
+							};
+						}
+					});
+				}
 
-				spaces.forEach((space) => {
-					if (acc.spaces[space.id]) {
-						acc.spaces[space.id].count++;
-					} else {
-						acc.spaces[space.id] = { ...space, count: 1 };
-					}
-				});
+				if (spaces) {
+					spaces.forEach((space) => {
+						if (acc.spaces[space.id]) {
+							acc.spaces[space.id].count++;
+						} else {
+							acc.spaces[space.id] = { id: space.id, name: space.name, count: 1 };
+						}
+					});
+				}
 
 				return acc;
 			},
@@ -40,7 +58,7 @@
 		)
 	);
 
-	const sortByCountThenName = (a, b) => {
+	const sortByCountThenName = (a: IndexEntity, b: IndexEntity) => {
 		if (a.count === b.count) {
 			return a.name.localeCompare(b.name);
 		}

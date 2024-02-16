@@ -9,7 +9,8 @@ const config = {
 		alias: {
 			$components: 'src/components',
 			$helpers: 'src/helpers',
-			$styles: 'src/styles'
+			$styles: 'src/styles',
+			$types: 'src/types'
 		}
 	},
 	compilerOptions: {
