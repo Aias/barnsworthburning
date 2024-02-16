@@ -1,4 +1,4 @@
-export interface LinkedRecord {
+export interface ILinkedRecord {
 	id: string;
 	name: string;
 }

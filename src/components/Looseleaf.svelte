@@ -1,9 +1,9 @@
 <script lang="ts">
 	import LooseleafCard from '$components/LooseleafCard.svelte';
-	import type { Extract } from '$types/Extract';
+	import type { IExtract } from '$types/Extract';
 
 	interface LooseleafProps {
-		extracts: Extract[];
+		extracts: IExtract[];
 	}
 
 	let { extracts } = $props<LooseleafProps>();

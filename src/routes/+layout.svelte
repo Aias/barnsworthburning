@@ -3,7 +3,7 @@
 	import Header from '$components/Header.svelte';
 	import Looseleaf from '$components/Looseleaf.svelte';
 	import { encodeSegment, entities } from '$helpers/params';
-	import type { Extract } from '../types/Extract';
+	import type { IExtract } from '../types/Extract';
 
 	let { children, data } = $props();
 
@@ -19,7 +19,7 @@
 
 	let index: Index = $derived(
 		data.index.reduce(
-			(acc: Index, item: Extract) => {
+			(acc: Index, item: IExtract) => {
 				let { creators, spaces, format } = item;
 
 				if (format) {

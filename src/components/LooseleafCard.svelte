@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type { Extract } from '$types/Extract';
+	import type { IExtract } from '$types/Extract';
 	import AirtableImage from '$components/AirtableImage.svelte';
 	import markdown from '$helpers/markdown';
 	import TopicList from './TopicList.svelte';
 
 	interface LooseleafCardProps {
-		extract: Extract;
+		extract: IExtract;
 	}
 
 	let { extract } = $props<LooseleafCardProps>();

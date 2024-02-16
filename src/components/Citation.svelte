@@ -2,10 +2,10 @@
 	import { article } from '$helpers/grammar';
 	import CreatorList from './CreatorList.svelte';
 	import Link from './Link.svelte';
-	import type { Extract } from '$types/Extract';
+	import type { IExtract } from '$types/Extract';
 
 	interface CitationProps {
-		extract: Extract;
+		extract: IExtract;
 	}
 
 	let { extract } = $props<CitationProps>();

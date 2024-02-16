@@ -1,7 +1,7 @@
 import type { Attachment } from 'airtable';
-import type { LinkedRecord } from './LinkedRecord';
+import type { ILinkedRecord } from './LinkedRecord';
 
-export interface RawExtract {
+export interface IRawExtract {
 	id: string;
 	childTitles?: string[];
 	children?: string[];
@@ -30,15 +30,15 @@ export interface RawExtract {
 	[key: string]: unknown;
 }
 
-export interface Extract {
+export interface IExtract {
 	id: string;
 	title?: string;
-	creators?: LinkedRecord[];
-	spaces?: LinkedRecord[];
-	connections?: LinkedRecord[];
-	parent?: LinkedRecord;
-	parentCreators?: LinkedRecord[];
-	children?: LinkedRecord[];
+	creators?: ILinkedRecord[];
+	spaces?: ILinkedRecord[];
+	connections?: ILinkedRecord[];
+	parent?: ILinkedRecord;
+	parentCreators?: ILinkedRecord[];
+	children?: ILinkedRecord[];
 	extract?: string;
 	notes?: string;
 	images?: Attachment[];
@@ -50,5 +50,5 @@ export interface Extract {
 	format?: string;
 	extractedOn: Date;
 	lastUpdated: Date;
-	_original: RawExtract;
+	_original: IRawExtract;
 }

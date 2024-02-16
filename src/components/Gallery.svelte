@@ -1,9 +1,9 @@
 <script lang="ts">
 	import Extract from './Extract.svelte';
-	import type { Extract as ExtractType } from '$types/Extract';
+	import type { IExtract } from '$types/Extract';
 
 	interface GalleryProps {
-		gallery: ExtractType[];
+		gallery: IExtract[];
 		meta: any;
 		componentClass: string;
 	}
