@@ -1,7 +1,7 @@
 <script lang="ts">
-	let { status, error } = $props();
+	import { page } from '$app/stores';
 
-	const dev = process.env.NODE_ENV === 'development';
+	let { status, error } = $page;
 </script>
 
 <svelte:head>
@@ -12,7 +12,4 @@
 
 {#if error}
 	<p>{error.message}</p>
-{/if}
-{#if dev && error && error.stack}
-	<pre>{error.stack}</pre>
 {/if}

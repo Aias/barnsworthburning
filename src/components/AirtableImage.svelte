@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { Attachment } from 'airtable';
 
-	// Define a props type
 	interface AirtableImageProps {
 		image: Attachment;
 	}

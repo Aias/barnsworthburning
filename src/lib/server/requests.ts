@@ -1,5 +1,6 @@
 import Airtable from 'airtable';
 import { error } from '@sveltejs/kit';
+import type { Record, FieldSet, SelectOptions } from 'airtable';
 
 // const BASE_ID = 'appHWZbECVKCSjquH';
 const BASE_ID = 'appNAUPSEyCYlPtvG';
@@ -11,14 +12,14 @@ Airtable.configure({
 
 const base = Airtable.base(BASE_ID);
 
-const mapReceivedRecord = (record) => {
+const mapReceivedRecord = (record: Record<FieldSet>) => {
 	return {
 		id: record.id,
 		...record.fields
 	};
 };
 
-const airtableFetch = async (tableName = '', options = {}) =>
+const airtableFetch = async (tableName: string, options: SelectOptions<FieldSet>) =>
 	base(tableName)
 		.select(options)
 		.all()
@@ -30,7 +31,7 @@ const airtableFetch = async (tableName = '', options = {}) =>
 			return null;
 		});
 
-const airtableFind = async (tableName = '', recordId = '') =>
+const airtableFind = async (tableName: string = 'extracts', recordId: Record<FieldSet>['id']) =>
 	base(tableName)
 		.find(recordId)
 		.then((record) => mapReceivedRecord(record))
