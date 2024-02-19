@@ -7,7 +7,7 @@
 
 	let { children, data } = $props();
 
-	$inspect(data.index);
+	// $inspect(data.index);
 
 	type IndexEntity = { id: string; name: string; count: number };
 

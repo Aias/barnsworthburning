@@ -1,24 +1,39 @@
 <script lang="ts">
-	import type { Attachment } from 'airtable';
+	import type { Attachment, Thumbnail } from 'airtable';
 
 	interface AirtableImageProps {
 		image: Attachment;
 	}
 
 	let { image } = $props<AirtableImageProps>();
+	let availableWidth = $state(0);
 
-	let thumbnail = $derived(image.thumbnails?.large);
+	const defaultThumbnail: Thumbnail = {
+		url: image.url,
+		width: 200,
+		height: 100
+	};
+
+	let thumbnailLarge = $derived(image.thumbnails?.large);
+	let thumbnailSmall = $derived(image.thumbnails?.small);
+	let thumbnailFull = $derived(image.thumbnails?.full);
+
+	const getThumbnail = () => {
+		if (thumbnailSmall && thumbnailSmall.width > availableWidth) return thumbnailSmall;
+		if (thumbnailLarge && thumbnailLarge.width > availableWidth) return thumbnailLarge;
+		return thumbnailFull || defaultThumbnail;
+	};
+
+	let thumbnail = $derived(getThumbnail());
 </script>
 
-{#if thumbnail}
-	<div class="image-container" style={`--aspect-ratio: ${thumbnail.width} / ${thumbnail.height}`}>
-		<img alt={image.filename} src={thumbnail.url} loading="lazy" />
-	</div>
-{:else}
-	<div class="image-container">
-		<img alt={image.filename} src={image.url} loading="lazy" />
-	</div>
-{/if}
+<div
+	class="image-container"
+	style={`--aspect-ratio: ${thumbnail.width} / ${thumbnail.height}`}
+	bind:clientWidth={availableWidth}
+>
+	<img alt={image.filename} src={thumbnail.url} loading="lazy" />
+</div>
 
 <style lang="scss">
 	.image-container {
