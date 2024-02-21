@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 import { airtableFetch } from '$lib/server/requests';
 import { mapExtractRecord } from '$helpers/mapping';
-import type { IRawExtract } from '$types/Extract';
+import type { IRawExtract } from '$types/Airtable';
 
 const MAX_RECORDS = 100;
 

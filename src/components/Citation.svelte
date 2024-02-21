@@ -2,7 +2,7 @@
 	import { article } from '$helpers/grammar';
 	import CreatorList from './CreatorList.svelte';
 	import Link from './Link.svelte';
-	import type { IExtract } from '$types/Extract';
+	import type { IExtract } from '$types/Airtable';
 
 	interface CitationProps {
 		extract: IExtract;

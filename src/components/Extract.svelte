@@ -6,7 +6,7 @@
 	import TopicList from './TopicList.svelte';
 	import RelationList from './RelationList.svelte';
 	import AirtableImage from './AirtableImage.svelte';
-	import type { IExtract } from '$types/Extract';
+	import type { IExtract } from '$types/Airtable';
 
 	interface ExtractProps {
 		extract: IExtract;

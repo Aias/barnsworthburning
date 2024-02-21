@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { IExtract } from '$types/Extract';
+	import type { IExtract } from '$types/Airtable';
 	import AirtableImage from '$components/AirtableImage.svelte';
 	import markdown from '$helpers/markdown';
 	import TopicList from './TopicList.svelte';

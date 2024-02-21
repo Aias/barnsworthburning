@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Extract from './Extract.svelte';
-	import type { IExtract } from '$types/Extract';
+	import type { IExtract } from '$types/Airtable';
 
 	interface GalleryProps {
 		gallery: IExtract[];

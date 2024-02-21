@@ -1,6 +1,6 @@
 <script lang="ts">
 	import LooseleafCard from '$components/LooseleafCard.svelte';
-	import type { IExtract } from '$types/Extract';
+	import type { IExtract } from '$types/Airtable';
 
 	interface LooseleafProps {
 		extracts: IExtract[];

@@ -3,7 +3,7 @@
 	import Header from '$components/Header.svelte';
 	import Looseleaf from '$components/Looseleaf.svelte';
 	import { encodeSegment, entities } from '$helpers/params';
-	import type { IExtract } from '../types/Extract';
+	import type { IExtract } from '../types/Airtable';
 
 	let { children, data } = $props();
 

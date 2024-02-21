@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Link from './Link.svelte';
-	import type { ILinkedRecord } from '$types/LinkedRecord';
+	import type { ILinkedRecord } from '$types/Airtable';
 
 	interface TopicListProps {
 		topics: ILinkedRecord[];

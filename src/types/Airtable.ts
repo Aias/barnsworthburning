@@ -1,7 +1,16 @@
 import type { Attachment } from 'airtable';
-import type { ILinkedRecord } from './LinkedRecord';
 
-export interface IRawExtract {
+export interface IBaseRecord {
+	id: string;
+	[key: string]: unknown;
+}
+
+export interface ILinkedRecord {
+	id: string;
+	name: string;
+}
+
+export interface IRawExtract extends IBaseRecord {
 	id: string;
 	childTitles?: string[];
 	children?: string[];
@@ -27,7 +36,6 @@ export interface IRawExtract {
 	spaces?: string[];
 	title?: string;
 	format?: string;
-	[key: string]: unknown;
 }
 
 export interface IExtract {

@@ -2,7 +2,7 @@ import { error } from '@sveltejs/kit';
 import { airtableFetch } from '$lib/server/requests';
 import { mapExtractRecord } from '$helpers/mapping';
 import { decodeSegment, entities } from '$helpers/params';
-import type { IRawExtract } from '$types/Extract';
+import type { IRawExtract } from '$types/Airtable';
 
 const makeCreatorFilter = (id: string) => `FIND('${id}', creatorsLookup)  > 0`;
 const makeSpaceFilter = (id: string) => `FIND('${id}', spacesLookup)  > 0`;
