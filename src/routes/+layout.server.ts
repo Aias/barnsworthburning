@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 import { airtableFetch } from '$lib/server/requests';
 import { mapExtractRecord } from '$helpers/mapping';
-import type { IRawExtract } from '$types/Airtable';
+import type { IBaseExtract } from '$types/Airtable';
 
 const MAX_RECORDS = 100;
 
@@ -10,7 +10,7 @@ export async function load() {
 		view: 'viwTkCBV6uRoHplvP', // Works
 		sort: [{ field: 'extractedOn', direction: 'desc' }],
 		maxRecords: MAX_RECORDS
-	})) as IRawExtract[];
+	})) as IBaseExtract[];
 
 	if (!records) {
 		error(404, {

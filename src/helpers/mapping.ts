@@ -1,31 +1,7 @@
 import zip from './zip';
-import type { IRawExtract, IExtract } from '../types/Airtable';
-import type { ILinkedRecord } from '$types/Airtable';
+import type { IBaseExtract, IExtract, ILinkedRecord } from '$types/Airtable';
 
-type RecordMap = { [key: string]: string };
-type RawRecord = { [key: string]: unknown };
-
-function rollupRecord<T, U>(rawRecord: T, recordMap: RecordMap): U[] | undefined {
-	const output: U[] = [];
-	const keys = Object.keys(recordMap);
-	const firstKey = keys[0];
-	if (!Array.isArray((rawRecord as RawRecord)[firstKey])) {
-		return undefined;
-	}
-	const length = ((rawRecord as RawRecord)[firstKey] as unknown[]).length;
-
-	for (let i = 0; i < length; i++) {
-		const record: Record<string, string> = {};
-		for (const key of keys) {
-			record[recordMap[key]] = (rawRecord as RawRecord)[key][i];
-		}
-		output.push(record as U);
-	}
-
-	return output;
-}
-
-export const mapExtractRecord = (record: IRawExtract): IExtract => {
+export const mapExtractRecord = (record: IBaseExtract): IExtract => {
 	const {
 		childTitles = [],
 		children = [],
@@ -41,8 +17,6 @@ export const mapExtractRecord = (record: IRawExtract): IExtract => {
 		lastUpdated,
 		michelinStars,
 		notes,
-		numChildren,
-		numFragments,
 		parent = [],
 		parentCreatorIds = [],
 		parentCreatorNames = [],
@@ -84,8 +58,6 @@ export const mapExtractRecord = (record: IRawExtract): IExtract => {
 		imageCaption,
 		michelinStars,
 		notes,
-		numChildren,
-		numFragments,
 		source,
 		lastUpdated: new Date(lastUpdated),
 		extractedOn: new Date(extractedOn),
