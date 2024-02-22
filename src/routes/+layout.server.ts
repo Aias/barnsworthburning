@@ -6,11 +6,11 @@ import type { IBaseExtract } from '$types/Airtable';
 const MAX_RECORDS = 100;
 
 export async function load() {
-	const records = (await airtableFetch('extracts', {
+	const records = await airtableFetch<IBaseExtract>('extracts', {
 		view: 'viwTkCBV6uRoHplvP', // Works
 		sort: [{ field: 'extractedOn', direction: 'desc' }],
 		maxRecords: MAX_RECORDS
-	})) as IBaseExtract[];
+	});
 
 	if (!records) {
 		error(404, {

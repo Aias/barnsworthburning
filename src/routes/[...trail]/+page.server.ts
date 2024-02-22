@@ -33,11 +33,11 @@ export async function load({ params }) {
 			});
 	}
 
-	const records = (await airtableFetch('extracts', {
+	const records = await airtableFetch<IBaseExtract>('extracts', {
 		view: 'viwCvae2rXQscUap6', // Best
 		filterByFormula: filterFormula,
 		maxRecords: 300
-	})) as IBaseExtract[];
+	});
 
 	if (!records) {
 		error(404, {

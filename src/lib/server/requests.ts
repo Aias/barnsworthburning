@@ -18,11 +18,11 @@ export const base = Airtable.base(BASE_ID);
  * @param record The record to be mapped.
  * @returns The mapped IBaseRecord.
  */
-function mapReceivedRecord(record: Record<FieldSet>): IBaseRecord {
+function mapReceivedRecord<T extends IBaseRecord>(record: Record<FieldSet>): T {
 	return {
 		id: record.id,
 		...record.fields
-	};
+	} as T;
 }
 
 /**
@@ -31,14 +31,14 @@ function mapReceivedRecord(record: Record<FieldSet>): IBaseRecord {
  * @param options - The options to apply when fetching records.
  * @returns A promise that resolves to an array of fetched records.
  */
-async function airtableFetch(
+async function airtableFetch<T extends IBaseRecord>(
 	tableName: string,
 	options: SelectOptions<FieldSet>
-): Promise<IBaseRecord[]> {
+): Promise<T[]> {
 	return base(tableName)
 		.select(options)
 		.all()
-		.then((records) => records.map(mapReceivedRecord))
+		.then((records) => records.map(mapReceivedRecord<T>))
 		.catch((err: Error) => {
 			error(err.statusCode, {
 				message: err.message
@@ -53,13 +53,13 @@ async function airtableFetch(
  * @param recordId - The ID of the record to find.
  * @returns A promise that resolves to the found record.
  */
-async function airtableFind(
+async function airtableFind<T extends IBaseRecord>(
 	tableName: string = 'extracts',
 	recordId: Record<FieldSet>['id']
-): Promise<IBaseRecord> {
+): Promise<T> {
 	return base(tableName)
 		.find(recordId)
-		.then((record) => mapReceivedRecord(record))
+		.then((record) => mapReceivedRecord<T>(record))
 		.catch((err: Error) => {
 			error(err.statusCode, {
 				message: err.message
