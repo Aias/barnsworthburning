@@ -1,20 +1,18 @@
-export default function zip(keys: string[] = [], ...arrays: string[][]) {
-	const numArrays = arrays.length;
-	const arrayLength = arrays[0].length;
-	if (arrayLength === 0) return undefined;
+type Input<Type> = {
+	[Key in keyof Type]?: Type[Key][];
+};
 
-	const zippedArray: Record<string, string>[] = [];
-
-	for (let i = 0; i < arrayLength; i++) {
-		const obj: Record<string, string> = {};
-
-		for (let j = 0; j < numArrays; j++) {
-			const key = keys[j] || `array${j + 1}`;
-			obj[key] = arrays[j][i];
-		}
-
-		zippedArray.push(obj);
+export default function zip<Type extends Record<string, unknown>>(
+	input: Input<Type>
+): Type[] | undefined {
+	if (Object.values(input).some((value) => value.length === 0)) {
+		return undefined;
 	}
+	const outputArraySize = (Object.values(input)[0] as Array<unknown>).length;
 
-	return zippedArray;
+	return Array.from({ length: outputArraySize }, (_, idx) =>
+		Object.entries(input).reduce((accumulator, [key, values]) => {
+			return { ...accumulator, [key]: values[idx] };
+		}, {} as Type)
+	);
 }

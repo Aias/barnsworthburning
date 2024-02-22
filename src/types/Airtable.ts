@@ -56,7 +56,6 @@ export interface IExtract {
 	format?: string;
 	extractedOn: Date;
 	lastUpdated: Date;
-	_original: IBaseExtract;
 }
 
 export interface IBaseCreator extends IBaseRecord {
@@ -98,7 +97,6 @@ export interface ICreator {
 	numExtracts: number;
 	createdTime: string;
 	lastUpdated: string;
-	_original: IBaseCreator;
 }
 
 export interface IBaseSpace extends IBaseRecord {
@@ -125,5 +123,4 @@ export interface ISpace {
 	connectedSpaces?: ILinkedRecord[];
 	lastUpdated: Date;
 	createdTime: Date;
-	_original: IBaseSpace;
 }

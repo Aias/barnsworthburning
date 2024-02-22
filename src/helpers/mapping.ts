@@ -1,7 +1,5 @@
-import zip from './zip';
-import type { IBaseExtract, IExtract, ILinkedRecord } from '$types/Airtable';
-
-type LinkField = ILinkedRecord[] | undefined;
+import type { IBaseExtract, IExtract } from '$types/Airtable';
+import zip from '$helpers/zip';
 
 export const mapExtractRecord = (record: IBaseExtract): IExtract => {
 	const {
@@ -30,16 +28,30 @@ export const mapExtractRecord = (record: IBaseExtract): IExtract => {
 		format
 	} = record;
 
-	const mappedChildren = zip(['id', 'name'], children, childTitles) as LinkField;
-	const mappedConnections = zip(['id', 'name'], connections, connectionTitles) as LinkField;
-	const mappedCreators = zip(['id', 'name'], creators, creatorNames) as LinkField;
-	const mappedParent = zip(['id', 'name'], parent, parentTitle) as LinkField;
-	const mappedParentCreators = zip(
-		['id', 'name'],
-		parentCreatorIds,
-		parentCreatorNames
-	) as LinkField;
-	const mappedSpaces = zip(['id', 'name'], spaces, spaceTopics) as LinkField;
+	const mappedChildren = zip({
+		id: children,
+		name: childTitles
+	});
+	const mappedConnections = zip({
+		id: connections,
+		name: connectionTitles
+	});
+	const mappedCreators = zip({
+		id: creators,
+		name: creatorNames
+	});
+	const mappedParent = zip({
+		id: parent,
+		name: parentTitle
+	});
+	const mappedParentCreators = zip({
+		id: parentCreatorIds,
+		name: parentCreatorNames
+	});
+	const mappedSpaces = zip({
+		id: spaces,
+		name: spaceTopics
+	});
 
 	return {
 		id,
@@ -58,7 +70,6 @@ export const mapExtractRecord = (record: IBaseExtract): IExtract => {
 		notes,
 		source,
 		lastUpdated: new Date(lastUpdated),
-		extractedOn: new Date(extractedOn),
-		_original: record
+		extractedOn: new Date(extractedOn)
 	};
 };
