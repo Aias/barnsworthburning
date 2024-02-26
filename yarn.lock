@@ -372,14 +372,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/js@npm:8.56.0":
-  version: 8.56.0
-  resolution: "@eslint/js@npm:8.56.0"
-  checksum: 5804130574ef810207bdf321c265437814e7a26f4e6fac9b496de3206afd52f533e09ec002a3be06cd9adcc9da63e727f1883938e663c4e4751c007d5b58e539
+"@eslint/js@npm:8.57.0":
+  version: 8.57.0
+  resolution: "@eslint/js@npm:8.57.0"
+  checksum: 315dc65b0e9893e2bff139bddace7ea601ad77ed47b4550e73da8c9c2d2766c7a575c3cddf17ef85b8fd6a36ff34f91729d0dcca56e73ca887c10df91a41b0bb
   languageName: node
   linkType: hard
 
-"@humanwhocodes/config-array@npm:^0.11.13":
+"@humanwhocodes/config-array@npm:^0.11.14":
   version: 0.11.14
   resolution: "@humanwhocodes/config-array@npm:0.11.14"
   dependencies:
@@ -905,13 +905,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/eslint@npm:8.56.2":
-  version: 8.56.2
-  resolution: "@types/eslint@npm:8.56.2"
+"@types/eslint@npm:8.56.3":
+  version: 8.56.3
+  resolution: "@types/eslint@npm:8.56.3"
   dependencies:
     "@types/estree": "*"
     "@types/json-schema": "*"
-  checksum: 38e054971596f5c0413f66a62dc26b10e0a21ac46ceacb06fbf8cfb838d20820787209b17218b3916e4c23d990ff77cfdb482d655cac0e0d2b837d430fcc5db8
+  checksum: 6e596e583496aeebb7c0b36d1e328cb8173844f8b82c213496e533ec7990c3451811b523d98a99e5b216056e4be8c417c87504b7b31fe32389b25b3294ce767a
   languageName: node
   linkType: hard
 
@@ -1327,20 +1327,20 @@ __metadata:
     "@sveltejs/adapter-node": ^4.0.1
     "@sveltejs/kit": ^2.5.1
     "@sveltejs/vite-plugin-svelte": ^3.0.2
-    "@types/eslint": 8.56.2
+    "@types/eslint": 8.56.3
     "@types/remarkable": ^2.0.8
     "@typescript-eslint/eslint-plugin": ^7.0.2
     "@typescript-eslint/parser": ^7.0.2
     airtable: ^0.12.2
-    eslint: ^8.56.0
+    eslint: ^8.57.0
     eslint-config-prettier: ^9.1.0
-    eslint-plugin-svelte: ^2.36.0-next.5
+    eslint-plugin-svelte: ^2.36.0-next.6
     normalize.css: ^8.0.1
     prettier: ^3.2.5
     prettier-plugin-svelte: ^3.2.1
     remarkable: ^2.0.1
     sass: ^1.71.1
-    svelte: ^5.0.0-next.65
+    svelte: ^5.0.0-next.68
     svelte-check: ^3.6.4
     tslib: ^2.6.2
     typescript: ^5.3.3
@@ -1875,9 +1875,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-svelte@npm:^2.36.0-next.5":
-  version: 2.36.0-next.5
-  resolution: "eslint-plugin-svelte@npm:2.36.0-next.5"
+"eslint-plugin-svelte@npm:^2.36.0-next.6":
+  version: 2.36.0-next.6
+  resolution: "eslint-plugin-svelte@npm:2.36.0-next.6"
   dependencies:
     "@eslint-community/eslint-utils": ^4.2.0
     "@jridgewell/sourcemap-codec": ^1.4.14
@@ -1890,14 +1890,14 @@ __metadata:
     postcss-safe-parser: ^6.0.0
     postcss-selector-parser: ^6.0.11
     semver: ^7.5.3
-    svelte-eslint-parser: ">=0.34.0-next.4 <1.0.0"
+    svelte-eslint-parser: ">=0.34.0-next.9 <1.0.0"
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0-0 || ^9.0.0-0
-    svelte: ^3.37.0 || ^4.0.0 || ^5.0.0-next.33
+    svelte: ^3.37.0 || ^4.0.0 || ^5.0.0-next.68
   peerDependenciesMeta:
     svelte:
       optional: true
-  checksum: f75cc73dc0a9c9d5d2d033850ff2e5edadc7c423ef47cbe66c3e0197fb50fa61bb19df34223b0cdfac56cbec9298b1da1aa6c22a6a364f364aac814e86da0f8b
+  checksum: eeb26eb5aa277c1607c39b7edb9793fb9d67fa464ddc9d1c9fcf2a436ecd71acecc271de6bc7d7704062e8eba60366b0e5c0dd5c475e18c872a48e55da3573a9
   languageName: node
   linkType: hard
 
@@ -1918,15 +1918,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^8.56.0":
-  version: 8.56.0
-  resolution: "eslint@npm:8.56.0"
+"eslint@npm:^8.57.0":
+  version: 8.57.0
+  resolution: "eslint@npm:8.57.0"
   dependencies:
     "@eslint-community/eslint-utils": ^4.2.0
     "@eslint-community/regexpp": ^4.6.1
     "@eslint/eslintrc": ^2.1.4
-    "@eslint/js": 8.56.0
-    "@humanwhocodes/config-array": ^0.11.13
+    "@eslint/js": 8.57.0
+    "@humanwhocodes/config-array": ^0.11.14
     "@humanwhocodes/module-importer": ^1.0.1
     "@nodelib/fs.walk": ^1.2.8
     "@ungap/structured-clone": ^1.2.0
@@ -1962,7 +1962,7 @@ __metadata:
     text-table: ^0.2.0
   bin:
     eslint: bin/eslint.js
-  checksum: 883436d1e809b4a25d9eb03d42f584b84c408dbac28b0019f6ea07b5177940bf3cca86208f749a6a1e0039b63e085ee47aca1236c30721e91f0deef5cc5a5136
+  checksum: 3a48d7ff85ab420a8447e9810d8087aea5b1df9ef68c9151732b478de698389ee656fd895635b5f2871c89ee5a2652b3f343d11e9db6f8486880374ebc74a2d9
   languageName: node
   linkType: hard
 
@@ -3776,9 +3776,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte-eslint-parser@npm:>=0.34.0-next.4 <1.0.0":
-  version: 0.34.0-next.8
-  resolution: "svelte-eslint-parser@npm:0.34.0-next.8"
+"svelte-eslint-parser@npm:>=0.34.0-next.9 <1.0.0":
+  version: 0.34.0-next.9
+  resolution: "svelte-eslint-parser@npm:0.34.0-next.9"
   dependencies:
     eslint-scope: ^7.2.2
     eslint-visitor-keys: ^3.4.3
@@ -3786,11 +3786,11 @@ __metadata:
     postcss: ^8.4.32
     postcss-scss: ^4.0.9
   peerDependencies:
-    svelte: ^3.37.0 || ^4.0.0 || ^5.0.0-next.37
+    svelte: ^3.37.0 || ^4.0.0 || ^5.0.0-next.65
   peerDependenciesMeta:
     svelte:
       optional: true
-  checksum: bbe8a012cf904fe2dd12953ca1597b6deb3f4d437efa2e9f35ba179ddf8ef2d468e3d65fdda0dd7f7ebc72d029bb658c016a01eb045cf00c76e5edc4b18d1c16
+  checksum: e35ec15ee34ba38b68369e5edd0f27ad6e5cf051f3751d085e851a0f6f782ca4dbcafb98efe51564b615ddeadc69623de84919e3db196e0de508eb395edd08d2
   languageName: node
   linkType: hard
 
@@ -3849,9 +3849,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte@npm:^5.0.0-next.65":
-  version: 5.0.0-next.65
-  resolution: "svelte@npm:5.0.0-next.65"
+"svelte@npm:^5.0.0-next.68":
+  version: 5.0.0-next.68
+  resolution: "svelte@npm:5.0.0-next.68"
   dependencies:
     "@ampproject/remapping": ^2.2.1
     "@jridgewell/sourcemap-codec": ^1.4.15
@@ -3866,7 +3866,7 @@ __metadata:
     locate-character: ^3.0.0
     magic-string: ^0.30.5
     zimmerframe: ^1.1.2
-  checksum: add00ff3967b764b1b77c5cb6325ae45e8018fbd7b8f52e92c82effad2c36900e79d1cbf5417532159af3fe0c7a96606b96aa810484e92934ab798602e54799a
+  checksum: e1b903524af843d54150bdc341acc661832394aa2cdd63a8df10ea9c9f1ed5d05ad0da9505430f7fb12b000d52afce6be4f5d8a0f9177e24c4c959766ca2ff07
   languageName: node
   linkType: hard
 

@@ -18,7 +18,7 @@
 		setCookie('barnsworthburning-chroma', chroma);
 	};
 	const setPalette = (event: Event) => {
-		palette = (event.target as HTMLInputElement).value;
+		palette = (event.currentTarget as HTMLInputElement).value;
 		setCookie('barnsworthburning-palette', palette);
 	};
 

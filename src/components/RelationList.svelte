@@ -33,7 +33,7 @@
 		{/each}
 		{#if isTruncated}
 			<li class="show-more">
-				<button on:click={expandList} class="link caption"
+				<button onclick={expandList} class="link caption"
 					>+{items.length - maxChildren} More</button
 				>
 			</li>
