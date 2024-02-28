@@ -1,4 +1,4 @@
-type Entity = {
+type EntityType = {
 	id: string;
 	title: string;
 	plural: string;
@@ -6,7 +6,12 @@ type Entity = {
 	description: string;
 };
 
-export const entities: Record<string, Entity> = {
+type Segment = {
+	entityType: EntityType;
+	id: string;
+};
+
+export const entityTypes: Record<string, EntityType> = {
 	creator: {
 		id: 'creator',
 		title: 'Creator',
@@ -39,16 +44,27 @@ export const entities: Record<string, Entity> = {
 
 const segmentSeparator = '.';
 
-const getEntityByPrefix = (prefix: string): Entity | undefined =>
-	Object.values(entities).find((entity) => entity.prefix === prefix);
+const getEntityTypeByPrefix = (prefix: string): EntityType | undefined =>
+	Object.values(entityTypes).find((entityType) => entityType.prefix === prefix);
 
-export const encodeSegment = (entity: Entity, recordId: string): string =>
-	`${entity.prefix}${segmentSeparator}${encodeURIComponent(recordId)}`;
+export const encodeSegment = (entityType: EntityType, recordId: string): string =>
+	`${entityType.prefix}${segmentSeparator}${encodeURIComponent(recordId)}`;
 
-export const decodeSegment = (segment = ''): { entity: Entity | undefined; id: string } => {
+export const decodeSegment = (segment = ''): Segment | undefined => {
 	const [prefix, idString] = segment.split(segmentSeparator);
+	const entityType = getEntityTypeByPrefix(prefix);
+	if (!entityType) return undefined;
 	return {
-		entity: getEntityByPrefix(prefix),
+		entityType,
 		id: decodeURIComponent(idString)
 	};
 };
+
+export const decodeTrail = (trail: string): Segment[] =>
+	trail
+		.split('/')
+		.map((segment) => decodeSegment(segment))
+		.filter(Boolean) as Segment[];
+
+export const encodeTrail = (segments: Segment[]): string =>
+	segments.map((segment) => encodeSegment(segment.entityType, segment.id)).join('/');

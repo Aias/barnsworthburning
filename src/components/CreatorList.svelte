@@ -16,7 +16,7 @@
 					? ' & '
 					: ', '
 				: ''}
-			<Link toCreator={creator.id}>{creator.name}</Link>
+			<Link toType="creator" toId={creator.id}>{creator.name}</Link>
 		{/each}
 	</span>
 {/if}

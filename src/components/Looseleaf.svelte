@@ -4,12 +4,15 @@
 
 	interface LooseleafProps {
 		extracts: IExtract[];
+		scale?: number;
 	}
 
-	let { extracts } = $props<LooseleafProps>();
+	let { extracts, scale } = $props<LooseleafProps>();
+
+	const scaleStyle = scale ? `--scale: ${scale}em` : undefined;
 </script>
 
-<div class="looseleaf">
+<div class="looseleaf" style={scaleStyle}>
 	{#each extracts as extract (extract.id)}
 		<LooseleafCard {extract} />
 	{/each}
@@ -18,6 +21,7 @@
 <style lang="scss">
 	.looseleaf {
 		--gallery-gap: 0.25em;
+		font-size: var(--scale, 1em);
 		column-width: 15em;
 		column-gap: var(--gallery-gap);
 

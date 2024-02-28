@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 import { airtableFetch } from '$lib/server/requests';
 import { mapExtractRecord } from '$helpers/mapping';
-import { decodeSegment, entities } from '$helpers/params';
+import { decodeTrail, entityTypes } from '$helpers/params';
 import type { IBaseExtract } from '$types/Airtable';
 
 const makeCreatorFilter = (id: string) => `FIND('${id}', creatorsLookup)  > 0`;
@@ -9,22 +9,22 @@ const makeSpaceFilter = (id: string) => `FIND('${id}', spacesLookup)  > 0`;
 
 export async function load({ params }) {
 	const { trail } = params;
-	const steps = trail.split('/').map((id) => decodeSegment(id));
-	const { entity, id } = steps[0];
+	const segments = decodeTrail(trail);
+	const { entityType, id } = segments[0];
 
 	let filterFormula;
 
-	switch (entity) {
-		case entities.creator:
+	switch (entityType) {
+		case entityTypes.creator:
 			filterFormula = makeCreatorFilter(id);
 			break;
-		case entities.space:
+		case entityTypes.space:
 			filterFormula = makeSpaceFilter(id);
 			break;
-		case entities.format:
+		case entityTypes.format:
 			filterFormula = `format = '${id}'`;
 			break;
-		case entities.extract:
+		case entityTypes.extract:
 			filterFormula = `RECORD_ID() = '${id}'`;
 			break;
 		default:

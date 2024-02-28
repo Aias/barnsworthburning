@@ -29,7 +29,7 @@
 {#if items?.length > 0}
 	<ol class="relation-list" data-symbol={symbol} title={label}>
 		{#each displayedItems as item (item.id)}
-			<li><Link toExtract={item.id}>{item.name}</Link></li>
+			<li><Link toType="extract" toId={item.id}>{item.name}</Link></li>
 		{/each}
 		{#if isTruncated}
 			<li class="show-more">

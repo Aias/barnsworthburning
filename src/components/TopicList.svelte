@@ -11,7 +11,7 @@
 {#if topics}
 	<ul class="tag-list">
 		{#each topics as topic (topic.id)}
-			<li class="tag"><Link toSpace={topic.id}>{topic.name}</Link></li>
+			<li class="tag"><Link toType="space" toId={topic.id}>{topic.name}</Link></li>
 		{/each}
 	</ul>
 {/if}

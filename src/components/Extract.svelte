@@ -37,9 +37,9 @@
 		<header>
 			<h2 class="extract-title">
 				{#if parent}
-					<Link toExtract={parent.id} childAnchor={`panel--${id}`}>{title}</Link>
+					<Link toType="extract" toId={parent.id}>{title}</Link>
 				{:else}
-					<Link toExtract={id}>{title}</Link>
+					<Link toType="extract" toId={id}>{title}</Link>
 				{/if}
 			</h2>
 		</header>

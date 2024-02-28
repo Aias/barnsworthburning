@@ -1,59 +1,28 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import type { Snippet } from 'svelte';
+	import { decodeTrail, entityTypes, encodeTrail } from '$helpers/params';
 
 	interface LinkProps {
-		toExtract?: string;
-		childAnchor?: string;
-		toCreator?: string;
-		toSpace?: string;
+		toType?: 'extract' | 'creator' | 'space';
+		toId: string;
 		children: Snippet;
 	}
 
-	let { toExtract, childAnchor, toCreator, toSpace, children, ...restProps } =
-		$props<LinkProps>();
+	let { toType = 'extract', toId, children, ...restProps } = $props<LinkProps>();
 
-	let href = $state<string>();
+	let currentTrail = $derived(decodeTrail($page.params.trail));
+	let href = $derived(makeNewTrail());
 
-	let currentExtract = $derived($page.params?.extract);
-	let currentCreator = $derived($page.url.searchParams?.get('creator'));
-	let currentSpace = $derived($page.url.searchParams?.get('space'));
+	function makeNewTrail() {
+		let newSegment = {
+			id: toId,
+			entityType: entityTypes[toType]
+		};
 
-	$effect(() => {
-		let url = new URL($page.url);
-
-		if (toExtract === null) {
-			url.pathname = '/';
-		} else {
-			let newExtract = toExtract || currentExtract;
-			url.pathname = `/${newExtract}`;
-		}
-
-		if (childAnchor) {
-			url.hash = childAnchor;
-		} else {
-			url.hash = '';
-		}
-
-		if (toCreator === null || toSpace === null) {
-			url.searchParams.delete('creator');
-			url.searchParams.delete('space');
-		} else if (toCreator) {
-			url.searchParams.delete('space');
-			url.searchParams.set('creator', toCreator);
-		} else if (toSpace) {
-			url.searchParams.delete('creator');
-			url.searchParams.set('space', toSpace);
-		}
-
-		href = url.pathname + url.search + url.hash;
-	});
-
-	let isActive = $derived(
-		(currentExtract && currentExtract === toExtract) ||
-			(currentCreator && currentCreator === toCreator) ||
-			(currentSpace && currentSpace === toSpace)
-	);
+		let newTrail = [...currentTrail, newSegment];
+		return encodeTrail(newTrail);
+	}
 </script>
 
-<a {href} class:active={isActive} {...restProps}>{@render children()}</a>
+<a {href} {...restProps}>{@render children()}</a>

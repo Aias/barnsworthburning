@@ -2,7 +2,7 @@
 	import '$styles/app.css';
 	import Header from '$components/Header.svelte';
 	import Looseleaf from '$components/Looseleaf.svelte';
-	import { encodeSegment, entities } from '$helpers/params';
+	import { encodeSegment, entityTypes } from '$helpers/params';
 	import type { IExtract } from '../types/Airtable';
 
 	let { children, data } = $props();
@@ -68,24 +68,23 @@
 		return b.count - a.count;
 	};
 
-	let creatorsByCount = $derived(Object.values(index.creators).sort(sortByCountThenName));
-	let spacesByCount = $derived(Object.values(index.spaces).sort(sortByCountThenName));
-	let formatsByCount = $derived(Object.values(index.formats).sort(sortByCountThenName));
+	const sortByName = (a: IndexEntity, b: IndexEntity) => a.name.localeCompare(b.name);
+
+	let creatorsByCount = $derived(Object.values(index.creators).sort(sortByName));
+	let spacesByCount = $derived(Object.values(index.spaces).sort(sortByName));
+	let formatsByCount = $derived(Object.values(index.formats).sort(sortByName));
 </script>
 
 <Header class="app-header" />
 <main class="app-content">
 	<div class="index">
 		<h2>In Recent Memory</h2>
-		<section class="looseleaf">
-			<Looseleaf extracts={data.index} />
-		</section>
 		<section>
-			<h3>{entities.format.plural}</h3>
+			<h3>{entityTypes.format.plural}</h3>
 			<ul>
 				{#each formatsByCount as format}
 					<li>
-						<a class="name" href={`${encodeSegment(entities.format, format.name)}`}
+						<a class="name" href={`${encodeSegment(entityTypes.format, format.name)}`}
 							>{format.name}</a
 						>
 						<span class="count">{format.count}</span>
@@ -94,11 +93,11 @@
 			</ul>
 		</section>
 		<section>
-			<h3>{entities.creator.plural}</h3>
+			<h3>{entityTypes.creator.plural}</h3>
 			<ul>
 				{#each creatorsByCount as creator}
 					<li>
-						<a class="name" href={`${encodeSegment(entities.creator, creator.id)}`}
+						<a class="name" href={`${encodeSegment(entityTypes.creator, creator.id)}`}
 							>{creator.name}</a
 						>
 						<span class="count">{creator.count}</span>
@@ -107,11 +106,11 @@
 			</ul>
 		</section>
 		<section>
-			<h3>{entities.space.plural}</h3>
+			<h3>{entityTypes.space.plural}</h3>
 			<ul class="spaces">
 				{#each spacesByCount as space}
 					<li>
-						<a class="name" href={`${encodeSegment(entities.space, space.id)}`}
+						<a class="name" href={`${encodeSegment(entityTypes.space, space.id)}`}
 							>{space.name}</a
 						>
 						<span class="count">{space.count}</span>

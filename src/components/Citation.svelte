@@ -21,8 +21,7 @@
 		<span class="article">{article(format)}</span>
 		<strong class="format">{format}</strong>
 		{#if parent}
-			<span class="parent"
-				>from <Link toExtract={parent.id}><cite>{parent.name}</cite></Link></span
+			<span class="parent">from <Link toId={parent.id}><cite>{parent.name}</cite></Link></span
 			>
 		{/if}
 		{#if creators}
