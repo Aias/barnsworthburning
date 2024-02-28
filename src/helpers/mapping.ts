@@ -1,4 +1,4 @@
-import type { IBaseExtract, IExtract } from '$types/Airtable';
+import type { IBaseExtract, IExtract, ILinkedRecord } from '$types/Airtable';
 import zip from '$helpers/zip';
 
 export const mapExtractRecord = (record: IBaseExtract): IExtract => {
@@ -28,27 +28,27 @@ export const mapExtractRecord = (record: IBaseExtract): IExtract => {
 		format
 	} = record;
 
-	const mappedChildren = zip({
+	const mappedChildren = zip<ILinkedRecord>({
 		id: children,
 		name: childTitles
 	});
-	const mappedConnections = zip({
+	const mappedConnections = zip<ILinkedRecord>({
 		id: connections,
 		name: connectionTitles
 	});
-	const mappedCreators = zip({
+	const mappedCreators = zip<ILinkedRecord>({
 		id: creators,
 		name: creatorNames
 	});
-	const mappedParent = zip({
+	const mappedParent = zip<ILinkedRecord>({
 		id: parent,
 		name: parentTitle
 	});
-	const mappedParentCreators = zip({
+	const mappedParentCreators = zip<ILinkedRecord>({
 		id: parentCreatorIds,
 		name: parentCreatorNames
 	});
-	const mappedSpaces = zip({
+	const mappedSpaces = zip<ILinkedRecord>({
 		id: spaces,
 		name: spaceTopics
 	});
