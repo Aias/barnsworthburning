@@ -67,4 +67,4 @@ export const decodeTrail = (trail: string): Segment[] =>
 		.filter(Boolean) as Segment[];
 
 export const encodeTrail = (segments: Segment[]): string =>
-	segments.map((segment) => encodeSegment(segment.entityType, segment.id)).join('/');
+	'/' + segments.map((segment) => encodeSegment(segment.entityType, segment.id)).join('/');
