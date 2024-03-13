@@ -3,7 +3,9 @@ import type {
 	IExtract,
 	ILinkedRecord,
 	IBaseCreator,
-	ICreator
+	ICreator,
+	IBaseSpace,
+	ISpace
 } from '$types/Airtable';
 import zip from '$helpers/zip';
 
@@ -135,6 +137,46 @@ export const mapCreatorRecord = (record: IBaseCreator): ICreator => {
 		spaces: mappedSpaces,
 		totalStars,
 		connectedCreators: mappedConnectedCreators,
+		createdTime: new Date(createdTime),
+		lastUpdated: new Date(lastUpdated)
+	};
+};
+
+export const mapSpaceRecord = (record: IBaseSpace): ISpace => {
+	const {
+		id,
+		topic,
+		title,
+		icon,
+		description,
+		extracts = [],
+		extractTitles = [],
+		connectedSpaces = [],
+		connectedSpaceTopics = [],
+		totalStars,
+		createdTime,
+		lastUpdated
+	} = record;
+
+	const mappedExtracts = zip<ILinkedRecord>({
+		id: extracts,
+		name: extractTitles
+	});
+
+	const mappedConnectedSpaces = zip<ILinkedRecord>({
+		id: connectedSpaces,
+		name: connectedSpaceTopics
+	});
+
+	return {
+		id,
+		topic,
+		title,
+		icon,
+		description,
+		extracts: mappedExtracts,
+		connectedSpaces: mappedConnectedSpaces,
+		totalStars,
 		createdTime: new Date(createdTime),
 		lastUpdated: new Date(lastUpdated)
 	};

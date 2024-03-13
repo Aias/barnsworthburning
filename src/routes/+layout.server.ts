@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
 import { airtableFetch } from '$lib/server/requests';
-import { mapCreatorRecord, mapExtractRecord } from '$helpers/mapping';
+import { mapCreatorRecord, mapExtractRecord, mapSpaceRecord } from '$helpers/mapping';
 import {
 	CreatorViews,
 	ExtractViews,
@@ -15,7 +15,6 @@ const MAX_RECORDS = 100;
 export async function load() {
 	const extracts = await airtableFetch<IBaseExtract>('extracts', {
 		view: ExtractViews.Works,
-		sort: [{ field: 'extractedOn', direction: 'desc' }],
 		maxRecords: MAX_RECORDS
 	});
 	const creators = await airtableFetch<IBaseCreator>('creators', {
@@ -36,6 +35,6 @@ export async function load() {
 	return {
 		extracts: extracts.map(mapExtractRecord),
 		creators: creators.map(mapCreatorRecord),
-		spaces: spaces
+		spaces: spaces.map(mapSpaceRecord)
 	};
 }
