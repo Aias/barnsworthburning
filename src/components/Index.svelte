@@ -1,89 +1,16 @@
 <script lang="ts">
 	import cache from '$lib/cache.svelte';
-	import { encodeSegment, entityTypes } from '$helpers/params';
-
-	type IndexEntity = { id: string; name: string; count: number };
-
-	type Index = {
-		formats: { [id: string]: IndexEntity };
-		creators: { [id: string]: IndexEntity };
-		spaces: { [id: string]: IndexEntity };
-	};
-
-	let index: Index = $derived(
-		cache.allExtracts.reduce(
-			(acc: Index, item) => {
-				let { creators, spaces, format } = item;
-
-				if (format) {
-					if (acc.formats[format]) {
-						acc.formats[format].count++;
-					} else {
-						acc.formats[format] = { id: format, name: format, count: 1 };
-					}
-				}
-
-				if (creators) {
-					creators.forEach((creator) => {
-						if (acc.creators[creator.id]) {
-							acc.creators[creator.id].count++;
-						} else {
-							acc.creators[creator.id] = {
-								id: creator.id,
-								name: creator.name,
-								count: 1
-							};
-						}
-					});
-				}
-
-				if (spaces) {
-					spaces.forEach((space) => {
-						if (acc.spaces[space.id]) {
-							acc.spaces[space.id].count++;
-						} else {
-							acc.spaces[space.id] = { id: space.id, name: space.name, count: 1 };
-						}
-					});
-				}
-
-				return acc;
-			},
-			{ creators: {}, spaces: {}, formats: {} }
-		)
-	);
-
-	const sortByName = (a: IndexEntity, b: IndexEntity) => a.name.localeCompare(b.name);
-
-	let creatorsByCount = $derived(Object.values(index.creators).sort(sortByName));
-	let spacesByCount = $derived(Object.values(index.spaces).sort(sortByName));
-	let formatsByCount = $derived(Object.values(index.formats).sort(sortByName));
+	import { entityTypes } from '$helpers/params';
 </script>
 
 <div class="index">
-	<h2>In Recent Memory</h2>
-	<section>
-		<h3>{entityTypes.format.plural}</h3>
-		<ul>
-			{#each formatsByCount as format}
-				<li>
-					<a class="name" href={`${encodeSegment(entityTypes.format, format.name)}`}
-						>{format.name}</a
-					>
-					<span class="count">{format.count}</span>
-				</li>
-			{/each}
-		</ul>
-	</section>
 	<section>
 		<h3>{entityTypes.creator.plural}</h3>
 		<ul>
-			{#each creatorsByCount as creator}
+			{#each cache.allCreators as creator}
 				<li>
-					<a class="name" href={`${encodeSegment(entityTypes.creator, creator.id)}`}
-						>{creator.name}</a
-					>
-					<span class="count">{creator.count}</span>
+					<a class="name" href={`/creators/${creator.id}`}>{creator.name}</a>
+					<span class="count">{creator.numExtracts}</span>
 				</li>
 			{/each}
 		</ul>
@@ -91,12 +18,25 @@
 	<section>
 		<h3>{entityTypes.space.plural}</h3>
 		<ul class="spaces">
-			{#each spacesByCount as space}
+			{#each cache.allSpaces as space}
 				<li>
-					<a class="name" href={`${encodeSegment(entityTypes.space, space.id)}`}
-						>{space.name}</a
+					<a class="name" href={`/space/${space.id}`}>{space.topic}</a>
+					<span class="count">{space.extracts?.length ?? 0}</span>
+				</li>
+			{/each}
+		</ul>
+	</section>
+	<section>
+		<h3>{entityTypes.extract.plural}</h3>
+		<ul class="extracts">
+			{#each cache.allExtracts as extract}
+				<li>
+					<a class="name" href={`/extracts/${extract.id}`}>{extract.title}</a>
+					<span class="count"
+						>{extract.creators
+							? extract.creators.map((c) => c.name).join(', ')
+							: 'Unknown'}</span
 					>
-					<span class="count">{space.count}</span>
 				</li>
 			{/each}
 		</ul>
