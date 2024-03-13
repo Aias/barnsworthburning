@@ -60,7 +60,7 @@ export const decodeSegment = (segment = ''): Segment | undefined => {
 	};
 };
 
-export const decodeTrail = (trail: string): Segment[] =>
+export const decodeTrail = (trail: string = ''): Segment[] =>
 	trail
 		.split('/')
 		.map((segment) => decodeSegment(segment))

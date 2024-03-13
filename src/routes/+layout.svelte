@@ -1,7 +1,6 @@
 <script lang="ts">
 	import '$styles/app.css';
 	import Header from '$components/Header.svelte';
-	import Index from '$components/Index.svelte';
 	import cache from '$lib/cache.svelte';
 
 	let { children, data } = $props();
@@ -21,6 +20,5 @@
 
 <Header class="app-header" />
 <main class="app-content">
-	<Index />
 	{@render children()}
 </main>

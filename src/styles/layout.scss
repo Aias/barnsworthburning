@@ -8,13 +8,10 @@
 }
 .app-content {
 	padding: var(--padding);
-	display: flex;
-	flex-direction: row;
-	gap: var(--padding);
 	height: 100%;
 	flex-grow: 1;
 	overflow-x: auto;
-	overflow-y: hidden;
+	overflow-y: auto;
 	align-items: stretch;
 
 	> * {
