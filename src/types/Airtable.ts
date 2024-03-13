@@ -130,6 +130,7 @@ export interface IBaseSpace extends IBaseRecord {
 	extractTitles?: string[];
 	connectedSpaces?: AirtableRecordId[];
 	connectedSpaceTopics?: string[];
+	numExtracts: number;
 	totalStars: number;
 	lastUpdated: string;
 	createdTime: string;
@@ -143,6 +144,7 @@ export interface ISpace {
 	description?: string;
 	extracts?: ILinkedRecord[];
 	connectedSpaces?: ILinkedRecord[];
+	numExtracts: number;
 	totalStars: number;
 	lastUpdated: Date;
 	createdTime: Date;

@@ -153,6 +153,7 @@ export const mapSpaceRecord = (record: IBaseSpace): ISpace => {
 		extractTitles = [],
 		connectedSpaces = [],
 		connectedSpaceTopics = [],
+		numExtracts,
 		totalStars,
 		createdTime,
 		lastUpdated
@@ -176,6 +177,7 @@ export const mapSpaceRecord = (record: IBaseSpace): ISpace => {
 		description,
 		extracts: mappedExtracts,
 		connectedSpaces: mappedConnectedSpaces,
+		numExtracts,
 		totalStars,
 		createdTime: new Date(createdTime),
 		lastUpdated: new Date(lastUpdated)

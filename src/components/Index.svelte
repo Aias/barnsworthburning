@@ -1,13 +1,25 @@
 <script lang="ts">
 	import cache from '$lib/cache.svelte';
 	import { entityTypes } from '$helpers/params';
+	import type { ICreator, ISpace } from '$types/Airtable';
+
+	const creatorsByCount = $derived.by(() => {
+		return cache.allCreators.sort(sortByCount);
+	});
+	const spacesByCount = $derived.by(() => {
+		return cache.allSpaces.sort(sortByCount);
+	});
+
+	function sortByCount(a: ICreator | ISpace, b: ICreator | ISpace) {
+		return b.numExtracts - a.numExtracts;
+	}
 </script>
 
 <div class="index">
 	<section>
-		<h3>{entityTypes.creator.plural}</h3>
+		<h3><a href="/creators">{entityTypes.creator.plural}</a></h3>
 		<ul>
-			{#each cache.allCreators as creator}
+			{#each creatorsByCount as creator}
 				<li>
 					<a class="name" href={`/creators/${creator.id}`}>{creator.name}</a>
 					<span class="count">{creator.numExtracts}</span>
@@ -16,18 +28,18 @@
 		</ul>
 	</section>
 	<section>
-		<h3>{entityTypes.space.plural}</h3>
+		<h3><a href="/spaces">{entityTypes.space.plural}</a></h3>
 		<ul class="spaces">
-			{#each cache.allSpaces as space}
+			{#each spacesByCount as space}
 				<li>
 					<a class="name" href={`/space/${space.id}`}>{space.topic}</a>
-					<span class="count">{space.extracts?.length ?? 0}</span>
+					<span class="count">{space.numExtracts}</span>
 				</li>
 			{/each}
 		</ul>
 	</section>
 	<section>
-		<h3>{entityTypes.extract.plural}</h3>
+		<h3><a href="extracts">{entityTypes.extract.plural}</a></h3>
 		<ul class="extracts">
 			{#each cache.allExtracts as extract}
 				<li>
