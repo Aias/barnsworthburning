@@ -1,5 +1,24 @@
 import type { Attachment, FieldSet, Record } from 'airtable';
 
+export enum ExtractViews {
+	Best = 'viwCvae2rXQscUap6',
+	ByEntryDate = 'viwLItZEyHOGtcoHe',
+	Gallery = 'viwEHJGOwWKp7Zebc',
+	Works = 'viwTkCBV6uRoHplvP'
+}
+export enum CreatorViews {
+	Alphabetical = 'viwGZDVJxyNDDfOjV',
+	ByCount = 'viwcIFF6YBJV0SgE1',
+	ByStars = 'viwdUV8VFOvylVdtY',
+	RecentlyUpdated = 'viw8aHvPsBm7AJfcC'
+}
+export enum SpaceViews {
+	Alphabetical = 'viwXFuJApmneAzKEh',
+	ByCount = 'viw6rBrUfPPkrqMVC',
+	ByStars = 'viwYHuokhqY6LpWb3',
+	RecentlyUpdated = 'viwmSxAVAT3uJc6xk'
+}
+
 type AirtableRecordId = Record<FieldSet>['id'];
 
 export interface IBaseRecord {
@@ -76,6 +95,7 @@ export interface IBaseCreator extends IBaseRecord {
 	numWorks: number;
 	numFragments: number;
 	numExtracts: number;
+	totalStars: number;
 	createdTime: string;
 	lastUpdated: string;
 }
@@ -95,8 +115,9 @@ export interface ICreator {
 	numWorks: number;
 	numFragments: number;
 	numExtracts: number;
-	createdTime: string;
-	lastUpdated: string;
+	totalStars: number;
+	createdTime: Date;
+	lastUpdated: Date;
 }
 
 export interface IBaseSpace extends IBaseRecord {
@@ -109,6 +130,7 @@ export interface IBaseSpace extends IBaseRecord {
 	extractTitles?: string[];
 	connectedSpaces?: AirtableRecordId[];
 	connectedSpaceTopics?: string[];
+	totalStars: number;
 	lastUpdated: string;
 	createdTime: string;
 }
@@ -121,6 +143,7 @@ export interface ISpace {
 	description?: string;
 	extracts?: ILinkedRecord[];
 	connectedSpaces?: ILinkedRecord[];
+	totalStars: number;
 	lastUpdated: Date;
 	createdTime: Date;
 }

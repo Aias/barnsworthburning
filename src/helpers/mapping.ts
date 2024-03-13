@@ -1,4 +1,10 @@
-import type { IBaseExtract, IExtract, ILinkedRecord } from '$types/Airtable';
+import type {
+	IBaseExtract,
+	IExtract,
+	ILinkedRecord,
+	IBaseCreator,
+	ICreator
+} from '$types/Airtable';
 import zip from '$helpers/zip';
 
 export const mapExtractRecord = (record: IBaseExtract): IExtract => {
@@ -71,5 +77,65 @@ export const mapExtractRecord = (record: IBaseExtract): IExtract => {
 		source,
 		lastUpdated: new Date(lastUpdated),
 		extractedOn: new Date(extractedOn)
+	};
+};
+
+export const mapCreatorRecord = (record: IBaseCreator): ICreator => {
+	const {
+		id,
+		name,
+		primaryProject,
+		type,
+		site,
+		professions,
+		organizations,
+		nationality,
+		numWorks,
+		numFragments,
+		numExtracts,
+		totalStars,
+		extracts = [],
+		extractTitles = [],
+		spaces = [],
+		spaceTopics = [],
+		connectedCreators = [],
+		connectedCreatorNames = [],
+		createdTime,
+		lastUpdated
+	} = record;
+
+	const mappedExtracts = zip<ILinkedRecord>({
+		id: extracts,
+		name: extractTitles
+	});
+
+	const mappedSpaces = zip<ILinkedRecord>({
+		id: spaces,
+		name: spaceTopics
+	});
+
+	const mappedConnectedCreators = zip<ILinkedRecord>({
+		id: connectedCreators,
+		name: connectedCreatorNames
+	});
+
+	return {
+		id,
+		name,
+		primaryProject,
+		type,
+		site,
+		professions,
+		organizations,
+		nationality,
+		numWorks,
+		numFragments,
+		numExtracts,
+		extracts: mappedExtracts,
+		spaces: mappedSpaces,
+		totalStars,
+		connectedCreators: mappedConnectedCreators,
+		createdTime: new Date(createdTime),
+		lastUpdated: new Date(lastUpdated)
 	};
 };

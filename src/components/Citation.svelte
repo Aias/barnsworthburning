@@ -8,7 +8,7 @@
 		extract: IExtract;
 	}
 
-	let { extract } = $props<CitationProps>();
+	let { extract }: CitationProps = $props();
 
 	let format = $derived(extract.format || 'Extract');
 	let creators = $derived(extract.creators || extract.parentCreators);

@@ -14,7 +14,7 @@
 		componentClass?: string;
 	}
 
-	let { extract, contextId = 'panel', componentClass } = $props<ExtractProps>();
+	let { extract, contextId = 'panel', componentClass }: ExtractProps = $props();
 
 	let id = $derived(extract.id);
 	let title = $derived(extract.title);

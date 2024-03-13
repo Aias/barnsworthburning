@@ -4,7 +4,7 @@
 		palette?: string;
 		chroma?: string;
 	}
-	let { mode, palette, chroma } = $props<TestCardProps>();
+	let { mode, palette, chroma }: TestCardProps = $props();
 </script>
 
 <article class={`${mode || ''} ${palette || ''} ${chroma || ''}`}>

@@ -1,13 +1,10 @@
 <script lang="ts">
 	import '$styles/app.css';
 	import Header from '$components/Header.svelte';
-	import Looseleaf from '$components/Looseleaf.svelte';
 	import { encodeSegment, entityTypes } from '$helpers/params';
 	import type { IExtract } from '../types/Airtable';
 
 	let { children, data } = $props();
-
-	// $inspect(data.index);
 
 	type IndexEntity = { id: string; name: string; count: number };
 
@@ -18,7 +15,7 @@
 	};
 
 	let index: Index = $derived(
-		data.index.reduce(
+		data.extracts.reduce(
 			(acc: Index, item: IExtract) => {
 				let { creators, spaces, format } = item;
 
@@ -59,14 +56,6 @@
 			{ creators: {}, spaces: {}, formats: {} }
 		)
 	);
-
-	const sortByCountThenName = (a: IndexEntity, b: IndexEntity) => {
-		if (a.count === b.count) {
-			return a.name.localeCompare(b.name);
-		}
-
-		return b.count - a.count;
-	};
 
 	const sortByName = (a: IndexEntity, b: IndexEntity) => a.name.localeCompare(b.name);
 

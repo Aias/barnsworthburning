@@ -8,7 +8,7 @@
 		extract: IExtract;
 	}
 
-	let { extract } = $props<LooseleafCardProps>();
+	let { extract }: LooseleafCardProps = $props();
 
 	let michelinStars = $derived(extract.michelinStars);
 	let title = $derived(extract.title);

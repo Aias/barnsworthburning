@@ -9,7 +9,7 @@
 		children: Snippet;
 	}
 
-	let { toType = 'extract', toId, children, ...restProps } = $props<LinkProps>();
+	let { toType = 'extract', toId, children, ...restProps }: LinkProps = $props();
 
 	let currentTrail = $derived(decodeTrail($page.params.trail));
 	let href = $derived(makeNewTrail());

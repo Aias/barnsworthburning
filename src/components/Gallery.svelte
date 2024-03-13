@@ -8,7 +8,7 @@
 		componentClass: string;
 	}
 
-	let { gallery, meta, componentClass } = $props<GalleryProps>();
+	let { gallery, meta, componentClass }: GalleryProps = $props();
 </script>
 
 {#if gallery}

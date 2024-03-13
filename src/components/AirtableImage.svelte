@@ -5,7 +5,7 @@
 		image: Attachment;
 	}
 
-	let { image } = $props<AirtableImageProps>();
+	let { image }: AirtableImageProps = $props();
 	let availableWidth = $state(0);
 
 	const defaultThumbnail: Thumbnail = {

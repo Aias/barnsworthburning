@@ -5,7 +5,7 @@
 	interface TopicListProps {
 		topics: ILinkedRecord[];
 	}
-	let { topics } = $props<TopicListProps>();
+	let { topics }: TopicListProps = $props();
 </script>
 
 {#if topics}

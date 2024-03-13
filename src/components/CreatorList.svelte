@@ -6,7 +6,7 @@
 		creators: ILinkedRecord[];
 	}
 
-	let { creators, ...restProps } = $props<CreatorListProps>();
+	let { creators, ...restProps }: CreatorListProps = $props();
 </script>
 
 {#if creators}

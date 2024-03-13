@@ -9,7 +9,7 @@
 		maxChildren?: number;
 	}
 
-	let { items, label, symbol, maxChildren = 5 } = $props<RelationListProps>();
+	let { items, label, symbol, maxChildren = 5 }: RelationListProps = $props();
 
 	let showAllChildren = false;
 
