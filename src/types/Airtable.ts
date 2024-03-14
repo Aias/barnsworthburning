@@ -1,5 +1,15 @@
 import type { Attachment, FieldSet, Record } from 'airtable';
 
+// const AirtableBaseId = 'appHWZbECVKCSjquH' as const;
+export const AirtableBaseId = 'appNAUPSEyCYlPtvG' as const;
+
+export enum AirtableTables {
+	Extracts = 'tblACVIEZW68A1mMZ',
+	Creators = 'tblWPCpPglI6ssVZv',
+	Spaces = 'tblDQjXO9oy2TKTqL',
+	Assemblages = 'tbl9R62MN7hQ6nOGw'
+}
+
 export enum ExtractViews {
 	Best = 'viwCvae2rXQscUap6',
 	ByEntryDate = 'viwLItZEyHOGtcoHe',

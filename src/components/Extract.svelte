@@ -1,7 +1,6 @@
 <script lang="ts">
 	import markdown from '$helpers/markdown';
-
-	import Link from './Link.svelte';
+	import { AirtableBaseId } from '$types/Airtable';
 	import Citation from './Citation.svelte';
 	import TopicList from './TopicList.svelte';
 	import RelationList from './RelationList.svelte';
@@ -23,7 +22,6 @@
 	let images = $derived(extract.images);
 	let imageCaption = $derived(extract.imageCaption);
 
-	let parent = $derived(extract.parent);
 	let children = $derived(extract.children);
 	let connections = $derived(extract.connections);
 	let spaces = $derived(extract.spaces);
@@ -36,11 +34,13 @@
 	{#if title}
 		<header>
 			<h2 class="extract-title">
-				{#if parent}
-					<Link toType="extract" toId={parent.id}>{title}</Link>
-				{:else}
-					<Link toType="extract" toId={id}>{title}</Link>
-				{/if}
+				<a
+					href={`https://airtable.com/${AirtableBaseId}/tblACVIEZW68A1mMZ/${id}`}
+					target="_blank"
+					rel="noopener"
+				>
+					{title}
+				</a>
 			</h2>
 		</header>
 	{/if}

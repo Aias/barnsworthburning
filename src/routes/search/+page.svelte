@@ -48,6 +48,12 @@
 <style lang="scss">
 	form {
 		margin-bottom: 1em;
+		display: flex;
+		gap: 0.25em;
+
+		> input {
+			flex: 0 1 35ch;
+		}
 	}
 	ul {
 		list-style: none;
