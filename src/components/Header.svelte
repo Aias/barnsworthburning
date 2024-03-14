@@ -62,7 +62,10 @@
 			</label>
 		{/each}
 	</div>
-	<a class="home" href="/">Go Home</a>
+	<nav>
+		<a href="/search">Search</a>
+		<a href="/">Home</a>
+	</nav>
 </header>
 
 <style lang="scss">
@@ -86,7 +89,9 @@
 			text-transform: capitalize;
 		}
 	}
-	.home {
+	nav {
 		margin-left: auto;
+		display: inline-flex;
+		gap: 1em;
 	}
 </style>
