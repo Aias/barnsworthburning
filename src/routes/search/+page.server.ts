@@ -8,7 +8,9 @@ const MAX_RECORDS = 200;
 export async function load({ url }) {
 	const queryParam = url.searchParams.get('q');
 	if (!queryParam) {
-		return null;
+		return {
+			search: undefined
+		};
 	}
 	const query = decodeURIComponent(queryParam).toLowerCase();
 

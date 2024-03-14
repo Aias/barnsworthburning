@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import type { IExtract } from '$types/Airtable';
 	import Extract from '$components/Extract.svelte';
 
 	const { data } = $props();
-	const results: IExtract[] | null = $derived(data.search);
+	const results = $derived(data.search);
 
 	const currentQuery = $derived($page.url.searchParams.get('q'));
 	let searchValue = $state('');
