@@ -22,7 +22,14 @@
 
 <!-- svelte-ignore a11y-autofocus -->
 <form data-sveltekit-keepfocus>
-	<input type="search" name="q" value={searchValue} onchange={updateSearchValue} autofocus />
+	<input
+		type="search"
+		name="q"
+		placeholder="Search extracts..."
+		value={searchValue}
+		onchange={updateSearchValue}
+		autofocus
+	/>
 	<button type="submit">Search</button>
 </form>
 
@@ -46,7 +53,7 @@
 		list-style: none;
 		padding: 0;
 		margin: 0;
-		column-width: 30ch;
+		column-width: 35ch;
 		column-gap: 1em;
 	}
 	li {

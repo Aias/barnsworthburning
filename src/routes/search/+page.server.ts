@@ -12,7 +12,7 @@ export async function load({ url }) {
 			search: undefined
 		};
 	}
-	const query = decodeURIComponent(queryParam).toLowerCase();
+	const query = decodeURIComponent(queryParam).toLowerCase().replace(/'/g, "\\'");
 
 	const extractResults = await airtableFetch<IBaseExtract>('extracts', {
 		view: ExtractViews.Best,
