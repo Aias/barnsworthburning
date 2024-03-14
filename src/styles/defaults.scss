@@ -5,6 +5,8 @@
 	--font-size-heading: calc(4em / 3);
 	--font-size-title: calc(6em / 3);
 
+	--border-radius-small: 0.125rem;
+
 	--line-height: calc(1.5 / 0.875); /* 24px for base font size */
 
 	--reading-width-narrow: 65ch;
@@ -74,30 +76,52 @@ small,
 }
 
 button {
-	font-family: var(--font-stack-mono);
 	background-color: var(--splash);
 	color: var(--accent);
 	border-width: 1px;
 	border-style: solid;
 	border-color: var(--border);
-	border-radius: 2px;
-	padding: 4px 8px;
+	border-radius: var(--border-radius-small);
+	padding: 0.25em 0.5em;
 	margin: 0;
-	font-size: 0.925em;
 
 	&:hover {
 		background-color: var(--flood);
 		border-color: var(--boundary);
 	}
+
+	&.link {
+		appearance: none;
+		background: none;
+		border: none;
+		outline: none;
+		padding: 0;
+		margin: 0;
+	}
 }
 
-button.link {
-	appearance: none;
-	background: none;
-	border: none;
-	outline: none;
+input[type='text'],
+input[type='search'] {
 	padding: 0;
-	margin: 0;
+	background-color: var(--splash);
+	border: 1px solid var(--border);
+	padding: 0.25em 0.5em;
+	border-radius: var(--border-radius-small);
+	color: var(--primary);
+
+	&:hover {
+		border-color: var(--boundary);
+	}
+
+	&::placeholder {
+		color: var(--hint);
+	}
+}
+
+label:has(> input[type='radio']) {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25em;
 }
 
 :any-link,
@@ -127,6 +151,8 @@ svg,
 }
 
 a,
+button,
+input,
 .link,
 .text-mono,
 pre,
@@ -136,7 +162,6 @@ samp {
 	font-family: var(--font-stack-mono);
 	/* The monospace fonts tend to be optically larger for a given font size. */
 	font-size: 0.933em;
-	line-height: calc((1.5 / 0.875) / 0.933);
 }
 
 .text-mono :is(.link, :any-link) {
@@ -145,11 +170,6 @@ samp {
 
 pre {
 	overflow-x: auto;
-}
-
-:focus-visible {
-	outline: 1px solid var(--fill);
-	outline-offset: 2px;
 }
 
 ol,

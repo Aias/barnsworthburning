@@ -56,7 +56,7 @@
 		padding: 0 0.5em;
 		background-color: var(--splash);
 		border: 1px solid var(--divider);
-		border-radius: 2px;
+		border-radius: var(--border-radius-small);
 		font-size: 0.75em;
 		line-height: inherit;
 

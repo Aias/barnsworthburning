@@ -3,7 +3,7 @@
 @import './triptych.css' layer(theme);
 @import 'normalize.css' layer(normalize);
 @import './reset.css' layer(reset);
-@import './defaults.css' layer(defaults);
+@import './defaults.scss' layer(defaults);
 @import './layout.scss' layer(layout);
 @import './components.css' layer(components);
 @import './utilities.css' layer(utilities);

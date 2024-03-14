@@ -1,42 +1,11 @@
 .app {
-	--padding: 1.5rem;
-	--column-width: 30rem;
 	display: flex;
 	flex-direction: column;
 	height: 100%;
-	flex: 0 0 auto;
 }
-.app-content {
-	padding: var(--padding);
-	height: 100%;
-	flex-grow: 1;
-	overflow-x: auto;
-	overflow-y: auto;
-	align-items: stretch;
 
-	> * {
-		overflow-y: auto;
-		overflow-x: hidden;
-		scroll-behavior: smooth;
-	}
-}
-.index {
-	min-width: 12rem;
-}
-.gallery {
-	flex: 0 1 100%;
-	min-width: var(--column-width);
-}
-.extract-panel {
-	padding: var(--padding);
-	margin: calc(-1 * var(--padding));
-	margin-inline-start: 0;
-	background-color: var(--background);
-	border-left: 1px solid var(--edge);
-	flex: 0 1 var(--column-width);
-	min-width: var(--column-width);
-
-	&:empty {
-		display: none;
-	}
+main {
+	padding: 1rem;
+	flex: 1;
+	overflow: auto;
 }
