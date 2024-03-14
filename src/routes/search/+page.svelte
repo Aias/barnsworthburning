@@ -26,7 +26,7 @@
 	<button type="submit">Search</button>
 </form>
 
-{#if results}
+{#if results && results.length > 0}
 	<ul>
 		{#each results as result}
 			<li>
