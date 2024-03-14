@@ -834,9 +834,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/kit@npm:^2.5.3":
-  version: 2.5.3
-  resolution: "@sveltejs/kit@npm:2.5.3"
+"@sveltejs/kit@npm:^2.5.4":
+  version: 2.5.4
+  resolution: "@sveltejs/kit@npm:2.5.4"
   dependencies:
     "@types/cookie": ^0.6.0
     cookie: ^0.6.0
@@ -856,7 +856,7 @@ __metadata:
     vite: ^5.0.3
   bin:
     svelte-kit: svelte-kit.js
-  checksum: bca6fb86f23fda57e15beba2df4905c80a18bcc894839612b886acb916546274cdcb661e866fa50ea205f5f6c9c8b04296817933726022f01fb9f6f2abd6fea0
+  checksum: f5028e6cd77ada027c19bc3009a16456460f234dff96f598dd42caa0d681e21448b624f9ac060d6b25552c9cbaa3dbf78b21abe63fe6e5a5ea73d3e1e9f7d689
   languageName: node
   linkType: hard
 
@@ -1325,7 +1325,7 @@ __metadata:
     "@radix-ui/colors": ^3.0.0
     "@sveltejs/adapter-netlify": ^4.1.0
     "@sveltejs/adapter-node": ^4.0.1
-    "@sveltejs/kit": ^2.5.3
+    "@sveltejs/kit": ^2.5.4
     "@sveltejs/vite-plugin-svelte": ^3.0.2
     "@types/eslint": 8.56.5
     "@types/remarkable": ^2.0.8
@@ -1339,8 +1339,8 @@ __metadata:
     prettier: ^3.2.5
     prettier-plugin-svelte: ^3.2.2
     remarkable: ^2.0.1
-    sass: ^1.71.1
-    svelte: ^5.0.0-next.77
+    sass: ^1.72.0
+    svelte: ^5.0.0-next.78
     svelte-check: ^3.6.7
     tslib: ^2.6.2
     typescript: ^5.4.2
@@ -3513,16 +3513,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.71.1":
-  version: 1.71.1
-  resolution: "sass@npm:1.71.1"
+"sass@npm:^1.72.0":
+  version: 1.72.0
+  resolution: "sass@npm:1.72.0"
   dependencies:
     chokidar: ">=3.0.0 <4.0.0"
     immutable: ^4.0.0
     source-map-js: ">=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: 19c4939d3042eb9459d462bbd27b1f576fa18034e23c87ca0005b87effdee431c16503b5a785edcdcde1a76dfb804716d9ad42c85a78968ac3825d515e45cb53
+  checksum: f420079c7d51660b7256ee52463c1499ede36f7fd5c8ef50c687451777ad641509001454dea45244073cedd7c00e7a3bc1c362e55206ac6686171b994edb41e4
   languageName: node
   linkType: hard
 
@@ -3849,9 +3849,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte@npm:^5.0.0-next.77":
-  version: 5.0.0-next.77
-  resolution: "svelte@npm:5.0.0-next.77"
+"svelte@npm:^5.0.0-next.78":
+  version: 5.0.0-next.78
+  resolution: "svelte@npm:5.0.0-next.78"
   dependencies:
     "@ampproject/remapping": ^2.2.1
     "@jridgewell/sourcemap-codec": ^1.4.15
@@ -3866,7 +3866,7 @@ __metadata:
     locate-character: ^3.0.0
     magic-string: ^0.30.5
     zimmerframe: ^1.1.2
-  checksum: 713f3e6f152a10070dd63df283ba06e3969d23cfea4cd29f3ea7e5e2b34d71ac66a12e4f5ae4d2455b429b7761f6f50dc9a56d19e668ece9a0923ff5a1174b15
+  checksum: 282e192e2e722866d8f70119ebaff943776554e22fb2f20c3478f3e61b8934902ab7af3d6060508e93e443d6d17a94014939c89c9f2bbb8a28b3b53ef6671f0d
   languageName: node
   linkType: hard
 
