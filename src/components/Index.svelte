@@ -60,6 +60,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 1em;
+		font-size: var(--font-size-small);
 	}
 	.looseleaf {
 		flex: 1 0 auto;

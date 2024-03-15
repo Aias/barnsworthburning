@@ -1,9 +1,9 @@
 @layer theme, normalize, reset, defaults, layout, components, utilities;
 
-@import './triptych.css' layer(theme);
+@import './triptych.scss' layer(theme);
 @import 'normalize.css' layer(normalize);
-@import './reset.css' layer(reset);
+@import './reset.scss' layer(reset);
 @import './defaults.scss' layer(defaults);
 @import './layout.scss' layer(layout);
-@import './components.css' layer(components);
-@import './utilities.css' layer(utilities);
+@import './components.scss' layer(components);
+@import './utilities.scss' layer(utilities);

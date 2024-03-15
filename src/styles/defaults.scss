@@ -1,26 +1,6 @@
-:root {
-	--font-size-small: 0.85em;
-	--font-size-body: 1em;
-	--font-size-subhead: calc(3.5em / 3);
-	--font-size-heading: calc(4em / 3);
-	--font-size-title: calc(6em / 3);
-
-	--border-radius-small: 0.125rem;
-
-	--line-height: calc(1.5 / 0.875); /* 24px for base font size */
-
-	--reading-width-narrow: 65ch;
-	--reading-width-wide: 75ch;
-}
+@import './vars.scss';
 
 html {
-	--font-stack-sans: 'IBM Plex Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-	--font-stack-serif: 'Palatino Linotype', Palatino, Palladio, 'URW Palladio L', 'Book Antiqua',
-		Baskerville, 'Bookman Old Style', 'Bitstream Charter', 'Nimbus Roman No9 L', Garamond,
-		'Apple Garamond', 'ITC Garamond Narrow', 'New Century Schoolbook', 'Century Schoolbook',
-		'Century Schoolbook L', Georgia, serif;
-	--font-stack-mono: 'IBM Plex Mono', monospace;
-
 	height: 100vh;
 	min-height: 100vh;
 	font-family: var(--font-stack-sans);
