@@ -2,10 +2,10 @@ import { error } from '@sveltejs/kit';
 import { airtableFetch } from '$lib/server/requests';
 import { mapCreatorRecord, mapExtractRecord, mapSpaceRecord } from '$helpers/mapping';
 import {
-	CreatorViews,
-	ExtractViews,
-	SpaceViews,
-	AirtableTables,
+	CreatorView,
+	ExtractView,
+	SpaceView,
+	AirtableTable,
 	type IBaseCreator,
 	type IBaseExtract,
 	type IBaseSpace
@@ -14,16 +14,16 @@ import {
 const MAX_RECORDS = 100;
 
 export async function load() {
-	const extracts = await airtableFetch<IBaseExtract>(AirtableTables.Extracts, {
-		view: ExtractViews.Works,
+	const extracts = await airtableFetch<IBaseExtract>(AirtableTable.Extracts, {
+		view: ExtractView.Works,
 		maxRecords: MAX_RECORDS
 	});
-	const creators = await airtableFetch<IBaseCreator>(AirtableTables.Creators, {
-		view: CreatorViews.ByStars,
+	const creators = await airtableFetch<IBaseCreator>(AirtableTable.Creators, {
+		view: CreatorView.ByStars,
 		maxRecords: MAX_RECORDS
 	});
-	const spaces = await airtableFetch<IBaseSpace>(AirtableTables.Spaces, {
-		view: SpaceViews.ByStars,
+	const spaces = await airtableFetch<IBaseSpace>(AirtableTable.Spaces, {
+		view: SpaceView.ByStars,
 		maxRecords: MAX_RECORDS
 	});
 

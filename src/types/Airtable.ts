@@ -3,26 +3,26 @@ import type { Attachment, FieldSet, Record } from 'airtable';
 // const AirtableBaseId = 'appHWZbECVKCSjquH' as const;
 export const AirtableBaseId = 'appNAUPSEyCYlPtvG' as const;
 
-export enum AirtableTables {
+export enum AirtableTable {
 	Extracts = 'tblACVIEZW68A1mMZ',
 	Creators = 'tblWPCpPglI6ssVZv',
 	Spaces = 'tblDQjXO9oy2TKTqL',
 	Assemblages = 'tbl9R62MN7hQ6nOGw'
 }
 
-export enum ExtractViews {
+export enum ExtractView {
 	Best = 'viwCvae2rXQscUap6',
 	ByEntryDate = 'viwLItZEyHOGtcoHe',
 	Gallery = 'viwEHJGOwWKp7Zebc',
 	Works = 'viwTkCBV6uRoHplvP'
 }
-export enum CreatorViews {
+export enum CreatorView {
 	Alphabetical = 'viwGZDVJxyNDDfOjV',
 	ByCount = 'viwcIFF6YBJV0SgE1',
 	ByStars = 'viwdUV8VFOvylVdtY',
 	RecentlyUpdated = 'viw8aHvPsBm7AJfcC'
 }
-export enum SpaceViews {
+export enum SpaceView {
 	Alphabetical = 'viwXFuJApmneAzKEh',
 	ByCount = 'viw6rBrUfPPkrqMVC',
 	ByStars = 'viwYHuokhqY6LpWb3',

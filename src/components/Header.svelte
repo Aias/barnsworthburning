@@ -1,33 +1,39 @@
 <script lang="ts">
 	import { getCookie, setCookie } from '$helpers/cookies';
-	import { onMount } from 'svelte';
+	import { Palette, Mode, Chroma } from '$types/Theme';
 
 	let { ...restProps } = $props();
 
-	let mode = $state('dark');
-	let chroma = $state('neutral');
-	const paletteOptions = ['indigo', 'tomato', 'amber', 'sky', 'grass'];
-	let palette = $state(paletteOptions[0]);
+	let mode: Mode = $state(Mode.Dark);
+	let chroma: Chroma = $state(Chroma.Neutral);
+	const paletteOptions: Palette[] = [
+		Palette.Indigo,
+		Palette.Tomato,
+		Palette.Amber,
+		Palette.Sky,
+		Palette.Grass
+	];
+	let palette: Palette | undefined = $state();
 
 	const toggleMode = () => {
-		mode = mode === 'dark' ? 'light' : 'dark';
+		mode = mode === Mode.Dark ? Mode.Light : Mode.Dark;
 		setCookie('barnsworthburning-mode', mode);
 	};
 	const toggleChroma = () => {
-		chroma = chroma === 'neutral' ? 'chromatic' : 'neutral';
+		chroma = chroma === Chroma.Neutral ? Chroma.Chromatic : Chroma.Neutral;
 		setCookie('barnsworthburning-chroma', chroma);
 	};
 	const setPalette = (event: Event) => {
-		palette = (event.currentTarget as HTMLInputElement).value;
+		palette = (event.currentTarget as HTMLInputElement).value as Palette;
 		setCookie('barnsworthburning-palette', palette);
 	};
 
 	let themeClass = $derived(`${mode} ${chroma} ${palette}`);
 
-	onMount(() => {
-		const storedMode = getCookie('barnsworthburning-mode');
-		const storedChroma = getCookie('barnsworthburning-chroma');
-		const storedPalette = getCookie('barnsworthburning-palette');
+	$effect.pre(() => {
+		const storedMode = getCookie('barnsworthburning-mode') as Mode | null;
+		const storedChroma = getCookie('barnsworthburning-chroma') as Chroma | null;
+		const storedPalette = getCookie('barnsworthburning-palette') as Palette | null;
 
 		if (storedMode) {
 			mode = storedMode;

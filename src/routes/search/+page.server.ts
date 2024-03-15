@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 import { airtableFetch } from '$lib/server/requests';
 import { mapExtractRecord } from '$helpers/mapping';
-import { ExtractViews, type IBaseExtract, AirtableTables } from '$types/Airtable';
+import { ExtractView, type IBaseExtract, AirtableTable } from '$types/Airtable';
 
 const MAX_RECORDS = 200;
 
@@ -14,8 +14,8 @@ export async function load({ url }) {
 	}
 	const query = decodeURIComponent(queryParam).toLowerCase().replace(/'/g, "\\'");
 
-	const extractResults = await airtableFetch<IBaseExtract>(AirtableTables.Extracts, {
-		view: ExtractViews.Best,
+	const extractResults = await airtableFetch<IBaseExtract>(AirtableTable.Extracts, {
+		view: ExtractView.Best,
 		maxRecords: MAX_RECORDS,
 		filterByFormula: `FIND('${query}', search) > 0`
 	});
