@@ -1,5 +1,6 @@
-type EntityType = {
+export type EntityType = {
 	id: string;
+	urlParam: string;
 	title: string;
 	plural: string;
 	prefix: string;
@@ -14,6 +15,7 @@ type Segment = {
 export const entityTypes: Record<string, EntityType> = {
 	creator: {
 		id: 'creator',
+		urlParam: 'creators',
 		title: 'Creator',
 		plural: 'Creators',
 		prefix: 'creator',
@@ -21,6 +23,7 @@ export const entityTypes: Record<string, EntityType> = {
 	},
 	space: {
 		id: 'space',
+		urlParam: 'spaces',
 		title: 'Space',
 		plural: 'Spaces',
 		prefix: 'space',
@@ -28,17 +31,11 @@ export const entityTypes: Record<string, EntityType> = {
 	},
 	extract: {
 		id: 'extract',
+		urlParam: 'extracts',
 		title: 'Extract',
 		plural: 'Extracts',
 		prefix: 'extract',
 		description: 'A small fragment or larger work that has been extracted from a source.'
-	},
-	format: {
-		id: 'format',
-		title: 'Format',
-		plural: 'Formats',
-		prefix: 'format',
-		description: 'A type of work or extract, or its medium, such as a book, article, or video.'
 	}
 };
 

@@ -1,97 +1,99 @@
 <script lang="ts">
 	import cache from '$lib/cache.svelte';
-	import { entityTypes } from '$helpers/params';
-	import type { ICreator, ISpace } from '$types/Airtable';
+	import { entityTypes, type EntityType } from '$helpers/params';
 
-	const creatorsByCount = $derived.by(() => {
-		return cache.allCreators.sort(sortByCount);
-	});
-	const spacesByCount = $derived.by(() => {
-		return cache.allSpaces.sort(sortByCount);
+	type IndexEntry = {
+		type: EntityType;
+		name: string;
+		id: string;
+		count: number;
+	};
+
+	let currentSort = $state('name');
+	let nameFilter = $state('');
+
+	const index = $derived.by(() => {
+		const creators = cache.allCreators.map((c) => ({
+			type: entityTypes.creator,
+			name: c.name || 'Unknown',
+			id: c.id,
+			count: c.numExtracts
+		}));
+		const spaces = cache.allSpaces.map((s) => ({
+			type: entityTypes.space,
+			name: s.topic || 'general',
+			id: s.id,
+			count: s.numExtracts
+		}));
+		const all = [...creators, ...spaces]
+			.sort(currentSort === 'name' ? sortByName : sortByCount)
+			.filter((entry) => entry.name.toLowerCase().includes(nameFilter.toLowerCase()));
+
+		return all;
 	});
 
-	function sortByCount(a: ICreator | ISpace, b: ICreator | ISpace) {
-		return b.numExtracts - a.numExtracts;
+	function sortByCount(a: IndexEntry, b: IndexEntry) {
+		return b.count - a.count;
+	}
+	function sortByName(a: IndexEntry, b: IndexEntry) {
+		return a.name.localeCompare(b.name);
 	}
 </script>
 
-<div class="index">
-	<section>
-		<h3><a href="/creators">{entityTypes.creator.plural}</a></h3>
-		<ul>
-			{#each creatorsByCount as creator}
-				<li>
-					<a class="name" href={`/creators/${creator.id}`}>{creator.name}</a>
-					<span class="count">{creator.numExtracts}</span>
-				</li>
-			{/each}
-		</ul>
-	</section>
-	<section>
-		<h3><a href="/spaces">{entityTypes.space.plural}</a></h3>
-		<ul class="spaces">
-			{#each spacesByCount as space}
-				<li>
-					<a class="name" href={`/space/${space.id}`}>{space.topic}</a>
-					<span class="count">{space.numExtracts}</span>
-				</li>
-			{/each}
-		</ul>
-	</section>
-	<section>
-		<h3><a href="extracts">{entityTypes.extract.plural}</a></h3>
-		<ul class="extracts">
-			{#each cache.allExtracts as extract}
-				<li>
-					<a class="name" href={`/extracts/${extract.id}`}>{extract.title}</a>
-					<span class="count"
-						>{extract.creators
-							? extract.creators.map((c) => c.name).join(', ')
-							: 'Unknown'}</span
-					>
-				</li>
-			{/each}
-		</ul>
-	</section>
-</div>
+{#snippet sectionBreak()}
+	<li class="center">
+		<span class="text-hint">⁘  ⁘  ⁘</span>
+	</li>
+{/snippet}
+
+<section class="index-container">
+	<ol class="index">
+		<li><a href="/creators">Creators</a></li>
+		<li><a href="/spaces">Spaces</a></li>
+		<li><a href="/extracts">Extracts</a></li>
+		{@render sectionBreak()}
+		<li class="controls">
+			<input class="inline" type="search" bind:value={nameFilter} placeholder="Filter" />
+		</li>
+		{#each index as entry (entry.id)}
+			<li class="index-entry">
+				<a class="name" href="/{entry.type.urlParam}/{entry.id}">
+					{entry.name}
+				</a>&nbsp;<span class="count">{entry.count}</span>
+			</li>
+		{/each}
+	</ol>
+</section>
 
 <style lang="scss">
-	.index {
-		display: flex;
-		flex-direction: column;
-		gap: 1em;
+	.index-container {
 		font-size: var(--font-size-small);
+		column-width: 25ch;
+		column-gap: 2em;
 	}
-	.looseleaf {
-		flex: 1 0 auto;
-		max-height: 25vh;
-		overflow-y: auto;
-		font-size: 0.25em;
-	}
-	section {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5em;
-	}
-	ul {
-		--gap: 0.5em;
-		list-style: none;
+	.index {
 		padding: 0;
-		margin: 0;
+		list-style-type: none;
+	}
+	.controls {
 		display: flex;
-		flex-wrap: wrap;
-		column-gap: 0.5em;
+
+		input {
+			flex: 1;
+		}
 	}
-	li:not(:last-child)::after {
-		content: '/';
-		margin-left: var(--gap);
-		color: var(--divider);
-	}
-	.spaces .name {
-		text-transform: lowercase;
+	.index-entry {
+		--indent: 1.5em;
+		padding-left: var(--indent);
+		text-indent: calc(-1 * var(--indent));
+
+		&:hover .count {
+			color: var(--secondary);
+		}
 	}
 	.count {
+		margin-left: 1em;
 		color: var(--hint);
-		padding-left: 0.25em;
+		transition: color var(--transition-snappy);
 	}
 </style>

@@ -41,6 +41,10 @@
 			</li>
 		{/each}
 	</ul>
+{:else if !currentQuery}
+	<div class="empty-state">
+		<p class="text-secondary">Enter a search query.</p>
+	</div>
 {:else}
 	<p>No results.</p>
 {/if}
@@ -64,5 +68,14 @@
 	}
 	li {
 		margin-bottom: 1em;
+	}
+	.empty-state {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 2em;
+		background-color: var(--shadow);
+		border: 1px solid var(--divider);
+		border-radius: var(--border-radius-medium);
 	}
 </style>

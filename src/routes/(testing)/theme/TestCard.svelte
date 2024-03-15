@@ -30,7 +30,7 @@
 		&:hover {
 			border-color: var(--border);
 			background-color: var(--container);
-			transition: all 200ms;
+			transition: all var(--transition-default);
 		}
 	}
 

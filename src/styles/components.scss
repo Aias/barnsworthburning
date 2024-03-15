@@ -10,7 +10,7 @@
 .card.interactive {
 	cursor: pointer;
 	border: 1px solid var(--border);
-	transition: all 100ms;
+	transition: all var(--transition-snappy);
 
 	&:hover {
 		border: 1px solid var(--boundary);

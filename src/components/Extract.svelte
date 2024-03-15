@@ -118,7 +118,7 @@
 	}
 
 	.extract-text {
-		all: inherit; /* Remove default blockquote styling as it's being used only as a semantic element. */
+		all: unset; /* Remove default blockquote styling as it's being used only as a semantic element. */
 	}
 
 	.relations {

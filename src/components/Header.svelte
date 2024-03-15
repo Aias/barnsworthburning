@@ -45,10 +45,11 @@
 </script>
 
 <header {...restProps}>
-	<button onclick={toggleMode}>Toggle Mode</button>
-	<button onclick={toggleChroma}>Toggle Chroma</button>
-	<div class="theme-selector">
-		<span class="text-secondary">Theme:</span>
+	<nav>
+		<a href="/">Home</a>
+		<a href="/search">Search</a>
+	</nav>
+	<fieldset class="theme-selector">
 		{#each paletteOptions as paletteKey (paletteKey)}
 			<label>
 				<input
@@ -61,11 +62,9 @@
 				{paletteKey}
 			</label>
 		{/each}
-	</div>
-	<nav>
-		<a href="/search">Search</a>
-		<a href="/">Home</a>
-	</nav>
+	</fieldset>
+	<button onclick={toggleMode}>Toggle Mode</button>
+	<button onclick={toggleChroma}>Toggle Chroma</button>
 </header>
 
 <style lang="scss">
@@ -80,18 +79,18 @@
 		align-items: center;
 		gap: 1rem;
 	}
+	nav {
+		margin-right: auto;
+		display: inline-flex;
+		gap: 1em;
+	}
 	.theme-selector {
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
+		gap: 0.75em;
 
 		label {
 			text-transform: capitalize;
 		}
-	}
-	nav {
-		margin-left: auto;
-		display: inline-flex;
-		gap: 1em;
 	}
 </style>

@@ -16,7 +16,7 @@ body {
 	height: 100%;
 	margin: 0;
 	color: var(--display);
-	font-size: 0.875rem;
+	font-size: var(--font-size-body);
 	line-height: var(--line-height);
 }
 
@@ -82,7 +82,7 @@ button {
 
 input[type='text'],
 input[type='search'] {
-	padding: 0;
+	margin: 0;
 	background-color: var(--splash);
 	border: 1px solid var(--border);
 	padding: 0.25em 0.5em;
@@ -96,12 +96,31 @@ input[type='search'] {
 	&::placeholder {
 		color: var(--hint);
 	}
+
+	&:focus-visible {
+		outline-offset: 0;
+	}
+
+	&.inline {
+		padding: 0 0.25em;
+		border: none;
+		border-radius: 0;
+		border-bottom: 1px solid var(--border);
+		margin-bottom: -1px;
+		background-color: transparent;
+	}
 }
 
 label:has(> input[type='radio']) {
 	display: inline-flex;
-	align-items: center;
+	// align-items: center;
 	gap: 0.25em;
+}
+
+fieldset {
+	margin: 0;
+	padding: 0;
+	border: none;
 }
 
 :any-link,
@@ -115,7 +134,7 @@ label:has(> input[type='radio']) {
 		cursor: pointer;
 	}
 
-	transition: color 100ms;
+	transition: color var(--transition-snappy);
 }
 
 button,
@@ -141,7 +160,8 @@ kbd,
 samp {
 	font-family: var(--font-stack-mono);
 	/* The monospace fonts tend to be optically larger for a given font size. */
-	font-size: 0.933em;
+	font-size: calc(1em * var(--monospace-scale));
+	line-height: calc(var(--line-height) / var(--monospace-scale));
 }
 
 .text-mono :is(.link, :any-link) {
