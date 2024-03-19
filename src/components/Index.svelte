@@ -41,7 +41,7 @@
 </script>
 
 {#snippet sectionBreak()}
-	<li class="center">
+	<li class="section-break center">
 		<span class="text-hint">⁘  ⁘  ⁘</span>
 	</li>
 {/snippet}
@@ -75,8 +75,12 @@
 		padding: 0;
 		list-style-type: none;
 	}
+	// .section-break {
+	// 	margin: 0.5lh 0;
+	// }
 	.controls {
 		display: flex;
+		margin: 0.5lh 0;
 
 		input {
 			flex: 1;
