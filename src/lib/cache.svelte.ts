@@ -1,47 +1,43 @@
 import type { ICreator, IExtract, ISpace } from '$types/Airtable';
+import { Map } from 'svelte/reactivity';
 
-// TODO: When Svelte 5 supports reactive Maps, use those instead of objects
 export function createCache() {
-	const extractsById: Record<string, IExtract> = $state({});
-	const creatorsById: Record<string, ICreator> = $state({});
-	const spacesById: Record<string, ISpace> = $state({});
-
-	const allExtracts = $derived(Object.values(extractsById));
-	const allCreators = $derived(Object.values(creatorsById));
-	const allSpaces = $derived(Object.values(spacesById));
+	const extractsById = new Map<string, IExtract>();
+	const creatorsById = new Map<string, ICreator>();
+	const spacesById = new Map<string, ISpace>();
 
 	return {
 		get extractsById() {
 			return extractsById;
 		},
 		get allExtracts() {
-			return allExtracts;
+			return [...extractsById.values()];
 		},
 		addExtracts: (extracts: IExtract[]) => {
 			extracts.forEach((extract) => {
-				extractsById[extract.id] = extract;
+				extractsById.set(extract.id, extract);
 			});
 		},
 		get creatorsById() {
 			return creatorsById;
 		},
 		get allCreators() {
-			return allCreators;
+			return [...creatorsById.values()];
 		},
 		addCreators: (creators: ICreator[]) => {
 			creators.forEach((creator) => {
-				creatorsById[creator.id] = creator;
+				creatorsById.set(creator.id, creator);
 			});
 		},
 		get spacesById() {
 			return spacesById;
 		},
 		get allSpaces() {
-			return allSpaces;
+			return [...spacesById.values()];
 		},
 		addSpaces: (spaces: ISpace[]) => {
 			spaces.forEach((space) => {
-				spacesById[space.id] = space;
+				spacesById.set(space.id, space);
 			});
 		}
 	};

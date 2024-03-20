@@ -74,6 +74,8 @@
 	.index {
 		padding: 0;
 		list-style-type: none;
+		column-width: 25ch;
+		column-gap: 2em;
 	}
 	// .section-break {
 	// 	margin: 0.5lh 0;
