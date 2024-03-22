@@ -18,3 +18,4 @@ Some ideas for one-off pages that could be implemented as easter eggs.
 -   Random: A sample of random extracts from the archive.
 -   Now: https://nownownow.com/about
 -   Ago: "On this day `X` weeks/months/years ago..."
+-   Questions: https://www.quartey.com/questions

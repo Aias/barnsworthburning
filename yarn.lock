@@ -1354,11 +1354,11 @@ __metadata:
     prettier-plugin-svelte: ^3.2.2
     remarkable: ^2.0.1
     sass: ^1.72.0
-    svelte: ^5.0.0-next.80
+    svelte: ^5.0.0-next.82
     svelte-check: ^3.6.8
     tslib: ^2.6.2
-    typescript: ^5.4.2
-    vite: ^5.2.2
+    typescript: ^5.4.3
+    vite: ^5.2.3
   languageName: unknown
   linkType: soft
 
@@ -3888,9 +3888,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte@npm:^5.0.0-next.80":
-  version: 5.0.0-next.80
-  resolution: "svelte@npm:5.0.0-next.80"
+"svelte@npm:^5.0.0-next.82":
+  version: 5.0.0-next.82
+  resolution: "svelte@npm:5.0.0-next.82"
   dependencies:
     "@ampproject/remapping": ^2.2.1
     "@jridgewell/sourcemap-codec": ^1.4.15
@@ -3905,7 +3905,7 @@ __metadata:
     locate-character: ^3.0.0
     magic-string: ^0.30.5
     zimmerframe: ^1.1.2
-  checksum: c98d218753979cefac2391910efc65ea122276fa61a9da52b674d68897d66ecbc6f7da45c6d86a0bdbd23ba267776361f807287673cf379f51a6a4b414e91e3f
+  checksum: 560ea97ce80f8c4cf8870fd406851f8439dfd0d2be5b218408d05dd8bcc9df1d039b14d6673b516d3805c5c5631d8e6ed48814d4d3660c016b345bafd84c6fc7
   languageName: node
   linkType: hard
 
@@ -4012,13 +4012,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.4.2":
-  version: 5.4.2
-  resolution: "typescript@npm:5.4.2"
+"typescript@npm:^5.4.3":
+  version: 5.4.3
+  resolution: "typescript@npm:5.4.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 96d80fde25a09bcb04d399082fb27a808a9e17c2111e43849d2aafbd642d835e4f4ef0de09b0ba795ec2a700be6c4c2c3f62bf4660c05404c948727b5bbfb32a
+  checksum: d74d731527e35e64d8d2dcf2f897cf8cfbc3428be0ad7c48434218ba4ae41239f53be7c90714089db1068c05cae22436af2ecba71fd36ecc5e7a9118af060198
   languageName: node
   linkType: hard
 
@@ -4032,13 +4032,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^5.4.2#~builtin<compat/typescript>":
-  version: 5.4.2
-  resolution: "typescript@patch:typescript@npm%3A5.4.2#~builtin<compat/typescript>::version=5.4.2&hash=14eedb"
+"typescript@patch:typescript@^5.4.3#~builtin<compat/typescript>":
+  version: 5.4.3
+  resolution: "typescript@patch:typescript@npm%3A5.4.3#~builtin<compat/typescript>::version=5.4.3&hash=14eedb"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: c1b669146bca5529873aae60870e243fa8140c85f57ca32c42f898f586d73ce4a6b4f6bb02ae312729e214d7f5859a0c70da3e527a116fdf5ad00c9fc733ecc6
+  checksum: 3a62fe90aa79d68c9ce38ea5edb2957e62801c733b99f0e5a2b8b50922761f68f7d9a40d28c544b449866e81185cddb93cba2496d0ff3fa52ef5b1f8bcace38c
   languageName: node
   linkType: hard
 
@@ -4076,9 +4076,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.2.2":
-  version: 5.2.2
-  resolution: "vite@npm:5.2.2"
+"vite@npm:^5.2.3":
+  version: 5.2.3
+  resolution: "vite@npm:5.2.3"
   dependencies:
     esbuild: ^0.20.1
     fsevents: ~2.3.3
@@ -4112,7 +4112,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: ef20480a0d4145f05378d33d295917995679c75205c19872346f18ad847cca8ac90794b7cfb280f787c0db60a90afcc1ae2c2e5ccedfe4751fb4a3c0ff07be69
+  checksum: 5848cb110c37a7d6ddd8b9c58c18749611770b9a28ffe150ef0e748b6e2018f905ca2d8c53c5eb8ba80c70656f72e68e604f802eddd42987b20c82de874fa3c0
   languageName: node
   linkType: hard
 
