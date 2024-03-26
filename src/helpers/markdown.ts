@@ -1,11 +1,7 @@
-import { Remarkable } from 'remarkable';
+import { Marked } from 'marked';
 
-const markdown = new Remarkable({
-	// typographer: true,
-	breaks: true,
-	html: true
+const markdown = new Marked({
+	breaks: true
 });
-
-markdown.core.ruler.enable(['abbr']);
 
 export default markdown;

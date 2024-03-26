@@ -51,13 +51,13 @@
 			{/each}
 			{#if imageCaption}
 				<div class="extract-image-caption caption content">
-					{@html markdown.render(imageCaption)}
+					{@html markdown.parse(imageCaption)}
 				</div>
 			{/if}
 		{/if}
 		{#if extractContent}
 			<blockquote class="extract-text content" cite={extract.source}>
-				{@html markdown.render(extractContent)}
+				{@html markdown.parse(extractContent)}
 			</blockquote>
 		{/if}
 		<figcaption class="extract-caption">
@@ -77,7 +77,7 @@
 	{/if}
 	{#if notes}
 		<footer class="caption content">
-			{@html markdown.render(notes)}
+			{@html markdown.parse(notes)}
 		</footer>
 	{/if}
 </section>

@@ -30,7 +30,7 @@
 
 	function makeMarkdown(string: string) {
 		const trimmed = trimString(string, previewLength);
-		const html = markdown.render(trimmed);
+		const html = markdown.parse(trimmed);
 		return html;
 	}
 
