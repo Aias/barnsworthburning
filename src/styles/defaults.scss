@@ -116,7 +116,7 @@ input[type='search'] {
 
 label:has(> input[type='radio']) {
 	display: inline-flex;
-	// align-items: center;
+	align-items: center;
 	gap: 0.25em;
 }
 
