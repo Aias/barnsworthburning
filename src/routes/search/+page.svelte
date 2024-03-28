@@ -51,7 +51,7 @@
 
 <style lang="scss">
 	form {
-		margin-bottom: 1em;
+		margin-block-end: 1em;
 		display: flex;
 		gap: 0.25em;
 
@@ -67,7 +67,7 @@
 		column-gap: 1em;
 	}
 	li {
-		margin-bottom: 1em;
+		margin-block-end: 1em;
 	}
 	.empty-state {
 		display: flex;

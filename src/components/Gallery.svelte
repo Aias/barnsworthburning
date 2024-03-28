@@ -32,11 +32,14 @@
 
 <style lang="scss">
 	.gallery {
+		--gutter: 1em;
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
-		padding: 0 1rem;
-		margin: 0 -1rem;
+		padding-block: 0;
+		padding-inline: var(--gutter);
+		margin-block: 0;
+		margin-inline: calc(-1 * var(--gutter));
 	}
 	.gallery-meta {
 		h1 {
@@ -44,7 +47,7 @@
 		}
 	}
 	.gallery-grid {
-		--gallery-gap: 1rem;
+		--gallery-gap: 1em;
 
 		padding-inline: calc(var(--padding) / 1.5);
 		margin-inline: calc(-1 * var(--padding) / 1.5);
@@ -53,7 +56,7 @@
 		column-gap: var(--gallery-gap);
 
 		> :global(*) {
-			margin-bottom: var(--gallery-gap);
+			margin-block-end: var(--gallery-gap);
 		}
 	}
 </style>

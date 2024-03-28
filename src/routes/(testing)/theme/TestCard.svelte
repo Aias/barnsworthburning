@@ -20,7 +20,7 @@
 
 <style lang="scss">
 	article {
-		padding: 1rem;
+		padding: 1em;
 		border: 1px solid var(--divider);
 		border-radius: 4px;
 		background-color: var(--paper);

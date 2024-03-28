@@ -26,7 +26,7 @@
 		column-gap: var(--gallery-gap);
 
 		> :global(*) {
-			margin-bottom: var(--gallery-gap);
+			margin-block-end: var(--gallery-gap);
 			break-inside: avoid;
 		}
 	}

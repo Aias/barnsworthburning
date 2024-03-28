@@ -2,9 +2,9 @@
 .screenreader {
 	position: absolute !important; /* Outside the DOM flow */
 	height: 1px;
-	width: 1px; /* Nearly collapsed */
+	inline-size: 1px; /* Nearly collapsed */
 	overflow: hidden;
-	left: -10000px;
+	inset-inline-start: -10000px;
 	clip-path: rect(1px, 1px, 1px, 1px); /* All other browsers */
 	clip: rect(1px, 1px, 1px, 1px); /* All other browsers */
 }
@@ -32,10 +32,6 @@
 
 .center {
 	text-align: center;
-}
-
-.right {
-	text-align: right;
 }
 
 .themey {

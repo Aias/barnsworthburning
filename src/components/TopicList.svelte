@@ -33,7 +33,7 @@
 		&::before {
 			content: '#';
 			display: inline;
-			margin-right: 0.5ch;
+			margin-inline-end: 0.5ch;
 			color: var(--hint);
 		}
 	}

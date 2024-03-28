@@ -129,7 +129,7 @@
 	}
 
 	footer {
-		border-top: 1px solid var(--divider);
-		padding-top: var(--layout-gap);
+		border-block-start: 1px solid var(--divider);
+		padding-block-start: var(--layout-gap);
 	}
 </style>

@@ -82,8 +82,8 @@
 
 		small {
 			color: var(--secondary);
-			border-top: 1px solid var(--divider);
-			padding-top: var(--extract-gap);
+			border-block-start: 1px solid var(--divider);
+			padding-block-start: var(--extract-gap);
 		}
 	}
 </style>

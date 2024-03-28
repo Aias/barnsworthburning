@@ -46,7 +46,8 @@
 		display: block;
 		position: relative;
 		margin: 0;
-		padding: 0 0 0 20px;
+		padding: 0;
+		padding-inline-start: 1.5em;
 		list-style-type: none;
 		color: var(--link);
 		font-family: var(--font-stack-mono);
@@ -54,7 +55,7 @@
 		&::before {
 			content: attr(data-symbol);
 			position: absolute;
-			left: 0;
+			inset-inline-start: 0;
 			color: var(--hint);
 		}
 	}
@@ -62,11 +63,12 @@
 		display: inline;
 		& + li::before {
 			content: '/';
-			margin: 0 0.5em;
+			margin-block: 0;
+			margin-inline: 0.5em;
 			color: var(--hint);
 		}
 	}
 	.show-more {
-		margin-left: -1ch; // Remove extra white space.
+		margin-inline-start: -1ch; // Remove extra white space.
 	}
 </style>

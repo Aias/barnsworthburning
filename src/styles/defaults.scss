@@ -1,8 +1,9 @@
 @import './vars.scss';
 
 html {
-	height: 100vh;
-	min-height: 100vh;
+	block-size: 100vh;
+	min-block-size: 100vh;
+	font-size: 100%;
 	font-family: var(--font-stack-sans);
 	font-weight: 400;
 	font-variant-ligatures: common-ligatures;
@@ -13,7 +14,7 @@ html {
 }
 
 body {
-	height: 100%;
+	block-size: 100%;
 	margin: 0;
 	color: var(--display);
 	font-size: var(--font-size-body);
@@ -58,11 +59,10 @@ small,
 button {
 	background-color: var(--splash);
 	color: var(--accent);
-	border-width: 1px;
-	border-style: solid;
-	border-color: var(--border);
+	border: 1px solid var(--border);
 	border-radius: var(--border-radius-small);
-	padding: 0.25em 0.5em;
+	padding-block: 0.25em;
+	padding-inline: 0.5em;
 	margin: 0;
 	white-space: nowrap;
 
@@ -86,7 +86,8 @@ input[type='search'] {
 	margin: 0;
 	background-color: var(--splash);
 	border: 1px solid var(--border);
-	padding: 0.25em 0.5em;
+	padding-block: 0.25em;
+	padding-inline: 0.5em;
 	border-radius: var(--border-radius-small);
 	color: var(--primary);
 
@@ -103,11 +104,12 @@ input[type='search'] {
 	}
 
 	&.inline {
-		padding: 0 0.25em;
+		padding-block: 0;
+		padding-inline: 0.25em;
 		border: none;
 		border-radius: 0;
-		border-bottom: 1px solid var(--border);
-		margin-bottom: -1px;
+		border-block-end: 1px solid var(--border);
+		margin-block-end: -1px;
 		background-color: transparent;
 	}
 }
@@ -181,8 +183,8 @@ ul {
 
 blockquote {
 	margin: 0;
-	padding-left: 0.75em;
-	border-left: 0.35em solid var(--flood);
+	padding-inline-start: 0.75em;
+	border-inline-start: 0.35em solid var(--flood);
 	font-style: italic;
 	font-size: 1.1em;
 	font-family: var(--font-stack-serif);
@@ -190,7 +192,7 @@ blockquote {
 
 .content :where(blockquote, article, section, figure, footer) > * + * {
 	--spacing: 1em;
-	margin-top: var(--spacing);
+	margin-block-start: var(--spacing);
 }
 
 blockquote:not(.extract-text) em {
@@ -199,12 +201,12 @@ blockquote:not(.extract-text) em {
 
 hr {
 	color: var(--divider);
-	margin: 1px 0 0 0;
-	padding-top: 1px;
+	margin: 0;
+	padding-block-start: 1px;
+	margin-block-start: 1px;
 	border-style: solid;
-	border-bottom: none;
-	border-left: none;
-	border-right: none;
+	border-block-end: none;
+	border-inline: none;
 }
 
 table {
@@ -212,21 +214,22 @@ table {
 }
 
 tr:not(:first-child) {
-	border-top: 1px solid var(--divider);
+	border-block-start: 1px solid var(--divider);
 }
 
 th,
 td {
-	padding: 0.5rem 0.25rem;
+	padding-block: 0.25em;
+	padding-inline: 0.5em;
 }
 
 th {
-	text-align: left;
+	text-align: start;
 	font-weight: normal;
 	color: var(--secondary);
-	vertical-align: bottom;
+	vertical-align: end;
 	white-space: nowrap;
-	padding-top: 0;
+	padding-block-start: 0;
 }
 
 td {

@@ -1,7 +1,8 @@
 .card {
-	--container-padding-side: 1.5em;
-	--container-padding-top: 1.25em;
-	padding: var(--container-padding-top) var(--container-padding-side);
+	--container-padding-inline: 1.5em;
+	--container-padding-block: 1.25em;
+	padding-block: var(--container-padding-block);
+	padding-inline: var(--container-padding-inline);
 	background-color: var(--paper);
 	border: 1px solid var(--divider);
 	overflow: hidden;

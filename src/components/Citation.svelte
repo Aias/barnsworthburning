@@ -53,7 +53,8 @@
 	.source {
 		display: inline-flex;
 		white-space: nowrap;
-		padding: 0 0.5em;
+		padding-block: 0;
+		padding-inline: 0.5em;
 		background-color: var(--splash);
 		border: 1px solid var(--divider);
 		border-radius: var(--border-radius-small);

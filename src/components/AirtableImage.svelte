@@ -37,12 +37,12 @@
 
 <style lang="scss">
 	.image-container {
-		width: 100%;
+		inline-size: 100%;
 		aspect-ratio: var(--aspect-ratio, 'auto');
 		overflow: hidden;
 
 		img {
-			width: 100%;
+			inline-size: 100%;
 			height: auto;
 		}
 	}

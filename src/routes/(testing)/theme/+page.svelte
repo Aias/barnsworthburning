@@ -37,14 +37,14 @@
 		text-transform: capitalize;
 	}
 	section {
-		padding: 1rem;
+		padding: 1em;
 		background-color: var(--background);
 		display: flex;
 		flex-direction: column;
-		gap: 1rem;
+		gap: 1em;
 	}
 	div {
-		--gap: 1rem;
+		--gap: 1em;
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;

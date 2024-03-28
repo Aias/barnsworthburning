@@ -68,8 +68,6 @@
 <style lang="scss">
 	.index-container {
 		font-size: var(--font-size-small);
-		column-width: 25ch;
-		column-gap: 2em;
 	}
 	.index {
 		padding: 0;
@@ -77,12 +75,9 @@
 		column-width: 25ch;
 		column-gap: 2em;
 	}
-	// .section-break {
-	// 	margin: 0.5lh 0;
-	// }
 	.controls {
 		display: flex;
-		margin: 0.5lh 0;
+		margin-block: 0.5lh;
 
 		input {
 			flex: 1;
@@ -90,7 +85,7 @@
 	}
 	.index-entry {
 		--indent: 1.5em;
-		padding-left: var(--indent);
+		padding-inline-start: var(--indent);
 		text-indent: calc(-1 * var(--indent));
 
 		&:hover .count {
@@ -98,7 +93,7 @@
 		}
 	}
 	.count {
-		margin-left: 1em;
+		margin-inline-start: 1em;
 		color: var(--hint);
 		transition: color var(--transition-snappy);
 	}

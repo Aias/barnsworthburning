@@ -77,17 +77,17 @@
 
 <style lang="scss">
 	header {
-		padding-block: 0.5rem;
-		padding-inline: 1rem;
-		border-bottom: 1px solid var(--divider);
+		padding-block: 0.5em;
+		padding-inline: 1em;
+		border-block-end: 1px solid var(--divider);
 		background-color: var(--paper);
 		position: sticky;
-		top: 0;
+		inset-block-start: 0;
 		z-index: 10;
 		display: flex;
 		align-items: center;
-		max-width: 100%;
-		overflow-x: auto;
+		max-inline-size: 100%;
+		overflow: auto;
 		gap: 2em;
 	}
 	nav {
