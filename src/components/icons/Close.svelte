@@ -1,7 +1,0 @@
-<script>
-	import Icon from './_Base.svelte';
-</script>
-
-<Icon title="Close">
-	<path d="M160 16.1143L143.886 0L80 63.8857L16.1143 0L0 16.1143L63.8857 80L0 143.886L16.1143 160L80 96.1143L143.886 160L160 143.886L96.1143 80L160 16.1143Z" />
-</Icon>

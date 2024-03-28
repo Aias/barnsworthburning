@@ -1,84 +1,73 @@
-<script>
-	import get from '$helpers/get'
-	import { article } from '$helpers/isFirstLetterAVowel';
-	import domainOfUrl from '$helpers/domainOfUrl';
-	import CreatorNames from './CreatorNames.svelte';
-	import InternalLink from './InternalLink.svelte';
-	import { getContext } from 'svelte';
+<script lang="ts">
+	import { article } from '$helpers/grammar';
+	import CreatorList from './CreatorList.svelte';
+	import Link from './Link.svelte';
+	import type { IExtract } from '$types/Airtable';
 
-	const parentContainer = getContext('parentContainer');
+	interface CitationProps {
+		extract: IExtract;
+	}
 
-	export let extract = {};
-	export let suppressCitation = false;
+	let { extract }: CitationProps = $props();
 
-	const combinedCreatorNames = get(extract, 'combined_creator_names', []);
-	const parentCreatorNames = get(extract, 'parent_creator_names', []);
-	const slug = get(extract, 'slug');
-	const parentTitle = get(extract, 'parent_title[0]');
-	const parentSlug = get(extract, 'parent_slug[0]');
-	const type = get(extract, 'type', 'Work');
-	const source = get(extract, 'source');
-	const isWork = get(extract, 'is_work');
-
-	$: creatorNames = suppressCitation ? combinedCreatorNames.filter(name => parentCreatorNames.indexOf(name) === -1) : combinedCreatorNames;
-	$: showCitation = isWork ? true : suppressCitation ? creatorNames.length > 0 : true;
+	let format = $derived(extract.format || 'Extract');
+	let creators = $derived(extract.creators || extract.parentCreators);
+	let parent = $derived(extract.parent);
+	let source = $derived(extract.source);
 </script>
 
-{#if showCitation}
-	<div class="{isWork ? 'work' : 'extract'} text-mono">
-	{#if isWork}
-		<span>
-			{article(type)}&nbsp;<span class="extract-type">{type}</span>
-			{#if parentTitle && !suppressCitation}
-			from <InternalLink class="parent" toExtract="{parentSlug}" toFragment="{parentContainer === 'panel' ? slug : undefined}"><cite>{parentTitle}</cite></InternalLink>
-			{/if}
-			{#if creatorNames.length > 0}
-			by <CreatorNames creatorNames="{creatorNames}" />
-			{/if}		
-		</span>
-	{:else}
-		{#if creatorNames.length > 0}
-		<CreatorNames class="creator-names" creatorNames="{creatorNames}" />{#if parentTitle && !suppressCitation}<span>, </span>{/if}
+<div class="citation">
+	<div class="text-mono">
+		<span class="article">{article(format)}</span>
+		<strong class="format">{format}</strong>
+		{#if parent}
+			<span class="parent">from <Link toId={parent.id}><cite>{parent.name}</cite></Link></span
+			>
 		{/if}
-		{#if parentTitle && !suppressCitation}
-		<InternalLink class="parent" toExtract="{parentSlug}" toFragment="{parentContainer === 'panel' ? slug : undefined}"><cite>{parentTitle}</cite></InternalLink>
-		{/if}	
-	{/if}
-	{#if source}
-		<div class="small extract-source">
-			<a href="{source}" target="_blank" rel="noreferrer">{domainOfUrl(source)}</a>
-		</div>
-	{/if}
+		{#if creators}
+			<span class="creators">by <CreatorList {creators} /></span>
+		{/if}
+		{#if source}
+			<div class="source">
+				<a href={source} target="_blank" rel="noreferrer">{new URL(source).hostname}</a>
+			</div>
+		{/if}
 	</div>
-{/if}
+</div>
 
-<style>
-	.extract-type {
+<style lang="scss">
+	.citation {
+		display: contents;
+		color: var(--primary);
+	}
+
+	.type {
 		text-transform: lowercase;
+		color: var(--display);
 	}
 
 	cite {
 		font-style: italic;
 	}
 
-	.extract-source {
-		display: inline;
-		--opacity: 0.8;
-		opacity: var(--opacity);
-		transition: opacity 0.25s;
-		margin-left: 0.25em;
-	}
+	.source {
+		display: inline-flex;
+		white-space: nowrap;
+		padding: 0 0.5em;
+		background-color: var(--splash);
+		border: 1px solid var(--divider);
+		border-radius: var(--border-radius-small);
+		font-size: 0.75em;
+		line-height: inherit;
 
-	.extract-source:hover {
-		opacity: 1;
-	}
+		a {
+			color: var(--accent);
+			text-decoration: none;
+		}
 
-	.extract-source:before {
-		opacity: var(--opacity);
-		content: '[';
-	}
-	.extract-source:after {
-		opacity: var(--opacity);
-		content: ']';
+		&:hover {
+			background-color: var(--flood);
+			cursor: pointer;
+		}
 	}
 </style>

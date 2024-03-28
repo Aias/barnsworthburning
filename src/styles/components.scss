@@ -1,0 +1,19 @@
+.card {
+	--container-padding-side: 1.5em;
+	--container-padding-top: 1.25em;
+	padding: var(--container-padding-top) var(--container-padding-side);
+	background-color: var(--paper);
+	border: 1px solid var(--divider);
+	overflow: hidden;
+}
+
+.card.interactive {
+	cursor: pointer;
+	border: 1px solid var(--border);
+	transition: all var(--transition-snappy);
+
+	&:hover {
+		border: 1px solid var(--boundary);
+		background-color: var(--container);
+	}
+}
