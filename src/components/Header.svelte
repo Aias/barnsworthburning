@@ -55,7 +55,7 @@
 		<a href="/">Home</a>
 		<a href="/search">Search</a>
 	</nav>
-	<fieldset class="theme-selector">
+	<fieldset class="settings-group theme-selector">
 		{#each paletteOptions as paletteKey (paletteKey)}
 			<label>
 				<input
@@ -69,13 +69,16 @@
 			</label>
 		{/each}
 	</fieldset>
-	<button onclick={toggleMode}>Toggle Mode</button>
-	<button onclick={toggleChroma}>Toggle Chroma</button>
+	<fieldset class="settings-group">
+		<button onclick={toggleMode}>Toggle Mode</button>
+		<button onclick={toggleChroma}>Toggle Chroma</button>
+	</fieldset>
 </header>
 
 <style lang="scss">
 	header {
-		padding: 0.5rem 1rem;
+		padding-block: 0.5rem;
+		padding-inline: 1rem;
 		border-bottom: 1px solid var(--divider);
 		background-color: var(--paper);
 		position: sticky;
@@ -83,18 +86,21 @@
 		z-index: 10;
 		display: flex;
 		align-items: center;
-		gap: 1rem;
+		max-width: 100%;
+		overflow-x: auto;
+		gap: 2em;
 	}
 	nav {
-		margin-right: auto;
+		margin-inline-end: auto;
 		display: inline-flex;
 		gap: 1em;
 	}
-	.theme-selector {
+	.settings-group {
 		display: flex;
 		align-items: center;
 		gap: 0.75em;
-
+	}
+	.theme-selector {
 		label {
 			text-transform: capitalize;
 		}
