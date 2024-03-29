@@ -58,7 +58,11 @@
 		</li>
 		{#each index as entry (entry.id)}
 			<li class="index-entry">
-				<a class="name" href="/{entry.type.urlParam}/{entry.id}">
+				<a
+					class="name"
+					href="/{entry.type.urlParam}/{entry.id}"
+					aria-label={`View ${entry.type.id}: ${entry.name}`}
+				>
 					{entry.name}
 				</a>&nbsp;<span class="count">{entry.count}</span>
 			</li>
@@ -95,13 +99,18 @@
 		padding-inline-start: var(--indent);
 		text-indent: calc(-1 * var(--indent));
 
-		&:hover .count {
-			color: var(--secondary);
+		.name {
+			margin-inline-end: 1em;
 		}
-	}
-	.count {
-		margin-inline-start: 1em;
-		color: var(--hint);
-		transition: color var(--transition-snappy);
+
+		.count {
+			margin-inline-start: 1em;
+			color: var(--hint);
+			transition: color var(--transition-snappy);
+
+			&:hover {
+				color: var(--secondary);
+			}
+		}
 	}
 </style>

@@ -1,6 +1,6 @@
 export enum ViewportContent {
-	Default = 'width=device-width,initial-scale=1.0',
-	NoSafariZoom = 'width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no'
+	Default = 'width=device-width, initial-scale=1',
+	NoSafariZoom = 'width=device-width, initial-scale=1, maximum-scale=1'
 }
 
 export function createMeta() {
