@@ -1,6 +1,7 @@
 <script lang="ts">
 	import '$styles/app.scss';
 	import Header from '$components/Header.svelte';
+	import SEO from '$components/SEO.svelte';
 	import cache from '$lib/cache.svelte';
 
 	let { children, data } = $props();
@@ -18,6 +19,7 @@
 	});
 </script>
 
+<SEO />
 <Header class="app-header" />
 <main class="app-content">
 	{@render children()}

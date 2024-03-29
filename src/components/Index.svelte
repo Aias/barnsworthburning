@@ -1,6 +1,7 @@
 <script lang="ts">
 	import cache from '$lib/cache.svelte';
 	import { entityTypes, type EntityType } from '$helpers/params';
+	import TextInput from './TextInput.svelte';
 
 	type IndexEntry = {
 		type: EntityType;
@@ -41,7 +42,7 @@
 </script>
 
 {#snippet sectionBreak()}
-	<li class="section-break center">
+	<li class="section-break">
 		<span class="text-hint">⁘  ⁘  ⁘</span>
 	</li>
 {/snippet}
@@ -53,7 +54,7 @@
 		<li><a href="/extracts">Extracts</a></li>
 		{@render sectionBreak()}
 		<li class="controls">
-			<input class="inline" type="search" bind:value={nameFilter} placeholder="Filter" />
+			<TextInput type="search" inline bind:value={nameFilter} placeholder="Filter" />
 		</li>
 		{#each index as entry (entry.id)}
 			<li class="index-entry">
@@ -79,9 +80,15 @@
 		display: flex;
 		margin-block: 0.5lh;
 
-		input {
+		:global(input) {
 			flex: 1;
 		}
+	}
+	.section-break {
+		margin-block: 0.75lh;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 	.index-entry {
 		--indent: 1.5em;

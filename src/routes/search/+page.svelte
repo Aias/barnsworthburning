@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import Extract from '$components/Extract.svelte';
+	import TextInput from '$components/TextInput.svelte';
 
 	const { data } = $props();
 	const results = $derived(data.search);
@@ -22,7 +23,7 @@
 
 <!-- svelte-ignore a11y-autofocus -->
 <form data-sveltekit-keepfocus>
-	<input
+	<TextInput
 		type="search"
 		name="q"
 		placeholder="Search extracts..."

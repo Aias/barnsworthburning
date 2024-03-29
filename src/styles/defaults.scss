@@ -107,10 +107,14 @@ input[type='search'] {
 		padding-block: 0;
 		padding-inline: 0.25em;
 		border: none;
-		border-radius: 0;
+		border-radius: 1px;
 		border-block-end: 1px solid var(--border);
-		margin-block-end: -1px;
 		background-color: transparent;
+		max-height: 1lh;
+
+		&:hover {
+			border-color: var(--boundary);
+		}
 	}
 }
 
