@@ -77,7 +77,7 @@
 
 		p,
 		small {
-			font-weight: 300;
+			font-weight: var(--font-weight-light);
 		}
 
 		small {

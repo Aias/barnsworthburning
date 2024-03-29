@@ -27,10 +27,17 @@ dd {
 	margin-block-start: 0;
 }
 
+ol,
+ul {
+	margin: 0;
+	padding-inline-start: 1.5em;
+}
+
 /* https://piccalil.li/blog/removing-list-styles-without-affecting-semantics/ */
 :is(ul, ol)[class] {
 	list-style-type: '';
 	margin: 0;
+	padding: 0;
 }
 
 ul {
