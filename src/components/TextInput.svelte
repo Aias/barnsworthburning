@@ -6,7 +6,7 @@
 		inline?: boolean;
 	}
 
-	let { type, inline = false, value = $bindable(), ...rest }: TextInputProps = $props();
+	let { type, inline = false, value = $bindable(), ...restProps }: TextInputProps = $props();
 
 	function preventZoomOnFocus() {
 		meta.setViewport(ViewportContent.NoSafariZoom);
@@ -22,5 +22,5 @@
 	bind:value
 	onfocus={preventZoomOnFocus}
 	onblur={allowZoomOnBlur}
-	{...rest}
+	{...restProps}
 />

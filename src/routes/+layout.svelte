@@ -3,6 +3,7 @@
 	import Header from '$components/Header.svelte';
 	import SEO from '$components/SEO.svelte';
 	import cache from '$lib/cache.svelte';
+	import Index from '$components/Index.svelte';
 
 	let { children, data } = $props();
 
@@ -21,6 +22,9 @@
 
 <SEO />
 <Header class="app-header" />
-<main class="app-content">
-	{@render children()}
+<main class="app-container">
+	<Index class="app-index" />
+	<div class="app-content">
+		{@render children()}
+	</div>
 </main>

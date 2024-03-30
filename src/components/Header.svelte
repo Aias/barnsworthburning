@@ -51,10 +51,10 @@
 </script>
 
 <header {...restProps}>
-	<nav>
-		<a href="/">Home</a>
-		<a href="/search">Search</a>
-	</nav>
+	<fieldset class="settings-group">
+		<button onclick={toggleMode}>Toggle Mode</button>
+		<button onclick={toggleChroma}>Toggle Chroma</button>
+	</fieldset>
 	<fieldset class="settings-group theme-selector">
 		{#each paletteOptions as paletteKey (paletteKey)}
 			<label>
@@ -69,31 +69,19 @@
 			</label>
 		{/each}
 	</fieldset>
-	<fieldset class="settings-group">
-		<button onclick={toggleMode}>Toggle Mode</button>
-		<button onclick={toggleChroma}>Toggle Chroma</button>
-	</fieldset>
 </header>
 
 <style lang="scss">
 	header {
 		padding-block: 0.5em;
 		padding-inline: 1em;
-		border-block-end: 1px solid var(--divider);
 		background-color: var(--paper);
-		position: sticky;
-		inset-block-start: 0;
-		z-index: 10;
+		border-block-end: 1px solid var(--divider);
 		display: flex;
 		align-items: center;
 		max-inline-size: 100%;
 		overflow: auto;
 		gap: 2em;
-	}
-	nav {
-		margin-inline-end: auto;
-		display: inline-flex;
-		gap: 1em;
 	}
 	.settings-group {
 		display: flex;

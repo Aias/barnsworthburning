@@ -56,8 +56,8 @@
 		display: flex;
 		gap: 0.25em;
 
-		> input {
-			flex: 0 1 35ch;
+		> :global(input) {
+			flex: 1;
 		}
 	}
 	ul {

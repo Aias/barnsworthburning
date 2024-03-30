@@ -3,6 +3,8 @@
 	import { entityTypes, type EntityType } from '$helpers/params';
 	import TextInput from './TextInput.svelte';
 
+	let { ...restProps } = $props();
+
 	type IndexEntry = {
 		type: EntityType;
 		name: string;
@@ -47,14 +49,16 @@
 	</li>
 {/snippet}
 
-<section class="index-container">
+<section class:container={true} {...restProps}>
 	<ol class="index">
-		<li><a href="/creators">Creators</a></li>
-		<li><a href="/spaces">Spaces</a></li>
-		<li><a href="/extracts">Extracts</a></li>
+		<li><a href="/">🗂️ Index</a></li>
+		<li><a href="/creators">🧑‍🎨 Creators</a></li>
+		<li><a href="/spaces">🏷️ Spaces</a></li>
+		<li><a href="/extracts">📝 Extracts</a></li>
+		<li><a href="/search">🔍 Search</a></li>
 		{@render sectionBreak()}
 		<li class="controls">
-			<TextInput type="search" inline bind:value={nameFilter} placeholder="Filter" />
+			<TextInput type="search" inline bind:value={nameFilter} placeholder="Filter..." />
 		</li>
 		{#each index as entry (entry.id)}
 			<li class="index-entry">
@@ -71,7 +75,7 @@
 </section>
 
 <style lang="scss">
-	.index-container {
+	.container {
 		font-size: var(--font-size-small);
 	}
 	.index {
@@ -86,6 +90,7 @@
 
 		:global(input) {
 			flex: 1;
+			text-align: center;
 		}
 	}
 	.section-break {
@@ -104,7 +109,6 @@
 		}
 
 		.count {
-			margin-inline-start: 1em;
 			color: var(--hint);
 			transition: color var(--transition-snappy);
 

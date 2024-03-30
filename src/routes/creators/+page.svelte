@@ -2,7 +2,6 @@
 	import cache from '$lib/cache.svelte';
 
 	const creators = $derived(cache.allCreators);
-	$inspect(creators);
 </script>
 
 <ul>
@@ -23,6 +22,8 @@
 		--separation: 0.5ch;
 		display: block;
 		text-align: justify;
+		max-inline-size: 100%;
+		overflow: hidden;
 	}
 	li {
 		display: inline;

@@ -4,6 +4,73 @@
 @import 'normalize.css' layer(normalize);
 @import './reset.scss' layer(reset);
 @import './defaults.scss' layer(defaults);
-@import './layout.scss' layer(layout);
 @import './components.scss' layer(components);
 @import './utilities.scss' layer(utilities);
+
+.app {
+	display: flex;
+	flex-direction: column;
+	block-size: 100%;
+}
+
+.app-header {
+	flex: 0 0 auto;
+}
+
+.app-container {
+	padding: 1em;
+	flex: 1;
+	overflow: hidden;
+	display: flex;
+	gap: 1em;
+
+	> * {
+		overflow-y: auto;
+		padding: 1em;
+		margin: -1em;
+	}
+}
+
+.app-index {
+	flex: 1 1 0;
+	min-inline-size: min(25ch, 100vw);
+}
+
+.app-content {
+	flex: 1 1 100%;
+
+	&:empty {
+		display: none;
+	}
+}
+
+@media (max-width: 550px) {
+	.app-container:has(.app-content:not(:empty)) {
+		flex-direction: column;
+
+		> * {
+			margin: 0;
+			padding: 0;
+		}
+
+		.app-index {
+			flex: 0 0 auto;
+			order: 1;
+			border-block-start: 1px solid var(--divider);
+			padding-block-start: 1em;
+			font-size: inherit;
+
+			.controls,
+			.index-entry,
+			.section-break {
+				display: none;
+			}
+			.index {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				row-gap: 0.5em;
+			}
+		}
+	}
+}
