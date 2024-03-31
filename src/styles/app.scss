@@ -8,6 +8,7 @@
 @import './utilities.scss' layer(utilities);
 
 .app {
+	--app-padding: 1em;
 	display: flex;
 	flex-direction: column;
 	block-size: 100%;
@@ -18,26 +19,22 @@
 }
 
 .app-container {
-	padding: 1em;
 	flex: 1;
 	overflow: hidden;
 	display: flex;
-	gap: 1em;
-
-	> * {
-		overflow-y: auto;
-		padding: 1em;
-		margin: -1em;
-	}
 }
 
 .app-index {
 	flex: 1 1 0;
+	padding: var(--app-padding);
 	min-inline-size: min(25ch, 100dvi);
+	overflow: auto;
 }
 
 .app-content {
 	flex: 1 1 100%;
+	padding: var(--app-padding);
+	overflow: auto;
 
 	&:empty {
 		display: none;
@@ -48,17 +45,10 @@
 	.app-container:has(.app-content:not(:empty)) {
 		flex-direction: column;
 
-		> * {
-			margin: 0;
-			padding: 0;
-		}
-
 		.app-index {
 			flex: 0 0 auto;
 			order: 1;
 			border-block-start: 1px solid var(--divider);
-			padding-block-start: 1em;
-			font-size: inherit;
 
 			.controls,
 			.index-entry,

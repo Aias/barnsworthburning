@@ -15,7 +15,7 @@
 	let currentSort = $state('name');
 	let nameFilter = $state('');
 
-	const index = $derived.by(() => {
+	const fullIndex = $derived.by(() => {
 		const creators = cache.allCreators.map((c) => ({
 			type: entityTypes.creator,
 			name: c.name || 'Unknown',
@@ -28,12 +28,18 @@
 			id: s.id,
 			count: s.numExtracts
 		}));
-		const all = [...creators, ...spaces]
-			.sort(currentSort === 'name' ? sortByName : sortByCount)
-			.filter((entry) => entry.name.toLowerCase().includes(nameFilter.toLowerCase()));
+		const all = [...creators, ...spaces].sort(
+			currentSort === 'name' ? sortByName : sortByCount
+		);
 
 		return all;
 	});
+
+	const index = $derived(
+		fullIndex.filter((entry) => entry.name.toLowerCase().includes(nameFilter.toLowerCase()))
+	);
+
+	const numMissing = $derived(fullIndex.length - index.length);
 
 	function sortByCount(a: IndexEntry, b: IndexEntry) {
 		return b.count - a.count;
@@ -71,6 +77,11 @@
 				</a>&nbsp;<span class="count">{entry.count}</span>
 			</li>
 		{/each}
+		{#if numMissing > 0}
+			{#each Array(numMissing) as _, i}
+				<li class="index-entry extra" aria-hidden="true"></li>
+			{/each}
+		{/if}
 	</ol>
 </section>
 
@@ -79,6 +90,7 @@
 		font-size: var(--font-size-small);
 	}
 	.index {
+		container-type: inline-size;
 		padding: 0;
 		list-style-type: none;
 		column-width: 25ch;
@@ -103,6 +115,7 @@
 		--indent: 1.5em;
 		padding-inline-start: var(--indent);
 		text-indent: calc(-1 * var(--indent));
+		min-height: 1lh;
 
 		.name {
 			margin-inline-end: 1em;
@@ -115,6 +128,14 @@
 			&:hover {
 				color: var(--secondary);
 			}
+		}
+	}
+	@container (max-width: 50ch) {
+		.index {
+			column-count: 1;
+		}
+		.extra {
+			display: none;
 		}
 	}
 </style>
