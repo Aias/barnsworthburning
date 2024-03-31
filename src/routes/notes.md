@@ -19,3 +19,4 @@ Some ideas for one-off pages that could be implemented as easter eggs.
 -   Now: https://nownownow.com/about
 -   Ago: "On this day `X` weeks/months/years ago..."
 -   Questions: https://www.quartey.com/questions
+-   Colophon

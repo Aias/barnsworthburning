@@ -18,3 +18,24 @@
 		background-color: var(--container);
 	}
 }
+
+.entity-list {
+	--separation: 0.5ch;
+	display: block;
+	text-align: justify;
+	max-inline-size: 100%;
+	overflow: hidden;
+	> li {
+		display: inline;
+	}
+	> li + li::before {
+		display: inline;
+		content: ' / ';
+		font-weight: var(--font-weight-normal);
+		color: var(--accent);
+		padding-inline-start: var(--separation);
+		padding-inline-end: var(--separation);
+		break-after: avoid;
+		break-before: avoid;
+	}
+}
