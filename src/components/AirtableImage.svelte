@@ -39,6 +39,7 @@
 	.image-container {
 		inline-size: 100%;
 		aspect-ratio: var(--aspect-ratio, 'auto');
+		border: 1px solid var(--splash);
 		overflow: hidden;
 
 		img {

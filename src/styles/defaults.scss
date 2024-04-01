@@ -186,15 +186,26 @@ blockquote {
 	font-style: italic;
 	font-size: 1.1em;
 	font-family: var(--font-stack-serif);
+
+	em {
+		font-style: normal;
+	}
 }
 
-.content :where(blockquote, article, section, figure, footer) > * + * {
-	--spacing: 1em;
-	margin-block-start: var(--spacing);
-}
+.content {
+	margin-trim: block;
+	--spacing: 0.5em;
 
-blockquote:not(.extract-text) em {
-	font-style: normal;
+	> * {
+		margin-block: var(--spacing);
+	}
+
+	> :first-child {
+		margin-block-start: 0;
+	}
+	> :last-child {
+		margin-block-end: 0;
+	}
 }
 
 hr {

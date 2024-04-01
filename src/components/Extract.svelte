@@ -105,7 +105,7 @@
 	.extract-main {
 		display: flex;
 		flex-direction: column;
-		gap: 0.5em;
+		gap: 0.75em;
 		color: var(--display);
 	}
 
