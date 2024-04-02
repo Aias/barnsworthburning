@@ -21,7 +21,7 @@
 	{/each}
 {/if}
 {#if moreItems > 0}
-	<span class="group-item more">+{moreItems}</span>
+	<span class="group-item more" aria-hidden>+{moreItems}</span>
 {/if}
 
 <style lang="scss">

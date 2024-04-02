@@ -175,8 +175,25 @@ samp {
 	font-size: 1em; /* Avoid compounding ensmallnesses. */
 }
 
+:not(pre) > :where(code, kbd, samp) {
+	word-wrap: break-word;
+	background-color: var(--flood);
+	border-radius: var(--border-radius-small);
+	padding-inline: 0.25em;
+}
+
 pre {
 	overflow-x: auto;
+	line-height: var(--line-height);
+	background: var(--shadow);
+	border-radius: var(--border-radius-medium);
+	border: 1px solid var(--divider);
+	padding-inline: 1em;
+	padding-block: 0.25em;
+
+	> code {
+		line-height: inherit;
+	}
 }
 
 blockquote {

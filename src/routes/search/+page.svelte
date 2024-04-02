@@ -54,7 +54,7 @@
 	form {
 		margin-block-end: 1em;
 		display: flex;
-		gap: 0.25em;
+		gap: 0.5em;
 
 		> :global(input) {
 			flex: 1;

@@ -95,7 +95,7 @@
 	.extract-title {
 		> :global(a) {
 			all: inherit;
-			display: inline-block;
+			word-wrap: break-word;
 			&:hover {
 				text-decoration: underline;
 			}

@@ -49,12 +49,6 @@
 	}
 </script>
 
-{#snippet sectionBreak()}
-	<li class="section-break">
-		<span class="text-hint">⁘  ⁘  ⁘</span>
-	</li>
-{/snippet}
-
 <section class:container={true} {...restProps}>
 	<ol class="index">
 		<li><a href="/">🗂️ Index</a></li>
@@ -62,17 +56,13 @@
 		<li><a href="/spaces">🏷️ Spaces</a></li>
 		<li><a href="/extracts">📝 Extracts</a></li>
 		<li><a href="/search">🔍 Search</a></li>
-		{@render sectionBreak()}
+		<li class="section-break" />
 		<li class="controls">
 			<TextInput type="search" inline bind:value={nameFilter} placeholder="Filter..." />
 		</li>
 		{#each index as entry (entry.id)}
 			<li class="index-entry">
-				<a
-					class="name"
-					href="/{entry.type.urlParam}/{entry.id}"
-					aria-label={`View ${entry.type.id}: ${entry.name}`}
-				>
+				<a class="name" href="/{entry.type.urlParam}/{entry.id}">
 					{entry.name}
 				</a>&nbsp;<span class="count">{entry.count}</span>
 			</li>
@@ -110,6 +100,12 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+
+		&::before {
+			content: '⁘  ⁘  ⁘';
+			display: inline-block;
+			color: var(--hint);
+		}
 	}
 	.index-entry {
 		--indent: 1.5em;
