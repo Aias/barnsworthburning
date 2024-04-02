@@ -1,5 +1,5 @@
 <script lang="ts">
-	import meta, { ViewportContent } from '$lib/meta.svelte';
+	import metadata, { ViewportContent } from '$lib/metadata.svelte';
 	import type { HTMLInputAttributes } from 'svelte/elements';
 	interface TextInputProps extends HTMLInputAttributes {
 		type: 'text' | 'search';
@@ -9,10 +9,10 @@
 	let { type, inline = false, value = $bindable(), ...restProps }: TextInputProps = $props();
 
 	function preventZoomOnFocus() {
-		meta.setViewport(ViewportContent.NoSafariZoom);
+		metadata.setViewport(ViewportContent.NoSafariZoom);
 	}
 	function allowZoomOnBlur() {
-		meta.setViewport(ViewportContent.Default);
+		metadata.setViewport(ViewportContent.Default);
 	}
 </script>
 

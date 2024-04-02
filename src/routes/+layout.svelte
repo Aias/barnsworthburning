@@ -4,8 +4,29 @@
 	import SEO from '$components/SEO.svelte';
 	import cache from '$lib/cache.svelte';
 	import Index from '$components/Index.svelte';
+	import { Palette, Mode, Chroma } from '$types/Theme';
+	import settings from '$lib/settings.svelte';
+	import { getCookie } from '$helpers/cookies';
 
 	let { children, data } = $props();
+
+	$effect.pre(() => {
+		const storedMode = getCookie('barnsworthburning-mode') as Mode | null;
+		const storedChroma = getCookie('barnsworthburning-chroma') as Chroma | null;
+		const storedPalette = getCookie('barnsworthburning-palette') as Palette | null;
+
+		if (storedMode) {
+			settings.toggleMode(storedMode);
+		}
+		if (storedChroma) {
+			settings.toggleChroma(storedChroma);
+		}
+		if (storedPalette) {
+			settings.setPalette(storedPalette);
+		}
+
+		document.documentElement.className = settings.themeClass;
+	});
 
 	$effect(() => {
 		if (data.extracts) {
