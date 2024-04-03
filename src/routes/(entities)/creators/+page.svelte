@@ -3,6 +3,12 @@
 	import { entityTypes } from '$helpers/params';
 	import ExtractGroup from '../ExtractGroup.svelte';
 
+	let { data } = $props();
+
+	$effect(() => {
+		cache.addCreators(data.recentCreators);
+	});
+
 	const cachedCreators = $derived(cache.allCreators);
 </script>
 
