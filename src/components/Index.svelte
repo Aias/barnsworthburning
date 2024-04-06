@@ -35,11 +35,12 @@
 		return all;
 	});
 
-	const index = $derived(
+	const filteredIndex = $derived(
+		// TODO: If we're on an entity page, only show index entries of the same type.
 		fullIndex.filter((entry) => entry.name.toLowerCase().includes(nameFilter.toLowerCase()))
 	);
 
-	const numMissing = $derived(fullIndex.length - index.length);
+	const numMissing = $derived(fullIndex.length - filteredIndex.length);
 
 	function sortByCount(a: IndexEntry, b: IndexEntry) {
 		return b.count - a.count;
@@ -60,7 +61,7 @@
 		<li class="controls">
 			<TextInput type="search" inline bind:value={nameFilter} placeholder="Filter..." />
 		</li>
-		{#each index as entry (entry.id)}
+		{#each filteredIndex as entry (entry.id)}
 			<li class="index-entry">
 				<a class="name" href="/{entry.type.urlParam}/{entry.id}">
 					{entry.name}

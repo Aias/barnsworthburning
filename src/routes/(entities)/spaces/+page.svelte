@@ -3,6 +3,12 @@
 	import { entityTypes } from '$helpers/params';
 	import ExtractGroup from '../ExtractGroup.svelte';
 
+	let { data } = $props();
+
+	$effect(() => {
+		cache.addSpaces(data.recentSpaces);
+	});
+
 	const cachedSpaces = $derived(cache.allSpaces);
 </script>
 
