@@ -9,6 +9,11 @@ html {
 	font-variant-ligatures: common-ligatures;
 	font-variant-numeric: tabular-nums;
 	hanging-punctuation: first last;
+	input,
+	textarea {
+		hanging-punctuation: none; /* https://adactio.com/journal/21027 */
+	}
+
 	background-color: var(--background);
 	accent-color: var(--link);
 }
