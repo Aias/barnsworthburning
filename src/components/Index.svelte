@@ -1,5 +1,6 @@
 <script lang="ts">
 	import cache from '$lib/cache.svelte';
+	import { page } from '$app/stores';
 	import { entityTypes, type EntityType } from '$helpers/params';
 	import TextInput from './TextInput.svelte';
 
@@ -35,10 +36,21 @@
 		return all;
 	});
 
-	const filteredIndex = $derived(
-		// TODO: If we're on an entity page, only show index entries of the same type.
-		fullIndex.filter((entry) => entry.name.toLowerCase().includes(nameFilter.toLowerCase()))
-	);
+	const filteredIndex = $derived.by(() => {
+		let filtered = fullIndex;
+		const routeId = $page.route.id || '/';
+		if (nameFilter) {
+			filtered = filtered.filter((entry) =>
+				entry.name.toLowerCase().includes(nameFilter.toLowerCase())
+			);
+		}
+		if (routeId.includes('creators')) {
+			filtered = filtered.filter((entry) => entry.type === entityTypes.creator);
+		} else if (routeId.includes('spaces')) {
+			filtered = filtered.filter((entry) => entry.type === entityTypes.space);
+		}
+		return filtered;
+	});
 
 	const numMissing = $derived(fullIndex.length - filteredIndex.length);
 
