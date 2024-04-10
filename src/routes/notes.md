@@ -16,7 +16,7 @@ Some ideas for one-off pages that could be implemented as easter eggs.
 -   About: https://daringfireball.net/linked/2021/12/22/about-boxes-from-vintage-mac-apps
 -   Blank: https://blog.plover.com/meta/intentionally-left-blank.html
 -   Random: A sample of random extracts from the archive.
--   Now: https://nownownow.com/about
+-   Now: https://nownownow.com/about, https://buttondown.email/ownyourweb/archive/issue-13/
 -   Ago: "On this day `X` weeks/months/years ago..."
 -   Questions: https://www.quartey.com/questions
 -   Colophon
