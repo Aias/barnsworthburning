@@ -37,8 +37,8 @@ async function airtableFetch<T extends IBaseRecord>(
 		.all()
 		.then((records) => records.map(mapReceivedRecord<T>))
 		.catch((err: Error) => {
-			error(err.statusCode, {
-				message: err.message
+			error(500, {
+				...err
 			});
 		});
 }
@@ -58,8 +58,8 @@ async function airtableFind<T extends IBaseRecord>(
 		.find(recordId)
 		.then((record) => mapReceivedRecord<T>(record))
 		.catch((err: Error) => {
-			error(err.statusCode, {
-				message: err.message
+			error(500, {
+				...err
 			});
 		});
 }
