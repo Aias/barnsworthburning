@@ -9,7 +9,7 @@ const config = {
 		adapter: adapterNetlify({
 			// if true, will create a Netlify Edge Function rather
 			// than using standard Node-based functions
-			edge: false,
+			edge: true,
 
 			// if true, will split your app into multiple functions
 			// instead of creating a single one for the entire app.

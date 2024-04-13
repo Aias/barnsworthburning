@@ -887,21 +887,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/vite-plugin-svelte@npm:^3.0.2":
-  version: 3.0.2
-  resolution: "@sveltejs/vite-plugin-svelte@npm:3.0.2"
+"@sveltejs/vite-plugin-svelte@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "@sveltejs/vite-plugin-svelte@npm:3.1.0"
   dependencies:
     "@sveltejs/vite-plugin-svelte-inspector": ^2.0.0
     debug: ^4.3.4
     deepmerge: ^4.3.1
     kleur: ^4.1.5
-    magic-string: ^0.30.5
-    svelte-hmr: ^0.15.3
+    magic-string: ^0.30.9
+    svelte-hmr: ^0.16.0
     vitefu: ^0.2.5
   peerDependencies:
     svelte: ^4.0.0 || ^5.0.0-next.0
     vite: ^5.0.0
-  checksum: 86a8cb80b3f24495d913702c9528dfa45917ef4bb66ee3fcba745038f9056c41c7e9db30cb6828679eb9896c39cc4be6de9565a98e4cc140dda53938b8f5a688
+  checksum: 7d99c058feecf2cc5d6adac0185d128f386a63e98b25c3cdfb37af326036769015904fd01938756039128b23792874c4526025df5381e31f9de85682f88ead65
   languageName: node
   linkType: hard
 
@@ -919,13 +919,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/eslint@npm:8.56.7":
-  version: 8.56.7
-  resolution: "@types/eslint@npm:8.56.7"
+"@types/eslint@npm:8.56.9":
+  version: 8.56.9
+  resolution: "@types/eslint@npm:8.56.9"
   dependencies:
     "@types/estree": "*"
     "@types/json-schema": "*"
-  checksum: 26b036e27e369981843585248591b15068f1ba3ac44a01c09c34717f0b57cbb422a7ed2b497b51093b0ead97739e187dde65bbd5893ec901672dac39f41c8038
+  checksum: c0c033fc724774b791bf97465cfe246814eda1f82460aff2daa64dfce1b1a01626c75f4281d2ab10dcd9176446df0b4bf57e8ac542da6476902e28683e89137d
   languageName: node
   linkType: hard
 
@@ -1315,24 +1315,24 @@ __metadata:
     "@sveltejs/adapter-netlify": ^4.1.0
     "@sveltejs/adapter-node": ^5.0.1
     "@sveltejs/kit": ^2.5.5
-    "@sveltejs/vite-plugin-svelte": ^3.0.2
-    "@types/eslint": 8.56.7
+    "@sveltejs/vite-plugin-svelte": ^3.1.0
+    "@types/eslint": 8.56.9
     "@types/remarkable": ^2.0.8
     "@typescript-eslint/eslint-plugin": ^7.6.0
     "@typescript-eslint/parser": ^7.6.0
     airtable: ^0.12.2
     eslint: ^9.0.0
     eslint-config-prettier: ^9.1.0
-    eslint-plugin-svelte: ^2.36.0
+    eslint-plugin-svelte: ^2.37.0
     marked: ^12.0.1
     normalize.css: ^8.0.1
     prettier: ^3.2.5
-    prettier-plugin-svelte: ^3.2.2
-    sass: ^1.74.1
-    svelte: ^5.0.0-next.96
+    prettier-plugin-svelte: ^3.2.3
+    sass: ^1.75.0
+    svelte: ^5.0.0-next.102
     svelte-check: ^3.6.9
     tslib: ^2.6.2
-    typescript: ^5.4.4
+    typescript: ^5.4.5
     vite: ^5.2.8
   languageName: unknown
   linkType: soft
@@ -1858,9 +1858,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-svelte@npm:^2.36.0":
-  version: 2.36.0
-  resolution: "eslint-plugin-svelte@npm:2.36.0"
+"eslint-plugin-svelte@npm:^2.37.0":
+  version: 2.37.0
+  resolution: "eslint-plugin-svelte@npm:2.37.0"
   dependencies:
     "@eslint-community/eslint-utils": ^4.4.0
     "@jridgewell/sourcemap-codec": ^1.4.15
@@ -1880,7 +1880,7 @@ __metadata:
   peerDependenciesMeta:
     svelte:
       optional: true
-  checksum: 02f56e37cb348ca8bab148736f48f17a596adcaaf113d160c1a62b6445152b239edce6dd00516293c4b90b4a3fe25520b044eb0e53c0824c8b46cc594f6c0247
+  checksum: 2dde140a4f6daff399bc5bfd0f9a175a6bcdbe16201f6ddb633262f1998fe4bb7da4614298820242970563705e0fbb9daac75343eaa4cb8b8118eea64756d9f7
   languageName: node
   linkType: hard
 
@@ -2735,6 +2735,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"magic-string@npm:^0.30.9":
+  version: 0.30.9
+  resolution: "magic-string@npm:0.30.9"
+  dependencies:
+    "@jridgewell/sourcemap-codec": ^1.4.15
+  checksum: a97b9a706b39e9569781dcb662b15ab085ca3af8b916cd69d8485e8565108917c17e4eb03b6b1013389387d827bb3025711ebeafe237f742bc95a90708416147
+  languageName: node
+  linkType: hard
+
 "make-fetch-happen@npm:^11.0.3":
   version: 11.1.1
   resolution: "make-fetch-happen@npm:11.1.1"
@@ -3243,13 +3252,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-svelte@npm:^3.2.2":
-  version: 3.2.2
-  resolution: "prettier-plugin-svelte@npm:3.2.2"
+"prettier-plugin-svelte@npm:^3.2.3":
+  version: 3.2.3
+  resolution: "prettier-plugin-svelte@npm:3.2.3"
   peerDependencies:
     prettier: ^3.0.0
     svelte: ^3.2.0 || ^4.0.0-next.0 || ^5.0.0-next.0
-  checksum: 90cbc1fea436e2a5f78273f2cdf216d2f7f84eed1da55137621da593249f1126d0a55aea6ca2bc6fd48e2a5b1273010cbd56e02b5cb9dabbf867c11fc2446616
+  checksum: 9055b7d2c394f71b066b44eab6a943d6aac151e2a55213bc68be4196bebdbce56d54ddf36346d831a03860d77ca2ed6258af7408a6dbf121beca88f24b10641f
   languageName: node
   linkType: hard
 
@@ -3527,16 +3536,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.74.1":
-  version: 1.74.1
-  resolution: "sass@npm:1.74.1"
+"sass@npm:^1.75.0":
+  version: 1.75.0
+  resolution: "sass@npm:1.75.0"
   dependencies:
     chokidar: ">=3.0.0 <4.0.0"
     immutable: ^4.0.0
     source-map-js: ">=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: 3cbcd73d91e65607f7987656b7f6b0c6143724304544768079ecbe95505f1ce71036916e0e02dcc9923551c3779863bcdd522732a8f4409e89205271966a36f4
+  checksum: bfb9f5ddb6a2e1fe0c1ba6191cdb17afa7b40c1eb892c7152f6a29ff2b06dc7a510bdb648f8cca0179dcb3965920ebeb8894f0710b0b450a99db563831345033
   languageName: node
   linkType: hard
 
@@ -3808,12 +3817,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte-hmr@npm:^0.15.3":
-  version: 0.15.3
-  resolution: "svelte-hmr@npm:0.15.3"
+"svelte-hmr@npm:^0.16.0":
+  version: 0.16.0
+  resolution: "svelte-hmr@npm:0.16.0"
   peerDependencies:
     svelte: ^3.19.0 || ^4.0.0
-  checksum: 09518aad14288b15e723e69376d2044330f52f49c2730a5e1357b4bee5928c04c5e4022f713856f51ef08ccf3fb5639e870ac89a44c0cb573cedf395017e2402
+  checksum: c99a48df9776f47b4262b4a601bead6d100d7a031b13aa1203b97eb456afde7a9a27c4ddb0a66f8b4655f69cf0d955e96dd26040e54d421d431ae01a6c09b918
   languageName: node
   linkType: hard
 
@@ -3863,9 +3872,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte@npm:^5.0.0-next.96":
-  version: 5.0.0-next.96
-  resolution: "svelte@npm:5.0.0-next.96"
+"svelte@npm:^5.0.0-next.102":
+  version: 5.0.0-next.102
+  resolution: "svelte@npm:5.0.0-next.102"
   dependencies:
     "@ampproject/remapping": ^2.2.1
     "@jridgewell/sourcemap-codec": ^1.4.15
@@ -3880,7 +3889,7 @@ __metadata:
     locate-character: ^3.0.0
     magic-string: ^0.30.5
     zimmerframe: ^1.1.2
-  checksum: 3637bf87b317263ea16057205301fef8c8f8d188f44e277973e824bff0d9142b96b8ff247fb383432fd2c054b8a4f4cea363453b9f3c6976801061f7e409b0a3
+  checksum: b245d418b1f34e4ad48839dcc6774326bbc63375c2aae262fb68618fa630bf87fae9f9202046bd3c7b6e866f7b8d8187c04e3fa8a0437907bd8f7924deec53e7
   languageName: node
   linkType: hard
 
@@ -3973,13 +3982,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.4.4":
-  version: 5.4.4
-  resolution: "typescript@npm:5.4.4"
+"typescript@npm:^5.4.5":
+  version: 5.4.5
+  resolution: "typescript@npm:5.4.5"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: a7b54515d2adfc75c8d14188af0216b6b9ae3c192c9732797c24b1d14608eac1c83be7b1c65ce6f4ced0f2c40583f11b495fe1ba3d982afadbcc523517d183c8
+  checksum: 53c879c6fa1e3bcb194b274d4501ba1985894b2c2692fa079db03c5a5a7140587a1e04e1ba03184605d35f439b40192d9e138eb3279ca8eee313c081c8bcd9b0
   languageName: node
   linkType: hard
 
@@ -3993,13 +4002,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^5.4.4#~builtin<compat/typescript>":
-  version: 5.4.4
-  resolution: "typescript@patch:typescript@npm%3A5.4.4#~builtin<compat/typescript>::version=5.4.4&hash=14eedb"
+"typescript@patch:typescript@^5.4.5#~builtin<compat/typescript>":
+  version: 5.4.5
+  resolution: "typescript@patch:typescript@npm%3A5.4.5#~builtin<compat/typescript>::version=5.4.5&hash=14eedb"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 34e8fe6b892736204c6c72ae9e3027fb37f23e34cf748340712101cbe9c55527c379c4d275c407e5c66ff73eca56c7425b1fb4ac5b23dc7a62413cf6a8af98e8
+  checksum: 2373c693f3b328f3b2387c3efafe6d257b057a142f9a79291854b14ff4d5367d3d730810aee981726b677ae0fd8329b23309da3b6aaab8263dbdccf1da07a3ba
   languageName: node
   linkType: hard
 
