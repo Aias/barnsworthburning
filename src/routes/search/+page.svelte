@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import Extract from '$components/Extract.svelte';
+	import Looseleaf from '$components/Looseleaf.svelte';
 	import TextInput from '$components/TextInput.svelte';
 
 	const { data } = $props();
 	const results = $derived(data.search);
+	let compactView = $state(false);
 
 	const currentQuery = $derived($page.url.searchParams.get('q'));
 	let searchValue = $state('');
@@ -21,27 +23,35 @@
 	}
 </script>
 
-<!-- svelte-ignore a11y-autofocus -->
-<form data-sveltekit-keepfocus>
-	<TextInput
-		type="search"
-		name="q"
-		placeholder="Search extracts..."
-		value={searchValue}
-		onchange={updateSearchValue}
-		autofocus
-	/>
-	<button type="submit">Search</button>
-</form>
+<div class="toolbar">
+	<form data-sveltekit-keepfocus class="search-input">
+		<TextInput
+			type="search"
+			name="q"
+			placeholder="Search extracts..."
+			value={searchValue}
+			onchange={updateSearchValue}
+			autofocus
+		/>
+		<button type="submit">Search</button>
+	</form>
+	<label class="compact-toggle">
+		<input type="checkbox" bind:checked={compactView} />
+		Compact
+	</label>
+</div>
 
 {#if results && results.length > 0}
-	<ul>
-		{#each results as result}
-			<li>
-				<Extract extract={result} componentClass="card" />
-			</li>
-		{/each}
-	</ul>
+	{#if compactView}
+		<Looseleaf extracts={results} scale={0.5} />
+	{:else}<ul>
+			{#each results as result}
+				<li>
+					<Extract extract={result} componentClass="card" />
+				</li>
+			{/each}
+		</ul>
+	{/if}
 {:else if !currentQuery}
 	<div class="empty-state">
 		<p class="text-secondary">Enter a search query.</p>
@@ -51,13 +61,25 @@
 {/if}
 
 <style lang="scss">
-	form {
+	.toolbar {
 		margin-block-end: 1em;
 		display: flex;
-		gap: 0.5em;
+		align-items: center;
 
-		> :global(input) {
+		.search-input {
+			display: flex;
+			gap: 0.5em;
 			flex: 1;
+
+			> :global(input) {
+				flex: 1;
+			}
+		}
+
+		.compact-toggle {
+			margin-inline-start: 1em;
+			border-left: 1px solid var(--divider);
+			padding-inline-start: 1em;
 		}
 	}
 	ul {

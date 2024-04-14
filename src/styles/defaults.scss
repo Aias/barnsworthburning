@@ -128,10 +128,10 @@ input[type='search'] {
 	}
 }
 
-label:has(> input[type='radio']) {
+label:has(> :where(input[type='radio'], input[type='checkbox'])) {
 	display: inline-flex;
 	align-items: center;
-	gap: 0.25em;
+	gap: 0.33em;
 }
 
 fieldset {

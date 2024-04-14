@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { IExtract } from '$types/Airtable';
 	import AirtableImage from '$components/AirtableImage.svelte';
-	import markdown from '$helpers/markdown';
+	import MarkdownContent from './MarkdownContent.svelte';
 	import TopicList from './TopicList.svelte';
 
 	interface LooseleafCardProps {
@@ -18,21 +18,6 @@
 	let spaces = $derived(extract.spaces);
 
 	const previewLength = 280;
-
-	// Function to trim a string to a certain length
-	function trimString(string: string, length: number) {
-		if (string.length > length) {
-			return string.substring(0, length) + '...';
-		} else {
-			return string;
-		}
-	}
-
-	function makeMarkdown(string: string) {
-		const trimmed = trimString(string, previewLength);
-		const html = markdown.parse(trimmed);
-		return html;
-	}
 
 	// Create a string of star emojis given a count
 	function starRating(count: number) {
@@ -53,11 +38,13 @@
 		{/each}
 	{/if}
 	{#if extractText}
-		<section class="extract">{@html makeMarkdown(extractText)}</section>
+		<section class="extract content">
+			<MarkdownContent text={extractText} trimLength={previewLength} />
+		</section>
 	{/if}
 	{#if notes}
-		<section class="notes">
-			<small>{@html makeMarkdown(notes)}</small>
+		<section class="notes content">
+			<MarkdownContent text={notes} trimLength={previewLength} />
 		</section>
 	{/if}
 	{#if spaces}
@@ -75,13 +62,14 @@
 		gap: var(--extract-gap);
 		word-wrap: break-word;
 
-		p,
-		small {
+		.extract,
+		.notes {
 			font-weight: var(--font-weight-light);
 		}
 
-		small {
+		.notes {
 			color: var(--secondary);
+			font-size: var(--font-size-small);
 			border-block-start: 1px solid var(--divider);
 			padding-block-start: var(--extract-gap);
 		}
