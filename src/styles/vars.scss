@@ -4,7 +4,7 @@
 	--font-stack-mono: 'IBM Plex Mono', monospace;
 
 	--scaling-ratio: calc(14 / 16);
-	--monospace-scale: 0.933;
+	--monospace-scale: 0.933; // TODO: Try doing with this size-adjust rather than actually changing the font size.
 	--font-size-body: calc(1em * var(--scaling-ratio));
 	--line-height: calc(1.5 / var(--scaling-ratio));
 
