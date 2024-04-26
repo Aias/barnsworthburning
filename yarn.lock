@@ -1025,14 +1025,14 @@ __metadata:
     airtable: "npm:^0.12.2"
     eslint: "npm:^9.1.1"
     eslint-config-prettier: "npm:^9.1.0"
-    eslint-plugin-svelte: "npm:^2.37.0"
+    eslint-plugin-svelte: "npm:^2.38.0"
     marked: "npm:^12.0.2"
     normalize.css: "npm:^8.0.1"
     prettier: "npm:^3.2.5"
     prettier-plugin-svelte: "npm:^3.2.3"
     sass: "npm:^1.75.0"
-    svelte: "npm:^5.0.0-next.111"
-    svelte-check: "npm:^3.6.9"
+    svelte: "npm:^5.0.0-next.115"
+    svelte-check: "npm:^3.7.0"
     tslib: "npm:^2.6.2"
     typescript: "npm:^5.4.5"
     vite: "npm:^5.2.10"
@@ -1431,9 +1431,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-svelte@npm:^2.37.0":
-  version: 2.37.0
-  resolution: "eslint-plugin-svelte@npm:2.37.0"
+"eslint-plugin-svelte@npm:^2.38.0":
+  version: 2.38.0
+  resolution: "eslint-plugin-svelte@npm:2.38.0"
   dependencies:
     "@eslint-community/eslint-utils": "npm:^4.4.0"
     "@jridgewell/sourcemap-codec": "npm:^1.4.15"
@@ -1446,14 +1446,14 @@ __metadata:
     postcss-safe-parser: "npm:^6.0.0"
     postcss-selector-parser: "npm:^6.0.16"
     semver: "npm:^7.6.0"
-    svelte-eslint-parser: "npm:>=0.34.0 <1.0.0"
+    svelte-eslint-parser: "npm:>=0.35.0 <1.0.0"
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0-0 || ^9.0.0-0
-    svelte: ^3.37.0 || ^4.0.0 || ^5.0.0-next.95
+    svelte: ^3.37.0 || ^4.0.0 || ^5.0.0-next.112
   peerDependenciesMeta:
     svelte:
       optional: true
-  checksum: 10c0/4aa72d38969e7dc3f7c489530c8bea271d033aae8b692cdb808717d3a5f45875e1f2b8f983f20b927337c587475994f268446623f03daff02485346446024a19
+  checksum: 10c0/210dbb5ec44b6c50e796d03641626458aa8f7049a3786b4ac854dd613541ad7d98a7f528dfdba2876ccdc783660f886f519eb74912b3939e3c0c2346fd795952
   languageName: node
   linkType: hard
 
@@ -3164,9 +3164,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte-check@npm:^3.6.9":
-  version: 3.6.9
-  resolution: "svelte-check@npm:3.6.9"
+"svelte-check@npm:^3.7.0":
+  version: 3.7.0
+  resolution: "svelte-check@npm:3.7.0"
   dependencies:
     "@jridgewell/trace-mapping": "npm:^0.3.17"
     chokidar: "npm:^3.4.1"
@@ -3180,13 +3180,13 @@ __metadata:
     svelte: ^3.55.0 || ^4.0.0-next.0 || ^4.0.0 || ^5.0.0-next.0
   bin:
     svelte-check: bin/svelte-check
-  checksum: 10c0/9d05208d74041f10b4176a74481acf7f1c729eddcacfce5be180cdf41059655746591ffbca6ac5bdd53aede7ce135d09bd97ec523416cdd92ca82eed76df4306
+  checksum: 10c0/b6ed01800ace90634e2e3407d49f68d1b5dabf671b9cb973b95358fd3eedb79ad32555f009a470a3d4913c9a8c950009f4cb315eae51bb8104569584c185d04b
   languageName: node
   linkType: hard
 
-"svelte-eslint-parser@npm:>=0.34.0 <1.0.0":
-  version: 0.34.1
-  resolution: "svelte-eslint-parser@npm:0.34.1"
+"svelte-eslint-parser@npm:>=0.35.0 <1.0.0":
+  version: 0.35.0
+  resolution: "svelte-eslint-parser@npm:0.35.0"
   dependencies:
     eslint-scope: "npm:^7.2.2"
     eslint-visitor-keys: "npm:^3.4.3"
@@ -3194,11 +3194,11 @@ __metadata:
     postcss: "npm:^8.4.38"
     postcss-scss: "npm:^4.0.9"
   peerDependencies:
-    svelte: ^3.37.0 || ^4.0.0 || ^5.0.0-next.94
+    svelte: ^3.37.0 || ^4.0.0 || ^5.0.0-next.112
   peerDependenciesMeta:
     svelte:
       optional: true
-  checksum: 10c0/ed17e59ea8947971bb737f12c260fddb9149cef49f654b588a343c27f4b2b23e232b5b414f0045e08cb68b39c56811e074a12b87362860b2b6eacbb4a7fef243
+  checksum: 10c0/029d54796f4e89ea02ecebf4d7e996b811dfa48ee5b3c5157782c5fe34ca0060e235bb83cfb5ad8791ddf52eb15d015b87e8f6bf388fa6da7904b4bc6801e94c
   languageName: node
   linkType: hard
 
@@ -3257,9 +3257,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte@npm:^5.0.0-next.111":
-  version: 5.0.0-next.111
-  resolution: "svelte@npm:5.0.0-next.111"
+"svelte@npm:^5.0.0-next.115":
+  version: 5.0.0-next.115
+  resolution: "svelte@npm:5.0.0-next.115"
   dependencies:
     "@ampproject/remapping": "npm:^2.2.1"
     "@jridgewell/sourcemap-codec": "npm:^1.4.15"
@@ -3274,7 +3274,7 @@ __metadata:
     locate-character: "npm:^3.0.0"
     magic-string: "npm:^0.30.5"
     zimmerframe: "npm:^1.1.2"
-  checksum: 10c0/11d41e1c43f5f2280ac74cba8f3d6d8df75985dec062057a5291022d843f2251011cdd9de817af58eb101088cab33348d2514817af02cc6c5ffe94877ede999f
+  checksum: 10c0/b6726ddeffc3727e3238a33dc7e0762a437a6ac6a5e85df6331b6857200e5ebdbf9c2d41e16aed7afd873bfadc47bf95a0bde838719b4fea0013b0beeff72249
   languageName: node
   linkType: hard
 
