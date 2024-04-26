@@ -27,7 +27,7 @@
 		</div>
 	</div>
 {:else}
-	<progress />
+	<progress></progress>
 {/if}
 
 <style lang="scss">

@@ -69,7 +69,7 @@
 		<li><a href="/spaces">🏷️ Spaces</a></li>
 		<li><a href="/extracts">📝 Extracts</a></li>
 		<li><a href="/search">🔍 Search</a></li>
-		<li class="section-break" />
+		<li class="section-break"></li>
 		<li class="controls">
 			<TextInput type="search" inline bind:value={nameFilter} placeholder="Filter..." />
 		</li>

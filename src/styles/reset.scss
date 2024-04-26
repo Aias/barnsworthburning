@@ -83,8 +83,9 @@ textarea:not([rows]) {
 }
 
 /* Anything that has been anchored to should have extra scroll margin */
-:target {
-	scroll-margin-block: 5ex;
+:target,
+[id] {
+	scroll-margin-block: 2rem;
 }
 
 /* https://css-tricks.com/the-focus-visible-trick/ */
