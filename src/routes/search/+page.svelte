@@ -47,7 +47,7 @@
 	{:else}<ul>
 			{#each results as result}
 				<li>
-					<Extract extract={result} componentClass="card" />
+					<Extract extract={result} class="card" />
 				</li>
 			{/each}
 		</ul>

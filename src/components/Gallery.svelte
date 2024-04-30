@@ -5,14 +5,14 @@
 	interface GalleryProps {
 		gallery: IExtract[];
 		meta: any;
-		componentClass: string;
+		class?: string;
 	}
 
-	let { gallery, meta, componentClass }: GalleryProps = $props();
+	let { gallery, meta, class: className }: GalleryProps = $props();
 </script>
 
 {#if gallery}
-	<div class={componentClass} class:gallery>
+	<div class={className} class:gallery>
 		<header class="gallery-meta">
 			{#if meta?.type === 'creator'}
 				<h1>{meta.creator.name}</h1>
@@ -22,7 +22,7 @@
 		</header>
 		<div class="gallery-grid">
 			{#each gallery as extract (extract.id)}
-				<Extract {extract} contextId="gallery" componentClass="card" />
+				<Extract {extract} contextId="gallery" class="card" />
 			{/each}
 		</div>
 	</div>

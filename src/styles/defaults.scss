@@ -62,8 +62,7 @@ small,
 	color: var(--secondary);
 }
 
-button,
-::file-selector-button {
+button {
 	/* First lines here from https://dbushell.com/2024/03/10/css-button-styles-you-might-not-know/ */
 	inline-size: fit-content;
 	touch-action: manipulation;

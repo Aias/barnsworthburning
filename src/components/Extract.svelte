@@ -10,10 +10,10 @@
 	interface ExtractProps {
 		extract: IExtract;
 		contextId?: string;
-		componentClass?: string;
+		class?: string;
 	}
 
-	let { extract, contextId = 'panel', componentClass }: ExtractProps = $props();
+	let { extract, contextId = 'panel', class: className }: ExtractProps = $props();
 
 	let id = $derived(extract.id);
 	let title = $derived(extract.title);
@@ -30,7 +30,7 @@
 	let nodeId = $derived(`${contextId}--${id}`);
 </script>
 
-<section id={nodeId} class:extract={true} class:interactive={true} class={componentClass}>
+<section id={nodeId} class:extract={true} class:interactive={true} class={className}>
 	{#if title}
 		<header>
 			<h2 class="extract-title">

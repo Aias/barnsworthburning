@@ -1,20 +1,53 @@
 <script lang="ts">
 	import cache from '$lib/cache.svelte';
-	// import { extractHierarchy } from '$lib/extractHierarchy.svelte';
-	// import { page } from '$app/stores';
+	import { makeHierarchy } from '$lib/extractHierarchy.svelte';
+	import { page } from '$app/stores';
+	import Extract from '$components/Extract.svelte';
 
 	let { data } = $props();
-	// let selectedId = $page.params.extractId;
 
 	$effect(() => {
 		cache.addExtracts(data.selectedExtractData);
 	});
 
-	// let hierarchy = $derived(extractHierarchy(selectedId));
-
-	// $inspect(hierarchy);
+	let tree = $derived(makeHierarchy($page.params.extractId).full);
+	let selected = $derived(tree?.selected);
+	let parents = $derived(tree?.parents);
+	let children = $derived(tree?.children);
+	let connections = $derived(tree?.connections);
 </script>
 
 <article>
-	{JSON.stringify(data.selectedExtractData, null, 2)}
+	{#if parents}
+		{#each parents as parent (parent.id)}
+			<Extract extract={parent} />
+		{/each}
+	{/if}
+
+	{#if selected}
+		<Extract extract={selected} class="card" />
+	{/if}
+
+	{#if children}
+		{#each children as child (child.id)}
+			<Extract extract={child} />
+		{/each}
+	{/if}
+
+	{#if connections}
+		{#each connections as connection (connection.id)}
+			<Extract extract={connection} />
+		{/each}
+	{/if}
 </article>
+
+<style lang="scss">
+	article {
+		max-width: 600px;
+		margin-inline: auto;
+		padding-inline: 1em;
+		display: flex;
+		flex-direction: column;
+		gap: 2em;
+	}
+</style>
