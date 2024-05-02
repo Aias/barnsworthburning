@@ -211,10 +211,9 @@ blockquote {
 	padding-inline-start: 0.75em;
 	border-inline-start: 0.35em solid var(--flood);
 	font-style: italic;
-	font-size: 1.1em;
 	font-family: var(--font-stack-serif);
 
-	em {
+	&:not(:is(.extract-text, .content)) em {
 		font-style: normal;
 	}
 }
