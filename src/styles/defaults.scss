@@ -218,7 +218,8 @@ blockquote {
 	}
 }
 
-.content {
+.content,
+blockquote {
 	margin-trim: block;
 	--spacing: 0.5em;
 
