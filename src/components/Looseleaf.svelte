@@ -7,7 +7,7 @@
 		scale?: number;
 	}
 
-	let { extracts, scale }: LooseleafProps = $props();
+	let { extracts, scale = 0.75 }: LooseleafProps = $props();
 
 	const scaleStyle = scale ? `--scale: ${scale}em` : undefined;
 </script>

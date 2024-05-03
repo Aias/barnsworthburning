@@ -44,11 +44,11 @@
 				entry.name.toLowerCase().includes(nameFilter.toLowerCase())
 			);
 		}
-		if (routeId.includes('creators')) {
-			filtered = filtered.filter((entry) => entry.type === entityTypes.creator);
-		} else if (routeId.includes('spaces')) {
-			filtered = filtered.filter((entry) => entry.type === entityTypes.space);
-		}
+		// if (routeId.includes('creators')) {
+		// 	filtered = filtered.filter((entry) => entry.type === entityTypes.creator);
+		// } else if (routeId.includes('spaces')) {
+		// 	filtered = filtered.filter((entry) => entry.type === entityTypes.space);
+		// }
 		return filtered;
 	});
 

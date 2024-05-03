@@ -84,7 +84,7 @@
 
 <style lang="scss">
 	.extract {
-		--layout-gap: 1em;
+		--layout-gap: 0.5em;
 		display: flex;
 		flex-direction: column;
 		gap: var(--layout-gap);
@@ -105,7 +105,7 @@
 	.extract-main {
 		display: flex;
 		flex-direction: column;
-		gap: 0.75em;
+		gap: var(--layout-gap);
 		color: var(--display);
 	}
 

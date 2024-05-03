@@ -3,50 +3,20 @@
 	import type { IExtract } from '$types/Airtable';
 
 	interface GalleryProps {
-		gallery: IExtract[];
-		meta: any;
-		class?: string;
+		extracts: IExtract[];
 	}
 
-	let { gallery, meta, class: className }: GalleryProps = $props();
+	let { extracts }: GalleryProps = $props();
 </script>
 
-{#if gallery}
-	<div class={className} class:gallery>
-		<header class="gallery-meta">
-			{#if meta?.type === 'creator'}
-				<h1>{meta.creator.name}</h1>
-			{:else if meta?.type === 'space'}
-				<h1>{meta.space.topic}</h1>
-			{/if}
-		</header>
-		<div class="gallery-grid">
-			{#each gallery as extract (extract.id)}
-				<Extract {extract} contextId="gallery" class="card" />
-			{/each}
-		</div>
-	</div>
-{:else}
-	<progress></progress>
-{/if}
+<div class="gallery">
+	{#each extracts as extract (extract.id)}
+		<Extract {extract} contextId="gallery" class="card" />
+	{/each}
+</div>
 
 <style lang="scss">
 	.gallery {
-		--gutter: 1em;
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-		padding-block: 0;
-		padding-inline: var(--gutter);
-		margin-block: 0;
-		margin-inline: calc(-1 * var(--gutter));
-	}
-	.gallery-meta {
-		h1 {
-			text-transform: capitalize;
-		}
-	}
-	.gallery-grid {
 		--gallery-gap: 1em;
 
 		padding-inline: calc(var(--padding) / 1.5);

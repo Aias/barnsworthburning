@@ -54,7 +54,7 @@
 
 <style lang="scss">
 	article {
-		--extract-gap: 0.75em;
+		--extract-gap: 0.5em;
 		border: 1px solid var(--divider);
 		padding: 1em;
 		display: flex;
