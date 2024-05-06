@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Gallery from '$components/Gallery.svelte';
+	import ExtractGallery from '$components/ExtractGallery.svelte';
 
 	let { data } = $props();
 
@@ -12,7 +12,7 @@
 		{creator.name}
 	{/each}
 </h1>
-<Gallery {extracts} />
+<ExtractGallery {extracts} />
 
 <style lang="scss">
 	h1 {

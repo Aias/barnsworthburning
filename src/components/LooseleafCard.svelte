@@ -25,7 +25,7 @@
 	}
 </script>
 
-<article>
+<article class="card">
 	<h3>
 		{#if michelinStars}
 			<span>{starRating(michelinStars)}</span>

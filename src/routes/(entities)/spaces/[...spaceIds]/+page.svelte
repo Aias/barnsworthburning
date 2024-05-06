@@ -1,6 +1,5 @@
 <script lang="ts">
-	import Gallery from '$components/Gallery.svelte';
-	import Looseleaf from '$components/Looseleaf.svelte';
+	import ExtractGallery from '$components/ExtractGallery.svelte';
 
 	let { data } = $props();
 
@@ -13,11 +12,7 @@
 		{space.topic}
 	{/each}
 </h1>
-{#if extracts.length < 20}
-	<Gallery {extracts} />
-{:else}
-	<Looseleaf {extracts} />
-{/if}
+<ExtractGallery {extracts} density={extracts.length > 20 ? 'compact' : 'comfortable'} />
 
 <style lang="scss">
 	h1 {

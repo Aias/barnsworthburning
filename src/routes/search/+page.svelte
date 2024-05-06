@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import Extract from '$components/Extract.svelte';
-	import Looseleaf from '$components/Looseleaf.svelte';
+	import ExtractGallery from '$components/ExtractGallery.svelte';
 	import TextInput from '$components/TextInput.svelte';
 
 	const { data } = $props();
@@ -42,16 +41,7 @@
 </div>
 
 {#if results && results.length > 0}
-	{#if compactView}
-		<Looseleaf extracts={results} scale={0.5} />
-	{:else}<ul>
-			{#each results as result}
-				<li>
-					<Extract extract={result} class="card" />
-				</li>
-			{/each}
-		</ul>
-	{/if}
+	<ExtractGallery extracts={results} density={compactView ? 'compact' : 'comfortable'} />
 {:else if !currentQuery}
 	<div class="empty-state">
 		<p class="text-secondary">Enter a search query.</p>
@@ -81,16 +71,6 @@
 			border-left: 1px solid var(--divider);
 			padding-inline-start: 1em;
 		}
-	}
-	ul {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-		column-width: 35ch;
-		column-gap: 1em;
-	}
-	li {
-		margin-block-end: 1em;
 	}
 	.empty-state {
 		display: flex;

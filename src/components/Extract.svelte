@@ -30,7 +30,7 @@
 	let nodeId = $derived(`${contextId}--${id}`);
 </script>
 
-<section id={nodeId} class:extract={true} class:interactive={true} class={className}>
+<section id={nodeId} class:extract={true} class={className}>
 	{#if title}
 		<header>
 			<h2 class="extract-title">
