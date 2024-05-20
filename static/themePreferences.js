@@ -3,6 +3,7 @@
 
 const MODE_COOKIE = 'barnsworthburning-mode';
 const MODES = {
+	AUTO: 'auto',
 	DARK: 'dark',
 	LIGHT: 'light'
 };

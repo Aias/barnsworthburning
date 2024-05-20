@@ -32,7 +32,21 @@ export enum Palette {
 	Sky = 'sky'
 }
 
+export const paletteOptions: Palette[] = [
+	Palette.Indigo,
+	Palette.Sky,
+	Palette.Grass,
+	Palette.Amber,
+	Palette.Tomato
+];
+
+export enum Shade {
+	White = 'white',
+	Black = 'black'
+}
+
 export enum Mode {
+	Auto = 'auto',
 	Light = 'light',
 	Dark = 'dark'
 }

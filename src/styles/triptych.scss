@@ -3,7 +3,7 @@
 :root {
 	color-scheme: light dark;
 	--mode-contrast: light-dark(black, white);
-	--chroma: 0;
+	--chroma: 0%;
 }
 
 .light {
@@ -22,7 +22,7 @@
 	--chroma: 100%;
 }
 
-:where(:root, .dark, .light, .neutral, .chromatic) {
+:where(:root, .dark, .light, .neutral, .chromatic, .indigo, .sky, .grass, .amber, .tomato) {
 	// Neutral
 	--display-neutral: color-mix(in oklch, var(--neu-a12), var(--mode-contrast));
 	--primary-neutral: var(--neu-a12);
