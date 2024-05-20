@@ -43,8 +43,14 @@
 		column-gap: var(--gallery-scale);
 
 		> :global(*) {
-			margin-block-end: var(--gallery-scale);
+			margin-block: var(--gallery-scale);
 			break-inside: avoid;
+			&:first-of-type {
+				margin-block-start: 0;
+			}
+			&:last-of-type {
+				margin-block-end: 0;
+			}
 		}
 	}
 </style>
