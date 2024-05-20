@@ -2,29 +2,33 @@
 	import type { Attachment, Thumbnail } from 'airtable';
 
 	interface AirtableImageProps {
-		image: Attachment;
+		image: Attachment & {
+			width?: number; // Exists on API response, types are wrong here as of Airtable 0.12.2
+			height?: number;
+		};
 	}
 
 	let { image }: AirtableImageProps = $props();
-	let availableWidth = $state(0);
 
-	const defaultThumbnail: Thumbnail = {
+	const DEFAULT_WIDTH = 100;
+	let availableWidth = $state(DEFAULT_WIDTH);
+
+	const defaultThumbnail: Thumbnail = $derived({
 		url: image.url,
-		width: 200,
-		height: 100
-	};
+		width: image.width ?? DEFAULT_WIDTH,
+		height: image.height ?? DEFAULT_WIDTH / 2 // Assume 2:1 aspect ratio
+	});
 
 	let thumbnailLarge = $derived(image.thumbnails?.large);
 	let thumbnailSmall = $derived(image.thumbnails?.small);
 	let thumbnailFull = $derived(image.thumbnails?.full);
 
-	const getThumbnail = () => {
+	let thumbnail = $derived.by(() => {
 		if (thumbnailSmall && thumbnailSmall.width > availableWidth) return thumbnailSmall;
 		if (thumbnailLarge && thumbnailLarge.width > availableWidth) return thumbnailLarge;
 		return thumbnailFull || defaultThumbnail;
-	};
-
-	let thumbnail = $derived(getThumbnail());
+	});
+	let src = $derived(thumbnail.url);
 </script>
 
 <div
@@ -32,7 +36,7 @@
 	style={`--aspect-ratio: ${thumbnail.width} / ${thumbnail.height}`}
 	bind:clientWidth={availableWidth}
 >
-	<img alt={image.filename} src={thumbnail.url} loading="lazy" />
+	<img alt={image.filename} {src} loading="lazy" />
 </div>
 
 <style lang="scss">
