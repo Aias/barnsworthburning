@@ -9,12 +9,12 @@
 		{ chroma: 'chromatic' },
 		{ palette: 'amber', chroma: 'chromatic' },
 		{ mode: 'light', palette: 'indigo' },
-		{ mode: 'light', palette: 'jade', chroma: 'chromatic' },
+		{ mode: 'light', palette: 'amber', chroma: 'chromatic' },
 		{ mode: 'dark', palette: 'tomato' },
 		{ mode: 'dark', palette: 'sky', chroma: 'chromatic' },
 		{ chroma: 'neutral' },
 		{ chroma: 'neutral', mode: 'dark' },
-		{ chroma: 'neutral', palette: 'green' }
+		{ chroma: 'neutral', palette: 'indigo' }
 	];
 	const testSections = ['light', 'dark', 'light chromatic', 'dark chromatic'];
 </script>
