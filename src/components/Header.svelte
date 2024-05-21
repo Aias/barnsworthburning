@@ -1,6 +1,5 @@
 <script lang="ts">
 	import settings from '$lib/settings.svelte';
-	import { Palette } from '$types/Theme';
 
 	let { ...restProps } = $props();
 </script>
@@ -17,7 +16,7 @@
 					type="radio"
 					name="paletteKey"
 					value={paletteKey}
-					onchange={(e) => settings.setPalette((e.target as HTMLInputElement).value as Palette)}
+					onchange={(e) => settings.setPalette((e.target as HTMLInputElement).value as typeof paletteKey)}
 					checked={settings.palette === paletteKey}
 				/>
 				{paletteKey}

@@ -1,13 +1,5 @@
 import { setCookie } from '$helpers/cookies';
-import { Palette, Mode, Chroma } from '$types/Theme';
-
-const paletteOptions: Palette[] = [
-	Palette.Indigo,
-	Palette.Sky,
-	Palette.Grass,
-	Palette.Amber,
-	Palette.Tomato
-];
+import { Palette, Mode, Chroma, paletteOptions } from '$types/Theme';
 
 export function createSettings() {
 	let mode: Mode = $state(Mode.Dark);
