@@ -5,6 +5,7 @@
 	import TopicList from './TopicList.svelte';
 	import RelationList from './RelationList.svelte';
 	import AirtableImage from './AirtableImage.svelte';
+	import Link from './Link.svelte';
 	import type { IExtract } from '$types/Airtable';
 
 	interface ExtractProps {
@@ -34,13 +35,9 @@
 	{#if title}
 		<header>
 			<h2 class="extract-title">
-				<a
-					href={`https://airtable.com/${AirtableBaseId}/tblACVIEZW68A1mMZ/${id}`}
-					target="_blank"
-					rel="noopener"
-				>
+				<Link toId={id}>
 					{title}
-				</a>
+				</Link>
 			</h2>
 		</header>
 	{/if}
@@ -95,6 +92,7 @@
 	.extract-title {
 		> :global(a) {
 			all: inherit;
+			cursor: pointer;
 			word-wrap: break-word;
 			&:hover {
 				text-decoration: underline;

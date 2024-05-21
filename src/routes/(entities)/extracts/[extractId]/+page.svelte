@@ -35,6 +35,11 @@
 	{/if}
 
 	{#if connections}
+		<div class="connections">
+			<hr />
+			<span class="text-secondary">⮂</span>
+			<hr />
+		</div>
 		{#each connections as connection (connection.id)}
 			<Extract extract={connection} />
 		{/each}
@@ -49,5 +54,15 @@
 		display: flex;
 		flex-direction: column;
 		gap: 2em;
+	}
+
+	.connections {
+		display: flex;
+		align-items: center;
+		gap: 1em;
+
+		hr {
+			flex: 1;
+		}
 	}
 </style>

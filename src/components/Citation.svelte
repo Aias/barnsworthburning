@@ -16,28 +16,24 @@
 	let source = $derived(extract.source);
 </script>
 
-<div class="citation">
-	<div class="text-mono">
-		<span class="article">{article(format)}</span>
-		<strong class="format">{format}</strong>
-		{#if parent}
-			<span class="parent">from <Link toId={parent.id}><cite>{parent.name}</cite></Link></span
-			>
-		{/if}
-		{#if creators}
-			<span class="creators">by <CreatorList {creators} /></span>
-		{/if}
-		{#if source}
-			<div class="source">
-				<a href={source} target="_blank" rel="noreferrer">{new URL(source).hostname}</a>
-			</div>
-		{/if}
-	</div>
+<div class="citation text-mono">
+	<span class="article">{article(format)}</span>
+	<strong class="format">{format}</strong>
+	{#if creators}
+		<span class="creators">by <CreatorList {creators} /></span>
+	{/if}
+	{#if parent}
+		<span class="parent">from <Link toId={parent.id}><cite>{parent.name}</cite></Link></span>
+	{/if}
+	{#if source}
+		<a class="source" href={source} target="_blank" rel="noreferrer" title="View source">
+			{new URL(source).hostname}
+		</a>
+	{/if}
 </div>
 
 <style lang="scss">
 	.citation {
-		display: contents;
 		color: var(--primary);
 	}
 
@@ -60,14 +56,13 @@
 		border-radius: var(--border-radius-small);
 		font-size: 0.75em;
 		line-height: inherit;
-
-		a {
-			color: var(--accent);
-			text-decoration: none;
-		}
+		transform: translateY(-0.1lh);
+		color: var(--accent);
+		text-decoration: none;
 
 		&:hover {
 			background-color: var(--flood);
+			border-color: var(--boundary);
 			cursor: pointer;
 		}
 	}
