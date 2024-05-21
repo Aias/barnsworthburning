@@ -31,6 +31,13 @@ export enum Palette {
 	Mint = 'mint',
 	Sky = 'sky'
 }
+export type Neutral =
+	| Palette.Gray
+	| Palette.Slate
+	| Palette.Sand
+	| Palette.Mauve
+	| Palette.Olive
+	| Palette.Sage;
 
 export const paletteOptions: Palette[] = [
 	Palette.Indigo,
@@ -39,6 +46,40 @@ export const paletteOptions: Palette[] = [
 	Palette.Amber,
 	Palette.Tomato
 ];
+
+export const neutralsMap: Record<Neutral, Palette[]> = {
+	[Palette.Gray]: [Palette.Gray],
+	[Palette.Mauve]: [
+		Palette.Mauve,
+		Palette.Tomato,
+		Palette.Red,
+		Palette.Ruby,
+		Palette.Crimson,
+		Palette.Pink,
+		Palette.Plum,
+		Palette.Purple,
+		Palette.Violet
+	],
+	[Palette.Slate]: [
+		Palette.Slate,
+		Palette.Iris,
+		Palette.Indigo,
+		Palette.Blue,
+		Palette.Sky,
+		Palette.Cyan
+	],
+	[Palette.Sage]: [Palette.Sage, Palette.Mint, Palette.Teal, Palette.Jade, Palette.Green],
+	[Palette.Olive]: [Palette.Olive, Palette.Grass, Palette.Lime],
+	[Palette.Sand]: [
+		Palette.Sand,
+		Palette.Yellow,
+		Palette.Amber,
+		Palette.Orange,
+		Palette.Brown,
+		Palette.Bronze,
+		Palette.Gold
+	]
+};
 
 export enum Shade {
 	White = 'white',

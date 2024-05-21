@@ -1,9 +1,20 @@
-@import './radix.scss';
+@import './palette.scss';
 
 :root {
+	--black: black;
+	--white: white;
 	color-scheme: light dark;
-	--mode-contrast: light-dark(black, white);
 	--chroma: 0%;
+	--mode-contrast: light-dark(var(--black), var(--white));
+}
+
+@supports (color: color(display-p3 1 1 1)) {
+	@media (color-gamut: p3) {
+		:root {
+			--black: color(display-p3 0 0 0);
+			--white: color(display-p3 1 1 1);
+		}
+	}
 }
 
 .light {
@@ -20,6 +31,41 @@
 
 .chromatic {
 	--chroma: 100%;
+}
+
+:where(
+		.gray,
+		.mauve,
+		.slate,
+		.sage,
+		.olive,
+		.sand,
+		.bronze,
+		.gold,
+		.brown,
+		.orange,
+		.tomato,
+		.red,
+		.ruby,
+		.crimson,
+		.pink,
+		.plum,
+		.purple,
+		.violet,
+		.iris,
+		.indigo,
+		.blue,
+		.cyan,
+		.teal,
+		.jade,
+		.green,
+		.grass
+	) {
+	--clr-contrast: var(--white);
+}
+
+:where(.sky, .mint, .lime, .yellow, .amber) {
+	--clr-contrast: var(--black);
 }
 
 :where(:root, .dark, .light, .neutral, .chromatic, .indigo, .sky, .grass, .amber, .tomato) {
