@@ -1,10 +1,10 @@
 import { airtableFetch, airtableFind } from '$lib/server/requests';
 import { mapCreatorRecord, mapExtractRecord } from '$helpers/mapping';
-import { ExtractView, AirtableTable, type IBaseCreator, type IBaseExtract } from '$types/Airtable';
+import { ExtractView, Table, type IBaseCreator, type IBaseExtract } from '$types/Airtable';
 
 const findAllCreators = async (creatorIds: string[]) => {
 	const creatorRecords = creatorIds.map(async (creatorId) =>
-		airtableFind<IBaseCreator>(AirtableTable.Creators, creatorId)
+		airtableFind<IBaseCreator>(Table.Creators, creatorId)
 	);
 
 	return Promise.all(creatorRecords);
@@ -12,7 +12,7 @@ const findAllCreators = async (creatorIds: string[]) => {
 
 const findExtractsByCreators = async (creatorIds: string[], operand: 'AND' | 'OR' = 'AND') => {
 	const filterFormula = `${operand}(${creatorIds.map((id) => `FIND('${id}', creatorsLookup) > 0`).join(',')})`;
-	const extracts = await airtableFetch<IBaseExtract>(AirtableTable.Extracts, {
+	const extracts = await airtableFetch<IBaseExtract>(Table.Extracts, {
 		view: ExtractView.Best,
 		filterByFormula: filterFormula
 	});

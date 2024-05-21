@@ -1,12 +1,12 @@
 <script lang="ts">
 	import markdown from '$helpers/markdown';
-	import { AirtableBaseId } from '$types/Airtable';
 	import Citation from './Citation.svelte';
 	import TopicList from './TopicList.svelte';
 	import RelationList from './RelationList.svelte';
 	import AirtableImage from './AirtableImage.svelte';
 	import Link from './Link.svelte';
-	import type { IExtract } from '$types/Airtable';
+	import { AirtableBaseId, ExtractView, Table, type IExtract } from '$types/Airtable';
+	import interaction from '$lib/interaction.svelte';
 
 	interface ExtractProps {
 		extract: IExtract;
@@ -15,6 +15,10 @@
 	}
 
 	let { extract, contextId = 'panel', class: className }: ExtractProps = $props();
+
+	let airtableUrl = $derived(
+		`https://airtable.com/${AirtableBaseId}/${Table.Extracts}/${ExtractView.EntryView}/${extract.id}`
+	);
 
 	let id = $derived(extract.id);
 	let title = $derived(extract.title);
@@ -29,9 +33,18 @@
 
 	let hasRelations = $derived(children || connections || spaces);
 	let nodeId = $derived(`${contextId}--${id}`);
+
+	const handleClick = (event: MouseEvent) => {
+		if (interaction.metaKeyPressed) {
+			event.preventDefault();
+			window.open(airtableUrl, '_blank');
+		}
+	};
 </script>
 
-<section id={nodeId} class:extract={true} class={className}>
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<section id={nodeId} class:extract={true} class={className} onclick={handleClick}>
 	{#if title}
 		<header>
 			<h2 class="extract-title">

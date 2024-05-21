@@ -1,7 +1,7 @@
 import Airtable from 'airtable';
 import { error } from '@sveltejs/kit';
 import type { Record, FieldSet, SelectOptions, Error } from 'airtable';
-import { type IBaseRecord, AirtableBaseId, AirtableTable } from '$types/Airtable';
+import { type IBaseRecord, AirtableBaseId, Table } from '$types/Airtable';
 
 Airtable.configure({
 	endpointUrl: 'https://api.airtable.com',
@@ -29,7 +29,7 @@ function mapReceivedRecord<T extends IBaseRecord>(record: Record<FieldSet>): T {
  * @returns A promise that resolves to an array of fetched records.
  */
 async function airtableFetch<T extends IBaseRecord>(
-	table: AirtableTable,
+	table: Table,
 	options: SelectOptions<FieldSet>
 ): Promise<T[]> {
 	return base(table)
@@ -51,7 +51,7 @@ async function airtableFetch<T extends IBaseRecord>(
  * @returns A promise that resolves to the found record.
  */
 async function airtableFind<T extends IBaseRecord>(
-	table: AirtableTable = AirtableTable.Extracts,
+	table: Table = Table.Extracts,
 	recordId: Record<FieldSet>['id']
 ): Promise<T> {
 	return base(table)

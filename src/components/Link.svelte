@@ -1,19 +1,33 @@
 <script lang="ts">
-	import type { Snippet } from 'svelte';
+	import type { Snippet, SvelteComponent } from 'svelte';
 	import { entityTypes } from '$helpers/params';
+	import type { HTMLAnchorAttributes } from 'svelte/elements';
 
-	interface LinkProps {
+	// Separate interfaces for different cases
+	interface ExternalLinkProps extends HTMLAnchorAttributes {
+		href: string;
+		children: Snippet;
+		toType?: never;
+		toId?: never;
+	}
+
+	interface InternalLinkProps extends HTMLAnchorAttributes {
 		toType?: keyof typeof entityTypes;
 		toId: string;
 		children: Snippet;
+		href?: never;
 	}
 
-	let { toType = 'extract', toId, children, ...restProps }: LinkProps = $props();
+	// Union type for LinkProps
+	type LinkProps = ExternalLinkProps | InternalLinkProps;
 
-	let href = $derived.by(() => {
+	let { toType = 'extract', toId, href, children, ...restProps }: LinkProps = $props();
+
+	let url = $derived.by(() => {
+		if (href) return href;
 		let segment = entityTypes[toType].urlParam;
 		return `/${segment}/${toId}`;
 	});
 </script>
 
-<a {href} {...restProps}>{@render children()}</a>
+<a href={url} {...restProps}>{@render children()}</a>

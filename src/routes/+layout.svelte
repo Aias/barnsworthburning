@@ -6,6 +6,7 @@
 	import Index from '$components/Index.svelte';
 	import { Palette, Mode, Chroma } from '$types/Theme';
 	import settings from '$lib/settings.svelte';
+	import interaction from '$lib/interaction.svelte';
 	import { getCookie } from '$helpers/cookies';
 
 	let { children, data } = $props();
@@ -39,8 +40,26 @@
 			cache.addSpaces(data.spaces);
 		}
 	});
+
+	const handleKeydown = (event: KeyboardEvent) => {
+		if (event.altKey) {
+			interaction.setAltKeyPressed(true);
+		}
+		if (event.metaKey) {
+			interaction.setMetaKeyPressed(true);
+		}
+	};
+	const handleKeyup = (event: KeyboardEvent) => {
+		if (!event.altKey) {
+			interaction.setAltKeyPressed(false);
+		}
+		if (!event.metaKey) {
+			interaction.setMetaKeyPressed(false);
+		}
+	};
 </script>
 
+<svelte:window on:keydown={handleKeydown} on:keyup={handleKeyup} />
 <SEO />
 <Header class="app-header" />
 <main class="app-container">

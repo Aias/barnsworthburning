@@ -5,7 +5,7 @@ import {
 	CreatorView,
 	ExtractView,
 	SpaceView,
-	AirtableTable,
+	Table,
 	type IBaseCreator,
 	type IBaseExtract,
 	type IBaseSpace
@@ -14,15 +14,15 @@ import {
 const MAX_RECORDS = 100;
 
 export async function load() {
-	const extracts = await airtableFetch<IBaseExtract>(AirtableTable.Extracts, {
+	const extracts = await airtableFetch<IBaseExtract>(Table.Extracts, {
 		view: ExtractView.Works,
 		maxRecords: MAX_RECORDS
 	});
-	const creators = await airtableFetch<IBaseCreator>(AirtableTable.Creators, {
+	const creators = await airtableFetch<IBaseCreator>(Table.Creators, {
 		view: CreatorView.ByStars,
 		maxRecords: MAX_RECORDS
 	});
-	const spaces = await airtableFetch<IBaseSpace>(AirtableTable.Spaces, {
+	const spaces = await airtableFetch<IBaseSpace>(Table.Spaces, {
 		view: SpaceView.ByStars,
 		maxRecords: MAX_RECORDS
 	});

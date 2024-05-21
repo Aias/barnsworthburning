@@ -2,7 +2,7 @@
 	import { article } from '$helpers/grammar';
 	import CreatorList from './CreatorList.svelte';
 	import Link from './Link.svelte';
-	import type { IExtract } from '$types/Airtable';
+	import { type IExtract } from '$types/Airtable';
 
 	interface CitationProps {
 		extract: IExtract;
@@ -64,6 +64,11 @@
 			background-color: var(--flood);
 			border-color: var(--boundary);
 			cursor: pointer;
+		}
+
+		&::after {
+			content: '⤤';
+			margin-inline-start: 1ch;
 		}
 	}
 </style>

@@ -3,7 +3,7 @@ import type { Attachment, FieldSet, Record } from 'airtable';
 // const AirtableBaseId = 'appHWZbECVKCSjquH' as const;
 export const AirtableBaseId = 'appNAUPSEyCYlPtvG' as const;
 
-export enum AirtableTable {
+export enum Table {
 	Extracts = 'tblACVIEZW68A1mMZ',
 	Creators = 'tblWPCpPglI6ssVZv',
 	Spaces = 'tblDQjXO9oy2TKTqL',
@@ -14,7 +14,8 @@ export enum ExtractView {
 	Best = 'viwCvae2rXQscUap6',
 	ByEntryDate = 'viwLItZEyHOGtcoHe',
 	Gallery = 'viwEHJGOwWKp7Zebc',
-	Works = 'viwTkCBV6uRoHplvP'
+	Works = 'viwTkCBV6uRoHplvP',
+	EntryView = 'viw4zAxRJhQbhTddm'
 }
 export enum CreatorView {
 	Alphabetical = 'viwGZDVJxyNDDfOjV',
