@@ -71,7 +71,16 @@
 		<li><a href="/search">🔍 Search</a></li>
 		<li class="section-break"></li>
 		<li class="controls">
-			<TextInput type="search" inline bind:value={nameFilter} placeholder="Filter..." />
+			<form action="/search">
+				<TextInput
+					type="search"
+					name="q"
+					inline
+					bind:value={nameFilter}
+					placeholder="Filter..."
+				/>
+				<button class="screenreader" type="submit">Search</button>
+			</form>
 		</li>
 		{#each filteredIndex as entry (entry.id)}
 			<li class="index-entry">
@@ -102,6 +111,10 @@
 	.controls {
 		display: flex;
 		margin-block: 0.5lh;
+
+		form {
+			display: contents;
+		}
 
 		:global(input) {
 			flex: 1;
