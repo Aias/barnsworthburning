@@ -590,15 +590,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/kit@npm:^2.5.9":
-  version: 2.5.9
-  resolution: "@sveltejs/kit@npm:2.5.9"
+"@sveltejs/kit@npm:^2.5.10":
+  version: 2.5.10
+  resolution: "@sveltejs/kit@npm:2.5.10"
   dependencies:
     "@types/cookie": "npm:^0.6.0"
     cookie: "npm:^0.6.0"
     devalue: "npm:^5.0.0"
     esm-env: "npm:^1.0.0"
-    import-meta-resolve: "npm:^4.0.0"
+    import-meta-resolve: "npm:^4.1.0"
     kleur: "npm:^4.1.5"
     magic-string: "npm:^0.30.5"
     mrmime: "npm:^2.0.0"
@@ -612,7 +612,7 @@ __metadata:
     vite: ^5.0.3
   bin:
     svelte-kit: svelte-kit.js
-  checksum: 10c0/c23540b8922a6efa6e61aaf74b7863d289bd49c144f9a702ba04bd73bc5bc1e4d0bbad659e2478aca5423a434b05c32bc8c167b8f0c1f3776188467cb441c2b2
+  checksum: 10c0/af66ebfe367c223cd20cb7365003b66fe4ed5cabcf2869a4a64f98acc4f12711fbbf36795f97de99e121b372c77d0830e40fd20d599e239342330b4118ab6cbc
   languageName: node
   linkType: hard
 
@@ -1004,7 +1004,7 @@ __metadata:
     "@radix-ui/colors": "npm:^3.0.0"
     "@sveltejs/adapter-netlify": "npm:^4.2.0"
     "@sveltejs/adapter-node": "npm:^5.0.1"
-    "@sveltejs/kit": "npm:^2.5.9"
+    "@sveltejs/kit": "npm:^2.5.10"
     "@sveltejs/vite-plugin-svelte": "npm:^3.1.0"
     "@types/eslint": "npm:8.56.10"
     "@types/remarkable": "npm:^2.0.8"
@@ -1957,10 +1957,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"import-meta-resolve@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "import-meta-resolve@npm:4.0.0"
-  checksum: 10c0/709375e01f8c3a87b7870991ca29c630d71bb7e22b7bb0f622613173d87b41b4043b4a983800e6d38ab3867496a46f82d30df0cbc2e55792c91c23193eea67a1
+"import-meta-resolve@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "import-meta-resolve@npm:4.1.0"
+  checksum: 10c0/42f3284b0460635ddf105c4ad99c6716099c3ce76702602290ad5cbbcd295700cbc04e4bdf47bacf9e3f1a4cec2e1ff887dabc20458bef398f9de22ddff45ef5
   languageName: node
   linkType: hard
 

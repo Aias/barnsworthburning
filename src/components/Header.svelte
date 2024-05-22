@@ -1,5 +1,6 @@
 <script lang="ts">
 	import settings from '$lib/settings.svelte';
+	import ThemeSelector from './ThemeSelector.svelte';
 
 	let { ...restProps } = $props();
 </script>
@@ -9,20 +10,7 @@
 		<button onclick={() => settings.toggleMode()}>Toggle Mode</button>
 		<button onclick={() => settings.toggleChroma()}>Toggle Chroma</button>
 	</fieldset>
-	<fieldset class="settings-group theme-selector">
-		{#each settings.paletteOptions as paletteKey (paletteKey)}
-			<label>
-				<input
-					type="radio"
-					name="paletteKey"
-					value={paletteKey}
-					onchange={(e) => settings.setPalette((e.target as HTMLInputElement).value as typeof paletteKey)}
-					checked={settings.palette === paletteKey}
-				/>
-				{paletteKey}
-			</label>
-		{/each}
-	</fieldset>
+	<ThemeSelector />
 </header>
 
 <style lang="scss">
@@ -41,10 +29,5 @@
 		display: flex;
 		align-items: center;
 		gap: 0.75em;
-	}
-	.theme-selector {
-		label {
-			text-transform: capitalize;
-		}
 	}
 </style>
