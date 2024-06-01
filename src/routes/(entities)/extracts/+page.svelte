@@ -17,7 +17,6 @@
 		<li>
 			<article>
 				<header>
-					<strong>{extract.title}</strong>
 					{#if extract.michelinStars}
 						<span class="stars">
 							{#each Array(extract.michelinStars) as _}
@@ -25,6 +24,7 @@
 							{/each}
 						</span>
 					{/if}
+					<strong>{extract.title}</strong>
 					{#if extract.creators}
 						<CreatorList creators={extract.creators} />
 					{/if}
