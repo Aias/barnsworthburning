@@ -25,9 +25,7 @@
 						</span>
 					{/if}
 					<strong>{extract.title}</strong>
-					{#if extract.creators}
-						<CreatorList creators={extract.creators} />
-					{/if}
+					<CreatorList creators={extract.creators} class="creators" />
 				</header>
 				{#if extract.extract}
 					<blockquote>
@@ -73,6 +71,12 @@
 			flex: 0 1 auto;
 			text-overflow: ellipsis;
 			overflow: hidden;
+		}
+
+		& > :global(.creators) {
+			flex: 1;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 	}
 	blockquote {

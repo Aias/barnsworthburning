@@ -1,9 +1,10 @@
 <script lang="ts">
 	import Link from './Link.svelte';
 	import type { ILinkedRecord } from '$types/Airtable';
+	import type { HTMLAttributes } from 'svelte/elements';
 
-	interface CreatorListProps {
-		creators: ILinkedRecord[];
+	interface CreatorListProps extends HTMLAttributes<HTMLSpanElement> {
+		creators?: ILinkedRecord[];
 	}
 
 	let { creators, ...restProps }: CreatorListProps = $props();
@@ -20,3 +21,9 @@
 		{/each}
 	</span>
 {/if}
+
+<style>
+	span {
+		color: var(--secondary);
+	}
+</style>
