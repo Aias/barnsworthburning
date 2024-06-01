@@ -62,16 +62,19 @@ small,
 	color: var(--secondary);
 }
 
-button {
+button,
+.button {
 	/* First lines here from https://dbushell.com/2024/03/10/css-button-styles-you-might-not-know/ */
 	inline-size: fit-content;
 	touch-action: manipulation;
 	user-select: none;
+	display: inline-flex;
+	align-items: center;
 	background-color: var(--splash);
 	color: var(--accent);
 	border: 1px solid var(--border);
 	border-radius: var(--border-radius-small);
-	padding-block: 0.25em;
+	padding-block: 0.15em;
 	padding-inline: 0.5em;
 	margin: 0;
 	white-space: nowrap;
