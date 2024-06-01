@@ -1,7 +1,7 @@
 <script lang="ts">
 	import cache from '$lib/cache.svelte';
-	import MarkdownContent from '$components/MarkdownContent.svelte';
 	import CreatorList from '$components/CreatorList.svelte';
+	import markdown from '$helpers/markdown';
 
 	let { data } = $props();
 
@@ -29,7 +29,10 @@
 				</header>
 				{#if extract.extract}
 					<blockquote>
-						<MarkdownContent text={extract.extract} />
+						{@html markdown
+							.parse(extract.extract)
+							.toString()
+							.replaceAll('<br>', '<span class="line-break"></span>')}
 					</blockquote>
 				{/if}
 			</article>
@@ -98,6 +101,11 @@
 		}
 		br {
 			display: none;
+		}
+		.line-break::after {
+			content: '/';
+			margin-inline: 0.5ch;
+			color: var(--hint);
 		}
 	}
 </style>
