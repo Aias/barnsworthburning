@@ -2,6 +2,7 @@
 	import cache from '$lib/cache.svelte';
 	import CreatorList from '$components/CreatorList.svelte';
 	import markdown from '$helpers/markdown';
+	import { article } from '$helpers/grammar.js';
 
 	let { data } = $props();
 
@@ -14,26 +15,53 @@
 
 <ul class="extract-list">
 	{#each cachedExtracts as extract (extract.id)}
+		{@const {
+			michelinStars,
+			title,
+			creators,
+			extract: quote,
+			format = 'Fragment',
+			images,
+			imageCaption,
+			notes
+		} = extract}
+		{@const content = quote || notes}
 		<li>
 			<article>
-				<header>
-					{#if extract.michelinStars}
-						<span class="stars">
-							{#each Array(extract.michelinStars) as _}
-								<span>⭐</span>
-							{/each}
-						</span>
+				<section>
+					<header>
+						{#if michelinStars}
+							<span class="stars">
+								{#each Array(michelinStars) as _}
+									<span>⭐</span>
+								{/each}
+							</span>
+						{/if}
+						<strong class="title">{title}</strong>
+						<CreatorList {creators} class="creators" />
+					</header>
+					{#if content}
+						<blockquote class="summary">
+							{@html markdown
+								.parse(content)
+								.toString()
+								.replaceAll('<br>', '<span class="line-break"></span>')}
+						</blockquote>
+					{:else}
+						<p class="summary">
+							<span>({article(format)} {format.toLowerCase()})</span>
+						</p>
 					{/if}
-					<strong>{extract.title}</strong>
-					<CreatorList creators={extract.creators} class="creators" />
-				</header>
-				{#if extract.extract}
-					<blockquote>
-						{@html markdown
-							.parse(extract.extract)
-							.toString()
-							.replaceAll('<br>', '<span class="line-break"></span>')}
-					</blockquote>
+				</section>
+				{#if images}
+					{@const mainImage = images[0]}
+					<figure>
+						<img
+							src={mainImage.url}
+							alt={imageCaption ?? mainImage.filename}
+							loading="lazy"
+						/>
+					</figure>
 				{/if}
 			</article>
 		</li>
@@ -49,8 +77,8 @@
 		background-color: var(--paper);
 	}
 	li {
-		padding-inline: 1em;
-		padding-block: 0.25em;
+		padding-inline: 0.75em;
+		padding-block: 0.5em;
 		&:not(:last-child) {
 			border-bottom: 1px solid var(--divider);
 		}
@@ -59,9 +87,28 @@
 			cursor: pointer;
 		}
 	}
-	.stars {
-		font-size: 0.75em;
-		transform: translate(0, -2px);
+	article {
+		display: flex;
+		gap: 1em;
+
+		& > section {
+			flex: 1;
+			overflow: hidden;
+		}
+		& > figure {
+			position: relative;
+			width: 5em;
+			overflow: hidden;
+			border: 1px solid var(--divider);
+			border-radius: var(--border-radius-medium);
+			& > img {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				object-position: center;
+			}
+		}
 	}
 	header {
 		display: flex;
@@ -70,42 +117,47 @@
 		overflow: hidden;
 		white-space: nowrap;
 
-		& > strong {
+		& > .title {
 			flex: 0 1 auto;
 			text-overflow: ellipsis;
 			overflow: hidden;
 		}
 
+		& > .stars {
+			font-size: 0.75em;
+			transform: translate(0, -2px);
+		}
+
 		& > :global(.creators) {
 			flex: 1;
+			min-width: 20%;
 			overflow: hidden;
 			text-overflow: ellipsis;
 		}
 	}
-	blockquote {
-		all: unset;
-		display: block;
+	.summary {
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		max-width: 100%;
 		color: var(--secondary);
 	}
-	blockquote :global {
-		* {
-			display: inline;
-			white-space: nowrap;
-			margin: 0;
-			padding: 0;
-			border: none;
-		}
-		br {
-			display: none;
-		}
-		.line-break::after {
-			content: '/';
-			margin-inline: 0.5ch;
-			color: var(--hint);
+	blockquote {
+		all: unset;
+		display: block;
+
+		& :global {
+			* {
+				all: unset;
+			}
+			br {
+				display: none;
+			}
+			.line-break::after {
+				content: '/';
+				margin-inline: 0.5ch;
+				color: var(--hint);
+			}
 		}
 	}
 </style>
