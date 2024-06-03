@@ -59,35 +59,29 @@
 	</li>
 	<li>
 		<fieldset class="mode-selector">
-			<label
+			<label aria-label="Day Mode" title="Day Mode"
 				><input
 					type="radio"
 					name="modeKey"
 					class="screenreader"
-					aria-label="Day Mode"
-					title="Day Mode"
 					checked={settings.mode === Mode.Light}
 					onchange={() => settings.setMode(Mode.Light)}
 				/>🌅</label
 			>
-			<label
+			<label aria-label="Match System Mode" title="Match System Mode"
 				><input
 					type="radio"
 					name="modeKey"
 					class="screenreader"
-					aria-label="System Mode"
-					title="System Mode"
 					checked={settings.mode === Mode.Auto}
 					onchange={() => settings.setMode(Mode.Auto)}
 				/>🌄</label
 			>
-			<label
+			<label aria-label="Night Mode" title="Night Mode"
 				><input
 					type="radio"
 					name="modeKey"
 					class="screenreader"
-					aria-label="Night Mode"
-					title="Night Mode"
 					checked={settings.mode === Mode.Dark}
 					onchange={() => settings.setMode(Mode.Dark)}
 				/>🌌</label
@@ -96,13 +90,11 @@
 	</li>
 	<li>
 		<fieldset class="chroma-selector">
-			<label
+			<label aria-label="Toggle Chroma" title="Toggle Chroma"
 				><input
 					type="checkbox"
 					name="modeKey"
 					class="screenreader"
-					aria-label="Toggle Chroma"
-					title="Toggle Chroma"
 					checked={settings.chroma === Chroma.Chromatic}
 					onchange={() => settings.setChroma()}
 				/>🎨</label
