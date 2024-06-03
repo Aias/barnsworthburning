@@ -68,7 +68,7 @@
 	--clr-contrast: var(--black);
 }
 
-:where(:root, .dark, .light, .neutral, .chromatic, .indigo, .sky, .grass, .amber, .tomato) {
+:where(:root, .dark, .light, .neutral, .chromatic, .themed) {
 	// Neutral
 	--display-neutral: color-mix(in oklch, var(--neu-a12), var(--mode-contrast));
 	--primary-neutral: var(--neu-a12);

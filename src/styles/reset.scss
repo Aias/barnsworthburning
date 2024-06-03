@@ -34,7 +34,8 @@ ul {
 }
 
 /* https://piccalil.li/blog/removing-list-styles-without-affecting-semantics/ */
-:is(ul, ol)[class] {
+:is(ul, ol)[class],
+menu {
 	list-style-type: '';
 	margin: 0;
 	padding: 0;

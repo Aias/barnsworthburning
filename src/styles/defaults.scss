@@ -23,8 +23,8 @@ body {
 	block-size: 100%;
 	margin: 0;
 	color: var(--display);
-	font-size: var(--font-size-body);
-	line-height: var(--line-height);
+	font-size: calc((14 / 16) * 1em);
+	line-height: calc(1.5 * (16 / 14));
 }
 
 h1 {
@@ -179,13 +179,6 @@ code,
 kbd,
 samp {
 	font-family: var(--font-stack-mono);
-	/* The monospace fonts tend to be optically larger for a given font size. */
-	font-size: calc(1em * var(--monospace-scale));
-	line-height: calc(var(--line-height) / var(--monospace-scale));
-}
-
-.text-mono :is(.link, :any-link) {
-	font-size: 1em; /* Avoid compounding ensmallnesses. */
 }
 
 :not(pre) > :where(code, kbd, samp) {

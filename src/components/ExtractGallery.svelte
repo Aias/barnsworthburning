@@ -36,8 +36,6 @@
 		--gallery-scale: var(--scale, 1em);
 
 		font-size: var(--gallery-scale);
-		padding-inline: calc(var(--gallery-scale) / 1.5);
-		margin-inline: calc(-1 * var(--gallery-scale) / 1.5);
 
 		column-width: 35ch;
 		column-gap: var(--gallery-scale);

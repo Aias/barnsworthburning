@@ -2,7 +2,9 @@
 	import cache from '$lib/cache.svelte';
 	import { page } from '$app/stores';
 	import { entityTypes, type EntityType } from '$helpers/params';
-	import TextInput from './TextInput.svelte';
+	import TextInput from '$components/TextInput.svelte';
+	import Link from '$components/Link.svelte';
+	import ThemeSelector from './ThemeSelector.svelte';
 
 	let { ...restProps } = $props();
 
@@ -36,19 +38,20 @@
 		return all;
 	});
 
+	$effect(() => {
+		const routeId = $page.route.id;
+		if (routeId) {
+			nameFilter = '';
+		}
+	});
+
 	const filteredIndex = $derived.by(() => {
 		let filtered = fullIndex;
-		const routeId = $page.route.id || '/';
 		if (nameFilter) {
 			filtered = filtered.filter((entry) =>
 				entry.name.toLowerCase().includes(nameFilter.toLowerCase())
 			);
 		}
-		// if (routeId.includes('creators')) {
-		// 	filtered = filtered.filter((entry) => entry.type === entityTypes.creator);
-		// } else if (routeId.includes('spaces')) {
-		// 	filtered = filtered.filter((entry) => entry.type === entityTypes.space);
-		// }
 		return filtered;
 	});
 
@@ -62,26 +65,20 @@
 	}
 </script>
 
-<section class:container={true} {...restProps}>
+<header class:themed={true} {...restProps}>
+	<nav class="app-nav">
+		<Link class="nav-link" href="/" data-icon="🗂️">Index</Link>
+		<Link class="nav-link" href="/creators" data-icon="🧑‍🎨">Creators</Link>
+		<Link class="nav-link" href="/spaces" data-icon="🏷️">Spaces</Link>
+		<Link class="nav-link" href="/extracts" data-icon="📝">Extracts</Link>
+		<Link class="nav-link" href="/search" data-icon="🔍">Search</Link>
+	</nav>
+	<hr role="presentation" class="section-break" />
+	<form action="/search">
+		<TextInput type="search" name="q" inline bind:value={nameFilter} placeholder="Filter..." />
+		<button class="screenreader" type="submit">Search</button>
+	</form>
 	<ol class="index">
-		<li><a href="/">🗂️ Index</a></li>
-		<li><a href="/creators">🧑‍🎨 Creators</a></li>
-		<li><a href="/spaces">🏷️ Spaces</a></li>
-		<li><a href="/extracts">📝 Extracts</a></li>
-		<li><a href="/search">🔍 Search</a></li>
-		<li class="section-break"></li>
-		<li class="controls">
-			<form action="/search">
-				<TextInput
-					type="search"
-					name="q"
-					inline
-					bind:value={nameFilter}
-					placeholder="Filter..."
-				/>
-				<button class="screenreader" type="submit">Search</button>
-			</form>
-		</li>
 		{#each filteredIndex as entry (entry.id)}
 			<li class="index-entry">
 				<a class="name" href="/{entry.type.urlParam}/{entry.id}">
@@ -95,26 +92,18 @@
 			{/each}
 		{/if}
 	</ol>
-</section>
+	<hr role="presentation" class="section-break" />
+	<menu class="settings">
+		<li>
+			<ThemeSelector />
+		</li>
+	</menu>
+</header>
 
 <style lang="scss">
-	.container {
-		font-size: var(--font-size-small);
-	}
-	.index {
-		container-type: inline-size;
-		padding: 0;
-		list-style-type: none;
-		column-width: 25ch;
-		column-gap: 2em;
-	}
-	.controls {
+	form {
 		display: flex;
 		margin-block: 0.5lh;
-
-		form {
-			display: contents;
-		}
 
 		:global(input) {
 			flex: 1;
@@ -126,6 +115,8 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		height: 1lh;
+		border: none;
 
 		&::before {
 			content: '⁘  ⁘  ⁘';
@@ -150,14 +141,6 @@
 			&:hover {
 				color: var(--secondary);
 			}
-		}
-	}
-	@container (max-width: 50ch) {
-		.index {
-			column-count: 1;
-		}
-		.extra {
-			display: none;
 		}
 	}
 </style>

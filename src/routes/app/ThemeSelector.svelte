@@ -57,8 +57,10 @@
 <style lang="scss">
 	.theme-selector {
 		display: flex;
+		justify-content: center;
 		gap: 4px;
 		flex-wrap: wrap;
+		font-size: 0.875rem;
 
 		&:has(input:focus-visible) {
 			outline: 1px solid var(--main);

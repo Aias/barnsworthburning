@@ -1,9 +1,8 @@
 <script lang="ts">
 	import '$styles/app.scss';
-	import Header from '$components/Header.svelte';
 	import SEO from '$components/SEO.svelte';
+	import Nav from './app/Nav.svelte';
 	import cache from '$lib/cache.svelte';
-	import Index from '$components/Index.svelte';
 	import { Palette, Mode, Chroma } from '$types/Theme';
 	import settings from '$lib/settings.svelte';
 	import interaction from '$lib/interaction.svelte';
@@ -61,10 +60,7 @@
 
 <svelte:window on:keydown={handleKeydown} on:keyup={handleKeyup} />
 <SEO />
-<Header class="app-header" />
-<main class="app-container">
-	<Index class="app-index" />
-	<div class="app-content">
-		{@render children()}
-	</div>
+<Nav class="app-header" />
+<main class="app-main">
+	{@render children()}
 </main>
