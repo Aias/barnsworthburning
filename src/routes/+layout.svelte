@@ -13,8 +13,6 @@
 
 	let isIndex = $derived($page.route.id === '/');
 
-	$inspect(isIndex);
-
 	$effect.pre(() => {
 		const storedMode = getCookie('barnsworthburning-mode') as Mode | null;
 		const storedChroma = getCookie('barnsworthburning-chroma') as Chroma | null;
@@ -45,25 +43,13 @@
 		}
 	});
 
-	const handleKeydown = (event: KeyboardEvent) => {
-		if (event.altKey) {
-			interaction.setAltKeyPressed(true);
-		}
-		if (event.metaKey) {
-			interaction.setMetaKeyPressed(true);
-		}
-	};
-	const handleKeyup = (event: KeyboardEvent) => {
-		if (!event.altKey) {
-			interaction.setAltKeyPressed(false);
-		}
-		if (!event.metaKey) {
-			interaction.setMetaKeyPressed(false);
-		}
+	const handleKeyPress = (event: KeyboardEvent) => {
+		interaction.setAltKeyPressed(event.altKey);
+		interaction.setMetaKeyPressed(event.metaKey);
 	};
 </script>
 
-<svelte:window on:keydown={handleKeydown} on:keyup={handleKeyup} />
+<svelte:window on:keydown={handleKeyPress} on:keyup={handleKeyPress} />
 <SEO />
 <Nav class="app-header" />
 {#if !isIndex}
