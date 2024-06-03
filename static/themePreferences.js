@@ -33,11 +33,6 @@ function getCookie(name) {
 	return null;
 }
 
-function setCookie(name, value) {
-	let expires = 'Fri, 31 Dec 9999 23:59:59 GMT';
-	document.cookie = `${name}=${value || ''}; expires=${expires}; path=/`;
-}
-
 const siteModePreference = getCookie(MODE_COOKIE);
 const siteChromaPreference = getCookie(CHROMA_COOKIE);
 const sitePalettePreference = getCookie(PALETTE_COOKIE);
