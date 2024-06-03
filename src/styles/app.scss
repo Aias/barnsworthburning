@@ -38,7 +38,7 @@
 	}
 }
 
-.app:has(.app-main:not(:empty)) {
+.app:has(.app-main) {
 	.app-header {
 		column-width: unset;
 		position: fixed;
@@ -104,10 +104,6 @@
 
 .app-main {
 	padding: var(--padding);
-
-	&:empty {
-		display: none;
-	}
 
 	@media (width < 600px) {
 		padding-bottom: 6rem;

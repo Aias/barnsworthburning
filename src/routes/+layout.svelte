@@ -2,6 +2,7 @@
 	import '$styles/app.scss';
 	import SEO from '$components/SEO.svelte';
 	import Nav from './app/Nav.svelte';
+	import { page } from '$app/stores';
 	import cache from '$lib/cache.svelte';
 	import { Palette, Mode, Chroma } from '$types/Theme';
 	import settings from '$lib/settings.svelte';
@@ -9,6 +10,10 @@
 	import { getCookie } from '$helpers/cookies';
 
 	let { children, data } = $props();
+
+	let isIndex = $derived($page.route.id === '/');
+
+	$inspect(isIndex);
 
 	$effect.pre(() => {
 		const storedMode = getCookie('barnsworthburning-mode') as Mode | null;
@@ -61,6 +66,8 @@
 <svelte:window on:keydown={handleKeydown} on:keyup={handleKeyup} />
 <SEO />
 <Nav class="app-header" />
-<main class="app-main">
-	{@render children()}
-</main>
+{#if !isIndex}
+	<main class="app-main">
+		{@render children()}
+	</main>
+{/if}
