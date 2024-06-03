@@ -26,172 +26,32 @@
   --white-a12: rgba(255, 255, 255, 0.95);
 }
 
-.tomato {
-  --clr-1: light-dark(#fffcfc, #181111);
-  --clr-2: light-dark(#fff8f7, #1f1513);
-  --clr-3: light-dark(#feebe7, #391714);
-  --clr-4: light-dark(#ffdcd3, #4e1511);
-  --clr-5: light-dark(#ffcdc2, #5e1c16);
-  --clr-6: light-dark(#fdbdaf, #6e2920);
-  --clr-7: light-dark(#f5a898, #853a2d);
-  --clr-8: light-dark(#ec8e7b, #ac4d39);
-  --clr-9: light-dark(#e54d2e, #e54d2e);
-  --clr-10: light-dark(#dd4425, #ec6142);
-  --clr-11: light-dark(#d13415, #ff977d);
-  --clr-12: light-dark(#5c271f, #fbd3cb);
+.gold {
+  --clr-1: light-dark(#fdfdfc, #121211);
+  --clr-2: light-dark(#faf9f2, #1b1a17);
+  --clr-3: light-dark(#f2f0e7, #24231f);
+  --clr-4: light-dark(#eae6db, #2d2b26);
+  --clr-5: light-dark(#e1dccf, #38352e);
+  --clr-6: light-dark(#d8d0bf, #444039);
+  --clr-7: light-dark(#cbc0aa, #544f46);
+  --clr-8: light-dark(#b9a88d, #696256);
+  --clr-9: light-dark(#978365, #978365);
+  --clr-10: light-dark(#8c7a5e, #a39073);
+  --clr-11: light-dark(#71624b, #cbb99f);
+  --clr-12: light-dark(#3b352b, #e8e2d9);
 
-  --clr-a1: light-dark(#ff000003, #f1121208);
-  --clr-a2: light-dark(#ff200008, #ff55330f);
-  --clr-a3: light-dark(#f52b0018, #ff35232b);
-  --clr-a4: light-dark(#ff35002c, #fd201142);
-  --clr-a5: light-dark(#ff2e003d, #fe332153);
-  --clr-a6: light-dark(#f92d0050, #ff4f3864);
-  --clr-a7: light-dark(#e7280067, #fd644a7d);
-  --clr-a8: light-dark(#db250084, #fe6d4ea7);
-  --clr-a9: light-dark(#df2600d1, #fe5431e4);
-  --clr-a10: light-dark(#d72400da, #ff6847eb);
-  --clr-a11: light-dark(#cd2200ea, #ff977d);
-  --clr-a12: light-dark(#460900e0, #ffd6cefb);
-}
-
-.ruby {
-  --clr-1: light-dark(#fffcfd, #191113);
-  --clr-2: light-dark(#fff7f8, #1e1517);
-  --clr-3: light-dark(#feeaed, #3a141e);
-  --clr-4: light-dark(#ffdce1, #4e1325);
-  --clr-5: light-dark(#ffced6, #5e1a2e);
-  --clr-6: light-dark(#f8bfc8, #6f2539);
-  --clr-7: light-dark(#efacb8, #883447);
-  --clr-8: light-dark(#e592a3, #b3445a);
-  --clr-9: light-dark(#e54666, #e54666);
-  --clr-10: light-dark(#dc3b5d, #ec5a72);
-  --clr-11: light-dark(#ca244d, #ff949d);
-  --clr-12: light-dark(#64172b, #fed2e1);
-
-  --clr-a1: light-dark(#ff005503, #f4124a09);
-  --clr-a2: light-dark(#ff002008, #fe5a7f0e);
-  --clr-a3: light-dark(#f3002515, #ff235d2c);
-  --clr-a4: light-dark(#ff002523, #fd195e42);
-  --clr-a5: light-dark(#ff002a31, #fe2d6b53);
-  --clr-a6: light-dark(#e4002440, #ff447665);
-  --clr-a7: light-dark(#ce002553, #ff577d80);
-  --clr-a8: light-dark(#c300286d, #ff5c7cae);
-  --clr-a9: light-dark(#db002cb9, #fe4c70e4);
-  --clr-a10: light-dark(#d2002cc4, #ff617beb);
-  --clr-a11: light-dark(#c10030db, #ff949d);
-  --clr-a12: light-dark(#550016e8, #ffd3e2fe);
-}
-
-.violet {
-  --clr-1: light-dark(#fdfcfe, #14121f);
-  --clr-2: light-dark(#faf8ff, #1b1525);
-  --clr-3: light-dark(#f4f0fe, #291f43);
-  --clr-4: light-dark(#ebe4ff, #33255b);
-  --clr-5: light-dark(#e1d9ff, #3c2e69);
-  --clr-6: light-dark(#d4cafe, #473876);
-  --clr-7: light-dark(#c2b5f5, #56468b);
-  --clr-8: light-dark(#aa99ec, #6958ad);
-  --clr-9: light-dark(#6e56cf, #6e56cf);
-  --clr-10: light-dark(#654dc4, #7d66d9);
-  --clr-11: light-dark(#6550b9, #baa7ff);
-  --clr-12: light-dark(#2f265f, #e2ddfe);
-
-  --clr-a1: light-dark(#5500aa03, #4422ff0f);
-  --clr-a2: light-dark(#4900ff07, #853ff916);
-  --clr-a3: light-dark(#4400ee0f, #8354fe36);
-  --clr-a4: light-dark(#4300ff1b, #7d51fd50);
-  --clr-a5: light-dark(#3600ff26, #845ffd5f);
-  --clr-a6: light-dark(#3100fb35, #8f6cfd6d);
-  --clr-a7: light-dark(#2d01dd4a, #9879ff83);
-  --clr-a8: light-dark(#2b00d066, #977dfea8);
-  --clr-a9: light-dark(#2400b7a9, #8668ffcc);
-  --clr-a10: light-dark(#2300abb2, #9176fed7);
-  --clr-a11: light-dark(#1f0099af, #baa7ff);
-  --clr-a12: light-dark(#0b0043d9, #e3defffe);
-}
-
-.indigo {
-  --clr-1: light-dark(#fdfdfe, #11131f);
-  --clr-2: light-dark(#f7f9ff, #141726);
-  --clr-3: light-dark(#edf2fe, #182449);
-  --clr-4: light-dark(#e1e9ff, #1d2e62);
-  --clr-5: light-dark(#d2deff, #253974);
-  --clr-6: light-dark(#c1d0ff, #304384);
-  --clr-7: light-dark(#abbdf9, #3a4f97);
-  --clr-8: light-dark(#8da4ef, #435db1);
-  --clr-9: light-dark(#3e63dd, #3e63dd);
-  --clr-10: light-dark(#3358d4, #5472e4);
-  --clr-11: light-dark(#3a5bc7, #9eb1ff);
-  --clr-12: light-dark(#1f2d5c, #d6e1ff);
-
-  --clr-a1: light-dark(#00008002, #1133ff0f);
-  --clr-a2: light-dark(#0040ff08, #3354fa17);
-  --clr-a3: light-dark(#0047f112, #2f62ff3c);
-  --clr-a4: light-dark(#0044ff1e, #3566ff57);
-  --clr-a5: light-dark(#0044ff2d, #4171fd6b);
-  --clr-a6: light-dark(#003eff3e, #5178fd7c);
-  --clr-a7: light-dark(#0037ed54, #5a7fff90);
-  --clr-a8: light-dark(#0034dc72, #5b81feac);
-  --clr-a9: light-dark(#0031d2c1, #4671ffdb);
-  --clr-a10: light-dark(#002ec9cc, #5c7efee3);
-  --clr-a11: light-dark(#002bb7c5, #9eb1ff);
-  --clr-a12: light-dark(#001046e0, #d6e1ff);
-}
-
-.sky {
-  --clr-1: light-dark(#f9feff, #0d141f);
-  --clr-2: light-dark(#f1fafd, #111a27);
-  --clr-3: light-dark(#e1f6fd, #112840);
-  --clr-4: light-dark(#d1f0fa, #113555);
-  --clr-5: light-dark(#bee7f5, #154467);
-  --clr-6: light-dark(#a9daed, #1b537b);
-  --clr-7: light-dark(#8dcae3, #1f6692);
-  --clr-8: light-dark(#60b3d7, #197cae);
-  --clr-9: light-dark(#7ce2fe, #7ce2fe);
-  --clr-10: light-dark(#74daf8, #a8eeff);
-  --clr-11: light-dark(#00749e, #75c7f0);
-  --clr-12: light-dark(#1d3e56, #c2f3ff);
-
-  --clr-a1: light-dark(#00d5ff06, #0044ff0f);
-  --clr-a2: light-dark(#00a4db0e, #1171fb18);
-  --clr-a3: light-dark(#00b3ee1e, #1184fc33);
-  --clr-a4: light-dark(#00ace42e, #128fff49);
-  --clr-a5: light-dark(#00a1d841, #1c9dfd5d);
-  --clr-a6: light-dark(#0092ca56, #28a5ff72);
-  --clr-a7: light-dark(#0089c172, #2badfe8b);
-  --clr-a8: light-dark(#0085bf9f, #1db2fea9);
-  --clr-a9: light-dark(#00c7fe83, #7ce3fffe);
-  --clr-a10: light-dark(#00bcf38b, #a8eeff);
-  --clr-a11: light-dark(#00749e, #7cd3ffef);
-  --clr-a12: light-dark(#002540e2, #c2f3ff);
-}
-
-.jade {
-  --clr-1: light-dark(#fbfefd, #0d1512);
-  --clr-2: light-dark(#f4fbf7, #121c18);
-  --clr-3: light-dark(#e6f7ed, #0f2e22);
-  --clr-4: light-dark(#d6f1e3, #0b3b2c);
-  --clr-5: light-dark(#c3e9d7, #114837);
-  --clr-6: light-dark(#acdec8, #1b5745);
-  --clr-7: light-dark(#8bceb6, #246854);
-  --clr-8: light-dark(#56ba9f, #2a7e68);
-  --clr-9: light-dark(#29a383, #29a383);
-  --clr-10: light-dark(#26997b, #27b08b);
-  --clr-11: light-dark(#208368, #1fd8a4);
-  --clr-12: light-dark(#1d3b31, #adf0d4);
-
-  --clr-a1: light-dark(#00c08004, #00de4505);
-  --clr-a2: light-dark(#00a3460b, #27fba60c);
-  --clr-a3: light-dark(#00ae4819, #02f99920);
-  --clr-a4: light-dark(#00a85129, #00ffaa2d);
-  --clr-a5: light-dark(#00a2553c, #11ffb63b);
-  --clr-a6: light-dark(#009a5753, #34ffc24b);
-  --clr-a7: light-dark(#00945f74, #45fdc75e);
-  --clr-a8: light-dark(#00976ea9, #48ffcf75);
-  --clr-a9: light-dark(#00916bd6, #38feca9d);
-  --clr-a10: light-dark(#008764d9, #31fec7ab);
-  --clr-a11: light-dark(#007152df, #21fec0d6);
-  --clr-a12: light-dark(#002217e2, #b8ffe1ef);
+  --clr-a1: light-dark(#55550003, #91911102);
+  --clr-a2: light-dark(#9d8a000d, #f9e29d0b);
+  --clr-a3: light-dark(#75600018, #f8ecbb15);
+  --clr-a4: light-dark(#6b4e0024, #ffeec41e);
+  --clr-a5: light-dark(#60460030, #feecc22a);
+  --clr-a6: light-dark(#64440040, #feebcb37);
+  --clr-a7: light-dark(#63420055, #ffedcd48);
+  --clr-a8: light-dark(#633d0072, #fdeaca5f);
+  --clr-a9: light-dark(#5332009a, #ffdba690);
+  --clr-a10: light-dark(#492d00a1, #fedfb09d);
+  --clr-a11: light-dark(#362100b4, #fee7c6c8);
+  --clr-a12: light-dark(#130c00d4, #fef7ede7);
 }
 
 .grass {
@@ -222,88 +82,200 @@
   --clr-a12: light-dark(#002006df, #ceffceef);
 }
 
-.amber {
-  --clr-1: light-dark(#fefdfb, #16120c);
-  --clr-2: light-dark(#fefbe9, #1d180f);
-  --clr-3: light-dark(#fff7c2, #302008);
-  --clr-4: light-dark(#ffee9c, #3f2700);
-  --clr-5: light-dark(#fbe577, #4d3000);
-  --clr-6: light-dark(#f3d673, #5c3d05);
-  --clr-7: light-dark(#e9c162, #714f19);
-  --clr-8: light-dark(#e2a336, #8f6424);
-  --clr-9: light-dark(#ffc53d, #ffc53d);
-  --clr-10: light-dark(#ffba18, #ffd60a);
-  --clr-11: light-dark(#ab6400, #ffca16);
-  --clr-12: light-dark(#4f3422, #ffe7b3);
+.jade {
+  --clr-1: light-dark(#fbfefd, #0d1512);
+  --clr-2: light-dark(#f4fbf7, #121c18);
+  --clr-3: light-dark(#e6f7ed, #0f2e22);
+  --clr-4: light-dark(#d6f1e3, #0b3b2c);
+  --clr-5: light-dark(#c3e9d7, #114837);
+  --clr-6: light-dark(#acdec8, #1b5745);
+  --clr-7: light-dark(#8bceb6, #246854);
+  --clr-8: light-dark(#56ba9f, #2a7e68);
+  --clr-9: light-dark(#29a383, #29a383);
+  --clr-10: light-dark(#26997b, #27b08b);
+  --clr-11: light-dark(#208368, #1fd8a4);
+  --clr-12: light-dark(#1d3b31, #adf0d4);
 
-  --clr-a1: light-dark(#c0800004, #e63c0006);
-  --clr-a2: light-dark(#f4d10016, #fd9b000d);
-  --clr-a3: light-dark(#ffde003d, #fa820022);
-  --clr-a4: light-dark(#ffd40063, #fc820032);
-  --clr-a5: light-dark(#f8cf0088, #fd8b0041);
-  --clr-a6: light-dark(#eab5008c, #fd9b0051);
-  --clr-a7: light-dark(#dc9b009d, #ffab2567);
-  --clr-a8: light-dark(#da8a00c9, #ffae3587);
-  --clr-a9: light-dark(#ffb300c2, #ffc53d);
-  --clr-a10: light-dark(#ffb300e7, #ffd60a);
-  --clr-a11: light-dark(#ab6400, #ffca16);
-  --clr-a12: light-dark(#341500dd, #ffe7b3);
+  --clr-a1: light-dark(#00c08004, #00de4505);
+  --clr-a2: light-dark(#00a3460b, #27fba60c);
+  --clr-a3: light-dark(#00ae4819, #02f99920);
+  --clr-a4: light-dark(#00a85129, #00ffaa2d);
+  --clr-a5: light-dark(#00a2553c, #11ffb63b);
+  --clr-a6: light-dark(#009a5753, #34ffc24b);
+  --clr-a7: light-dark(#00945f74, #45fdc75e);
+  --clr-a8: light-dark(#00976ea9, #48ffcf75);
+  --clr-a9: light-dark(#00916bd6, #38feca9d);
+  --clr-a10: light-dark(#008764d9, #31fec7ab);
+  --clr-a11: light-dark(#007152df, #21fec0d6);
+  --clr-a12: light-dark(#002217e2, #b8ffe1ef);
 }
 
-.gold {
-  --clr-1: light-dark(#fdfdfc, #121211);
-  --clr-2: light-dark(#faf9f2, #1b1a17);
-  --clr-3: light-dark(#f2f0e7, #24231f);
-  --clr-4: light-dark(#eae6db, #2d2b26);
-  --clr-5: light-dark(#e1dccf, #38352e);
-  --clr-6: light-dark(#d8d0bf, #444039);
-  --clr-7: light-dark(#cbc0aa, #544f46);
-  --clr-8: light-dark(#b9a88d, #696256);
-  --clr-9: light-dark(#978365, #978365);
-  --clr-10: light-dark(#8c7a5e, #a39073);
-  --clr-11: light-dark(#71624b, #cbb99f);
-  --clr-12: light-dark(#3b352b, #e8e2d9);
+.sky {
+  --clr-1: light-dark(#f9feff, #0d141f);
+  --clr-2: light-dark(#f1fafd, #111a27);
+  --clr-3: light-dark(#e1f6fd, #112840);
+  --clr-4: light-dark(#d1f0fa, #113555);
+  --clr-5: light-dark(#bee7f5, #154467);
+  --clr-6: light-dark(#a9daed, #1b537b);
+  --clr-7: light-dark(#8dcae3, #1f6692);
+  --clr-8: light-dark(#60b3d7, #197cae);
+  --clr-9: light-dark(#7ce2fe, #7ce2fe);
+  --clr-10: light-dark(#74daf8, #a8eeff);
+  --clr-11: light-dark(#00749e, #75c7f0);
+  --clr-12: light-dark(#1d3e56, #c2f3ff);
 
-  --clr-a1: light-dark(#55550003, #91911102);
-  --clr-a2: light-dark(#9d8a000d, #f9e29d0b);
-  --clr-a3: light-dark(#75600018, #f8ecbb15);
-  --clr-a4: light-dark(#6b4e0024, #ffeec41e);
-  --clr-a5: light-dark(#60460030, #feecc22a);
-  --clr-a6: light-dark(#64440040, #feebcb37);
-  --clr-a7: light-dark(#63420055, #ffedcd48);
-  --clr-a8: light-dark(#633d0072, #fdeaca5f);
-  --clr-a9: light-dark(#5332009a, #ffdba690);
-  --clr-a10: light-dark(#492d00a1, #fedfb09d);
-  --clr-a11: light-dark(#362100b4, #fee7c6c8);
-  --clr-a12: light-dark(#130c00d4, #fef7ede7);
+  --clr-a1: light-dark(#00d5ff06, #0044ff0f);
+  --clr-a2: light-dark(#00a4db0e, #1171fb18);
+  --clr-a3: light-dark(#00b3ee1e, #1184fc33);
+  --clr-a4: light-dark(#00ace42e, #128fff49);
+  --clr-a5: light-dark(#00a1d841, #1c9dfd5d);
+  --clr-a6: light-dark(#0092ca56, #28a5ff72);
+  --clr-a7: light-dark(#0089c172, #2badfe8b);
+  --clr-a8: light-dark(#0085bf9f, #1db2fea9);
+  --clr-a9: light-dark(#00c7fe83, #7ce3fffe);
+  --clr-a10: light-dark(#00bcf38b, #a8eeff);
+  --clr-a11: light-dark(#00749e, #7cd3ffef);
+  --clr-a12: light-dark(#002540e2, #c2f3ff);
 }
 
-.gray {
-  --clr-1: light-dark(#fcfcfc, #111111);
-  --clr-2: light-dark(#f9f9f9, #191919);
-  --clr-3: light-dark(#f0f0f0, #222222);
-  --clr-4: light-dark(#e8e8e8, #2a2a2a);
-  --clr-5: light-dark(#e0e0e0, #313131);
-  --clr-6: light-dark(#d9d9d9, #3a3a3a);
-  --clr-7: light-dark(#cecece, #484848);
-  --clr-8: light-dark(#bbbbbb, #606060);
-  --clr-9: light-dark(#8d8d8d, #6e6e6e);
-  --clr-10: light-dark(#838383, #7b7b7b);
-  --clr-11: light-dark(#646464, #b4b4b4);
-  --clr-12: light-dark(#202020, #eeeeee);
+.indigo {
+  --clr-1: light-dark(#fdfdfe, #11131f);
+  --clr-2: light-dark(#f7f9ff, #141726);
+  --clr-3: light-dark(#edf2fe, #182449);
+  --clr-4: light-dark(#e1e9ff, #1d2e62);
+  --clr-5: light-dark(#d2deff, #253974);
+  --clr-6: light-dark(#c1d0ff, #304384);
+  --clr-7: light-dark(#abbdf9, #3a4f97);
+  --clr-8: light-dark(#8da4ef, #435db1);
+  --clr-9: light-dark(#3e63dd, #3e63dd);
+  --clr-10: light-dark(#3358d4, #5472e4);
+  --clr-11: light-dark(#3a5bc7, #9eb1ff);
+  --clr-12: light-dark(#1f2d5c, #d6e1ff);
 
-  --clr-a1: light-dark(#00000003, #00000000);
-  --clr-a2: light-dark(#00000006, #ffffff09);
-  --clr-a3: light-dark(#0000000f, #ffffff12);
-  --clr-a4: light-dark(#00000017, #ffffff1b);
-  --clr-a5: light-dark(#0000001f, #ffffff22);
-  --clr-a6: light-dark(#00000026, #ffffff2c);
-  --clr-a7: light-dark(#00000031, #ffffff3b);
-  --clr-a8: light-dark(#00000044, #ffffff55);
-  --clr-a9: light-dark(#00000072, #ffffff64);
-  --clr-a10: light-dark(#0000007c, #ffffff72);
-  --clr-a11: light-dark(#0000009b, #ffffffaf);
-  --clr-a12: light-dark(#000000df, #ffffffed);
+  --clr-a1: light-dark(#00008002, #1133ff0f);
+  --clr-a2: light-dark(#0040ff08, #3354fa17);
+  --clr-a3: light-dark(#0047f112, #2f62ff3c);
+  --clr-a4: light-dark(#0044ff1e, #3566ff57);
+  --clr-a5: light-dark(#0044ff2d, #4171fd6b);
+  --clr-a6: light-dark(#003eff3e, #5178fd7c);
+  --clr-a7: light-dark(#0037ed54, #5a7fff90);
+  --clr-a8: light-dark(#0034dc72, #5b81feac);
+  --clr-a9: light-dark(#0031d2c1, #4671ffdb);
+  --clr-a10: light-dark(#002ec9cc, #5c7efee3);
+  --clr-a11: light-dark(#002bb7c5, #9eb1ff);
+  --clr-a12: light-dark(#001046e0, #d6e1ff);
+}
+
+.violet {
+  --clr-1: light-dark(#fdfcfe, #14121f);
+  --clr-2: light-dark(#faf8ff, #1b1525);
+  --clr-3: light-dark(#f4f0fe, #291f43);
+  --clr-4: light-dark(#ebe4ff, #33255b);
+  --clr-5: light-dark(#e1d9ff, #3c2e69);
+  --clr-6: light-dark(#d4cafe, #473876);
+  --clr-7: light-dark(#c2b5f5, #56468b);
+  --clr-8: light-dark(#aa99ec, #6958ad);
+  --clr-9: light-dark(#6e56cf, #6e56cf);
+  --clr-10: light-dark(#654dc4, #7d66d9);
+  --clr-11: light-dark(#6550b9, #baa7ff);
+  --clr-12: light-dark(#2f265f, #e2ddfe);
+
+  --clr-a1: light-dark(#5500aa03, #4422ff0f);
+  --clr-a2: light-dark(#4900ff07, #853ff916);
+  --clr-a3: light-dark(#4400ee0f, #8354fe36);
+  --clr-a4: light-dark(#4300ff1b, #7d51fd50);
+  --clr-a5: light-dark(#3600ff26, #845ffd5f);
+  --clr-a6: light-dark(#3100fb35, #8f6cfd6d);
+  --clr-a7: light-dark(#2d01dd4a, #9879ff83);
+  --clr-a8: light-dark(#2b00d066, #977dfea8);
+  --clr-a9: light-dark(#2400b7a9, #8668ffcc);
+  --clr-a10: light-dark(#2300abb2, #9176fed7);
+  --clr-a11: light-dark(#1f0099af, #baa7ff);
+  --clr-a12: light-dark(#0b0043d9, #e3defffe);
+}
+
+.crimson {
+  --clr-1: light-dark(#fffcfd, #191114);
+  --clr-2: light-dark(#fef7f9, #201318);
+  --clr-3: light-dark(#ffe9f0, #381525);
+  --clr-4: light-dark(#fedce7, #4d122f);
+  --clr-5: light-dark(#facedd, #5c1839);
+  --clr-6: light-dark(#f3bed1, #6d2545);
+  --clr-7: light-dark(#eaacc3, #873356);
+  --clr-8: light-dark(#e093b2, #b0436e);
+  --clr-9: light-dark(#e93d82, #e93d82);
+  --clr-10: light-dark(#df3478, #ee518a);
+  --clr-11: light-dark(#cb1d63, #ff92ad);
+  --clr-12: light-dark(#621639, #fdd3e8);
+
+  --clr-a1: light-dark(#ff005503, #f4126709);
+  --clr-a2: light-dark(#e0004008, #f22f7a11);
+  --clr-a3: light-dark(#ff005216, #fe2a8b2a);
+  --clr-a4: light-dark(#f8005123, #fd158741);
+  --clr-a5: light-dark(#e5004f31, #fd278f51);
+  --clr-a6: light-dark(#d0004b41, #fe459763);
+  --clr-a7: light-dark(#bf004753, #fd559b7f);
+  --clr-a8: light-dark(#b6004a6c, #fe5b9bab);
+  --clr-a9: light-dark(#e2005bc2, #fe418de8);
+  --clr-a10: light-dark(#d70056cb, #ff5693ed);
+  --clr-a11: light-dark(#c4004fe2, #ff92ad);
+  --clr-a12: light-dark(#530026e9, #ffd5eafd);
+}
+
+.tomato {
+  --clr-1: light-dark(#fffcfc, #181111);
+  --clr-2: light-dark(#fff8f7, #1f1513);
+  --clr-3: light-dark(#feebe7, #391714);
+  --clr-4: light-dark(#ffdcd3, #4e1511);
+  --clr-5: light-dark(#ffcdc2, #5e1c16);
+  --clr-6: light-dark(#fdbdaf, #6e2920);
+  --clr-7: light-dark(#f5a898, #853a2d);
+  --clr-8: light-dark(#ec8e7b, #ac4d39);
+  --clr-9: light-dark(#e54d2e, #e54d2e);
+  --clr-10: light-dark(#dd4425, #ec6142);
+  --clr-11: light-dark(#d13415, #ff977d);
+  --clr-12: light-dark(#5c271f, #fbd3cb);
+
+  --clr-a1: light-dark(#ff000003, #f1121208);
+  --clr-a2: light-dark(#ff200008, #ff55330f);
+  --clr-a3: light-dark(#f52b0018, #ff35232b);
+  --clr-a4: light-dark(#ff35002c, #fd201142);
+  --clr-a5: light-dark(#ff2e003d, #fe332153);
+  --clr-a6: light-dark(#f92d0050, #ff4f3864);
+  --clr-a7: light-dark(#e7280067, #fd644a7d);
+  --clr-a8: light-dark(#db250084, #fe6d4ea7);
+  --clr-a9: light-dark(#df2600d1, #fe5431e4);
+  --clr-a10: light-dark(#d72400da, #ff6847eb);
+  --clr-a11: light-dark(#cd2200ea, #ff977d);
+  --clr-a12: light-dark(#460900e0, #ffd6cefb);
+}
+
+.orange {
+  --clr-1: light-dark(#fefcfb, #17120e);
+  --clr-2: light-dark(#fff7ed, #1e160f);
+  --clr-3: light-dark(#ffefd6, #331e0b);
+  --clr-4: light-dark(#ffdfb5, #462100);
+  --clr-5: light-dark(#ffd19a, #562800);
+  --clr-6: light-dark(#ffc182, #66350c);
+  --clr-7: light-dark(#f5ae73, #7e451d);
+  --clr-8: light-dark(#ec9455, #a35829);
+  --clr-9: light-dark(#f76b15, #f76b15);
+  --clr-10: light-dark(#ef5f00, #ff801f);
+  --clr-11: light-dark(#cc4e00, #ffa057);
+  --clr-12: light-dark(#582d1d, #ffe0c2);
+
+  --clr-a1: light-dark(#c0400004, #ec360007);
+  --clr-a2: light-dark(#ff8e0012, #fe6d000e);
+  --clr-a3: light-dark(#ff9c0029, #fb6a0025);
+  --clr-a4: light-dark(#ff91014a, #ff590039);
+  --clr-a5: light-dark(#ff8b0065, #ff61004a);
+  --clr-a6: light-dark(#ff81007d, #fd75045c);
+  --clr-a7: light-dark(#ed6c008c, #ff832c75);
+  --clr-a8: light-dark(#e35f00aa, #fe84389d);
+  --clr-a9: light-dark(#f65e00ea, #fe6d15f7);
+  --clr-a10: light-dark(#ef5f00, #ff801f);
+  --clr-a11: light-dark(#cc4e00, #ffa057);
+  --clr-a12: light-dark(#431200e2, #ffe0c2);
 }
 
 .gray {
@@ -529,603 +501,103 @@
       --white-a12: color(display-p3 1 1 1 / 0.95);
     }
 
-    .tomato {
+    .gold {
       --clr-1: light-dark(
-        color(display-p3 0.998 0.989 0.988),
-        color(display-p3 0.09 0.068 0.067)
+        color(display-p3 0.992 0.992 0.989),
+        color(display-p3 0.071 0.071 0.067)
       );
       --clr-2: light-dark(
-        color(display-p3 0.994 0.974 0.969),
-        color(display-p3 0.115 0.084 0.076)
+        color(display-p3 0.98 0.976 0.953),
+        color(display-p3 0.104 0.101 0.09)
       );
       --clr-3: light-dark(
-        color(display-p3 0.985 0.924 0.909),
-        color(display-p3 0.205 0.097 0.083)
+        color(display-p3 0.947 0.94 0.909),
+        color(display-p3 0.141 0.136 0.122)
       );
       --clr-4: light-dark(
-        color(display-p3 0.996 0.868 0.835),
-        color(display-p3 0.282 0.099 0.077)
+        color(display-p3 0.914 0.904 0.865),
+        color(display-p3 0.177 0.17 0.152)
       );
       --clr-5: light-dark(
-        color(display-p3 0.98 0.812 0.77),
-        color(display-p3 0.339 0.129 0.101)
+        color(display-p3 0.88 0.865 0.816),
+        color(display-p3 0.217 0.207 0.185)
       );
       --clr-6: light-dark(
-        color(display-p3 0.953 0.75 0.698),
-        color(display-p3 0.398 0.179 0.141)
+        color(display-p3 0.84 0.818 0.756),
+        color(display-p3 0.265 0.252 0.225)
       );
       --clr-7: light-dark(
-        color(display-p3 0.917 0.673 0.611),
-        color(display-p3 0.487 0.245 0.194)
+        color(display-p3 0.788 0.753 0.677),
+        color(display-p3 0.327 0.31 0.277)
       );
       --clr-8: light-dark(
-        color(display-p3 0.875 0.575 0.502),
-        color(display-p3 0.629 0.322 0.248)
+        color(display-p3 0.715 0.66 0.565),
+        color(display-p3 0.407 0.384 0.342)
       );
       --clr-9: light-dark(
-        color(display-p3 0.831 0.345 0.231),
-        color(display-p3 0.831 0.345 0.231)
+        color(display-p3 0.579 0.517 0.41),
+        color(display-p3 0.579 0.517 0.41)
       );
       --clr-10: light-dark(
-        color(display-p3 0.802 0.313 0.2),
-        color(display-p3 0.862 0.415 0.298)
+        color(display-p3 0.538 0.479 0.38),
+        color(display-p3 0.628 0.566 0.463)
       );
       --clr-11: light-dark(
-        color(display-p3 0.755 0.259 0.152),
-        color(display-p3 1 0.585 0.455)
+        color(display-p3 0.433 0.386 0.305),
+        color(display-p3 0.784 0.728 0.635)
       );
       --clr-12: light-dark(
-        color(display-p3 0.335 0.165 0.132),
-        color(display-p3 0.959 0.833 0.802)
+        color(display-p3 0.227 0.209 0.173),
+        color(display-p3 0.906 0.887 0.855)
       );
 
       --clr-a1: light-dark(
-        color(display-p3 0.675 0.024 0.024 / 0.012),
-        color(display-p3 0.973 0.071 0.071 / 0.026)
+        color(display-p3 0.349 0.349 0.024 / 0.012),
+        color(display-p3 0.855 0.855 0.071 / 0.005)
       );
       --clr-a2: light-dark(
-        color(display-p3 0.757 0.145 0.02 / 0.032),
-        color(display-p3 0.992 0.376 0.224 / 0.051)
+        color(display-p3 0.592 0.514 0.024 / 0.048),
+        color(display-p3 0.98 0.89 0.616 / 0.043)
       );
       --clr-a3: light-dark(
-        color(display-p3 0.831 0.184 0.012 / 0.091),
-        color(display-p3 0.996 0.282 0.176 / 0.148)
+        color(display-p3 0.4 0.357 0.012 / 0.091),
+        color(display-p3 1 0.949 0.753 / 0.08)
       );
       --clr-a4: light-dark(
-        color(display-p3 0.976 0.192 0.004 / 0.165),
-        color(display-p3 1 0.204 0.118 / 0.232)
+        color(display-p3 0.357 0.298 0.008 / 0.134),
+        color(display-p3 1 0.933 0.8 / 0.118)
       );
       --clr-a5: light-dark(
-        color(display-p3 0.918 0.192 0.004 / 0.232),
-        color(display-p3 1 0.286 0.192 / 0.29)
+        color(display-p3 0.345 0.282 0.004 / 0.185),
+        color(display-p3 1 0.949 0.804 / 0.16)
       );
       --clr-a6: light-dark(
-        color(display-p3 0.847 0.173 0.004 / 0.302),
-        color(display-p3 1 0.392 0.278 / 0.353)
+        color(display-p3 0.341 0.263 0.004 / 0.244),
+        color(display-p3 1 0.925 0.8 / 0.215)
       );
       --clr-a7: light-dark(
-        color(display-p3 0.788 0.165 0.004 / 0.389),
-        color(display-p3 1 0.459 0.349 / 0.45)
+        color(display-p3 0.345 0.235 0.004 / 0.322),
+        color(display-p3 1 0.945 0.831 / 0.278)
       );
       --clr-a8: light-dark(
-        color(display-p3 0.749 0.153 0.004 / 0.499),
-        color(display-p3 1 0.49 0.369 / 0.601)
+        color(display-p3 0.345 0.22 0.004 / 0.436),
+        color(display-p3 1 0.937 0.82 / 0.366)
       );
       --clr-a9: light-dark(
-        color(display-p3 0.78 0.149 0 / 0.769),
-        color(display-p3 1 0.408 0.267 / 0.82)
+        color(display-p3 0.286 0.18 0 / 0.589),
+        color(display-p3 0.996 0.882 0.69 / 0.551)
       );
       --clr-a10: light-dark(
-        color(display-p3 0.757 0.141 0 / 0.8),
-        color(display-p3 1 0.478 0.341 / 0.853)
+        color(display-p3 0.255 0.161 0 / 0.62),
+        color(display-p3 1 0.894 0.725 / 0.601)
       );
       --clr-a11: light-dark(
-        color(display-p3 0.755 0.259 0.152),
-        color(display-p3 1 0.585 0.455)
+        color(display-p3 0.433 0.386 0.305),
+        color(display-p3 0.784 0.728 0.635)
       );
       --clr-a12: light-dark(
-        color(display-p3 0.335 0.165 0.132),
-        color(display-p3 0.959 0.833 0.802)
-      );
-    }
-
-    .ruby {
-      --clr-1: light-dark(
-        color(display-p3 0.998 0.989 0.992),
-        color(display-p3 0.093 0.068 0.074)
-      );
-      --clr-2: light-dark(
-        color(display-p3 0.995 0.971 0.974),
-        color(display-p3 0.113 0.083 0.089)
-      );
-      --clr-3: light-dark(
-        color(display-p3 0.983 0.92 0.928),
-        color(display-p3 0.208 0.088 0.117)
-      );
-      --clr-4: light-dark(
-        color(display-p3 0.987 0.869 0.885),
-        color(display-p3 0.279 0.092 0.147)
-      );
-      --clr-5: light-dark(
-        color(display-p3 0.968 0.817 0.839),
-        color(display-p3 0.337 0.12 0.18)
-      );
-      --clr-6: light-dark(
-        color(display-p3 0.937 0.758 0.786),
-        color(display-p3 0.401 0.166 0.223)
-      );
-      --clr-7: light-dark(
-        color(display-p3 0.897 0.685 0.721),
-        color(display-p3 0.495 0.224 0.281)
-      );
-      --clr-8: light-dark(
-        color(display-p3 0.851 0.588 0.639),
-        color(display-p3 0.652 0.295 0.359)
-      );
-      --clr-9: light-dark(
-        color(display-p3 0.83 0.323 0.408),
-        color(display-p3 0.83 0.323 0.408)
-      );
-      --clr-10: light-dark(
-        color(display-p3 0.795 0.286 0.375),
-        color(display-p3 0.857 0.392 0.455)
-      );
-      --clr-11: light-dark(
-        color(display-p3 0.728 0.211 0.311),
-        color(display-p3 1 0.57 0.59)
-      );
-      --clr-12: light-dark(
-        color(display-p3 0.36 0.115 0.171),
-        color(display-p3 0.968 0.83 0.88)
-      );
-
-      --clr-a1: light-dark(
-        color(display-p3 0.675 0.024 0.349 / 0.012),
-        color(display-p3 0.984 0.071 0.329 / 0.03)
-      );
-      --clr-a2: light-dark(
-        color(display-p3 0.863 0.024 0.024 / 0.028),
-        color(display-p3 0.992 0.376 0.529 / 0.051)
-      );
-      --clr-a3: light-dark(
-        color(display-p3 0.804 0.008 0.11 / 0.079),
-        color(display-p3 0.996 0.196 0.404 / 0.152)
-      );
-      --clr-a4: light-dark(
-        color(display-p3 0.91 0.008 0.125 / 0.13),
-        color(display-p3 1 0.173 0.416 / 0.227)
-      );
-      --clr-a5: light-dark(
-        color(display-p3 0.831 0.004 0.133 / 0.185),
-        color(display-p3 1 0.259 0.459 / 0.29)
-      );
-      --clr-a6: light-dark(
-        color(display-p3 0.745 0.004 0.118 / 0.244),
-        color(display-p3 1 0.341 0.506 / 0.358)
-      );
-      --clr-a7: light-dark(
-        color(display-p3 0.678 0.004 0.114 / 0.314),
-        color(display-p3 1 0.412 0.541 / 0.458)
-      );
-      --clr-a8: light-dark(
-        color(display-p3 0.639 0.004 0.125 / 0.412),
-        color(display-p3 1 0.431 0.537 / 0.627)
-      );
-      --clr-a9: light-dark(
-        color(display-p3 0.753 0 0.129 / 0.679),
-        color(display-p3 1 0.376 0.482 / 0.82)
-      );
-      --clr-a10: light-dark(
-        color(display-p3 0.714 0 0.125 / 0.714),
-        color(display-p3 1 0.447 0.522 / 0.849)
-      );
-      --clr-a11: light-dark(
-        color(display-p3 0.728 0.211 0.311),
-        color(display-p3 1 0.57 0.59)
-      );
-      --clr-a12: light-dark(
-        color(display-p3 0.36 0.115 0.171),
-        color(display-p3 0.968 0.83 0.88)
-      );
-    }
-
-    .violet {
-      --clr-1: light-dark(
-        color(display-p3 0.991 0.988 0.995),
-        color(display-p3 0.077 0.071 0.118)
-      );
-      --clr-2: light-dark(
-        color(display-p3 0.978 0.974 0.998),
-        color(display-p3 0.101 0.084 0.141)
-      );
-      --clr-3: light-dark(
-        color(display-p3 0.953 0.943 0.993),
-        color(display-p3 0.154 0.123 0.256)
-      );
-      --clr-4: light-dark(
-        color(display-p3 0.916 0.897 1),
-        color(display-p3 0.191 0.148 0.345)
-      );
-      --clr-5: light-dark(
-        color(display-p3 0.876 0.851 1),
-        color(display-p3 0.226 0.182 0.396)
-      );
-      --clr-6: light-dark(
-        color(display-p3 0.825 0.793 0.981),
-        color(display-p3 0.269 0.223 0.449)
-      );
-      --clr-7: light-dark(
-        color(display-p3 0.752 0.712 0.943),
-        color(display-p3 0.326 0.277 0.53)
-      );
-      --clr-8: light-dark(
-        color(display-p3 0.654 0.602 0.902),
-        color(display-p3 0.399 0.346 0.656)
-      );
-      --clr-9: light-dark(
-        color(display-p3 0.417 0.341 0.784),
-        color(display-p3 0.417 0.341 0.784)
-      );
-      --clr-10: light-dark(
-        color(display-p3 0.381 0.306 0.741),
-        color(display-p3 0.477 0.402 0.823)
-      );
-      --clr-11: light-dark(
-        color(display-p3 0.383 0.317 0.702),
-        color(display-p3 0.72 0.65 1)
-      );
-      --clr-12: light-dark(
-        color(display-p3 0.179 0.15 0.359),
-        color(display-p3 0.883 0.867 0.986)
-      );
-
-      --clr-a1: light-dark(
-        color(display-p3 0.349 0.024 0.675 / 0.012),
-        color(display-p3 0.282 0.141 0.996 / 0.055)
-      );
-      --clr-a2: light-dark(
-        color(display-p3 0.161 0.024 0.863 / 0.028),
-        color(display-p3 0.51 0.263 1 / 0.08)
-      );
-      --clr-a3: light-dark(
-        color(display-p3 0.204 0.004 0.871 / 0.059),
-        color(display-p3 0.494 0.337 0.996 / 0.202)
-      );
-      --clr-a4: light-dark(
-        color(display-p3 0.196 0.004 1 / 0.102),
-        color(display-p3 0.49 0.345 1 / 0.299)
-      );
-      --clr-a5: light-dark(
-        color(display-p3 0.165 0.008 1 / 0.15),
-        color(display-p3 0.525 0.392 1 / 0.353)
-      );
-      --clr-a6: light-dark(
-        color(display-p3 0.153 0.004 0.906 / 0.208),
-        color(display-p3 0.569 0.455 1 / 0.408)
-      );
-      --clr-a7: light-dark(
-        color(display-p3 0.141 0.004 0.796 / 0.287),
-        color(display-p3 0.588 0.494 1 / 0.496)
-      );
-      --clr-a8: light-dark(
-        color(display-p3 0.133 0.004 0.753 / 0.397),
-        color(display-p3 0.596 0.51 1 / 0.631)
-      );
-      --clr-a9: light-dark(
-        color(display-p3 0.114 0 0.675 / 0.659),
-        color(display-p3 0.522 0.424 1 / 0.769)
-      );
-      --clr-a10: light-dark(
-        color(display-p3 0.11 0 0.627 / 0.695),
-        color(display-p3 0.576 0.482 1 / 0.811)
-      );
-      --clr-a11: light-dark(
-        color(display-p3 0.383 0.317 0.702),
-        color(display-p3 0.72 0.65 1)
-      );
-      --clr-a12: light-dark(
-        color(display-p3 0.179 0.15 0.359),
-        color(display-p3 0.883 0.867 0.986)
-      );
-    }
-
-    .indigo {
-      --clr-1: light-dark(
-        color(display-p3 0.992 0.992 0.996),
-        color(display-p3 0.068 0.074 0.118)
-      );
-      --clr-2: light-dark(
-        color(display-p3 0.971 0.977 0.998),
-        color(display-p3 0.081 0.089 0.144)
-      );
-      --clr-3: light-dark(
-        color(display-p3 0.933 0.948 0.992),
-        color(display-p3 0.105 0.141 0.275)
-      );
-      --clr-4: light-dark(
-        color(display-p3 0.885 0.914 1),
-        color(display-p3 0.129 0.18 0.369)
-      );
-      --clr-5: light-dark(
-        color(display-p3 0.831 0.87 1),
-        color(display-p3 0.163 0.22 0.439)
-      );
-      --clr-6: light-dark(
-        color(display-p3 0.767 0.814 0.995),
-        color(display-p3 0.203 0.262 0.5)
-      );
-      --clr-7: light-dark(
-        color(display-p3 0.685 0.74 0.957),
-        color(display-p3 0.245 0.309 0.575)
-      );
-      --clr-8: light-dark(
-        color(display-p3 0.569 0.639 0.916),
-        color(display-p3 0.285 0.362 0.674)
-      );
-      --clr-9: light-dark(
-        color(display-p3 0.276 0.384 0.837),
-        color(display-p3 0.276 0.384 0.837)
-      );
-      --clr-10: light-dark(
-        color(display-p3 0.234 0.343 0.801),
-        color(display-p3 0.354 0.445 0.866)
-      );
-      --clr-11: light-dark(
-        color(display-p3 0.256 0.354 0.755),
-        color(display-p3 0.63 0.69 1)
-      );
-      --clr-12: light-dark(
-        color(display-p3 0.133 0.175 0.348),
-        color(display-p3 0.848 0.881 0.99)
-      );
-
-      --clr-a1: light-dark(
-        color(display-p3 0.02 0.02 0.51 / 0.008),
-        color(display-p3 0.071 0.212 0.996 / 0.055)
-      );
-      --clr-a2: light-dark(
-        color(display-p3 0.024 0.161 0.863 / 0.028),
-        color(display-p3 0.251 0.345 0.988 / 0.085)
-      );
-      --clr-a3: light-dark(
-        color(display-p3 0.008 0.239 0.886 / 0.067),
-        color(display-p3 0.243 0.404 1 / 0.223)
-      );
-      --clr-a4: light-dark(
-        color(display-p3 0.004 0.247 1 / 0.114),
-        color(display-p3 0.263 0.42 1 / 0.324)
-      );
-      --clr-a5: light-dark(
-        color(display-p3 0.004 0.235 1 / 0.169),
-        color(display-p3 0.314 0.451 1 / 0.4)
-      );
-      --clr-a6: light-dark(
-        color(display-p3 0.004 0.208 0.984 / 0.232),
-        color(display-p3 0.361 0.49 1 / 0.467)
-      );
-      --clr-a7: light-dark(
-        color(display-p3 0.004 0.176 0.863 / 0.314),
-        color(display-p3 0.388 0.51 1 / 0.547)
-      );
-      --clr-a8: light-dark(
-        color(display-p3 0.004 0.165 0.812 / 0.432),
-        color(display-p3 0.404 0.518 1 / 0.652)
-      );
-      --clr-a9: light-dark(
-        color(display-p3 0 0.153 0.773 / 0.726),
-        color(display-p3 0.318 0.451 1 / 0.824)
-      );
-      --clr-a10: light-dark(
-        color(display-p3 0 0.137 0.737 / 0.765),
-        color(display-p3 0.404 0.506 1 / 0.858)
-      );
-      --clr-a11: light-dark(
-        color(display-p3 0.256 0.354 0.755),
-        color(display-p3 0.63 0.69 1)
-      );
-      --clr-a12: light-dark(
-        color(display-p3 0.133 0.175 0.348),
-        color(display-p3 0.848 0.881 0.99)
-      );
-    }
-
-    .sky {
-      --clr-1: light-dark(
-        color(display-p3 0.98 0.995 0.999),
-        color(display-p3 0.056 0.078 0.116)
-      );
-      --clr-2: light-dark(
-        color(display-p3 0.953 0.98 0.99),
-        color(display-p3 0.075 0.101 0.149)
-      );
-      --clr-3: light-dark(
-        color(display-p3 0.899 0.963 0.989),
-        color(display-p3 0.089 0.154 0.244)
-      );
-      --clr-4: light-dark(
-        color(display-p3 0.842 0.937 0.977),
-        color(display-p3 0.106 0.207 0.323)
-      );
-      --clr-5: light-dark(
-        color(display-p3 0.777 0.9 0.954),
-        color(display-p3 0.135 0.261 0.394)
-      );
-      --clr-6: light-dark(
-        color(display-p3 0.701 0.851 0.921),
-        color(display-p3 0.17 0.322 0.469)
-      );
-      --clr-7: light-dark(
-        color(display-p3 0.604 0.785 0.879),
-        color(display-p3 0.205 0.394 0.557)
-      );
-      --clr-8: light-dark(
-        color(display-p3 0.457 0.696 0.829),
-        color(display-p3 0.232 0.48 0.665)
-      );
-      --clr-9: light-dark(
-        color(display-p3 0.585 0.877 0.983),
-        color(display-p3 0.585 0.877 0.983)
-      );
-      --clr-10: light-dark(
-        color(display-p3 0.555 0.845 0.959),
-        color(display-p3 0.718 0.925 0.991)
-      );
-      --clr-11: light-dark(
-        color(display-p3 0.193 0.448 0.605),
-        color(display-p3 0.536 0.772 0.924)
-      );
-      --clr-12: light-dark(
-        color(display-p3 0.145 0.241 0.329),
-        color(display-p3 0.799 0.947 0.993)
-      );
-
-      --clr-a1: light-dark(
-        color(display-p3 0.02 0.804 1 / 0.02),
-        color(display-p3 0 0.282 0.996 / 0.055)
-      );
-      --clr-a2: light-dark(
-        color(display-p3 0.024 0.592 0.757 / 0.048),
-        color(display-p3 0.157 0.467 0.992 / 0.089)
-      );
-      --clr-a3: light-dark(
-        color(display-p3 0.004 0.655 0.886 / 0.102),
-        color(display-p3 0.192 0.522 0.996 / 0.19)
-      );
-      --clr-a4: light-dark(
-        color(display-p3 0.004 0.604 0.851 / 0.157),
-        color(display-p3 0.212 0.584 1 / 0.274)
-      );
-      --clr-a5: light-dark(
-        color(display-p3 0.004 0.565 0.792 / 0.224),
-        color(display-p3 0.259 0.631 1 / 0.349)
-      );
-      --clr-a6: light-dark(
-        color(display-p3 0.004 0.502 0.737 / 0.299),
-        color(display-p3 0.302 0.655 1 / 0.433)
-      );
-      --clr-a7: light-dark(
-        color(display-p3 0.004 0.459 0.694 / 0.397),
-        color(display-p3 0.329 0.686 1 / 0.526)
-      );
-      --clr-a8: light-dark(
-        color(display-p3 0 0.435 0.682 / 0.542),
-        color(display-p3 0.325 0.71 1 / 0.643)
-      );
-      --clr-a9: light-dark(
-        color(display-p3 0.004 0.71 0.965 / 0.416),
-        color(display-p3 0.592 0.894 1 / 0.984)
-      );
-      --clr-a10: light-dark(
-        color(display-p3 0.004 0.647 0.914 / 0.444),
-        color(display-p3 0.722 0.933 1 / 0.992)
-      );
-      --clr-a11: light-dark(
-        color(display-p3 0.193 0.448 0.605),
-        color(display-p3 0.536 0.772 0.924)
-      );
-      --clr-a12: light-dark(
-        color(display-p3 0.145 0.241 0.329),
-        color(display-p3 0.799 0.947 0.993)
-      );
-    }
-
-    .jade {
-      --clr-1: light-dark(
-        color(display-p3 0.986 0.996 0.992),
-        color(display-p3 0.059 0.083 0.071)
-      );
-      --clr-2: light-dark(
-        color(display-p3 0.962 0.983 0.969),
-        color(display-p3 0.078 0.11 0.094)
-      );
-      --clr-3: light-dark(
-        color(display-p3 0.912 0.965 0.932),
-        color(display-p3 0.091 0.176 0.138)
-      );
-      --clr-4: light-dark(
-        color(display-p3 0.858 0.941 0.893),
-        color(display-p3 0.102 0.228 0.177)
-      );
-      --clr-5: light-dark(
-        color(display-p3 0.795 0.909 0.847),
-        color(display-p3 0.133 0.279 0.221)
-      );
-      --clr-6: light-dark(
-        color(display-p3 0.715 0.864 0.791),
-        color(display-p3 0.174 0.334 0.273)
-      );
-      --clr-7: light-dark(
-        color(display-p3 0.603 0.802 0.718),
-        color(display-p3 0.219 0.402 0.335)
-      );
-      --clr-8: light-dark(
-        color(display-p3 0.44 0.72 0.629),
-        color(display-p3 0.263 0.488 0.411)
-      );
-      --clr-9: light-dark(
-        color(display-p3 0.319 0.63 0.521),
-        color(display-p3 0.319 0.63 0.521)
-      );
-      --clr-10: light-dark(
-        color(display-p3 0.299 0.592 0.488),
-        color(display-p3 0.338 0.68 0.555)
-      );
-      --clr-11: light-dark(
-        color(display-p3 0.15 0.5 0.37),
-        color(display-p3 0.4 0.835 0.656)
-      );
-      --clr-12: light-dark(
-        color(display-p3 0.142 0.229 0.194),
-        color(display-p3 0.734 0.934 0.838)
-      );
-
-      --clr-a1: light-dark(
-        color(display-p3 0.024 0.757 0.514 / 0.016),
-        color(display-p3 0 0.992 0.298 / 0.017)
-      );
-      --clr-a2: light-dark(
-        color(display-p3 0.024 0.612 0.22 / 0.04),
-        color(display-p3 0.318 0.988 0.651 / 0.047)
-      );
-      --clr-a3: light-dark(
-        color(display-p3 0.012 0.596 0.235 / 0.087),
-        color(display-p3 0.267 1 0.667 / 0.118)
-      );
-      --clr-a4: light-dark(
-        color(display-p3 0.008 0.588 0.255 / 0.142),
-        color(display-p3 0.275 0.996 0.702 / 0.173)
-      );
-      --clr-a5: light-dark(
-        color(display-p3 0.004 0.561 0.251 / 0.204),
-        color(display-p3 0.361 1 0.741 / 0.227)
-      );
-      --clr-a6: light-dark(
-        color(display-p3 0.004 0.525 0.278 / 0.287),
-        color(display-p3 0.439 1 0.796 / 0.286)
-      );
-      --clr-a7: light-dark(
-        color(display-p3 0.004 0.506 0.29 / 0.397),
-        color(display-p3 0.49 1 0.804 / 0.362)
-      );
-      --clr-a8: light-dark(
-        color(display-p3 0 0.506 0.337 / 0.561),
-        color(display-p3 0.506 1 0.835 / 0.45)
-      );
-      --clr-a9: light-dark(
-        color(display-p3 0 0.459 0.298 / 0.683),
-        color(display-p3 0.478 0.996 0.816 / 0.606)
-      );
-      --clr-a10: light-dark(
-        color(display-p3 0 0.42 0.271 / 0.702),
-        color(display-p3 0.478 1 0.816 / 0.656)
-      );
-      --clr-a11: light-dark(
-        color(display-p3 0.15 0.5 0.37),
-        color(display-p3 0.4 0.835 0.656)
-      );
-      --clr-a12: light-dark(
-        color(display-p3 0.142 0.229 0.194),
-        color(display-p3 0.734 0.934 0.838)
+        color(display-p3 0.227 0.209 0.173),
+        color(display-p3 0.906 0.887 0.855)
       );
     }
 
@@ -1229,303 +701,703 @@
       );
     }
 
-    .amber {
+    .jade {
       --clr-1: light-dark(
-        color(display-p3 0.995 0.992 0.985),
-        color(display-p3 0.082 0.07 0.05)
+        color(display-p3 0.986 0.996 0.992),
+        color(display-p3 0.059 0.083 0.071)
       );
       --clr-2: light-dark(
-        color(display-p3 0.994 0.986 0.921),
-        color(display-p3 0.111 0.094 0.064)
+        color(display-p3 0.962 0.983 0.969),
+        color(display-p3 0.078 0.11 0.094)
       );
       --clr-3: light-dark(
-        color(display-p3 0.994 0.969 0.782),
-        color(display-p3 0.178 0.128 0.049)
+        color(display-p3 0.912 0.965 0.932),
+        color(display-p3 0.091 0.176 0.138)
       );
       --clr-4: light-dark(
-        color(display-p3 0.989 0.937 0.65),
-        color(display-p3 0.239 0.156 0)
+        color(display-p3 0.858 0.941 0.893),
+        color(display-p3 0.102 0.228 0.177)
       );
       --clr-5: light-dark(
-        color(display-p3 0.97 0.902 0.527),
-        color(display-p3 0.29 0.193 0)
+        color(display-p3 0.795 0.909 0.847),
+        color(display-p3 0.133 0.279 0.221)
       );
       --clr-6: light-dark(
-        color(display-p3 0.936 0.844 0.506),
-        color(display-p3 0.344 0.245 0.076)
+        color(display-p3 0.715 0.864 0.791),
+        color(display-p3 0.174 0.334 0.273)
       );
       --clr-7: light-dark(
-        color(display-p3 0.89 0.762 0.443),
-        color(display-p3 0.422 0.314 0.141)
+        color(display-p3 0.603 0.802 0.718),
+        color(display-p3 0.219 0.402 0.335)
       );
       --clr-8: light-dark(
-        color(display-p3 0.85 0.65 0.3),
-        color(display-p3 0.535 0.399 0.189)
+        color(display-p3 0.44 0.72 0.629),
+        color(display-p3 0.263 0.488 0.411)
       );
       --clr-9: light-dark(
-        color(display-p3 1 0.77 0.26),
-        color(display-p3 1 0.77 0.26)
+        color(display-p3 0.319 0.63 0.521),
+        color(display-p3 0.319 0.63 0.521)
       );
       --clr-10: light-dark(
-        color(display-p3 0.959 0.741 0.274),
-        color(display-p3 1 0.87 0.15)
+        color(display-p3 0.299 0.592 0.488),
+        color(display-p3 0.338 0.68 0.555)
       );
       --clr-11: light-dark(
-        color(display-p3 0.64 0.4 0),
-        color(display-p3 1 0.8 0.29)
+        color(display-p3 0.15 0.5 0.37),
+        color(display-p3 0.4 0.835 0.656)
       );
       --clr-12: light-dark(
-        color(display-p3 0.294 0.208 0.145),
-        color(display-p3 0.984 0.909 0.726)
+        color(display-p3 0.142 0.229 0.194),
+        color(display-p3 0.734 0.934 0.838)
       );
 
       --clr-a1: light-dark(
-        color(display-p3 0.757 0.514 0.024 / 0.016),
-        color(display-p3 0.992 0.298 0 / 0.017)
+        color(display-p3 0.024 0.757 0.514 / 0.016),
+        color(display-p3 0 0.992 0.298 / 0.017)
       );
       --clr-a2: light-dark(
-        color(display-p3 0.902 0.804 0.008 / 0.079),
-        color(display-p3 0.988 0.651 0 / 0.047)
+        color(display-p3 0.024 0.612 0.22 / 0.04),
+        color(display-p3 0.318 0.988 0.651 / 0.047)
       );
       --clr-a3: light-dark(
-        color(display-p3 0.965 0.859 0.004 / 0.22),
-        color(display-p3 1 0.6 0 / 0.118)
+        color(display-p3 0.012 0.596 0.235 / 0.087),
+        color(display-p3 0.267 1 0.667 / 0.118)
       );
       --clr-a4: light-dark(
-        color(display-p3 0.969 0.82 0.004 / 0.35),
-        color(display-p3 1 0.557 0 / 0.185)
+        color(display-p3 0.008 0.588 0.255 / 0.142),
+        color(display-p3 0.275 0.996 0.702 / 0.173)
       );
       --clr-a5: light-dark(
-        color(display-p3 0.933 0.796 0.004 / 0.475),
-        color(display-p3 1 0.592 0 / 0.24)
+        color(display-p3 0.004 0.561 0.251 / 0.204),
+        color(display-p3 0.361 1 0.741 / 0.227)
       );
       --clr-a6: light-dark(
-        color(display-p3 0.875 0.682 0.004 / 0.495),
-        color(display-p3 1 0.659 0.094 / 0.299)
+        color(display-p3 0.004 0.525 0.278 / 0.287),
+        color(display-p3 0.439 1 0.796 / 0.286)
       );
       --clr-a7: light-dark(
-        color(display-p3 0.804 0.573 0 / 0.557),
-        color(display-p3 1 0.714 0.263 / 0.383)
+        color(display-p3 0.004 0.506 0.29 / 0.397),
+        color(display-p3 0.49 1 0.804 / 0.362)
       );
       --clr-a8: light-dark(
-        color(display-p3 0.788 0.502 0 / 0.699),
-        color(display-p3 0.996 0.729 0.306 / 0.5)
+        color(display-p3 0 0.506 0.337 / 0.561),
+        color(display-p3 0.506 1 0.835 / 0.45)
       );
       --clr-a9: light-dark(
-        color(display-p3 1 0.686 0 / 0.742),
-        color(display-p3 1 0.769 0.259)
+        color(display-p3 0 0.459 0.298 / 0.683),
+        color(display-p3 0.478 0.996 0.816 / 0.606)
       );
       --clr-a10: light-dark(
-        color(display-p3 0.945 0.643 0 / 0.726),
-        color(display-p3 1 0.871 0.149)
+        color(display-p3 0 0.42 0.271 / 0.702),
+        color(display-p3 0.478 1 0.816 / 0.656)
       );
       --clr-a11: light-dark(
-        color(display-p3 0.64 0.4 0),
-        color(display-p3 1 0.8 0.29)
+        color(display-p3 0.15 0.5 0.37),
+        color(display-p3 0.4 0.835 0.656)
       );
       --clr-a12: light-dark(
-        color(display-p3 0.294 0.208 0.145),
-        color(display-p3 0.984 0.909 0.726)
+        color(display-p3 0.142 0.229 0.194),
+        color(display-p3 0.734 0.934 0.838)
       );
     }
 
-    .gold {
+    .sky {
       --clr-1: light-dark(
-        color(display-p3 0.992 0.992 0.989),
-        color(display-p3 0.071 0.071 0.067)
+        color(display-p3 0.98 0.995 0.999),
+        color(display-p3 0.056 0.078 0.116)
       );
       --clr-2: light-dark(
-        color(display-p3 0.98 0.976 0.953),
-        color(display-p3 0.104 0.101 0.09)
+        color(display-p3 0.953 0.98 0.99),
+        color(display-p3 0.075 0.101 0.149)
       );
       --clr-3: light-dark(
-        color(display-p3 0.947 0.94 0.909),
-        color(display-p3 0.141 0.136 0.122)
+        color(display-p3 0.899 0.963 0.989),
+        color(display-p3 0.089 0.154 0.244)
       );
       --clr-4: light-dark(
-        color(display-p3 0.914 0.904 0.865),
-        color(display-p3 0.177 0.17 0.152)
+        color(display-p3 0.842 0.937 0.977),
+        color(display-p3 0.106 0.207 0.323)
       );
       --clr-5: light-dark(
-        color(display-p3 0.88 0.865 0.816),
-        color(display-p3 0.217 0.207 0.185)
+        color(display-p3 0.777 0.9 0.954),
+        color(display-p3 0.135 0.261 0.394)
       );
       --clr-6: light-dark(
-        color(display-p3 0.84 0.818 0.756),
-        color(display-p3 0.265 0.252 0.225)
+        color(display-p3 0.701 0.851 0.921),
+        color(display-p3 0.17 0.322 0.469)
       );
       --clr-7: light-dark(
-        color(display-p3 0.788 0.753 0.677),
-        color(display-p3 0.327 0.31 0.277)
+        color(display-p3 0.604 0.785 0.879),
+        color(display-p3 0.205 0.394 0.557)
       );
       --clr-8: light-dark(
-        color(display-p3 0.715 0.66 0.565),
-        color(display-p3 0.407 0.384 0.342)
+        color(display-p3 0.457 0.696 0.829),
+        color(display-p3 0.232 0.48 0.665)
       );
       --clr-9: light-dark(
-        color(display-p3 0.579 0.517 0.41),
-        color(display-p3 0.579 0.517 0.41)
+        color(display-p3 0.585 0.877 0.983),
+        color(display-p3 0.585 0.877 0.983)
       );
       --clr-10: light-dark(
-        color(display-p3 0.538 0.479 0.38),
-        color(display-p3 0.628 0.566 0.463)
+        color(display-p3 0.555 0.845 0.959),
+        color(display-p3 0.718 0.925 0.991)
       );
       --clr-11: light-dark(
-        color(display-p3 0.433 0.386 0.305),
-        color(display-p3 0.784 0.728 0.635)
+        color(display-p3 0.193 0.448 0.605),
+        color(display-p3 0.536 0.772 0.924)
       );
       --clr-12: light-dark(
-        color(display-p3 0.227 0.209 0.173),
-        color(display-p3 0.906 0.887 0.855)
+        color(display-p3 0.145 0.241 0.329),
+        color(display-p3 0.799 0.947 0.993)
       );
 
       --clr-a1: light-dark(
-        color(display-p3 0.349 0.349 0.024 / 0.012),
-        color(display-p3 0.855 0.855 0.071 / 0.005)
+        color(display-p3 0.02 0.804 1 / 0.02),
+        color(display-p3 0 0.282 0.996 / 0.055)
       );
       --clr-a2: light-dark(
-        color(display-p3 0.592 0.514 0.024 / 0.048),
-        color(display-p3 0.98 0.89 0.616 / 0.043)
+        color(display-p3 0.024 0.592 0.757 / 0.048),
+        color(display-p3 0.157 0.467 0.992 / 0.089)
       );
       --clr-a3: light-dark(
-        color(display-p3 0.4 0.357 0.012 / 0.091),
-        color(display-p3 1 0.949 0.753 / 0.08)
+        color(display-p3 0.004 0.655 0.886 / 0.102),
+        color(display-p3 0.192 0.522 0.996 / 0.19)
       );
       --clr-a4: light-dark(
-        color(display-p3 0.357 0.298 0.008 / 0.134),
-        color(display-p3 1 0.933 0.8 / 0.118)
+        color(display-p3 0.004 0.604 0.851 / 0.157),
+        color(display-p3 0.212 0.584 1 / 0.274)
       );
       --clr-a5: light-dark(
-        color(display-p3 0.345 0.282 0.004 / 0.185),
-        color(display-p3 1 0.949 0.804 / 0.16)
+        color(display-p3 0.004 0.565 0.792 / 0.224),
+        color(display-p3 0.259 0.631 1 / 0.349)
       );
       --clr-a6: light-dark(
-        color(display-p3 0.341 0.263 0.004 / 0.244),
-        color(display-p3 1 0.925 0.8 / 0.215)
+        color(display-p3 0.004 0.502 0.737 / 0.299),
+        color(display-p3 0.302 0.655 1 / 0.433)
       );
       --clr-a7: light-dark(
-        color(display-p3 0.345 0.235 0.004 / 0.322),
-        color(display-p3 1 0.945 0.831 / 0.278)
+        color(display-p3 0.004 0.459 0.694 / 0.397),
+        color(display-p3 0.329 0.686 1 / 0.526)
       );
       --clr-a8: light-dark(
-        color(display-p3 0.345 0.22 0.004 / 0.436),
-        color(display-p3 1 0.937 0.82 / 0.366)
+        color(display-p3 0 0.435 0.682 / 0.542),
+        color(display-p3 0.325 0.71 1 / 0.643)
       );
       --clr-a9: light-dark(
-        color(display-p3 0.286 0.18 0 / 0.589),
-        color(display-p3 0.996 0.882 0.69 / 0.551)
+        color(display-p3 0.004 0.71 0.965 / 0.416),
+        color(display-p3 0.592 0.894 1 / 0.984)
       );
       --clr-a10: light-dark(
-        color(display-p3 0.255 0.161 0 / 0.62),
-        color(display-p3 1 0.894 0.725 / 0.601)
+        color(display-p3 0.004 0.647 0.914 / 0.444),
+        color(display-p3 0.722 0.933 1 / 0.992)
       );
       --clr-a11: light-dark(
-        color(display-p3 0.433 0.386 0.305),
-        color(display-p3 0.784 0.728 0.635)
+        color(display-p3 0.193 0.448 0.605),
+        color(display-p3 0.536 0.772 0.924)
       );
       --clr-a12: light-dark(
-        color(display-p3 0.227 0.209 0.173),
-        color(display-p3 0.906 0.887 0.855)
+        color(display-p3 0.145 0.241 0.329),
+        color(display-p3 0.799 0.947 0.993)
       );
     }
 
-    .gray {
+    .indigo {
       --clr-1: light-dark(
-        color(display-p3 0.988 0.988 0.988),
-        color(display-p3 0.067 0.067 0.067)
+        color(display-p3 0.992 0.992 0.996),
+        color(display-p3 0.068 0.074 0.118)
       );
       --clr-2: light-dark(
-        color(display-p3 0.975 0.975 0.975),
-        color(display-p3 0.098 0.098 0.098)
+        color(display-p3 0.971 0.977 0.998),
+        color(display-p3 0.081 0.089 0.144)
       );
       --clr-3: light-dark(
-        color(display-p3 0.939 0.939 0.939),
-        color(display-p3 0.135 0.135 0.135)
+        color(display-p3 0.933 0.948 0.992),
+        color(display-p3 0.105 0.141 0.275)
       );
       --clr-4: light-dark(
-        color(display-p3 0.908 0.908 0.908),
-        color(display-p3 0.163 0.163 0.163)
+        color(display-p3 0.885 0.914 1),
+        color(display-p3 0.129 0.18 0.369)
       );
       --clr-5: light-dark(
-        color(display-p3 0.88 0.88 0.88),
-        color(display-p3 0.192 0.192 0.192)
+        color(display-p3 0.831 0.87 1),
+        color(display-p3 0.163 0.22 0.439)
       );
       --clr-6: light-dark(
-        color(display-p3 0.849 0.849 0.849),
-        color(display-p3 0.228 0.228 0.228)
+        color(display-p3 0.767 0.814 0.995),
+        color(display-p3 0.203 0.262 0.5)
       );
       --clr-7: light-dark(
-        color(display-p3 0.807 0.807 0.807),
-        color(display-p3 0.283 0.283 0.283)
+        color(display-p3 0.685 0.74 0.957),
+        color(display-p3 0.245 0.309 0.575)
       );
       --clr-8: light-dark(
-        color(display-p3 0.732 0.732 0.732),
-        color(display-p3 0.375 0.375 0.375)
+        color(display-p3 0.569 0.639 0.916),
+        color(display-p3 0.285 0.362 0.674)
       );
       --clr-9: light-dark(
-        color(display-p3 0.553 0.553 0.553),
-        color(display-p3 0.431 0.431 0.431)
+        color(display-p3 0.276 0.384 0.837),
+        color(display-p3 0.276 0.384 0.837)
       );
       --clr-10: light-dark(
-        color(display-p3 0.512 0.512 0.512),
-        color(display-p3 0.484 0.484 0.484)
+        color(display-p3 0.234 0.343 0.801),
+        color(display-p3 0.354 0.445 0.866)
       );
       --clr-11: light-dark(
-        color(display-p3 0.392 0.392 0.392),
-        color(display-p3 0.706 0.706 0.706)
+        color(display-p3 0.256 0.354 0.755),
+        color(display-p3 0.63 0.69 1)
       );
       --clr-12: light-dark(
-        color(display-p3 0.125 0.125 0.125),
-        color(display-p3 0.933 0.933 0.933)
+        color(display-p3 0.133 0.175 0.348),
+        color(display-p3 0.848 0.881 0.99)
       );
 
       --clr-a1: light-dark(
-        color(display-p3 0 0 0 / 0.012),
-        color(display-p3 0 0 0 / 0)
+        color(display-p3 0.02 0.02 0.51 / 0.008),
+        color(display-p3 0.071 0.212 0.996 / 0.055)
       );
       --clr-a2: light-dark(
-        color(display-p3 0 0 0 / 0.024),
-        color(display-p3 1 1 1 / 0.034)
+        color(display-p3 0.024 0.161 0.863 / 0.028),
+        color(display-p3 0.251 0.345 0.988 / 0.085)
       );
       --clr-a3: light-dark(
-        color(display-p3 0 0 0 / 0.063),
-        color(display-p3 1 1 1 / 0.071)
+        color(display-p3 0.008 0.239 0.886 / 0.067),
+        color(display-p3 0.243 0.404 1 / 0.223)
       );
       --clr-a4: light-dark(
-        color(display-p3 0 0 0 / 0.09),
-        color(display-p3 1 1 1 / 0.105)
+        color(display-p3 0.004 0.247 1 / 0.114),
+        color(display-p3 0.263 0.42 1 / 0.324)
       );
       --clr-a5: light-dark(
-        color(display-p3 0 0 0 / 0.122),
-        color(display-p3 1 1 1 / 0.134)
+        color(display-p3 0.004 0.235 1 / 0.169),
+        color(display-p3 0.314 0.451 1 / 0.4)
       );
       --clr-a6: light-dark(
-        color(display-p3 0 0 0 / 0.153),
-        color(display-p3 1 1 1 / 0.172)
+        color(display-p3 0.004 0.208 0.984 / 0.232),
+        color(display-p3 0.361 0.49 1 / 0.467)
       );
       --clr-a7: light-dark(
-        color(display-p3 0 0 0 / 0.192),
-        color(display-p3 1 1 1 / 0.231)
+        color(display-p3 0.004 0.176 0.863 / 0.314),
+        color(display-p3 0.388 0.51 1 / 0.547)
       );
       --clr-a8: light-dark(
-        color(display-p3 0 0 0 / 0.267),
-        color(display-p3 1 1 1 / 0.332)
+        color(display-p3 0.004 0.165 0.812 / 0.432),
+        color(display-p3 0.404 0.518 1 / 0.652)
       );
       --clr-a9: light-dark(
-        color(display-p3 0 0 0 / 0.447),
-        color(display-p3 1 1 1 / 0.391)
+        color(display-p3 0 0.153 0.773 / 0.726),
+        color(display-p3 0.318 0.451 1 / 0.824)
       );
       --clr-a10: light-dark(
-        color(display-p3 0 0 0 / 0.486),
-        color(display-p3 1 1 1 / 0.445)
+        color(display-p3 0 0.137 0.737 / 0.765),
+        color(display-p3 0.404 0.506 1 / 0.858)
       );
       --clr-a11: light-dark(
-        color(display-p3 0 0 0 / 0.608),
-        color(display-p3 1 1 1 / 0.685)
+        color(display-p3 0.256 0.354 0.755),
+        color(display-p3 0.63 0.69 1)
       );
       --clr-a12: light-dark(
-        color(display-p3 0 0 0 / 0.875),
-        color(display-p3 1 1 1 / 0.929)
+        color(display-p3 0.133 0.175 0.348),
+        color(display-p3 0.848 0.881 0.99)
+      );
+    }
+
+    .violet {
+      --clr-1: light-dark(
+        color(display-p3 0.991 0.988 0.995),
+        color(display-p3 0.077 0.071 0.118)
+      );
+      --clr-2: light-dark(
+        color(display-p3 0.978 0.974 0.998),
+        color(display-p3 0.101 0.084 0.141)
+      );
+      --clr-3: light-dark(
+        color(display-p3 0.953 0.943 0.993),
+        color(display-p3 0.154 0.123 0.256)
+      );
+      --clr-4: light-dark(
+        color(display-p3 0.916 0.897 1),
+        color(display-p3 0.191 0.148 0.345)
+      );
+      --clr-5: light-dark(
+        color(display-p3 0.876 0.851 1),
+        color(display-p3 0.226 0.182 0.396)
+      );
+      --clr-6: light-dark(
+        color(display-p3 0.825 0.793 0.981),
+        color(display-p3 0.269 0.223 0.449)
+      );
+      --clr-7: light-dark(
+        color(display-p3 0.752 0.712 0.943),
+        color(display-p3 0.326 0.277 0.53)
+      );
+      --clr-8: light-dark(
+        color(display-p3 0.654 0.602 0.902),
+        color(display-p3 0.399 0.346 0.656)
+      );
+      --clr-9: light-dark(
+        color(display-p3 0.417 0.341 0.784),
+        color(display-p3 0.417 0.341 0.784)
+      );
+      --clr-10: light-dark(
+        color(display-p3 0.381 0.306 0.741),
+        color(display-p3 0.477 0.402 0.823)
+      );
+      --clr-11: light-dark(
+        color(display-p3 0.383 0.317 0.702),
+        color(display-p3 0.72 0.65 1)
+      );
+      --clr-12: light-dark(
+        color(display-p3 0.179 0.15 0.359),
+        color(display-p3 0.883 0.867 0.986)
+      );
+
+      --clr-a1: light-dark(
+        color(display-p3 0.349 0.024 0.675 / 0.012),
+        color(display-p3 0.282 0.141 0.996 / 0.055)
+      );
+      --clr-a2: light-dark(
+        color(display-p3 0.161 0.024 0.863 / 0.028),
+        color(display-p3 0.51 0.263 1 / 0.08)
+      );
+      --clr-a3: light-dark(
+        color(display-p3 0.204 0.004 0.871 / 0.059),
+        color(display-p3 0.494 0.337 0.996 / 0.202)
+      );
+      --clr-a4: light-dark(
+        color(display-p3 0.196 0.004 1 / 0.102),
+        color(display-p3 0.49 0.345 1 / 0.299)
+      );
+      --clr-a5: light-dark(
+        color(display-p3 0.165 0.008 1 / 0.15),
+        color(display-p3 0.525 0.392 1 / 0.353)
+      );
+      --clr-a6: light-dark(
+        color(display-p3 0.153 0.004 0.906 / 0.208),
+        color(display-p3 0.569 0.455 1 / 0.408)
+      );
+      --clr-a7: light-dark(
+        color(display-p3 0.141 0.004 0.796 / 0.287),
+        color(display-p3 0.588 0.494 1 / 0.496)
+      );
+      --clr-a8: light-dark(
+        color(display-p3 0.133 0.004 0.753 / 0.397),
+        color(display-p3 0.596 0.51 1 / 0.631)
+      );
+      --clr-a9: light-dark(
+        color(display-p3 0.114 0 0.675 / 0.659),
+        color(display-p3 0.522 0.424 1 / 0.769)
+      );
+      --clr-a10: light-dark(
+        color(display-p3 0.11 0 0.627 / 0.695),
+        color(display-p3 0.576 0.482 1 / 0.811)
+      );
+      --clr-a11: light-dark(
+        color(display-p3 0.383 0.317 0.702),
+        color(display-p3 0.72 0.65 1)
+      );
+      --clr-a12: light-dark(
+        color(display-p3 0.179 0.15 0.359),
+        color(display-p3 0.883 0.867 0.986)
+      );
+    }
+
+    .crimson {
+      --clr-1: light-dark(
+        color(display-p3 0.998 0.989 0.992),
+        color(display-p3 0.093 0.068 0.078)
+      );
+      --clr-2: light-dark(
+        color(display-p3 0.991 0.969 0.976),
+        color(display-p3 0.117 0.078 0.095)
+      );
+      --clr-3: light-dark(
+        color(display-p3 0.987 0.917 0.941),
+        color(display-p3 0.203 0.091 0.143)
+      );
+      --clr-4: light-dark(
+        color(display-p3 0.975 0.866 0.904),
+        color(display-p3 0.277 0.087 0.182)
+      );
+      --clr-5: light-dark(
+        color(display-p3 0.953 0.813 0.864),
+        color(display-p3 0.332 0.115 0.22)
+      );
+      --clr-6: light-dark(
+        color(display-p3 0.921 0.755 0.817),
+        color(display-p3 0.394 0.162 0.268)
+      );
+      --clr-7: light-dark(
+        color(display-p3 0.88 0.683 0.761),
+        color(display-p3 0.489 0.222 0.336)
+      );
+      --clr-8: light-dark(
+        color(display-p3 0.834 0.592 0.694),
+        color(display-p3 0.638 0.289 0.429)
+      );
+      --clr-9: light-dark(
+        color(display-p3 0.843 0.298 0.507),
+        color(display-p3 0.843 0.298 0.507)
+      );
+      --clr-10: light-dark(
+        color(display-p3 0.807 0.266 0.468),
+        color(display-p3 0.864 0.364 0.539)
+      );
+      --clr-11: light-dark(
+        color(display-p3 0.731 0.195 0.388),
+        color(display-p3 1 0.56 0.66)
+      );
+      --clr-12: light-dark(
+        color(display-p3 0.352 0.111 0.221),
+        color(display-p3 0.966 0.834 0.906)
+      );
+
+      --clr-a1: light-dark(
+        color(display-p3 0.675 0.024 0.349 / 0.012),
+        color(display-p3 0.984 0.071 0.463 / 0.03)
+      );
+      --clr-a2: light-dark(
+        color(display-p3 0.757 0.02 0.267 / 0.032),
+        color(display-p3 0.996 0.282 0.569 / 0.055)
+      );
+      --clr-a3: light-dark(
+        color(display-p3 0.859 0.008 0.294 / 0.083),
+        color(display-p3 0.996 0.227 0.573 / 0.148)
+      );
+      --clr-a4: light-dark(
+        color(display-p3 0.827 0.008 0.298 / 0.134),
+        color(display-p3 1 0.157 0.569 / 0.227)
+      );
+      --clr-a5: light-dark(
+        color(display-p3 0.753 0.008 0.275 / 0.189),
+        color(display-p3 1 0.231 0.604 / 0.286)
+      );
+      --clr-a6: light-dark(
+        color(display-p3 0.682 0.004 0.247 / 0.244),
+        color(display-p3 1 0.337 0.643 / 0.349)
+      );
+      --clr-a7: light-dark(
+        color(display-p3 0.62 0.004 0.251 / 0.318),
+        color(display-p3 1 0.416 0.663 / 0.454)
+      );
+      --clr-a8: light-dark(
+        color(display-p3 0.6 0.004 0.251 / 0.408),
+        color(display-p3 0.996 0.427 0.651 / 0.614)
+      );
+      --clr-a9: light-dark(
+        color(display-p3 0.776 0 0.298 / 0.702),
+        color(display-p3 1 0.345 0.596 / 0.832)
+      );
+      --clr-a10: light-dark(
+        color(display-p3 0.737 0 0.275 / 0.734),
+        color(display-p3 1 0.42 0.62 / 0.853)
+      );
+      --clr-a11: light-dark(
+        color(display-p3 0.731 0.195 0.388),
+        color(display-p3 1 0.56 0.66)
+      );
+      --clr-a12: light-dark(
+        color(display-p3 0.352 0.111 0.221),
+        color(display-p3 0.966 0.834 0.906)
+      );
+    }
+
+    .tomato {
+      --clr-1: light-dark(
+        color(display-p3 0.998 0.989 0.988),
+        color(display-p3 0.09 0.068 0.067)
+      );
+      --clr-2: light-dark(
+        color(display-p3 0.994 0.974 0.969),
+        color(display-p3 0.115 0.084 0.076)
+      );
+      --clr-3: light-dark(
+        color(display-p3 0.985 0.924 0.909),
+        color(display-p3 0.205 0.097 0.083)
+      );
+      --clr-4: light-dark(
+        color(display-p3 0.996 0.868 0.835),
+        color(display-p3 0.282 0.099 0.077)
+      );
+      --clr-5: light-dark(
+        color(display-p3 0.98 0.812 0.77),
+        color(display-p3 0.339 0.129 0.101)
+      );
+      --clr-6: light-dark(
+        color(display-p3 0.953 0.75 0.698),
+        color(display-p3 0.398 0.179 0.141)
+      );
+      --clr-7: light-dark(
+        color(display-p3 0.917 0.673 0.611),
+        color(display-p3 0.487 0.245 0.194)
+      );
+      --clr-8: light-dark(
+        color(display-p3 0.875 0.575 0.502),
+        color(display-p3 0.629 0.322 0.248)
+      );
+      --clr-9: light-dark(
+        color(display-p3 0.831 0.345 0.231),
+        color(display-p3 0.831 0.345 0.231)
+      );
+      --clr-10: light-dark(
+        color(display-p3 0.802 0.313 0.2),
+        color(display-p3 0.862 0.415 0.298)
+      );
+      --clr-11: light-dark(
+        color(display-p3 0.755 0.259 0.152),
+        color(display-p3 1 0.585 0.455)
+      );
+      --clr-12: light-dark(
+        color(display-p3 0.335 0.165 0.132),
+        color(display-p3 0.959 0.833 0.802)
+      );
+
+      --clr-a1: light-dark(
+        color(display-p3 0.675 0.024 0.024 / 0.012),
+        color(display-p3 0.973 0.071 0.071 / 0.026)
+      );
+      --clr-a2: light-dark(
+        color(display-p3 0.757 0.145 0.02 / 0.032),
+        color(display-p3 0.992 0.376 0.224 / 0.051)
+      );
+      --clr-a3: light-dark(
+        color(display-p3 0.831 0.184 0.012 / 0.091),
+        color(display-p3 0.996 0.282 0.176 / 0.148)
+      );
+      --clr-a4: light-dark(
+        color(display-p3 0.976 0.192 0.004 / 0.165),
+        color(display-p3 1 0.204 0.118 / 0.232)
+      );
+      --clr-a5: light-dark(
+        color(display-p3 0.918 0.192 0.004 / 0.232),
+        color(display-p3 1 0.286 0.192 / 0.29)
+      );
+      --clr-a6: light-dark(
+        color(display-p3 0.847 0.173 0.004 / 0.302),
+        color(display-p3 1 0.392 0.278 / 0.353)
+      );
+      --clr-a7: light-dark(
+        color(display-p3 0.788 0.165 0.004 / 0.389),
+        color(display-p3 1 0.459 0.349 / 0.45)
+      );
+      --clr-a8: light-dark(
+        color(display-p3 0.749 0.153 0.004 / 0.499),
+        color(display-p3 1 0.49 0.369 / 0.601)
+      );
+      --clr-a9: light-dark(
+        color(display-p3 0.78 0.149 0 / 0.769),
+        color(display-p3 1 0.408 0.267 / 0.82)
+      );
+      --clr-a10: light-dark(
+        color(display-p3 0.757 0.141 0 / 0.8),
+        color(display-p3 1 0.478 0.341 / 0.853)
+      );
+      --clr-a11: light-dark(
+        color(display-p3 0.755 0.259 0.152),
+        color(display-p3 1 0.585 0.455)
+      );
+      --clr-a12: light-dark(
+        color(display-p3 0.335 0.165 0.132),
+        color(display-p3 0.959 0.833 0.802)
+      );
+    }
+
+    .orange {
+      --clr-1: light-dark(
+        color(display-p3 0.995 0.988 0.985),
+        color(display-p3 0.088 0.07 0.057)
+      );
+      --clr-2: light-dark(
+        color(display-p3 0.994 0.968 0.934),
+        color(display-p3 0.113 0.089 0.061)
+      );
+      --clr-3: light-dark(
+        color(display-p3 0.989 0.938 0.85),
+        color(display-p3 0.189 0.12 0.056)
+      );
+      --clr-4: light-dark(
+        color(display-p3 1 0.874 0.687),
+        color(display-p3 0.262 0.132 0)
+      );
+      --clr-5: light-dark(
+        color(display-p3 1 0.821 0.583),
+        color(display-p3 0.315 0.168 0.016)
+      );
+      --clr-6: light-dark(
+        color(display-p3 0.975 0.767 0.545),
+        color(display-p3 0.376 0.219 0.088)
+      );
+      --clr-7: light-dark(
+        color(display-p3 0.919 0.693 0.486),
+        color(display-p3 0.465 0.283 0.147)
+      );
+      --clr-8: light-dark(
+        color(display-p3 0.877 0.597 0.379),
+        color(display-p3 0.601 0.359 0.201)
+      );
+      --clr-9: light-dark(
+        color(display-p3 0.9 0.45 0.2),
+        color(display-p3 0.9 0.45 0.2)
+      );
+      --clr-10: light-dark(
+        color(display-p3 0.87 0.409 0.164),
+        color(display-p3 0.98 0.51 0.23)
+      );
+      --clr-11: light-dark(
+        color(display-p3 0.76 0.34 0),
+        color(display-p3 1 0.63 0.38)
+      );
+      --clr-12: light-dark(
+        color(display-p3 0.323 0.185 0.127),
+        color(display-p3 0.98 0.883 0.775)
+      );
+
+      --clr-a1: light-dark(
+        color(display-p3 0.757 0.267 0.024 / 0.016),
+        color(display-p3 0.961 0.247 0 / 0.022)
+      );
+      --clr-a2: light-dark(
+        color(display-p3 0.886 0.533 0.008 / 0.067),
+        color(display-p3 0.992 0.529 0 / 0.051)
+      );
+      --clr-a3: light-dark(
+        color(display-p3 0.922 0.584 0.008 / 0.15),
+        color(display-p3 0.996 0.486 0 / 0.131)
+      );
+      --clr-a4: light-dark(
+        color(display-p3 1 0.604 0.004 / 0.314),
+        color(display-p3 0.996 0.384 0 / 0.211)
+      );
+      --clr-a5: light-dark(
+        color(display-p3 1 0.569 0.004 / 0.416),
+        color(display-p3 1 0.455 0 / 0.265)
+      );
+      --clr-a6: light-dark(
+        color(display-p3 0.949 0.494 0.004 / 0.455),
+        color(display-p3 1 0.529 0.129 / 0.332)
+      );
+      --clr-a7: light-dark(
+        color(display-p3 0.839 0.408 0 / 0.514),
+        color(display-p3 1 0.569 0.251 / 0.429)
+      );
+      --clr-a8: light-dark(
+        color(display-p3 0.804 0.349 0 / 0.62),
+        color(display-p3 1 0.584 0.302 / 0.572)
+      );
+      --clr-a9: light-dark(
+        color(display-p3 0.878 0.314 0 / 0.8),
+        color(display-p3 1 0.494 0.216 / 0.895)
+      );
+      --clr-a10: light-dark(
+        color(display-p3 0.843 0.29 0 / 0.836),
+        color(display-p3 1 0.522 0.235 / 0.979)
+      );
+      --clr-a11: light-dark(
+        color(display-p3 0.76 0.34 0),
+        color(display-p3 1 0.63 0.38)
+      );
+      --clr-a12: light-dark(
+        color(display-p3 0.323 0.185 0.127),
+        color(display-p3 0.98 0.883 0.775)
       );
     }
 

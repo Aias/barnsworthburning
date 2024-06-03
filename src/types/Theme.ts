@@ -40,16 +40,15 @@ export type Neutral =
 	| Palette.Sage;
 
 export const paletteOptions: Palette[] = [
-	Palette.Tomato,
-	Palette.Ruby,
-	Palette.Violet,
-	Palette.Indigo,
-	Palette.Sky,
-	Palette.Jade,
-	Palette.Grass,
-	Palette.Amber,
 	Palette.Gold,
-	Palette.Gray
+	Palette.Grass,
+	Palette.Jade,
+	Palette.Sky,
+	Palette.Indigo,
+	Palette.Violet,
+	Palette.Crimson,
+	Palette.Tomato,
+	Palette.Orange
 ];
 
 export const neutralsMap: Record<Neutral, Palette[]> = {

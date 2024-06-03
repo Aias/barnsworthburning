@@ -8,12 +8,7 @@ const MODES = {
 	LIGHT: 'light'
 };
 
-const prefersSystemDarkMode =
-	window.matchMedia &&
-	(window.matchMedia('(prefers-color-scheme: dark)').matches ||
-		window.matchMedia('(prefers-color-scheme: no-preference)').matches);
-
-const DEFAULT_MODE = prefersSystemDarkMode ? MODES.DARK : MODES.LIGHT;
+const DEFAULT_MODE = MODES.AUTO;
 
 const CHROMA_COOKIE = 'barnsworthburning-chroma';
 const CHROMA = {
@@ -23,7 +18,7 @@ const CHROMA = {
 const DEFAULT_CHROMA = CHROMA.NEUTRAL;
 
 const PALETTE_COOKIE = 'barnsworthburning-palette';
-const DEFAULT_PALETTE = 'indigo';
+const DEFAULT_PALETTE = 'gold';
 
 function getCookie(name) {
 	let cookieArr = document.cookie.split(';');
@@ -51,19 +46,16 @@ if (siteModePreference) {
 	document.documentElement.classList.add(siteModePreference);
 } else {
 	document.documentElement.classList.add(DEFAULT_MODE);
-	setCookie(MODE_COOKIE, DEFAULT_MODE);
 }
 
 if (siteChromaPreference) {
 	document.documentElement.classList.add(siteChromaPreference);
 } else {
 	document.documentElement.classList.add(DEFAULT_CHROMA);
-	setCookie(CHROMA_COOKIE, DEFAULT_CHROMA);
 }
 
 if (sitePalettePreference) {
 	document.documentElement.classList.add(sitePalettePreference);
 } else {
 	document.documentElement.classList.add(DEFAULT_PALETTE);
-	setCookie(PALETTE_COOKIE, DEFAULT_PALETTE);
 }

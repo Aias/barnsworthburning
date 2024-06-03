@@ -1,22 +1,195 @@
 <script lang="ts">
 	import settings from '$lib/settings.svelte';
-	import ThemeSelector from './ThemeSelector.svelte';
+	import { Chroma, Mode, Palette } from '$types/Theme';
 
-	let { ...restProps } = $props();
+	let themeColor = $state('#000000');
+
+	const titleCase = (str: string) => str[0].toUpperCase() + str.slice(1);
+
+	const setThemeColor = () => {
+		const checkedInput = document.querySelector('input[name="paletteKey"]:checked');
+		if (checkedInput) {
+			const label = checkedInput.closest('label');
+			if (label) {
+				themeColor = getComputedStyle(label).color;
+			}
+		}
+	};
+
+	$effect(() => {
+		setThemeColor();
+	});
+
+	const handleThemeChange = (e: Event) => {
+		const target = e.target as HTMLInputElement;
+		const newTheme = target.value as Palette;
+		const label = target.closest('label');
+		if (label) {
+			themeColor = getComputedStyle(label).color;
+		}
+		settings.setPalette(newTheme);
+	};
 </script>
 
-<fieldset {...restProps}>
-	<fieldset class="settings-group">
-		<button onclick={() => settings.toggleMode()}>Toggle Mode</button>
-		<button onclick={() => settings.toggleChroma()}>Toggle Chroma</button>
-	</fieldset>
-	<ThemeSelector />
-</fieldset>
+<svelte:head>
+	<meta name="theme-color" content={themeColor} />
+</svelte:head>
+
+<menu class="settings">
+	<li>
+		<fieldset class="theme-selector">
+			{#each settings.paletteOptions as paletteKey (paletteKey)}
+				<label
+					class={paletteKey}
+					class:chromatic={true}
+					aria-label={titleCase(paletteKey)}
+					title={titleCase(paletteKey)}
+				>
+					<input
+						type="radio"
+						name="paletteKey"
+						class="screenreader"
+						value={paletteKey}
+						onchange={handleThemeChange}
+						checked={settings.palette === paletteKey}
+					/>
+				</label>
+			{/each}
+		</fieldset>
+	</li>
+	<li>
+		<fieldset class="mode-selector">
+			<label
+				><input
+					type="radio"
+					name="modeKey"
+					class="screenreader"
+					aria-label="Day Mode"
+					title="Day Mode"
+					checked={settings.mode === Mode.Light}
+					onchange={() => settings.setMode(Mode.Light)}
+				/>🌅</label
+			>
+			<label
+				><input
+					type="radio"
+					name="modeKey"
+					class="screenreader"
+					aria-label="System Mode"
+					title="System Mode"
+					checked={settings.mode === Mode.Auto}
+					onchange={() => settings.setMode(Mode.Auto)}
+				/>🌄</label
+			>
+			<label
+				><input
+					type="radio"
+					name="modeKey"
+					class="screenreader"
+					aria-label="Night Mode"
+					title="Night Mode"
+					checked={settings.mode === Mode.Dark}
+					onchange={() => settings.setMode(Mode.Dark)}
+				/>🌌</label
+			>
+		</fieldset>
+	</li>
+	<li>
+		<fieldset class="chroma-selector">
+			<label
+				><input
+					type="checkbox"
+					name="modeKey"
+					class="screenreader"
+					aria-label="Toggle Chroma"
+					title="Toggle Chroma"
+					checked={settings.chroma === Chroma.Chromatic}
+					onchange={() => settings.setChroma()}
+				/>🎨</label
+			>
+		</fieldset>
+	</li>
+</menu>
 
 <style lang="scss">
-	.settings-group {
+	menu {
 		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		font-size: 0.875rem;
+	}
+	fieldset {
+		display: flex;
+		justify-content: center;
 		align-items: center;
-		gap: 0.75em;
+		gap: 4px;
+		flex-wrap: wrap;
+		height: 1lh;
+
+		&:has(input:focus-visible) {
+			outline: 1px solid var(--main);
+			outline-offset: 4px;
+			border-radius: 2px;
+		}
+	}
+	.theme-selector {
+		label {
+			font-size: 1.15em;
+			text-transform: capitalize;
+			cursor: pointer;
+			display: block;
+			width: 1em;
+			aspect-ratio: 1;
+			border-radius: 4px;
+			background-color: var(--flood);
+			border: 1px solid var(--border);
+			position: relative;
+
+			&:hover {
+				border-color: var(--edge);
+				background-color: var(--sink);
+			}
+
+			&:has(input:checked) {
+				color: var(--main);
+				background-color: currentColor;
+				border-color: var(--edge);
+
+				&::after {
+					color: var(--main-contrast);
+					content: '✔';
+					display: block;
+					font-size: 0.75em;
+					line-height: 1;
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+				}
+			}
+		}
+	}
+	.mode-selector,
+	.chroma-selector {
+		label {
+			position: relative;
+			opacity: 0.5;
+			color: var(--display);
+			&:has(input:checked) {
+				opacity: 1;
+				&::after {
+					--border-height: 2px;
+					content: '';
+					display: block;
+					position: absolute;
+					left: 0;
+					right: 0;
+					bottom: calc(-1 * var(--border-height));
+					height: var(--border-height);
+					border-radius: calc(var(--border-height) / 2);
+					background-color: var(--main);
+				}
+			}
+		}
 	}
 </style>

@@ -16,10 +16,10 @@
 		const storedPalette = getCookie('barnsworthburning-palette') as Palette | null;
 
 		if (storedMode) {
-			settings.toggleMode(storedMode);
+			settings.setMode(storedMode);
 		}
 		if (storedChroma) {
-			settings.toggleChroma(storedChroma);
+			settings.setChroma(storedChroma);
 		}
 		if (storedPalette) {
 			settings.setPalette(storedPalette);

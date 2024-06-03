@@ -4,7 +4,7 @@
 	import { entityTypes, type EntityType } from '$helpers/params';
 	import TextInput from '$components/TextInput.svelte';
 	import Link from '$components/Link.svelte';
-	import ThemeSelector from './ThemeSelector.svelte';
+	import Toolbar from './Toolbar.svelte';
 
 	let { ...restProps } = $props();
 
@@ -93,11 +93,7 @@
 		{/if}
 	</ol>
 	<hr role="presentation" class="section-break" />
-	<menu class="settings">
-		<li>
-			<ThemeSelector />
-		</li>
-	</menu>
+	<Toolbar />
 </header>
 
 <style lang="scss">
