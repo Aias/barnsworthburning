@@ -30,7 +30,7 @@
 		"airtable": "^0.12.2",
 		"marked": "^12.0.2",
 		"normalize.css": "^8.0.1",
-		"prettify-xml": "^1.2.0"
+		"xml-formatter": "^3.6.2"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-netlify": "^4.2.0",

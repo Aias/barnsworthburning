@@ -6,7 +6,7 @@ import { airtableFetch } from '$lib/server/requests';
 import { ExtractView, Table, type IBaseExtract, type IExtract } from '$types/Airtable';
 import markdown from '$helpers/markdown';
 import { article } from '$helpers/grammar';
-import prettifyXml from 'prettify-xml';
+import xmlFormatter from 'xml-formatter';
 
 const generateContentMarkup = (extract: IExtract) => {
 	const {
@@ -136,9 +136,8 @@ export async function GET() {
 	const extracts = await airtableFetch<IBaseExtract>(Table.Extracts, fetchOptions);
 	const mappedExtracts = extracts.map(mapExtractRecord);
 
-	const responseBody = prettifyXml(atom(mappedExtracts), {
-		indent: 2,
-		newline: '\n'
+	const responseBody = xmlFormatter(atom(mappedExtracts), {
+		collapseContent: true
 	});
 	const responseOptions = {
 		status: 200,

@@ -1019,13 +1019,13 @@ __metadata:
     normalize.css: "npm:^8.0.1"
     prettier: "npm:^3.3.0"
     prettier-plugin-svelte: "npm:^3.2.3"
-    prettify-xml: "npm:^1.2.0"
     sass: "npm:^1.77.4"
     svelte: "npm:^5.0.0-next.149"
     svelte-check: "npm:^3.8.0"
     tslib: "npm:^2.6.2"
     typescript: "npm:^5.4.5"
     vite: "npm:^5.2.12"
+    xml-formatter: "npm:^3.6.2"
   languageName: unknown
   linkType: soft
 
@@ -2766,13 +2766,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettify-xml@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "prettify-xml@npm:1.2.0"
-  checksum: 10c0/66a27d758cf66ec2506d22aea3f43097ab2e9bb5de0b7f5128a3387d274392e821e5418b1b1cc27ec2fd225600242e7f979e454a9689750e3f074c051c646cef
-  languageName: node
-  linkType: hard
-
 "proc-log@npm:^3.0.0":
   version: 3.0.0
   resolution: "proc-log@npm:3.0.0"
@@ -3541,6 +3534,22 @@ __metadata:
   version: 1.0.2
   resolution: "wrappy@npm:1.0.2"
   checksum: 10c0/56fece1a4018c6a6c8e28fbc88c87e0fbf4ea8fd64fc6c63b18f4acc4bd13e0ad2515189786dd2c30d3eec9663d70f4ecf699330002f8ccb547e4a18231fc9f0
+  languageName: node
+  linkType: hard
+
+"xml-formatter@npm:^3.6.2":
+  version: 3.6.2
+  resolution: "xml-formatter@npm:3.6.2"
+  dependencies:
+    xml-parser-xo: "npm:^4.1.0"
+  checksum: 10c0/b50f085c935d0cb23e5f39cba39a1e22c511d2a247e960d7c6976236ad5bb9355f090adaa5416b074a8769493f03daf610cc0f121e5bfe85ced052401dbd14c5
+  languageName: node
+  linkType: hard
+
+"xml-parser-xo@npm:^4.1.0":
+  version: 4.1.1
+  resolution: "xml-parser-xo@npm:4.1.1"
+  checksum: 10c0/e14ae3820a6a34f309f8126c44e57d82429eca18770ee25f9b7845bf991a5ebc2071d25d2472e418c9a399abf713ec0a1ecbefc608b933e431245e19036c73bc
   languageName: node
   linkType: hard
 
