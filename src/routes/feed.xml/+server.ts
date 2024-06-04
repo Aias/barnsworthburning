@@ -32,11 +32,11 @@ const generateContentMarkup = (extract: IExtract) => {
 			}
 		}
 		markup += `<a href="${meta.url}/creators/${id}">${name}</a>`;
+		if (source) {
+			markup += ` <span>[<a href="${source}">Source</a>]</span>`;
+		}
 	});
 	markup += '</p>\n';
-	if (source) {
-		markup += `<p>From <a href="${source}">${new URL(source).hostname}</a></p>\n`;
-	}
 	markup += '</header>\n';
 	markup += '<section>\n';
 	if (content) {
@@ -48,7 +48,7 @@ const generateContentMarkup = (extract: IExtract) => {
 		if (content) {
 			markup += '<hr />\n';
 		}
-		markup += markdown.parse(notes);
+		markup += `<small>${markdown.parse(notes)}</small>\n`;
 	}
 	markup += '</section>\n';
 	markup += '</article>';
