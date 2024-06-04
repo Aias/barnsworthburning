@@ -1,6 +1,3 @@
-// Modeled after https://github.com/kball/speakwritelisten.com/blob/master/src/routes/feed.xml.js
-// and https://github.com/kball/speakwritelisten.com/blob/master/src/routes/index.svelte
-
 import { mapExtractRecord } from '$helpers/mapping';
 import { airtableFetch } from '$lib/server/requests';
 import { ExtractView, Table, type IBaseExtract, type IExtract } from '$types/Airtable';
@@ -13,6 +10,7 @@ const generateContentMarkup = (extract: IExtract) => {
 		extract: content,
 		notes,
 		format,
+		source,
 		creators = [
 			{
 				id: 'anon',
@@ -21,8 +19,8 @@ const generateContentMarkup = (extract: IExtract) => {
 		]
 	} = extract;
 	let type = (format || 'extract').toLowerCase();
-	let markup = '<article>';
-	markup += '<header>';
+	let markup = '<article>\n';
+	markup += '<header>\n';
 	markup += '<p>';
 	markup += `${article(type)} <strong>${type}</strong> by `;
 	creators.forEach(({ name, id }, index) => {
@@ -35,21 +33,24 @@ const generateContentMarkup = (extract: IExtract) => {
 		}
 		markup += `<a href="${meta.url}/creators/${id}">${name}</a>`;
 	});
-	markup += '</p>';
-	markup += '</header>';
-	markup += '<section>';
+	markup += '</p>\n';
+	if (source) {
+		markup += `<p>From <a href="${source}">${new URL(source).hostname}</a></p>\n`;
+	}
+	markup += '</header>\n';
+	markup += '<section>\n';
 	if (content) {
-		markup += '<blockquote>';
+		markup += '<blockquote>\n';
 		markup += markdown.parse(content);
-		markup += '</blockquote>';
+		markup += '</blockquote>\n';
 	}
 	if (notes) {
 		if (content) {
-			markup += '<hr />';
+			markup += '<hr />\n';
 		}
 		markup += markdown.parse(notes);
 	}
-	markup += '</section>';
+	markup += '</section>\n';
 	markup += '</article>';
 
 	return markup;
