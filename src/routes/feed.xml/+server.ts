@@ -3,24 +3,56 @@
 
 import { mapExtractRecord } from '$helpers/mapping';
 import { airtableFetch } from '$lib/server/requests';
-import {
-	ExtractView,
-	Table,
-	type IBaseExtract,
-	type IExtract,
-	type ILinkedRecord
-} from '$types/Airtable';
+import { ExtractView, Table, type IBaseExtract, type IExtract } from '$types/Airtable';
 import markdown from '$helpers/markdown';
+import { article } from '$helpers/grammar';
+import prettifyXml from 'prettify-xml';
 
-const generateCategoryMarkup = (spaces: ILinkedRecord[] = []) => {
-	return spaces.map((space) => `<category term="${space.name}" />`).join('');
-};
 const generateContentMarkup = (extract: IExtract) => {
-	const { extract: content } = extract;
+	const {
+		extract: content,
+		notes,
+		format,
+		creators = [
+			{
+				id: 'anon',
+				name: 'Anonymous'
+			}
+		]
+	} = extract;
+	let type = (format || 'extract').toLowerCase();
+	let markup = '<article>';
+	markup += '<header>';
+	markup += '<p>';
+	markup += `${article(type)} <strong>${type}</strong> by `;
+	creators.forEach(({ name, id }, index) => {
+		if (index > 0) {
+			if (index + 1 < creators.length) {
+				markup += ', ';
+			} else {
+				markup += ' & ';
+			}
+		}
+		markup += `<a href="${meta.url}/creators/${id}">${name}</a>`;
+	});
+	markup += '</p>';
+	markup += '</header>';
+	markup += '<section>';
 	if (content) {
-		return markdown.parse(content);
+		markup += '<blockquote>';
+		markup += markdown.parse(content);
+		markup += '</blockquote>';
 	}
-	return 'Open on barnsworthburning.net to view non-text content.';
+	if (notes) {
+		if (content) {
+			markup += '<hr />';
+		}
+		markup += markdown.parse(notes);
+	}
+	markup += '</section>';
+	markup += '</article>';
+
+	return markup;
 };
 
 const cleanLink = (link: string) => {
@@ -40,6 +72,7 @@ const meta = {
 };
 
 const atom = (extracts: IExtract[] = []) => {
+	const feedUpdated = new Date(extracts[0].lastUpdated).toISOString();
 	return `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>${meta.url}/feed</id>
@@ -53,45 +86,43 @@ const atom = (extracts: IExtract[] = []) => {
         <email>${meta.author.email}</email>
         <uri>${meta.author.url}</uri>
     </author>
-    <updated>${(() => {
-		const mostRecentWork = extracts[0];
-		return new Date(mostRecentWork['lastUpdated']).toISOString();
-	})()}</updated>${meta.tags
-		.map(
-			(tag) => `
-    <category term="${tag}" />`
-		)
-		.join('')}
-${extracts
-	.map((extract) => {
-		const { title, id, creators, source, lastUpdated, extractedOn, spaces } = extract;
-		return `    <entry>
-        <id>${meta.url}/extracts/${id}</id>
-        <title><![CDATA[${title}]]></title>${
-			creators
-				? creators
-						.map(
-							(creator) => `
-        <author>
-            <name><![CDATA[${creator.name}]]></name>
-        </author>`
-						)
-						.join('')
-				: ''
-		}
-        <published>${new Date(extractedOn).toISOString()}</published>
-        <updated>${new Date(lastUpdated).toISOString()}</updated>
-        <link rel="alternate" href="${meta.url}/extracts/${id}" />${
-			source
-				? `
-        <link rel="via" href="${cleanLink(source)}" />`
-				: ''
-		}
-        ${generateCategoryMarkup(spaces)}
-        <content type="html"><![CDATA[${generateContentMarkup(extract)}]]></content>
-    </entry>`;
-	})
-	.join('\n')}
+    <updated>${feedUpdated}</updated>
+	${meta.tags.map((tag) => `<category term="${tag}" />`).join('\n')}
+	${extracts
+		.map((extract) => {
+			const { title, id, creators, source, lastUpdated, extractedOn, spaces, images } =
+				extract;
+
+			let entry = `<entry>`;
+			entry += `<id>${meta.url}/extracts/${id}</id>`;
+			entry += `<title><![CDATA[${title}]]></title>`;
+			if (creators) {
+				entry += creators
+					.map((creator) => `<author><name><![CDATA[${creator.name}]]></name></author>`)
+					.join('\n');
+			}
+			entry += `<published>${new Date(extractedOn).toISOString()}</published>`;
+			entry += `<updated>${new Date(lastUpdated).toISOString()}</updated>`;
+			entry += `<link rel="alternate" href="${meta.url}/extracts/${id}" />`;
+			if (source) {
+				entry += `<link rel="via" href="${cleanLink(source)}" />`;
+			}
+			if (images) {
+				entry += images
+					.map(
+						(image) =>
+							`<link rel="enclosure" href="${cleanLink(image.url)}" type="${image.type}" />`
+					)
+					.join('\n');
+			}
+			if (spaces) {
+				entry += spaces.map((space) => `<category term="${space.name}" />`).join('\n');
+			}
+			entry += `<content type="html"><![CDATA[${generateContentMarkup(extract)}]]></content>`;
+			entry += '</entry>';
+			return entry;
+		})
+		.join('\n')}
 </feed>`;
 };
 
@@ -105,12 +136,15 @@ export async function GET() {
 	const extracts = await airtableFetch<IBaseExtract>(Table.Extracts, fetchOptions);
 	const mappedExtracts = extracts.map(mapExtractRecord);
 
-	const responseBody = atom(mappedExtracts);
+	const responseBody = prettifyXml(atom(mappedExtracts), {
+		indent: 2,
+		newline: '\n'
+	});
 	const responseOptions = {
 		status: 200,
 		headers: {
 			'Content-Type': 'application/atom+xml',
-			'Cache-Control': `max-age=0, s-maxage=${3600}`
+			'Cache-Control': `max-age=0, s-maxage=0`
 		}
 	};
 

@@ -1019,6 +1019,7 @@ __metadata:
     normalize.css: "npm:^8.0.1"
     prettier: "npm:^3.3.0"
     prettier-plugin-svelte: "npm:^3.2.3"
+    prettify-xml: "npm:^1.2.0"
     sass: "npm:^1.77.4"
     svelte: "npm:^5.0.0-next.149"
     svelte-check: "npm:^3.8.0"
@@ -2762,6 +2763,13 @@ __metadata:
   bin:
     prettier: bin/prettier.cjs
   checksum: 10c0/d033c356320aa2e468bf29c931b094ac730d2f4defd5eb2989d8589313dec901d2fc866e3788f3d161e420b142ea4ec3dda535dbe0169ef4d0026397a68ba9cf
+  languageName: node
+  linkType: hard
+
+"prettify-xml@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "prettify-xml@npm:1.2.0"
+  checksum: 10c0/66a27d758cf66ec2506d22aea3f43097ab2e9bb5de0b7f5128a3387d274392e821e5418b1b1cc27ec2fd225600242e7f979e454a9689750e3f074c051c646cef
   languageName: node
   linkType: hard
 
