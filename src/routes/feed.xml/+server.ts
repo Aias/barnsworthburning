@@ -36,7 +36,7 @@ const meta = {
 		url: 'https://nicktrombley.design'
 	},
 	tags: ['design', 'knowledge', 'making', 'architecture', 'art'],
-	url: 'https://barnsworthburning.net'
+	url: 'https://barnsworthburning.netlify.app'
 };
 
 const atom = (extracts: IExtract[] = []) => {
