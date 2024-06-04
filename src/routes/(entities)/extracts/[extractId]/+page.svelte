@@ -50,7 +50,6 @@
 	article {
 		max-width: 600px;
 		margin-inline: auto;
-		padding-inline: 1em;
 		display: flex;
 		flex-direction: column;
 		gap: 2em;

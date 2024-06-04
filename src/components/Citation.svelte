@@ -56,7 +56,8 @@
 		border-radius: var(--border-radius-small);
 		font-size: 0.75em;
 		line-height: inherit;
-		transform: translateY(-0.1lh);
+		transform: translateY(-0.1em);
+		break-before: avoid;
 		color: var(--accent);
 		text-decoration: none;
 

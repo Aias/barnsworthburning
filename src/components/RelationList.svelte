@@ -11,17 +11,16 @@
 
 	let { items, label, symbol, maxChildren = 5 }: RelationListProps = $props();
 
-	let showAllChildren = false;
+	let showAllChildren = $state(false);
 
 	const expandList = () => {
 		showAllChildren = true;
 	};
 
-	let isTruncated = $derived(items?.length > maxChildren);
+	let isTruncated = $derived(showAllChildren ? false : items?.length > maxChildren);
 	let displayedItems = $derived(showAllChildren ? items?.slice() : items?.slice(0, maxChildren));
 
 	$effect(() => {
-		items;
 		showAllChildren = false;
 	});
 </script>
@@ -33,8 +32,7 @@
 		{/each}
 		{#if isTruncated}
 			<li class="show-more">
-				<button onclick={expandList} class="link test"
-					>+{items.length - maxChildren} More</button
+				<button onclick={expandList} class="link">+{items.length - maxChildren} More</button
 				>
 			</li>
 		{/if}
@@ -51,6 +49,9 @@
 		list-style-type: none;
 		color: var(--link);
 		font-family: var(--font-stack-mono);
+		overflow: hidden;
+		white-space: break-spaces;
+		text-overflow: ellipsis;
 
 		&::before {
 			content: attr(data-symbol);

@@ -18,7 +18,7 @@ const CHROMA = {
 const DEFAULT_CHROMA = CHROMA.NEUTRAL;
 
 const PALETTE_COOKIE = 'barnsworthburning-palette';
-const DEFAULT_PALETTE = 'gold';
+const DEFAULT_PALETTE = 'indigo';
 
 function getCookie(name) {
 	let cookieArr = document.cookie.split(';');

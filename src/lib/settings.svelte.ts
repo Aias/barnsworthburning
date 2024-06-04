@@ -1,10 +1,18 @@
 import { setCookie } from '$helpers/cookies';
 import { Palette, Mode, Chroma, paletteOptions } from '$types/Theme';
+import {
+	MODE_COOKIE,
+	DEFAULT_MODE,
+	CHROMA_COOKIE,
+	DEFAULT_CHROMA,
+	PALETTE_COOKIE,
+	DEFAULT_PALETTE
+} from './themePreferences';
 
 export function createSettings() {
-	let mode: Mode = $state(Mode.Auto);
-	let chroma: Chroma = $state(Chroma.Neutral);
-	let palette: Palette = $state(Palette.Gold);
+	let mode: Mode = $state(DEFAULT_MODE);
+	let chroma: Chroma = $state(DEFAULT_CHROMA);
+	let palette: Palette = $state(DEFAULT_PALETTE);
 	const themeClass = $derived(`${mode} ${chroma} ${palette}`);
 
 	const setMode = (newMode?: Mode) => {
@@ -13,7 +21,7 @@ export function createSettings() {
 		} else if (mode !== Mode.Auto) {
 			mode = mode === Mode.Dark ? Mode.Light : Mode.Dark;
 		}
-		setCookie('barnsworthburning-mode', mode);
+		setCookie(MODE_COOKIE, mode);
 	};
 	const setChroma = (newChroma?: Chroma) => {
 		if (newChroma) {
@@ -21,11 +29,11 @@ export function createSettings() {
 		} else {
 			chroma = chroma === Chroma.Neutral ? Chroma.Chromatic : Chroma.Neutral;
 		}
-		setCookie('barnsworthburning-chroma', chroma);
+		setCookie(CHROMA_COOKIE, chroma);
 	};
 	const setPalette = (newPalette: Palette) => {
 		palette = newPalette;
-		setCookie('barnsworthburning-palette', palette);
+		setCookie(PALETTE_COOKIE, palette);
 	};
 
 	return {
