@@ -42,12 +42,10 @@ const generateContentMarkup = (extract: IExtract) => {
 		markup += '</blockquote>\n';
 	}
 	if (source) {
-		markup += ` <p>[<a href="${source}">Source</a>]</p>`;
+		markup += `<p>[<a href="${source}">Source</a>]</p>\n`;
 	}
 	if (notes) {
-		if (content) {
-			markup += '<hr />\n';
-		}
+		markup += '<hr />\n';
 		markup += `<small>${markdown.parse(notes)}</small>\n`;
 	}
 	markup += '</section>\n';
