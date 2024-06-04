@@ -32,9 +32,6 @@ const generateContentMarkup = (extract: IExtract) => {
 			}
 		}
 		markup += `<a href="${meta.url}/creators/${id}">${name}</a>`;
-		if (source) {
-			markup += ` <span>[<a href="${source}">Source</a>]</span>`;
-		}
 	});
 	markup += '</p>\n';
 	markup += '</header>\n';
@@ -43,6 +40,9 @@ const generateContentMarkup = (extract: IExtract) => {
 		markup += '<blockquote>\n';
 		markup += markdown.parse(content);
 		markup += '</blockquote>\n';
+	}
+	if (source) {
+		markup += ` <p>[<a href="${source}">Source</a>]</p>`;
 	}
 	if (notes) {
 		if (content) {
