@@ -11,6 +11,8 @@ const generateContentMarkup = (extract: IExtract) => {
 		notes,
 		format,
 		source,
+		images,
+		imageCaption,
 		creators = [
 			{
 				id: 'anon',
@@ -36,6 +38,16 @@ const generateContentMarkup = (extract: IExtract) => {
 	markup += '</p>\n';
 	markup += '</header>\n';
 	markup += '<section>\n';
+	if (images) {
+		markup += '<figure>\n';
+		markup += images
+			.map(({ url, filename }) => `<img src="${url}" alt="${filename}" />\n`)
+			.join('');
+		if (imageCaption) {
+			markup += `<figcaption>${markdown.parse(imageCaption)}</figcaption>\n`;
+		}
+		markup += '</figure>\n';
+	}
 	if (content) {
 		markup += '<blockquote>\n';
 		markup += markdown.parse(content);
