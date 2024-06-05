@@ -3,6 +3,8 @@
 	import CreatorList from '$components/CreatorList.svelte';
 	import markdown from '$helpers/markdown';
 	import { article } from '$helpers/grammar.js';
+	import Link from '$components/Link.svelte';
+	import { goto } from '$app/navigation';
 
 	let { data } = $props();
 
@@ -11,11 +13,34 @@
 	});
 
 	const cachedExtracts = $derived(cache.allExtracts);
+	const handleClick = (event: MouseEvent) => {
+		// Adapted from:
+		// https://css-tricks.com/block-links-the-search-for-a-perfect-solution/#comment-1769257
+		// https://codepen.io/xelium/pen/OJbEVmL
+		const target = event.target as HTMLElement;
+		let card: HTMLElement | null = null;
+		let mainLink: HTMLElement | null = null;
+		let allLinks: NodeListOf<HTMLElement> | null = null;
+		if (target) {
+			card = target.closest('.block-link');
+		}
+		if (card) {
+			mainLink = card.querySelector('.main-link');
+			allLinks = card.querySelectorAll('a, button, .link, :any-link');
+		}
+		if (!mainLink || window.getSelection()?.toString()) return;
+		if (allLinks && Array.from(allLinks).some((item) => item === target)) return;
+		const href = mainLink.getAttribute('href') ?? '/';
+		event.preventDefault();
+		event.stopPropagation();
+		goto(href);
+	};
 </script>
 
 <ul class="block-list compact">
 	{#each cachedExtracts as extract (extract.id)}
 		{@const {
+			id,
 			michelinStars,
 			title,
 			creators,
@@ -26,7 +51,9 @@
 			notes
 		} = extract}
 		{@const content = quote || notes}
-		<li>
+		<!-- svelte-ignore a11y_click_events_have_key_events -->
+		<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+		<li class="block-link" onclick={handleClick}>
 			<article>
 				<section>
 					<header>
@@ -37,7 +64,9 @@
 								{/each}
 							</span>
 						{/if}
-						<strong class="title">{title}</strong>
+						<strong class="title">
+							<Link class="main-link inherit" toId={id}>{title}</Link>
+						</strong>
 						<CreatorList {creators} class="creators" />
 					</header>
 					{#if content}

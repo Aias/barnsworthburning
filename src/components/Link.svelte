@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Snippet, SvelteComponent } from 'svelte';
+	import type { Snippet } from 'svelte';
 	import { entityTypes } from '$helpers/params';
 	import type { HTMLAnchorAttributes } from 'svelte/elements';
 

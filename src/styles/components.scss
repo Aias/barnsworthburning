@@ -67,3 +67,13 @@
 		}
 	}
 }
+
+.block-link {
+	&:has(.main-link:focus-visible) {
+		outline: 1px solid var(--main);
+	}
+	.main-link:focus-visible,
+	&:hover .main-link {
+		text-decoration: underline;
+	}
+}

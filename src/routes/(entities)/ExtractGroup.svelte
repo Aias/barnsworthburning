@@ -1,6 +1,8 @@
 <script lang="ts">
 	import type { EntityType } from '$helpers/params';
 	import type { ILinkedRecord } from '$types/Airtable';
+	import Link from '$components/Link.svelte';
+
 	interface ExtractGroupProps {
 		type: EntityType;
 		groupId: string;
@@ -17,7 +19,9 @@
 <a class="group-name" href={`/${type.urlParam}/${groupId}`}>{groupName}</a>
 {#if extracts}
 	{#each visibleExtracts as extract (extract.id)}
-		<span class="group-item">{extract.name}</span>
+		<span class="group-item">
+			<Link class="inherit" toId={extract.id}>{extract.name}</Link>
+		</span>
 	{/each}
 {/if}
 {#if moreItems > 0}

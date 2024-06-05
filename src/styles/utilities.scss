@@ -12,6 +12,11 @@
 .inherit {
 	all: inherit;
 	color: currentColor;
+
+	&:hover {
+		text-decoration: revert;
+		cursor: revert;
+	}
 }
 
 .text-inverted {

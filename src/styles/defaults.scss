@@ -131,6 +131,11 @@ input[type='search'] {
 	}
 }
 
+::selection {
+	background-color: var(--flood);
+	color: var(--link-active);
+}
+
 label:has(> :where(input[type='radio'], input[type='checkbox'])) {
 	display: inline-flex;
 	align-items: center;
@@ -190,24 +195,22 @@ samp {
 
 pre {
 	overflow-x: auto;
-	line-height: var(--line-height);
+	font-size: 0.875em;
 	background: var(--shadow);
 	border-radius: var(--border-radius-medium);
 	border: 1px solid var(--divider);
 	padding-inline: 1em;
-	padding-block: 0.25em;
-
-	> code {
-		line-height: inherit;
-	}
+	padding-block: 0.5em;
+	color: var(--accent);
 }
 
 blockquote {
-	margin: 0;
+	margin-inline: 0;
 	padding-inline-start: 0.75em;
 	border-inline-start: 0.35em solid var(--flood);
 	font-style: italic;
 	font-family: var(--font-stack-serif);
+	font-size: 1.05em;
 
 	&:not(:is(.extract-text, .content)) em {
 		font-style: normal;
