@@ -1,6 +1,9 @@
-.card {
+:root {
 	--container-padding-inline: 1.25em;
 	--container-padding-block: 1em;
+}
+
+.card {
 	padding-block: var(--container-padding-block);
 	padding-inline: var(--container-padding-inline);
 	background-color: var(--paper);
@@ -38,5 +41,29 @@
 		padding-inline-end: var(--separation);
 		break-after: avoid;
 		break-before: avoid;
+	}
+}
+
+.block-list {
+	&.compact {
+		--container-padding-inline: 0.75em;
+		--container-padding-block: 0.5em;
+	}
+	border: 1px solid var(--divider);
+	display: flex;
+	flex-direction: column;
+	border-radius: var(--border-radius-medium);
+	background-color: var(--paper);
+
+	> li {
+		padding-inline: var(--container-padding-inline);
+		padding-block: var(--container-padding-block);
+		&:not(:last-child) {
+			border-bottom: 1px solid var(--divider);
+		}
+		&:hover {
+			background-color: var(--splash);
+			cursor: pointer;
+		}
 	}
 }

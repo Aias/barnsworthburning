@@ -140,8 +140,8 @@ const atom = (extracts: IExtract[] = []) => {
 export async function GET() {
 	const fetchOptions = {
 		view: ExtractView.Works,
-		maxRecords: 30,
-		filterByFormula: `lastUpdated < DATEADD(NOW(), -12, 'hour')`
+		maxRecords: 50
+		// filterByFormula: `lastUpdated < DATEADD(NOW(), -12, 'hour')`
 	};
 
 	const extracts = await airtableFetch<IBaseExtract>(Table.Extracts, fetchOptions);

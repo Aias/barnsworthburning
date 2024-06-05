@@ -25,7 +25,7 @@
 	{/if}
 
 	{#if selected}
-		<Extract extract={selected} class="card" />
+		<Extract extract={selected} class="card chromatic" />
 	{/if}
 
 	{#if children}
@@ -35,18 +35,22 @@
 	{/if}
 
 	{#if connections}
-		<div class="connections">
+		<div class="connections-separator" role="presentation">
 			<hr />
-			<span class="text-secondary">⮂</span>
+			<span class="text-secondary text-mono">See ⮂ Also</span>
 			<hr />
 		</div>
-		{#each connections as connection (connection.id)}
-			<Extract extract={connection} />
-		{/each}
+		<ul class="connections block-list">
+			{#each connections as connection (connection.id)}
+				<li>
+					<Extract extract={connection} />
+				</li>
+			{/each}
+		</ul>
 	{/if}
 </article>
 
-<style lang="scss">
+<style>
 	article {
 		max-width: 600px;
 		margin-inline: auto;
@@ -55,7 +59,7 @@
 		gap: 2em;
 	}
 
-	.connections {
+	.connections-separator {
 		display: flex;
 		align-items: center;
 		gap: 1em;
@@ -63,5 +67,9 @@
 		hr {
 			flex: 1;
 		}
+	}
+
+	.connections {
+		font-size: var(--font-size-small);
 	}
 </style>

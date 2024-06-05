@@ -13,7 +13,7 @@
 	const cachedExtracts = $derived(cache.allExtracts);
 </script>
 
-<ul class="extract-list">
+<ul class="block-list compact">
 	{#each cachedExtracts as extract (extract.id)}
 		{@const {
 			michelinStars,
@@ -69,24 +69,6 @@
 </ul>
 
 <style>
-	ul {
-		border: 1px solid var(--divider);
-		display: flex;
-		flex-direction: column;
-		border-radius: var(--border-radius-medium);
-		background-color: var(--paper);
-	}
-	li {
-		padding-inline: 0.75em;
-		padding-block: 0.5em;
-		&:not(:last-child) {
-			border-bottom: 1px solid var(--divider);
-		}
-		&:hover {
-			background-color: var(--splash);
-			cursor: pointer;
-		}
-	}
 	article {
 		display: flex;
 		gap: 1em;
