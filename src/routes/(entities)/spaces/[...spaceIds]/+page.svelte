@@ -12,7 +12,7 @@
 		{space.topic}
 	{/each}
 </h1>
-<ExtractGallery {extracts} density={extracts.length > 200 ? 'compact' : 'comfortable'} />
+<ExtractGallery {extracts} />
 
 <style lang="scss">
 	h1 {

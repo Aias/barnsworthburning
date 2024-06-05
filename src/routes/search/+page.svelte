@@ -5,7 +5,6 @@
 
 	const { data } = $props();
 	const results = $derived(data.search);
-	let compactView = $state(false);
 
 	const currentQuery = $derived($page.url.searchParams.get('q'));
 	let searchValue = $state('');
@@ -34,14 +33,10 @@
 		/>
 		<button type="submit">Search</button>
 	</form>
-	<label class="compact-toggle">
-		<input type="checkbox" bind:checked={compactView} />
-		Compact
-	</label>
 </div>
 
 {#if results && results.length > 0}
-	<ExtractGallery extracts={results} density={compactView ? 'compact' : 'comfortable'} />
+	<ExtractGallery extracts={results} />
 {:else if !currentQuery}
 	<div class="empty-state">
 		<p class="text-secondary">Enter a search query.</p>
@@ -64,12 +59,6 @@
 			> :global(input) {
 				flex: 1;
 			}
-		}
-
-		.compact-toggle {
-			margin-inline-start: 1em;
-			border-left: 1px solid var(--divider);
-			padding-inline-start: 1em;
 		}
 	}
 	.empty-state {

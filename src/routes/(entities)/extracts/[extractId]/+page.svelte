@@ -42,9 +42,7 @@
 		</div>
 		<ul class="connections block-list">
 			{#each connections as connection (connection.id)}
-				<li>
-					<Extract extract={connection} />
-				</li>
+				<Extract element="li" extract={connection} />
 			{/each}
 		</ul>
 	{/if}

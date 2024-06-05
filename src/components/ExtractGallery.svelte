@@ -1,34 +1,18 @@
 <script lang="ts">
 	import Extract from './Extract.svelte';
-	import LooseleafCard from './LooseleafCard.svelte';
 	import type { IExtract } from '$types/Airtable';
 
 	interface GalleryProps {
 		extracts: IExtract[];
-		density?: 'comfortable' | 'compact';
-		scale?: number;
 	}
 
-	let { extracts, density = 'comfortable', scale }: GalleryProps = $props();
-
-	const scaleStyle = $derived.by(() => {
-		if (density === 'comfortable') {
-			return undefined;
-		}
-		return `--scale: ${scale ?? 0.65}em;`;
-	});
+	let { extracts }: GalleryProps = $props();
 </script>
 
-<div class="gallery" class:compact={density === 'compact'} style={scaleStyle}>
-	{#if density === 'compact'}
-		{#each extracts as extract (extract.id)}
-			<LooseleafCard {extract} />
-		{/each}
-	{:else}
-		{#each extracts as extract (extract.id)}
-			<Extract {extract} contextId="gallery" class="card" />
-		{/each}
-	{/if}
+<div class="gallery">
+	{#each extracts as extract (extract.id)}
+		<Extract {extract} contextId="gallery" class="card interactive" />
+	{/each}
 </div>
 
 <style lang="scss">

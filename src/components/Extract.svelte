@@ -6,16 +6,16 @@
 	import RelationList from './RelationList.svelte';
 	import AirtableImage from './AirtableImage.svelte';
 	import Link from './Link.svelte';
-	import { AirtableBaseId, ExtractView, Table, type IExtract } from '$types/Airtable';
-	import interaction from '$lib/interaction.svelte';
+	import type { IExtract } from '$types/Airtable';
 
 	interface ExtractProps {
 		extract: IExtract;
 		contextId?: string;
 		class?: string;
+		element?: string;
 	}
 
-	let { extract, contextId = 'panel', class: className }: ExtractProps = $props();
+	let { extract, element = 'section', class: className }: ExtractProps = $props();
 
 	// let airtableUrl = $derived(
 	// 	`https://airtable.com/${AirtableBaseId}/${Table.Extracts}/${ExtractView.EntryView}/${extract.id}`
@@ -42,7 +42,7 @@
 	// };
 </script>
 
-<BlockLink element="section" class={className ? `extract ${className}` : 'extract'}>
+<BlockLink {element} class={className ? `extract ${className}` : 'extract'}>
 	{#if title}
 		<header>
 			<h2 class="extract-title">

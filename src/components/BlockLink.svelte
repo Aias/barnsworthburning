@@ -51,9 +51,6 @@
 </svelte:element>
 
 <style>
-	.block-link {
-		cursor: pointer;
-	}
 	.block-link :global {
 		&:has(.main-link:focus-visible) {
 			outline: 1px solid var(--main);
