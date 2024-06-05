@@ -1,5 +1,6 @@
 <script lang="ts">
 	import markdown from '$helpers/markdown';
+	import BlockLink from './BlockLink.svelte';
 	import Citation from './Citation.svelte';
 	import TopicList from './TopicList.svelte';
 	import RelationList from './RelationList.svelte';
@@ -16,9 +17,9 @@
 
 	let { extract, contextId = 'panel', class: className }: ExtractProps = $props();
 
-	let airtableUrl = $derived(
-		`https://airtable.com/${AirtableBaseId}/${Table.Extracts}/${ExtractView.EntryView}/${extract.id}`
-	);
+	// let airtableUrl = $derived(
+	// 	`https://airtable.com/${AirtableBaseId}/${Table.Extracts}/${ExtractView.EntryView}/${extract.id}`
+	// );
 
 	let id = $derived(extract.id);
 	let title = $derived(extract.title);
@@ -32,23 +33,20 @@
 	let spaces = $derived(extract.spaces);
 
 	let hasRelations = $derived(children || connections || spaces);
-	let nodeId = $derived(`${contextId}--${id}`);
 
-	const handleClick = (event: MouseEvent) => {
-		if (interaction.metaKeyPressed) {
-			event.preventDefault();
-			window.open(airtableUrl, '_blank');
-		}
-	};
+	// const handleClick = (event: MouseEvent) => {
+	// 	if (interaction.metaKeyPressed) {
+	// 		event.preventDefault();
+	// 		window.open(airtableUrl, '_blank');
+	// 	}
+	// };
 </script>
 
-<!-- svelte-ignore a11y_no_static_element_interactions -->
-<!-- svelte-ignore a11y_click_events_have_key_events -->
-<section id={nodeId} class:extract={true} class={className} onclick={handleClick}>
+<BlockLink element="section" class={className ? `extract ${className}` : 'extract'}>
 	{#if title}
 		<header>
 			<h2 class="extract-title">
-				<Link toId={id}>
+				<Link toId={id} class="main-link inherit">
 					{title}
 				</Link>
 			</h2>
@@ -90,27 +88,16 @@
 			{@html markdown.parse(notes)}
 		</footer>
 	{/if}
-</section>
+</BlockLink>
 
-<style lang="scss">
-	.extract {
+<style>
+	:global(.extract) {
 		--layout-gap: 0.5em;
 		display: flex;
 		flex-direction: column;
 		gap: var(--layout-gap);
 		position: relative;
 		isolation: isolate;
-	}
-
-	.extract-title {
-		> :global(a) {
-			all: inherit;
-			cursor: pointer;
-			word-wrap: break-word;
-			&:hover {
-				text-decoration: underline;
-			}
-		}
 	}
 
 	.extract-main {
@@ -120,8 +107,9 @@
 		color: var(--display);
 	}
 
-	.extract-image {
-		border: 1px solid var(--divider);
+	:global(.extract img) {
+		background-color: var(--paper);
+		border: 1px solid var(--flood);
 	}
 
 	.extract-caption {

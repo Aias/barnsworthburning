@@ -210,7 +210,6 @@ blockquote {
 	border-inline-start: 0.35em solid var(--flood);
 	font-style: italic;
 	font-family: var(--font-stack-serif);
-	font-size: 1.05em;
 
 	&:not(:is(.extract-text, .content)) em {
 		font-style: normal;

@@ -4,7 +4,7 @@
 	import markdown from '$helpers/markdown';
 	import { article } from '$helpers/grammar.js';
 	import Link from '$components/Link.svelte';
-	import { goto } from '$app/navigation';
+	import BlockLink from '$components/BlockLink.svelte';
 
 	let { data } = $props();
 
@@ -13,28 +13,6 @@
 	});
 
 	const cachedExtracts = $derived(cache.allExtracts);
-	const handleClick = (event: MouseEvent) => {
-		// Adapted from:
-		// https://css-tricks.com/block-links-the-search-for-a-perfect-solution/#comment-1769257
-		// https://codepen.io/xelium/pen/OJbEVmL
-		const target = event.target as HTMLElement;
-		let card: HTMLElement | null = null;
-		let mainLink: HTMLElement | null = null;
-		let allLinks: NodeListOf<HTMLElement> | null = null;
-		if (target) {
-			card = target.closest('.block-link');
-		}
-		if (card) {
-			mainLink = card.querySelector('.main-link');
-			allLinks = card.querySelectorAll('a, button, .link, :any-link');
-		}
-		if (!mainLink || window.getSelection()?.toString()) return;
-		if (allLinks && Array.from(allLinks).some((item) => item === target)) return;
-		const href = mainLink.getAttribute('href') ?? '/';
-		event.preventDefault();
-		event.stopPropagation();
-		goto(href);
-	};
 </script>
 
 <ul class="block-list compact">
@@ -51,9 +29,7 @@
 			notes
 		} = extract}
 		{@const content = quote || notes}
-		<!-- svelte-ignore a11y_click_events_have_key_events -->
-		<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-		<li class="block-link" onclick={handleClick}>
+		<BlockLink element="li">
 			<article>
 				<section>
 					<header>
@@ -93,7 +69,7 @@
 					</figure>
 				{/if}
 			</article>
-		</li>
+		</BlockLink>
 	{/each}
 </ul>
 
