@@ -3,6 +3,7 @@
 	import SEO from '$components/SEO.svelte';
 	import Nav from './app/Nav.svelte';
 	import { page } from '$app/stores';
+	import { beforeNavigate } from '$app/navigation';
 	import cache from '$lib/cache.svelte';
 	import { Palette, Mode, Chroma } from '$types/Theme';
 	import settings from '$lib/settings.svelte';
@@ -42,6 +43,12 @@
 			cache.addSpaces(data.spaces);
 		}
 	});
+
+	// beforeNavigate(({ cancel, from, to, type }) => {
+	// 	const isNavigating = ['link', 'goto'].includes(type);
+	// 	console.log('from', from, 'to', to, 'type', type, 'isNavigating', isNavigating);
+	// 	if (type === 'leave') cancel();
+	// });
 
 	const handleKeyPress = (event: KeyboardEvent) => {
 		interaction.setAltKeyPressed(event.altKey);
