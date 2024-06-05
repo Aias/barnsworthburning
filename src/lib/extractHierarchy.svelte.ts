@@ -9,7 +9,7 @@ type ExtractHierarchy = {
 };
 
 export function makeHierarchy(extractId: string) {
-	const hierarchy = $derived.by(() => {
+	const hierarchy: ExtractHierarchy | undefined = $derived.by(() => {
 		const currentExtract = cache.extractsById.get(extractId);
 		if (!currentExtract) return undefined;
 
