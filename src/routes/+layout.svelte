@@ -8,7 +8,16 @@
 	import { Palette, Mode, Chroma } from '$types/Theme';
 	import settings from '$lib/settings.svelte';
 	import interaction from '$lib/interaction.svelte';
+	import trail from '$lib/trail.svelte';
+	import { entityTypes } from '$helpers/params';
 	import { getCookie } from '$helpers/cookies';
+	import { paletteOptions } from '$types/Theme';
+
+	const rotatePalette = (steps: number) => {
+		const currentIndex = paletteOptions.indexOf(settings.palette);
+		const newIndex = (currentIndex + steps) % paletteOptions.length;
+		return paletteOptions[newIndex];
+	};
 
 	let { children, data } = $props();
 
@@ -44,16 +53,24 @@
 		}
 	});
 
-	// beforeNavigate(({ cancel, from, to, type }) => {
-	// 	const isNavigating = ['link', 'goto'].includes(type);
-	// 	console.log('from', from, 'to', to, 'type', type, 'isNavigating', isNavigating);
-	// 	if (type === 'leave') cancel();
-	// });
+	beforeNavigate(({ to, type }) => {
+		const isNavigating = ['link', 'goto'].includes(type);
+		if (!isNavigating) return;
+		// console.log(to);
+		const newSegment = {
+			id: new Date().toISOString(),
+			entityType: entityTypes.extract,
+			content: to?.url.href || ''
+		};
+		// trail.addSegment(newSegment);
+	});
 
 	const handleKeyPress = (event: KeyboardEvent) => {
 		interaction.setAltKeyPressed(event.altKey);
 		interaction.setMetaKeyPressed(event.metaKey);
 	};
+
+	let currentTrail = $derived([...trail.trail]);
 </script>
 
 <svelte:window on:keydown={handleKeyPress} on:keyup={handleKeyPress} />
@@ -63,4 +80,22 @@
 	<main class="app-main">
 		{@render children()}
 	</main>
+{/if}
+{#if currentTrail.length > 0}
+	<aside class="app-trail">
+		<ul class="segments">
+			{#each currentTrail as { id, entityType, content }, index (id)}
+				<li class={`chromatic ${rotatePalette(index + 1)}`}>
+					<hr class="separator" />
+					<article class="segment">
+						<h3>{entityType.title}</h3>
+						<p>{id}</p>
+						<p>This is segment #{index + 1}</p>
+						<p>{content}</p>
+						<button type="reset" onclick={() => trail.removeSegment(id)}>Close</button>
+					</article>
+				</li>
+			{/each}
+		</ul>
+	</aside>
 {/if}

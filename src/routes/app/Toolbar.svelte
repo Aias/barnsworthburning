@@ -154,8 +154,8 @@
 					font-size: 0.75em;
 					line-height: 1;
 					position: absolute;
-					top: 50%;
-					left: 50%;
+					inset-block-start: 50%;
+					inset-inline-start: 50%;
 					transform: translate(-50%, -50%);
 				}
 			}
@@ -174,9 +174,9 @@
 					content: '';
 					display: block;
 					position: absolute;
-					left: 0;
-					right: 0;
-					bottom: calc(-1 * var(--border-height));
+					inset-inline-start: 0;
+					inset-inline-end: 0;
+					inset-block-end: calc(-1 * var(--border-height));
 					height: var(--border-height);
 					border-radius: calc(var(--border-height) / 2);
 					background-color: var(--main);

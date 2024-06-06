@@ -58,7 +58,7 @@
 		padding-inline: var(--container-padding-inline);
 		padding-block: var(--container-padding-block);
 		&:not(:last-child) {
-			border-bottom: 1px solid var(--divider);
+			border-block-end: 1px solid var(--divider);
 		}
 		&:hover {
 			background-color: var(--splash);
