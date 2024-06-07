@@ -6,14 +6,20 @@ const linkRenderer = (href: string, title: string | null | undefined, text: stri
 	return `<a href="${href}" target="${target}"${titleTag}>${text}</a>`;
 };
 
-const renderer = {
-	link: linkRenderer
-};
+const inlineRenderer = (text: string) => text;
 
-const markdown = new Marked({
-	breaks: true
+export const markdown = new Marked({
+	breaks: true,
+	renderer: {
+		link: linkRenderer
+	}
 });
-
-markdown.use({ renderer });
+export const inlineMarkdown = new Marked({
+	breaks: false,
+	renderer: {
+		paragraph: inlineRenderer,
+		text: inlineRenderer
+	}
+});
 
 export default markdown;
