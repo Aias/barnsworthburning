@@ -6,7 +6,8 @@
 	import RelationList from './RelationList.svelte';
 	import AirtableImage from './AirtableImage.svelte';
 	import Link from './Link.svelte';
-	import type { IExtract } from '$types/Airtable';
+	import { AirtableBaseId, ExtractView, Table, type IExtract } from '$types/Airtable';
+	import interaction from '$lib/interaction.svelte';
 
 	interface ExtractProps {
 		extract: IExtract;
@@ -16,10 +17,6 @@
 	}
 
 	let { extract, element = 'section', class: className }: ExtractProps = $props();
-
-	// let airtableUrl = $derived(
-	// 	`https://airtable.com/${AirtableBaseId}/${Table.Extracts}/${ExtractView.EntryView}/${extract.id}`
-	// );
 
 	let id = $derived(extract.id);
 	let title = $derived(extract.title);
@@ -34,22 +31,28 @@
 
 	let hasRelations = $derived(children || connections || spaces);
 
-	// const handleClick = (event: MouseEvent) => {
-	// 	if (interaction.metaKeyPressed) {
-	// 		event.preventDefault();
-	// 		window.open(airtableUrl, '_blank');
-	// 	}
-	// };
+	let airtableUrl = $derived(
+		`https://airtable.com/${AirtableBaseId}/${Table.Extracts}/${ExtractView.EntryView}/${extract.id}`
+	);
+	const openInAirtable = (event: MouseEvent) => {
+		event.preventDefault();
+		window.open(airtableUrl, '_blank');
+	};
 </script>
 
 <BlockLink {element} class={className ? `extract ${className}` : 'extract'}>
 	{#if title}
-		<header>
+		<header class:enable-menu={interaction.metaKeyPressed}>
 			<h2 class="extract-title">
 				<Link toId={id} class="main-link inherit">
 					{title}
 				</Link>
 			</h2>
+			<button
+				class="source-opener chromatic"
+				onclick={openInAirtable}
+				title="Open in Airtable">☁️</button
+			>
 		</header>
 	{/if}
 	<figure class="extract-main">
@@ -98,6 +101,26 @@
 		gap: var(--layout-gap);
 		position: relative;
 		isolation: isolate;
+	}
+
+	header {
+		position: relative;
+	}
+	.source-opener {
+		position: absolute;
+		inset-block-start: 0;
+		inset-inline-end: 0;
+		line-height: 1;
+		padding-block: 0.5cap;
+		font-family: var(--font-stack-sans);
+		font-size: var(--font-size-small);
+		display: none;
+		opacity: 50%;
+		transition: opacity 150ms;
+	}
+	:global(.extract):has(.enable-menu):hover .source-opener {
+		display: block;
+		opacity: 1;
 	}
 
 	.extract-main {

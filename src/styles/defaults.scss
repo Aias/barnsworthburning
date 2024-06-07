@@ -23,8 +23,8 @@ body {
 	block-size: 100%;
 	margin: 0;
 	color: var(--display);
-	font-size: calc((14 / 16) * 1em);
-	line-height: calc(1.5 * (16 / 14));
+	font-size: calc(0.875em);
+	line-height: calc(1.725);
 }
 
 h1 {
@@ -35,17 +35,23 @@ h1 {
 h2 {
 	font-size: var(--font-size-heading);
 	font-weight: var(--font-weight-light);
-	line-height: 1.4;
+	line-height: 1.45;
 }
 h3 {
 	font-size: var(--font-size-subhead);
 	font-weight: var(--font-weight-light);
-	line-height: 1.5;
+	line-height: 1.6;
 }
 h1,
 h2,
 h3 {
 	color: var(--primary);
+}
+h4,
+h5,
+h6 {
+	font-size: inherit;
+	line-height: inherit;
 }
 
 strong {
@@ -70,7 +76,7 @@ button,
 	user-select: none;
 	display: inline-flex;
 	align-items: center;
-	background-color: var(--splash);
+	background-color: var(--container);
 	color: var(--accent);
 	border: 1px solid var(--border);
 	border-radius: var(--border-radius-small);
@@ -80,7 +86,7 @@ button,
 	white-space: nowrap;
 
 	&:hover {
-		background-color: var(--flood);
+		background-color: var(--float);
 		border-color: var(--boundary);
 	}
 
