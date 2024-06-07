@@ -37,7 +37,7 @@
 	{#if connections}
 		<div class="connections-separator" role="presentation">
 			<hr />
-			<span class="text-secondary text-mono">See ⮂ Also</span>
+			<small class="text-secondary text-mono">See ⮂ Also</small>
 			<hr />
 		</div>
 		<ul class="connections block-list">
