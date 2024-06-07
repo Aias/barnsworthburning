@@ -55,6 +55,18 @@ export function makeHierarchy(extractId: string) {
 	return {
 		get full() {
 			return hierarchy;
+		},
+		get selected() {
+			return hierarchy?.selected;
+		},
+		get parents() {
+			return hierarchy?.parents;
+		},
+		get children() {
+			return hierarchy?.children;
+		},
+		get connections() {
+			return hierarchy?.connections;
 		}
 	};
 }

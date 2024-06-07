@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { setContext } from 'svelte';
 	import cache from '$lib/cache.svelte';
 	import { makeHierarchy } from '$lib/extractHierarchy.svelte';
 	import { page } from '$app/stores';
@@ -6,15 +7,19 @@
 
 	let { data } = $props();
 
-	$effect(() => {
+	$effect.pre(() => {
 		cache.addExtracts(data.selectedExtractData);
 	});
 
-	let tree = $derived(makeHierarchy($page.params.extractId).full);
-	let selected = $derived(tree?.selected);
-	let parents = $derived(tree?.parents);
-	let children = $derived(tree?.children);
-	let connections = $derived(tree?.connections);
+	let tree = $derived(makeHierarchy($page.params.extractId));
+	let selected = $derived(tree.selected);
+	let parents = $derived(tree.parents);
+	let children = $derived(tree.children);
+	let connections = $derived(tree.connections);
+
+	$effect.pre(() => {
+		setContext('extract', selected);
+	});
 </script>
 
 <article>

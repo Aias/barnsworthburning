@@ -2,14 +2,14 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import type { Snippet } from 'svelte';
+	import type { HTMLAttributes } from 'svelte/elements';
 
-	interface BlockLinkProps {
-		element?: string;
-		id?: string;
-		class?: string;
+	interface BlockLinkProps<T extends keyof HTMLElementTagNameMap>
+		extends HTMLAttributes<HTMLElementTagNameMap[T]> {
+		element?: T;
 		children: Snippet;
 	}
-	let { element = 'div', children, ...restProps }: BlockLinkProps = $props();
+	let { element = 'div', children, ...restProps }: BlockLinkProps<any> = $props();
 
 	const handleBlockLinkClick = (event: MouseEvent) => {
 		// Adapted from:

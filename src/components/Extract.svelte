@@ -7,7 +7,7 @@
 	import AirtableImage from './AirtableImage.svelte';
 	import Link from './Link.svelte';
 	import { AirtableBaseId, ExtractView, Table, type IExtract } from '$types/Airtable';
-	import interaction from '$lib/interaction.svelte';
+	import { classnames } from '$helpers/classnames';
 
 	interface ExtractProps {
 		extract: IExtract;
@@ -40,16 +40,16 @@
 	};
 </script>
 
-<BlockLink {element} class={className ? `extract ${className}` : 'extract'}>
+<BlockLink {element} class={classnames('extract', 'ssm-container', className)}>
 	{#if title}
-		<header class:enable-menu={interaction.metaKeyPressed}>
+		<header>
 			<h2 class="extract-title">
 				<Link toId={id} class="main-link inherit">
 					{title}
 				</Link>
 			</h2>
 			<button
-				class="source-opener chromatic"
+				class="ssm source-opener chromatic"
 				onclick={openInAirtable}
 				title="Open in Airtable">☁️</button
 			>
@@ -66,14 +66,12 @@
 				</div>
 			{/if}
 		{/if}
+		<Citation {extract} element="figcaption" class="extract-caption" />
 		{#if extractContent}
 			<blockquote class="extract-text content" cite={extract.source}>
 				{@html markdown.parse(extractContent)}
 			</blockquote>
 		{/if}
-		<figcaption class="extract-caption">
-			<Citation {extract} />
-		</figcaption>
 	</figure>
 	{#if hasRelations}
 		<nav class="relations">
@@ -114,12 +112,10 @@
 		padding-block: 0.5cap;
 		font-family: var(--font-stack-sans);
 		font-size: var(--font-size-small);
-		display: none;
 		opacity: 50%;
 		transition: opacity 150ms;
 	}
-	:global(.extract):has(.enable-menu):hover .source-opener {
-		display: block;
+	:global(.extract):hover .source-opener {
 		opacity: 1;
 	}
 
@@ -133,10 +129,6 @@
 	:global(.extract img) {
 		background-color: var(--paper);
 		border: 1px solid var(--flood);
-	}
-
-	.extract-caption {
-		order: -1;
 	}
 
 	.extract-text {

@@ -3,6 +3,13 @@
 	--container-padding-block: 1em;
 }
 
+.ssm {
+	display: none;
+}
+.show-super-secret-menus .ssm-container:hover .ssm {
+	display: initial;
+}
+
 .card {
 	padding-block: var(--container-padding-block);
 	padding-inline: var(--container-padding-inline);

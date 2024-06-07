@@ -11,6 +11,7 @@
 	import trail from '$lib/trail.svelte';
 	import { entityTypes } from '$helpers/params';
 	import { getCookie } from '$helpers/cookies';
+	import { classnames } from '$helpers/classnames';
 	import { paletteOptions } from '$types/Theme';
 
 	const rotatePalette = (steps: number) => {
@@ -20,7 +21,7 @@
 	};
 
 	let { children, data } = $props();
-
+	let bodyEl: HTMLBodyElement | undefined;
 	let isIndex = $derived($page.route.id === '/');
 
 	$effect.pre(() => {
@@ -65,7 +66,12 @@
 		// trail.addSegment(newSegment);
 	});
 
-	const handleKeyPress = (event: KeyboardEvent) => {
+	$effect(() => {
+		if (!bodyEl) return;
+		bodyEl.classList.toggle('show-super-secret-menus', interaction.metaKeyPressed);
+	});
+
+	const handleInteractions = (event: KeyboardEvent | MouseEvent) => {
 		interaction.setAltKeyPressed(event.altKey);
 		interaction.setMetaKeyPressed(event.metaKey);
 	};
@@ -73,8 +79,14 @@
 	let currentTrail = $derived([...trail.trail]);
 </script>
 
-<svelte:window on:keydown={handleKeyPress} on:keyup={handleKeyPress} />
+<svelte:window
+	on:keydown={handleInteractions}
+	on:keyup={handleInteractions}
+	on:mouseenter={handleInteractions}
+	on:mouseleave={handleInteractions}
+/>
 <SEO />
+<svelte:body bind:this={bodyEl} />
 <Nav class="app-header" />
 {#if !isIndex}
 	<main class="app-main">
@@ -85,7 +97,7 @@
 	<aside class="app-trail">
 		<ul class="segments">
 			{#each currentTrail as { id, entityType, content }, index (id)}
-				<li class={`chromatic ${rotatePalette(index + 1)}`}>
+				<li class={classnames('chromatic', rotatePalette(index + 1))}>
 					<hr class="separator" />
 					<article class="segment">
 						<h3>{entityType.title}</h3>
