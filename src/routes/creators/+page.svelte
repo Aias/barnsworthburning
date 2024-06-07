@@ -13,7 +13,7 @@
 </script>
 
 <svelte:head>
-	<title>barnsworthburning · creators</title>
+	<title>barnsworthburning</title>
 </svelte:head>
 <ul class="entity-list">
 	{#each cachedCreators as entity (entity.id)}

@@ -13,7 +13,7 @@
 </script>
 
 <svelte:head>
-	<title>barnsworthburning · spaces</title>
+	<title>barnsworthburning</title>
 </svelte:head>
 <ul class="entity-list">
 	{#each cachedSpaces as entity (entity.id)}

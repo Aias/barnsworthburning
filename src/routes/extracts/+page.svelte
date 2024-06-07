@@ -16,7 +16,7 @@
 </script>
 
 <svelte:head>
-	<title>barnsworthburning · extracts</title>
+	<title>barnsworthburning</title>
 </svelte:head>
 <ul class="block-list compact">
 	{#each cachedExtracts as extract (extract.id)}
