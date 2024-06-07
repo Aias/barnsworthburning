@@ -2,7 +2,7 @@ import { mapExtractRecord } from '$helpers/mapping';
 import { airtableFetch } from '$lib/server/requests';
 import { ExtractView, Table, type IBaseExtract, type IExtract } from '$types/Airtable';
 import markdown from '$helpers/markdown';
-import { article } from '$helpers/grammar';
+import { getArticle } from '$helpers/grammar';
 import xmlFormatter from 'xml-formatter';
 
 const generateContentMarkup = (extract: IExtract) => {
@@ -24,7 +24,7 @@ const generateContentMarkup = (extract: IExtract) => {
 	let markup = '<article>\n';
 	markup += '<header>\n';
 	markup += '<p>';
-	markup += `${article(type)} <strong>${type}</strong> by `;
+	markup += `${getArticle(type)} <strong>${type}</strong> by `;
 	creators.forEach(({ name, id }, index) => {
 		if (index > 0) {
 			if (index + 1 < creators.length) {

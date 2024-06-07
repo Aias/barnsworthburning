@@ -21,6 +21,9 @@
 	}
 </script>
 
+<svelte:head>
+	<title>barnsworthburning · search</title>
+</svelte:head>
 <div class="toolbar">
 	<form data-sveltekit-keepfocus class="search-input">
 		<TextInput

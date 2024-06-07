@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { article } from '$helpers/grammar';
+	import { getArticle } from '$helpers/grammar';
 	import CreatorList from './CreatorList.svelte';
 	import Link from './Link.svelte';
 	import { type IExtract } from '$types/Airtable';
@@ -35,7 +35,7 @@
 
 <svelte:element this={element} class:citation={true} class:text-mono={true} class={className}>
 	{#if creators.length > 0 || format.toLowerCase() !== Format.Fragment.toLowerCase()}
-		<span class="article">{article(format)}</span>
+		<span class="article">{getArticle(format)}</span>
 		<strong class="format">{format}</strong>
 	{/if}
 	{#if creators.length > 0}

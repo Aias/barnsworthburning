@@ -2,7 +2,7 @@
 	import cache from '$lib/cache.svelte';
 	import CreatorList from '$components/CreatorList.svelte';
 	import markdown from '$helpers/markdown';
-	import { article } from '$helpers/grammar.js';
+	import { getArticle } from '$helpers/grammar.js';
 	import Link from '$components/Link.svelte';
 	import BlockLink from '$components/BlockLink.svelte';
 
@@ -15,6 +15,9 @@
 	const cachedExtracts = $derived(cache.allExtracts);
 </script>
 
+<svelte:head>
+	<title>barnsworthburning · extracts</title>
+</svelte:head>
 <ul class="block-list compact">
 	{#each cachedExtracts as extract (extract.id)}
 		{@const {
@@ -54,7 +57,7 @@
 						</blockquote>
 					{:else}
 						<p class="summary">
-							<span>({article(format)} {format.toLowerCase()})</span>
+							<span>({getArticle(format)} {format.toLowerCase()})</span>
 						</p>
 					{/if}
 				</section>

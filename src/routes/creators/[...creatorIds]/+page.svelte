@@ -7,6 +7,9 @@
 	let extracts = $derived(data.extractsByCreators);
 </script>
 
+<svelte:head>
+	<title>{creators[0].name}</title>
+</svelte:head>
 <h1>
 	{#each creators as creator (creator.id)}
 		{creator.name}

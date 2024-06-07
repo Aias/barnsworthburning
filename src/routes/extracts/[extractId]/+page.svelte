@@ -22,6 +22,11 @@
 	});
 </script>
 
+<svelte:head>
+	{#if selected?.title}
+		<title>{selected.title}</title>
+	{/if}
+</svelte:head>
 <article>
 	{#if parents}
 		{#each parents as parent (parent.id)}

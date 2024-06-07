@@ -12,6 +12,9 @@
 	const cachedCreators = $derived(cache.allCreators);
 </script>
 
+<svelte:head>
+	<title>barnsworthburning · creators</title>
+</svelte:head>
 <ul class="entity-list">
 	{#each cachedCreators as entity (entity.id)}
 		<li>
