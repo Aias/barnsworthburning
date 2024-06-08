@@ -1,40 +1,23 @@
 import { mapExtractRecord } from '$helpers/mapping';
 import { airtableFetch } from '$lib/server/requests';
 import { ExtractView, Table, type IBaseExtract, type IExtract } from '$types/Airtable';
-import markdown from '$helpers/markdown';
-import { getArticle } from '$helpers/grammar';
+import markdown, { inlineMarkdown } from '$helpers/markdown';
+import { getArticle, combineAsList } from '$helpers/grammar';
 import xmlFormatter from 'xml-formatter';
 
 const generateContentMarkup = (extract: IExtract) => {
-	const {
-		extract: content,
-		notes,
-		format,
-		source,
-		images,
-		imageCaption,
-		creators = [
-			{
-				id: 'anon',
-				name: 'Anonymous'
-			}
-		]
-	} = extract;
+	const { extract: content, notes, format, source, images, imageCaption, creators } = extract;
 	let type = (format || 'extract').toLowerCase();
 	let markup = '<article>\n';
 	markup += '<header>\n';
 	markup += '<p>';
-	markup += `${getArticle(type)} <strong>${type}</strong> by `;
-	creators.forEach(({ name, id }, index) => {
-		if (index > 0) {
-			if (index + 1 < creators.length) {
-				markup += ', ';
-			} else {
-				markup += ' & ';
-			}
-		}
-		markup += `<a href="${meta.url}/creators/${id}">${name}</a>`;
-	});
+	markup += `${getArticle(type)} <strong>${type}</strong>`;
+	if (creators) {
+		const creatorsMarkup = inlineMarkdown.parse(
+			combineAsList(creators.map((c) => `[${c.name}](${meta.url}/creators/${c.id})`))
+		);
+		markup += ` by ${creatorsMarkup}`;
+	}
 	markup += '</p>\n';
 	markup += '</header>\n';
 	markup += '<section>\n';
