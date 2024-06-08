@@ -8,6 +8,7 @@ const MAX_RECORDS = 100;
 export async function load() {
 	const creators = await airtableFetch<IBaseSpace>(Table.Spaces, {
 		view: SpaceView.RecentlyUpdated,
+		filterByFormula: 'numExtracts > 0',
 		maxRecords: MAX_RECORDS
 	});
 
