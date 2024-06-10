@@ -11,15 +11,13 @@
 	$effect(() => {
 		cache.addExtracts(data.recentExtracts);
 	});
-
-	const cachedExtracts = $derived(cache.allExtracts);
 </script>
 
 <svelte:head>
 	<title>barnsworthburning</title>
 </svelte:head>
 <ul class="block-list compact">
-	{#each cachedExtracts as extract (extract.id)}
+	{#each data.recentExtracts as extract (extract.id)}
 		{@const {
 			id,
 			michelinStars,
@@ -46,7 +44,9 @@
 						<strong class="title">
 							<Link class="main-link inherit" toId={id}>{title}</Link>
 						</strong>
-						<CreatorList {creators} class="creators" />
+						{#if creators}
+							<CreatorList {creators} class="creators" />
+						{/if}
 					</header>
 					{#if content}
 						<blockquote class="summary">

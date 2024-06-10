@@ -14,7 +14,8 @@ const findExtractsByCreators = async (spaceIds: string[], operand: 'AND' | 'OR' 
 	const filterFormula = `${operand}(${spaceIds.map((id) => `FIND('${id}', spacesLookup) > 0`).join(',')})`;
 	const extracts = await airtableFetch<IBaseExtract>(Table.Extracts, {
 		view: ExtractView.Best,
-		filterByFormula: filterFormula
+		filterByFormula: filterFormula,
+		maxRecords: 100
 	});
 
 	return extracts;

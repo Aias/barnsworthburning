@@ -17,15 +17,11 @@
 
 <style lang="scss">
 	.gallery {
-		--gallery-scale: var(--scale, 1em);
-
-		font-size: var(--gallery-scale);
-
-		column-width: 35ch;
-		column-gap: var(--gallery-scale);
+		column-width: 40ch;
+		column-gap: 1em;
 
 		> :global(*) {
-			margin-block: var(--gallery-scale);
+			margin-block: 1em;
 			break-inside: avoid;
 			&:first-of-type {
 				margin-block-start: 0;

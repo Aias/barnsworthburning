@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getArticle } from '$helpers/grammar';
 	import CreatorList from './CreatorList.svelte';
-	import Link from './Link.svelte';
+	import SourceLink from './SourceLink.svelte';
 	import { type IExtract } from '$types/Airtable';
 	import { getContext } from 'svelte';
 
@@ -29,7 +29,6 @@
 		const contextCreators = extractContext.creators || [];
 		return fullList.filter((creator) => !contextCreators.find((c) => c.id === creator.id));
 	});
-	let parent = $derived(extract.parent);
 	let source = $derived(extract.source);
 </script>
 
@@ -41,13 +40,8 @@
 	{#if creators.length > 0}
 		<span class="creators">by <CreatorList {creators} /></span>
 	{/if}
-	{#if parent && parent.id !== extractContext?.id}
-		<span class="parent">from <Link toId={parent.id}><cite>{parent.name}</cite></Link></span>
-	{/if}
 	{#if source}
-		<a class="source" href={source} target="_blank" rel="noreferrer" title="View source">
-			{new URL(source).hostname}
-		</a>
+		<SourceLink href={source} />
 	{/if}
 </svelte:element>
 
@@ -66,32 +60,5 @@
 
 	cite {
 		font-style: italic;
-	}
-
-	.source {
-		display: inline-flex;
-		white-space: nowrap;
-		padding-block: 0;
-		padding-inline: 0.5em;
-		background-color: var(--splash);
-		border: 1px solid var(--divider);
-		border-radius: var(--border-radius-small);
-		font-size: 0.75em;
-		line-height: inherit;
-		transform: translateY(-0.1em);
-		break-before: avoid;
-		color: var(--accent);
-		text-decoration: none;
-
-		&:hover {
-			background-color: var(--flood);
-			border-color: var(--boundary);
-			cursor: pointer;
-		}
-
-		&::after {
-			content: '⤤';
-			margin-inline-start: 1ch;
-		}
 	}
 </style>
