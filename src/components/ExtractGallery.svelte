@@ -31,4 +31,17 @@
 			}
 		}
 	}
+	// @supports (grid-template-rows: masonry) {
+	// 	.gallery {
+	// 		all: initial;
+	// 		display: grid;
+	// 		grid-template-columns: repeat(auto-fill, minmax(40ch, 1fr));
+	// 		grid-template-rows: masonry;
+	// 		gap: 1em;
+
+	// 		> :global(*) {
+	// 			margin-block: 0;
+	// 		}
+	// 	}
+	// }
 </style>
