@@ -63,15 +63,38 @@
 	function sortByName(a: IndexEntry, b: IndexEntry) {
 		return a.name.localeCompare(b.name);
 	}
+
+	type Route = {
+		name: string;
+		path: string;
+		icon: string;
+	};
+	const routes = [
+		{ name: 'Index', path: '/', icon: '🗂️' },
+		{ name: 'Creators', path: '/creators', icon: '🧑‍🎨' },
+		{ name: 'Spaces', path: '/spaces', icon: '🏷️' },
+		{ name: 'Extracts', path: '/extracts', icon: '📝' },
+		{ name: 'Search', path: '/search', icon: '🔍' }
+	];
+	let activeRoute = $derived.by(() => {
+		const currentRoute = $page.route.id;
+		const [indexRoute, ...otherRoutes] = routes;
+		if (!currentRoute) return undefined;
+		if (currentRoute === '/') return indexRoute;
+		return otherRoutes.find((route) => currentRoute.startsWith(route.path));
+	});
 </script>
 
 <header class:themed={true} {...restProps}>
 	<nav class="app-nav">
-		<Link class="nav-link" href="/" data-icon="🗂️">Index</Link>
-		<Link class="nav-link" href="/creators" data-icon="🧑‍🎨">Creators</Link>
-		<Link class="nav-link" href="/spaces" data-icon="🏷️">Spaces</Link>
-		<Link class="nav-link" href="/extracts" data-icon="📝">Extracts</Link>
-		<Link class="nav-link" href="/search" data-icon="🔍">Search</Link>
+		{#each routes as route (route.path)}
+			<Link
+				class="nav-link"
+				active={route === activeRoute}
+				href={route.path}
+				data-icon={route.icon}>{route.name}</Link
+			>
+		{/each}
 	</nav>
 	<hr role="presentation" class="section-break" />
 	<form action="/search">

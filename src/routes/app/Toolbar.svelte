@@ -174,8 +174,7 @@
 					content: '';
 					display: block;
 					position: absolute;
-					inset-inline-start: 0;
-					inset-inline-end: 0;
+					inset-inline: 0;
 					inset-block-end: calc(-1 * var(--border-height));
 					height: var(--border-height);
 					border-radius: calc(var(--border-height) / 2);

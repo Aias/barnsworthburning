@@ -27,14 +27,25 @@
 }
 
 .nav-link {
+	border-radius: var(--border-radius-small);
+	padding-inline: 0.5em;
+	display: flex;
+	flex-direction: row;
+	gap: 1ch;
+	text-decoration: none;
+
+	&:hover {
+		background-color: var(--flood);
+	}
+
 	&::before {
 		content: attr(data-icon);
 		display: inline-block;
 	}
-	&::before,
-	&:hover::before {
-		text-decoration: none;
-		margin-inline-end: 1ch;
+
+	&.active {
+		background-color: var(--main);
+		color: var(--main-contrast);
 	}
 }
 
@@ -48,8 +59,7 @@
 
 		.app-header {
 			width: var(--sidebar-width);
-			inset-block-start: 0;
-			inset-block-end: 0;
+			inset-block: 0;
 			inset-inline-start: 0;
 			display: flex;
 			flex-direction: column;
@@ -72,18 +82,14 @@
 	@media (width < 600px) {
 		.app-header {
 			--chroma: 100%;
-			--max-width: calc(100% - 2 * var(--padding));
-			inset-block-end: var(--padding);
-			inset-inline-start: 50%;
-			transform: translateX(-50%);
-			width: var(--max-width);
-			max-width: var(--max-width);
+			inset-block-end: calc(var(--padding) / 2);
+			inset-inline: var(--padding);
 			overflow: hidden;
 			background-color: var(--float);
 			display: flex;
 			border-radius: var(--border-radius-small);
 			border: 1px solid var(--border);
-			padding: 0.5rem 1rem;
+			padding: 0.25em 0;
 
 			& > *:not(:is(nav)) {
 				display: none;
@@ -93,11 +99,18 @@
 			width: 100%;
 			display: flex;
 			flex-direction: row;
-			justify-content: space-evenly;
-			gap: 1em;
+			gap: 0.25em;
+			padding-inline: 0.25em;
 		}
 		.nav-link {
+			flex: 0 1 100%;
+			flex-direction: column;
+			gap: 0;
 			text-align: center;
+
+			&::before {
+				transform: translateY(0.25cap);
+			}
 		}
 	}
 }
@@ -106,14 +119,13 @@
 	padding: var(--padding);
 
 	@media (width < 600px) {
-		padding-block-end: 6rem;
+		padding-block-end: 4.5rem;
 	}
 }
 
 .app-trail {
 	position: fixed;
-	inset-block-start: 0;
-	inset-block-end: 0;
+	inset-block: 0;
 	inset-inline-end: 0;
 	max-width: 50%;
 	height: 100dvh;
