@@ -1,26 +1,33 @@
 <script lang="ts">
-	import type { EntityType } from '$helpers/params';
+	import { entityTypes, type EntityType } from '$helpers/params';
 	import type { ILinkedRecord } from '$types/Airtable';
 	import Link from '$components/Link.svelte';
 
 	interface ExtractGroupProps {
-		type: EntityType;
+		groupType: EntityType;
 		groupId: string;
 		groupName: string;
-		extracts?: ILinkedRecord[];
+		links?: ILinkedRecord[];
+		linkType?: EntityType;
 	}
-	let { type, groupId, groupName, extracts }: ExtractGroupProps = $props();
+	let {
+		groupType,
+		groupId,
+		groupName,
+		links,
+		linkType = entityTypes.extract
+	}: ExtractGroupProps = $props();
 
 	const maxItems = 5;
-	const moreItems = $derived(extracts ? extracts.length - maxItems : 0);
-	const visibleExtracts = extracts ? extracts.slice(0, maxItems) : [];
+	const moreItems = $derived(links ? links.length - maxItems : 0);
+	const visibleLinks = links ? links.slice(0, maxItems) : [];
 </script>
 
-<a class="group-name" href={`/${type.urlParam}/${groupId}`}>{groupName}</a>
-{#if extracts}
-	{#each visibleExtracts as extract (extract.id)}
+<a class="group-name" href={`/${groupType.urlParam}/${groupId}`}>{groupName}</a>
+{#if links}
+	{#each visibleLinks as link (link.id)}
 		<span class="group-item">
-			<Link class="inherit" toId={extract.id}>{extract.name}</Link>
+			<Link class="inherit" toId={link.id} toType={linkType.id}>{link.name}</Link>
 		</span>
 	{/each}
 {/if}

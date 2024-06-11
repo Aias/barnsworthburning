@@ -3,7 +3,6 @@
 	import { entityTypes } from '$helpers/params';
 	import type { HTMLAnchorAttributes } from 'svelte/elements';
 
-	// Separate interfaces for different cases
 	interface ExternalLinkProps extends HTMLAnchorAttributes {
 		href: string;
 		children: Snippet;
@@ -20,7 +19,6 @@
 		href?: never;
 	}
 
-	// Union type for LinkProps
 	type LinkProps = ExternalLinkProps | InternalLinkProps;
 
 	let {

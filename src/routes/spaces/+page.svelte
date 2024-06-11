@@ -1,7 +1,7 @@
 <script lang="ts">
 	import cache from '$lib/cache.svelte';
 	import { entityTypes } from '$helpers/params';
-	import ExtractGroup from '$components/ExtractGroup.svelte';
+	import LinkGroup from '$components/LinkGroup.svelte';
 
 	let { data } = $props();
 
@@ -18,11 +18,11 @@
 <ul class="entity-list">
 	{#each cachedSpaces as entity (entity.id)}
 		<li>
-			<ExtractGroup
-				type={entityTypes.space}
+			<LinkGroup
+				groupType={entityTypes.space}
 				groupId={entity.id}
 				groupName={entity.topic || 'Unknown'}
-				extracts={entity.extracts?.slice().reverse()}
+				links={entity.extracts?.slice().reverse()}
 			/>
 		</li>
 	{/each}
