@@ -24,6 +24,7 @@
 		extract,
 		element = 'article',
 		suppressBlockLink = false,
+		class: className,
 		variant = 'default'
 	}: ExtractProps<any> = $props();
 
@@ -54,7 +55,7 @@
 
 <BlockLink
 	{element}
-	class={classnames('extract', `extract--${variant}`, 'ssm-container')}
+	class={classnames('extract', `extract--${variant}`, 'ssm-container', className)}
 	suppress={suppressBlockLink}
 >
 	{#if parent}
