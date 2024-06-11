@@ -7,11 +7,18 @@
 	interface BlockLinkProps<T extends keyof HTMLElementTagNameMap>
 		extends HTMLAttributes<HTMLElementTagNameMap[T]> {
 		element?: T;
+		suppress?: boolean;
 		children: Snippet;
 	}
-	let { element = 'div', children, ...restProps }: BlockLinkProps<any> = $props();
+	let {
+		element = 'div',
+		suppress = false,
+		children,
+		...restProps
+	}: BlockLinkProps<any> = $props();
 
 	const handleBlockLinkClick = (event: MouseEvent) => {
+		if (suppress) return; // If we're suppressing the block link, no special handling.
 		// Adapted from:
 		// https://css-tricks.com/block-links-the-search-for-a-perfect-solution/#comment-1769257
 		// https://codepen.io/xelium/pen/OJbEVmL
@@ -43,7 +50,7 @@
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <svelte:element
 	this={element}
-	class:block-link={true}
+	class:block-link={!suppress}
 	onclick={handleBlockLinkClick}
 	{...restProps}
 >

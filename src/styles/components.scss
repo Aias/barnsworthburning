@@ -57,6 +57,14 @@
 	background-color: var(--paper);
 	overflow: hidden;
 
+	&.block-link:hover {
+		// background-color: var(--splash);
+		cursor: pointer;
+		.extract-title {
+			color: var(--link);
+		}
+	}
+
 	&.extract--default {
 		border: none;
 		border-radius: 0;
@@ -71,13 +79,6 @@
 
 		.extract-parent {
 			display: none;
-		}
-		.extract-body:hover {
-			background-color: transparent;
-			cursor: unset;
-			.extract-title {
-				color: inherit;
-			}
 		}
 
 		.extract-footer {
@@ -132,14 +133,6 @@
 		gap: var(--layout-gap);
 		position: relative;
 		isolation: isolate;
-
-		&:hover {
-			// background-color: var(--splash);
-			cursor: pointer;
-			.extract-title {
-				color: var(--link);
-			}
-		}
 	}
 
 	header {
@@ -151,7 +144,7 @@
 	}
 	.source-opener {
 		position: absolute;
-		inset-block-start: 0;
+		inset-block-start: 0.15em;
 		inset-inline-end: 0;
 		line-height: 1;
 		padding-block: 0.5cap;

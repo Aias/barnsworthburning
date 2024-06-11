@@ -10,16 +10,22 @@
 	import { classnames } from '$helpers/classnames';
 	import type { HTMLAttributes } from 'svelte/elements';
 	import CreatorList from './CreatorList.svelte';
-	import SourceLink from './SourceLink.svelte';
+	// import SourceLink from './SourceLink.svelte';
 
 	interface ExtractProps<T extends keyof HTMLElementTagNameMap>
 		extends HTMLAttributes<HTMLElementTagNameMap[T]> {
 		extract: IExtract;
 		element?: T;
+		suppressBlockLink?: boolean;
 		variant?: 'default' | 'card';
 	}
 
-	let { extract, element = 'article', variant = 'default' }: ExtractProps<any> = $props();
+	let {
+		extract,
+		element = 'article',
+		suppressBlockLink = false,
+		variant = 'default'
+	}: ExtractProps<any> = $props();
 
 	let id = $derived(extract.id);
 	let title = $derived(extract.title);
@@ -46,7 +52,11 @@
 	};
 </script>
 
-<svelte:element this={element} class={classnames('extract', `extract--${variant}`)}>
+<BlockLink
+	{element}
+	class={classnames('extract', `extract--${variant}`, 'ssm-container')}
+	suppress={suppressBlockLink}
+>
 	{#if parent}
 		<section class="extract-parent">
 			<strong class="parent-title"><Link toId={parent.id} inherit>{parent.name}</Link></strong
@@ -56,7 +66,7 @@
 			{/if}
 		</section>
 	{/if}
-	<BlockLink element="section" class={classnames('extract-body', 'ssm-container')}>
+	<section class="extract-body">
 		{#if title}
 			<header>
 				<h2 class="extract-title">
@@ -100,10 +110,10 @@
 				{#if spaces}<TopicList topics={spaces} />{/if}
 			</nav>
 		{/if}
-	</BlockLink>
+	</section>
 	{#if notes}
 		<footer class="extract-footer content">
 			{@html markdown.parse(notes)}
 		</footer>
 	{/if}
-</svelte:element>
+</BlockLink>

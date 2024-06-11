@@ -13,7 +13,6 @@
 
 	let tree = $derived(makeHierarchy($page.params.extractId));
 	let selected = $derived(tree.selected);
-	let parents = $derived(tree.parents);
 	let children = $derived(tree.children);
 	let connections = $derived(tree.connections);
 
@@ -29,12 +28,12 @@
 </svelte:head>
 <article>
 	{#if selected}
-		<Extract extract={selected} class="chromatic" variant="card" />
+		<Extract extract={selected} class="chromatic" variant="card" suppressBlockLink />
 	{/if}
 
 	{#if children}
 		{#each children as child (child.id)}
-			<Extract extract={child} />
+			<Extract extract={child} suppressBlockLink />
 		{/each}
 	{/if}
 
