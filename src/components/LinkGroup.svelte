@@ -27,7 +27,7 @@
 {#if links}
 	{#each visibleLinks as link (link.id)}
 		<span class="group-item">
-			<Link class="inherit" toId={link.id} toType={linkType.id}>{link.name}</Link>
+			<Link toId={link.id} toType={linkType.id} inherit>{link.name}</Link>
 		</span>
 	{/each}
 {/if}

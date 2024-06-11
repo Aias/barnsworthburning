@@ -28,14 +28,8 @@
 	{/if}
 </svelte:head>
 <article>
-	{#if parents}
-		{#each parents as parent (parent.id)}
-			<Extract extract={parent} />
-		{/each}
-	{/if}
-
 	{#if selected}
-		<Extract extract={selected} class="card chromatic" />
+		<Extract extract={selected} class="chromatic" variant="card" />
 	{/if}
 
 	{#if children}

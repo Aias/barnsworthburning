@@ -23,5 +23,6 @@
 <style>
 	span {
 		color: var(--secondary);
+		font-family: var(--font-stack-mono);
 	}
 </style>

@@ -25,6 +25,7 @@ body {
 	color: var(--display);
 	font-size: calc(0.875em);
 	line-height: calc(1.725);
+	letter-spacing: 0.01em;
 }
 
 h1 {
@@ -190,6 +191,7 @@ code,
 kbd,
 samp {
 	font-family: var(--font-stack-mono);
+	letter-spacing: -0.01em;
 }
 
 :not(pre) > :where(code, kbd, samp) {

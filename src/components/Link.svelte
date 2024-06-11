@@ -3,28 +3,31 @@
 	import { entityTypes } from '$helpers/params';
 	import type { HTMLAnchorAttributes } from 'svelte/elements';
 
-	interface ExternalLinkProps extends HTMLAnchorAttributes {
-		href: string;
-		children: Snippet;
+	interface LinkBaseProps extends HTMLAnchorAttributes {
 		active?: boolean;
+		children: Snippet;
+		inherit?: boolean;
+	}
+
+	interface InternalLinkProps extends LinkBaseProps {
+		toType?: keyof typeof entityTypes;
+		toId: string;
+		href?: never;
+	}
+
+	interface ExternalLinkProps extends LinkBaseProps {
+		href: string;
 		toType?: never;
 		toId?: never;
 	}
 
-	interface InternalLinkProps extends HTMLAnchorAttributes {
-		toType?: keyof typeof entityTypes;
-		toId: string;
-		children: Snippet;
-		active?: boolean;
-		href?: never;
-	}
-
-	type LinkProps = ExternalLinkProps | InternalLinkProps;
+	type LinkProps = InternalLinkProps | ExternalLinkProps;
 
 	let {
 		toType = 'extract',
 		toId,
 		active = false,
+		inherit = false,
 		href,
 		children,
 		...restProps
@@ -37,4 +40,4 @@
 	});
 </script>
 
-<a href={url} class:active {...restProps}>{@render children()}</a>
+<a href={url} class:inherit class:active {...restProps}>{@render children()}</a>

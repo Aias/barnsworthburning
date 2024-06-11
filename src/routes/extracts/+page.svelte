@@ -42,7 +42,7 @@
 							</span>
 						{/if}
 						<strong class="title">
-							<Link class="main-link inherit" toId={id}>{title}</Link>
+							<Link class="main-link" toId={id} inherit>{title}</Link>
 						</strong>
 						{#if creators}
 							<CreatorList {creators} class="creators" />

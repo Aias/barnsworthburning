@@ -11,7 +11,7 @@
 
 <div class="gallery">
 	{#each extracts as extract (extract.id)}
-		<Extract {extract} contextId="gallery" class="card interactive" />
+		<Extract {extract} variant="card" />
 	{/each}
 </div>
 

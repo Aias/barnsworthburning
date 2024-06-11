@@ -1,32 +1,8 @@
-:root {
-	--container-padding-inline: 1.25em;
-	--container-padding-block: 1em;
-}
-
 .ssm {
 	display: none;
 }
 .show-super-secret-menus .ssm-container:hover .ssm {
 	display: initial;
-}
-
-.card {
-	padding-block: var(--container-padding-block);
-	padding-inline: var(--container-padding-inline);
-	background-color: var(--paper);
-	border: 1px solid var(--divider);
-	border-radius: var(--border-radius-small);
-	overflow: hidden;
-}
-
-.card.interactive {
-	cursor: pointer;
-	transition: all var(--transition-snappy);
-
-	&:hover {
-		border: 1px solid var(--border);
-		background-color: var(--container);
-	}
 }
 
 .entity-list {
@@ -71,5 +47,152 @@
 			background-color: var(--splash);
 			cursor: pointer;
 		}
+	}
+}
+
+.extract {
+	--layout-gap: 0.5em;
+	border: 1px solid var(--divider);
+	border-radius: var(--border-radius-small);
+	background-color: var(--paper);
+	overflow: hidden;
+
+	&.extract--default {
+		border: none;
+		border-radius: 0;
+		background-color: transparent;
+
+		.extract-parent,
+		.extract-body,
+		.extract-footer {
+			padding-inline: 0;
+			padding-block: 0;
+		}
+
+		.extract-parent {
+			display: none;
+		}
+		.extract-body:hover {
+			background-color: transparent;
+			cursor: unset;
+			.extract-title {
+				color: inherit;
+			}
+		}
+
+		.extract-footer {
+			margin-block-start: var(--container-padding-block);
+			padding-block-start: var(--container-padding-block);
+		}
+	}
+
+	.extract-parent,
+	.extract-body,
+	.extract-footer {
+		padding-inline: var(--container-padding-inline);
+	}
+
+	.extract-parent,
+	.extract-footer {
+		padding-block: calc(var(--container-padding-block) / 1.5);
+		font-size: var(--font-size-small);
+	}
+
+	.extract-parent {
+		color: var(--accent);
+		border-block-end: 1px solid var(--divider);
+		display: flex;
+		gap: var(--layout-gap);
+
+		& > * {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		& > .parent-title {
+			flex: 0 1 auto;
+		}
+
+		& > .parent-creators {
+			flex: 1;
+			min-width: 25%;
+		}
+	}
+
+	.extract-footer {
+		color: var(--secondary);
+		border-block-start: 1px solid var(--divider);
+	}
+
+	.extract-body {
+		padding-block: var(--container-padding-block);
+		display: flex;
+		flex-direction: column;
+		gap: var(--layout-gap);
+		position: relative;
+		isolation: isolate;
+
+		&:hover {
+			// background-color: var(--splash);
+			cursor: pointer;
+			.extract-title {
+				color: var(--link);
+			}
+		}
+	}
+
+	header {
+		position: relative;
+		text-wrap: balance;
+	}
+	.extract-title {
+		display: inline;
+	}
+	.source-opener {
+		position: absolute;
+		inset-block-start: 0;
+		inset-inline-end: 0;
+		line-height: 1;
+		padding-block: 0.5cap;
+		font-family: var(--font-stack-sans);
+		font-size: var(--font-size-small);
+		opacity: 50%;
+		transition: opacity 150ms;
+	}
+	&:hover .source-opener {
+		opacity: 1;
+	}
+
+	.extract-main {
+		display: flex;
+		flex-direction: column;
+		gap: var(--layout-gap);
+		color: var(--display);
+
+		figcaption {
+			order: -1;
+		}
+
+		img {
+			background-color: var(--paper);
+			border: 1px solid var(--flood);
+		}
+
+		.extract-image-caption {
+			font-size: var(--font-size-small);
+			color: var(--secondary);
+		}
+
+		.extract-text {
+			all: unset; /* Remove default blockquote styling as it's being used only as a semantic element. */
+		}
+	}
+
+	.relations {
+		font-size: var(--font-size-small);
+		display: flex;
+		flex-direction: column;
+		gap: 0.5em;
 	}
 }
