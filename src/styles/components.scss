@@ -43,10 +43,6 @@
 		&:not(:last-child) {
 			border-block-end: 1px solid var(--divider);
 		}
-		&:hover {
-			background-color: var(--splash);
-			cursor: pointer;
-		}
 	}
 }
 
@@ -56,13 +52,28 @@
 	border-radius: var(--border-radius-small);
 	background-color: var(--paper);
 	overflow: hidden;
+	position: relative;
+
+	&.block-link {
+		&::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background-color: transparent;
+			transition: background-color 150ms;
+		}
+
+		&:hover::before {
+			background-color: var(--splash);
+		}
+
+		& > * {
+			position: relative;
+		}
+	}
 
 	&.block-link:hover {
-		// background-color: var(--splash);
 		cursor: pointer;
-		.extract-title {
-			color: var(--link);
-		}
 	}
 
 	&.extract--default {

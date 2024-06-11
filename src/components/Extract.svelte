@@ -101,13 +101,15 @@
 		</figure>
 		{#if hasRelations}
 			<nav class="relations">
-				{#if children}<RelationList items={children} symbol="↳" label="Children" />{/if}
-				{#if connections}<RelationList
-						items={connections}
-						symbol="⮂"
-						label="Connections"
-					/>{/if}
-				{#if spaces}<TopicList topics={spaces} />{/if}
+				{#if children}
+					<RelationList items={children} symbol="↳" label="Children" />
+				{/if}
+				{#if connections}
+					<RelationList items={connections} symbol="⮂" label="Connections" />
+				{/if}
+				{#if spaces}
+					<TopicList topics={spaces} />
+				{/if}
 			</nav>
 		{/if}
 	</section>
