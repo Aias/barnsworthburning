@@ -1,7 +1,7 @@
 import { mapExtractRecord } from '$helpers/mapping';
 import { airtableFetch } from '$lib/server/requests';
 import { ExtractView, Table, type IBaseExtract, type IExtract } from '$types/Airtable';
-import markdown, { inlineMarkdown } from '$helpers/markdown';
+import markdown from '$helpers/markdown';
 import { getArticle, combineAsList } from '$helpers/grammar';
 import xmlFormatter from 'xml-formatter';
 
@@ -13,7 +13,7 @@ const generateContentMarkup = (extract: IExtract) => {
 	markup += '<p>';
 	markup += `${getArticle(type)} <strong>${type}</strong>`;
 	if (creators) {
-		const creatorsMarkup = inlineMarkdown.parse(
+		const creatorsMarkup = markdown.parseInline(
 			combineAsList(creators.map((c) => `[${c.name}](${meta.url}/creators/${c.id})`))
 		);
 		markup += ` by ${creatorsMarkup}`;
