@@ -65,6 +65,7 @@
 			flex-direction: column;
 			gap: 0.75lh;
 			border-inline-end: 1px solid var(--divider);
+			background-color: var(--background);
 
 			& > * {
 				margin-block: 0;
