@@ -1,19 +1,20 @@
 import { type EntityType } from '$helpers/params';
+import type { Palette } from '$types/Theme';
 
-type Segment = {
+export type TrailSegment = {
 	entityType: EntityType;
 	id: string;
-	content: string;
+	color: Palette;
 };
 
 export function createTrailState() {
-	let trail = $state<Segment[]>([]);
+	let trail = $state<TrailSegment[]>([]);
 
 	return {
-		get trail() {
+		get segments() {
 			return trail;
 		},
-		addSegment: (value: Segment) => {
+		addSegment: (value: TrailSegment) => {
 			trail = [...trail, value];
 		},
 		removeSegment: (id: string) => {

@@ -69,7 +69,7 @@
 		path: string;
 		icon: string;
 	};
-	const routes = [
+	const routes: Route[] = [
 		{ name: 'Index', path: '/', icon: '🗂️' },
 		{ name: 'Creators', path: '/creators', icon: '🧑‍🎨' },
 		{ name: 'Spaces', path: '/spaces', icon: '🏷️' },

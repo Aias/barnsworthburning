@@ -8,14 +8,14 @@
 	import { Palette, Mode, Chroma } from '$types/Theme';
 	import settings from '$lib/settings.svelte';
 	import interaction from '$lib/interaction.svelte';
-	import trail from '$lib/trail.svelte';
+	import trail, { type TrailSegment } from '$lib/trail.svelte';
 	import { entityTypes } from '$helpers/params';
 	import { getCookie } from '$helpers/cookies';
 	import { classnames } from '$helpers/classnames';
 	import { paletteOptions } from '$types/Theme';
 
-	const rotatePalette = (steps: number) => {
-		const currentIndex = paletteOptions.indexOf(settings.palette);
+	const rotatePalette = (start: Palette, steps: number = 1) => {
+		const currentIndex = paletteOptions.indexOf(start);
 		const newIndex = (currentIndex + steps) % paletteOptions.length;
 		return paletteOptions[newIndex];
 	};
@@ -55,14 +55,30 @@
 	});
 
 	beforeNavigate(({ to, type }) => {
+		console.log(to, type);
 		const isNavigating = ['link', 'goto'].includes(type);
 		if (!isNavigating) return;
-		// console.log(to);
-		const newSegment = {
-			id: new Date().toISOString(),
-			entityType: entityTypes.extract,
-			content: to?.url.href || ''
+		if (!to || !to.params) return;
+		let id, entityType;
+		if (to.params.extractId) {
+			id = to.params.extractId;
+			entityType = entityTypes.extract;
+		} else if (to.params.creatorIds) {
+			id = to.params.creatorIds;
+			entityType = entityTypes.creator;
+		} else if (to.params.spaceIds) {
+			id = to.params.spaceIds;
+			entityType = entityTypes.space;
+		}
+		if (!id || !entityType) return;
+		const newSegment: TrailSegment = {
+			id,
+			entityType,
+			color: rotatePalette(
+				trail.segments.length > 0 ? trail.segments.slice(-1)[0].color : settings.palette
+			)
 		};
+		console.log(newSegment);
 		// trail.addSegment(newSegment);
 	});
 
@@ -76,7 +92,7 @@
 		interaction.setMetaKeyPressed(event.metaKey);
 	};
 
-	let currentTrail = $derived([...trail.trail]);
+	let currentTrail = $derived([...trail.segments]);
 </script>
 
 <svelte:window
@@ -96,14 +112,13 @@
 {#if currentTrail.length > 0}
 	<aside class="app-trail">
 		<ul class="segments">
-			{#each currentTrail as { id, entityType, content }, index (id)}
-				<li class={classnames('chromatic', rotatePalette(index + 1))}>
+			{#each currentTrail as { id, entityType, color } (id)}
+				<li class={classnames('chromatic', color)}>
 					<hr class="separator" />
 					<article class="segment">
 						<h3>{entityType.title}</h3>
 						<p>{id}</p>
-						<p>This is segment #{index + 1}</p>
-						<p>{content}</p>
+						<p>This is segment {color}</p>
 						<button type="reset" onclick={() => trail.removeSegment(id)}>Close</button>
 					</article>
 				</li>
