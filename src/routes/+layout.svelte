@@ -54,7 +54,7 @@
 		}
 	});
 
-	beforeNavigate(({ to, type }) => {
+	beforeNavigate(({ from, to, type, cancel }) => {
 		console.log(to, type);
 		const isNavigating = ['link', 'goto'].includes(type);
 		if (!isNavigating) return;
@@ -80,6 +80,7 @@
 		};
 		console.log(newSegment);
 		// trail.addSegment(newSegment);
+		// cancel();
 	});
 
 	$effect(() => {
