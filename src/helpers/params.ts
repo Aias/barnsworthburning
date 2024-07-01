@@ -1,5 +1,5 @@
 export type EntityType = {
-	id: string;
+	id: 'creator' | 'space' | 'extract';
 	urlParam: string;
 	title: string;
 	plural: string;

@@ -1,23 +1,11 @@
-import { error } from '@sveltejs/kit';
-import { airtableFetch } from '$lib/server/requests';
-import { mapExtractRecord } from '$helpers/mapping';
-import { ExtractView, Table, type IBaseExtract } from '$types/Airtable';
+import { createApi } from '$lib/api';
 
-const MAX_RECORDS = 100;
+export async function load({ fetch }) {
+	const api = createApi(fetch);
 
-export async function load() {
-	const extracts = await airtableFetch<IBaseExtract>(Table.Extracts, {
-		view: ExtractView.Works,
-		maxRecords: MAX_RECORDS
-	});
-
-	if (!extracts) {
-		error(404, {
-			message: 'Failed to load extracts.'
-		});
-	}
+	const records = await api.extracts.list();
 
 	return {
-		recentExtracts: extracts.map(mapExtractRecord)
+		recentExtracts: records
 	};
 }

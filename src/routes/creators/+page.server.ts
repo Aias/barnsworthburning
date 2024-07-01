@@ -1,24 +1,11 @@
-import { error } from '@sveltejs/kit';
-import { airtableFetch } from '$lib/server/requests';
-import { mapCreatorRecord } from '$helpers/mapping';
-import { CreatorView, Table, type IBaseCreator } from '$types/Airtable';
+import { createApi } from '$lib/api';
 
-const MAX_RECORDS = 100;
+export async function load({ fetch }) {
+	const api = createApi(fetch);
 
-export async function load() {
-	const creators = await airtableFetch<IBaseCreator>(Table.Creators, {
-		view: CreatorView.RecentlyUpdated,
-		filterByFormula: 'numExtracts > 0',
-		maxRecords: MAX_RECORDS
-	});
-
-	if (!creators) {
-		error(404, {
-			message: 'Failed to load creators.'
-		});
-	}
+	const creators = await api.creators.list();
 
 	return {
-		recentCreators: creators.map(mapCreatorRecord)
+		recentCreators: creators
 	};
 }
