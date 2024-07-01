@@ -5,15 +5,19 @@
 
 	let creators = $derived(data.selectedCreatorsData);
 	let extracts = $derived(data.extractsByCreators);
+
+	let title = $derived.by(() => {
+		const primaryCreator = creators[0];
+		const { name } = primaryCreator;
+		return name;
+	});
 </script>
 
 <svelte:head>
-	<title>{creators[0].name}</title>
+	<title>{title}</title>
 </svelte:head>
 <h1>
-	{#each creators as creator (creator.id)}
-		{creator.name}
-	{/each}
+	{title}
 </h1>
 <ExtractGallery {extracts} />
 

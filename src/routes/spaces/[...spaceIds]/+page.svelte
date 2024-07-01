@@ -27,6 +27,5 @@
 <style lang="scss">
 	h1 {
 		margin-block-end: 0.5em;
-		text-transform: capitalize;
 	}
 </style>

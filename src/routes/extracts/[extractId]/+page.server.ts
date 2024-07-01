@@ -11,9 +11,9 @@ export async function load({ params }) {
 		filterByFormula: filterFormula
 	});
 
-	if (!extracts) {
+	if (!extracts.length) {
 		error(404, {
-			message: 'Extract not found.'
+			message: 'Extract data not found.'
 		});
 	}
 
