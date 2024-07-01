@@ -1,5 +1,5 @@
 import type { ICreator, IExtract, ISpace } from '$types/Airtable';
-import { Map } from 'svelte/reactivity';
+import { SvelteMap as Map } from 'svelte/reactivity';
 
 export function createCache() {
 	const extractsById = new Map<string, IExtract>();
