@@ -54,34 +54,34 @@
 		}
 	});
 
-	beforeNavigate(({ from, to, type, cancel }) => {
-		console.log(to, type);
-		const isNavigating = ['link', 'goto'].includes(type);
-		if (!isNavigating) return;
-		if (!to || !to.params) return;
-		let id, entityType;
-		if (to.params.extractId) {
-			id = to.params.extractId;
-			entityType = entityTypes.extract;
-		} else if (to.params.creatorIds) {
-			id = to.params.creatorIds;
-			entityType = entityTypes.creator;
-		} else if (to.params.spaceIds) {
-			id = to.params.spaceIds;
-			entityType = entityTypes.space;
-		}
-		if (!id || !entityType) return;
-		const newSegment: TrailSegment = {
-			id,
-			entityType,
-			color: rotatePalette(
-				trail.segments.length > 0 ? trail.segments.slice(-1)[0].color : settings.palette
-			)
-		};
-		console.log(newSegment);
-		// trail.addSegment(newSegment);
-		// cancel();
-	});
+	// beforeNavigate(({ from, to, type, cancel }) => {
+	// 	console.log(to, type);
+	// 	const isNavigating = ['link', 'goto'].includes(type);
+	// 	if (!isNavigating) return;
+	// 	if (!to || !to.params) return;
+	// 	let id, entityType;
+	// 	if (to.params.extractId) {
+	// 		id = to.params.extractId;
+	// 		entityType = entityTypes.extract;
+	// 	} else if (to.params.creatorIds) {
+	// 		id = to.params.creatorIds;
+	// 		entityType = entityTypes.creator;
+	// 	} else if (to.params.spaceIds) {
+	// 		id = to.params.spaceIds;
+	// 		entityType = entityTypes.space;
+	// 	}
+	// 	if (!id || !entityType) return;
+	// 	const newSegment: TrailSegment = {
+	// 		id,
+	// 		entityType,
+	// 		color: rotatePalette(
+	// 			trail.segments.length > 0 ? trail.segments.slice(-1)[0].color : settings.palette
+	// 		)
+	// 	};
+	// 	console.log(newSegment);
+	// 	trail.addSegment(newSegment);
+	// 	cancel();
+	// });
 
 	$effect(() => {
 		if (!bodyEl) return;

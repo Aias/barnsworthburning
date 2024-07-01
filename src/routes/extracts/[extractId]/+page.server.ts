@@ -1,23 +1,11 @@
-import { error } from '@sveltejs/kit';
-import { airtableFetch } from '$lib/server/requests';
-import { mapExtractRecord } from '$helpers/mapping';
-import { ExtractView, Table, type IBaseExtract } from '$types/Airtable';
+import { createApi } from '$lib/api.js';
 
-export async function load({ params }) {
+export async function load({ params, fetch }) {
+	const api = createApi(fetch);
 	const { extractId } = params;
-	const filterFormula = `FIND('${extractId}', extractsLookup) > 0`;
-	const extracts = await airtableFetch<IBaseExtract>(Table.Extracts, {
-		view: ExtractView.ByEntryDate,
-		filterByFormula: filterFormula
-	});
-
-	if (!extracts.length) {
-		error(404, {
-			message: 'Extract data not found.'
-		});
-	}
+	const records = await api.extracts.related(extractId);
 
 	return {
-		selectedExtractData: extracts.map(mapExtractRecord)
+		selectedExtractData: records
 	};
 }
