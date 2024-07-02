@@ -1,10 +1,18 @@
 import { type EntityType } from '$helpers/params';
-import type { Palette } from '$types/Theme';
+import { type Palette, paletteOptions } from '$types/Theme';
+import settings from './settings.svelte';
 
 export type TrailSegment = {
 	entityType: EntityType;
-	id: string;
+	entityId: string;
 	color: Palette;
+	addedOn: Date;
+};
+
+const rotatePalette = (start: Palette, steps: number = 1) => {
+	const currentIndex = paletteOptions.indexOf(start);
+	const newIndex = (currentIndex + steps) % paletteOptions.length;
+	return paletteOptions[newIndex];
 };
 
 export function createTrailState() {
@@ -14,11 +22,17 @@ export function createTrailState() {
 		get segments() {
 			return trail;
 		},
-		addSegment: (value: TrailSegment) => {
-			trail = [...trail, value];
+		get length() {
+			return trail.length;
+		},
+		addSegment: (entityType: EntityType, entityId: string) => {
+			const lastSegment = trail[trail.length - 1];
+			const lastColor = lastSegment ? lastSegment.color : settings.palette;
+			const nextColor = rotatePalette(lastColor);
+			trail = [...trail, { entityType, entityId, color: nextColor, addedOn: new Date() }];
 		},
 		removeSegment: (id: string) => {
-			trail = trail.filter((segment) => segment.id !== id);
+			trail = trail.filter((segment) => segment.entityId !== id);
 		},
 		clearTrail: () => {
 			trail = [];

@@ -11,7 +11,7 @@
 		cache.addExtracts(data.selectedExtractData);
 	});
 
-	let tree = $derived(makeHierarchy($page.params.extractId));
+	let tree = $derived(makeHierarchy($page.params.id));
 	let selected = $derived(tree.selected);
 	let children = $derived(tree.children);
 	let connections = $derived(tree.connections);

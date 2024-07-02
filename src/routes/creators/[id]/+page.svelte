@@ -3,12 +3,11 @@
 
 	let { data } = $props();
 
-	let creators = $derived(data.selectedCreatorsData);
-	let extracts = $derived(data.extractsByCreators);
+	let creator = $derived(data.creator);
+	let extracts = $derived(data.extractsByCreator);
 
 	let title = $derived.by(() => {
-		const primaryCreator = creators[0];
-		const { name } = primaryCreator;
+		const { name } = creator;
 		return name;
 	});
 </script>

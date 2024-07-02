@@ -5,7 +5,7 @@ import { Table, type IBaseSpace, SpaceView } from '$types/Airtable';
 
 export async function GET() {
 	const spaces = await airtableFetch<IBaseSpace>(Table.Spaces, {
-		view: SpaceView.RecentlyUpdated,
+		view: SpaceView.ByCount,
 		filterByFormula: 'numExtracts > 0',
 		maxRecords: 100
 	});

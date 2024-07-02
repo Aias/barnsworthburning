@@ -8,17 +8,10 @@
 	import { Palette, Mode, Chroma } from '$types/Theme';
 	import settings from '$lib/settings.svelte';
 	import interaction from '$lib/interaction.svelte';
-	import trail, { type TrailSegment } from '$lib/trail.svelte';
-	import { entityTypes } from '$helpers/params';
+	import trail from '$lib/trail.svelte';
+	import { entityTypes, type EntityTypeKey } from '$helpers/params';
 	import { getCookie } from '$helpers/cookies';
 	import { classnames } from '$helpers/classnames';
-	import { paletteOptions } from '$types/Theme';
-
-	const rotatePalette = (start: Palette, steps: number = 1) => {
-		const currentIndex = paletteOptions.indexOf(start);
-		const newIndex = (currentIndex + steps) % paletteOptions.length;
-		return paletteOptions[newIndex];
-	};
 
 	let { children, data } = $props();
 	let bodyEl: HTMLBodyElement | undefined;
@@ -54,32 +47,25 @@
 		}
 	});
 
+	$inspect(entityTypes);
+
 	// beforeNavigate(({ from, to, type, cancel }) => {
-	// 	console.log(to, type);
 	// 	const isNavigating = ['link', 'goto'].includes(type);
 	// 	if (!isNavigating) return;
-	// 	if (!to || !to.params) return;
-	// 	let id, entityType;
-	// 	if (to.params.extractId) {
-	// 		id = to.params.extractId;
-	// 		entityType = entityTypes.extract;
-	// 	} else if (to.params.creatorIds) {
-	// 		id = to.params.creatorIds;
-	// 		entityType = entityTypes.creator;
-	// 	} else if (to.params.spaceIds) {
-	// 		id = to.params.spaceIds;
-	// 		entityType = entityTypes.space;
+	// 	if (!to?.params?.id) return;
+	// 	let id = to.params.id;
+	// 	let entityType;
+	// 	const { route } = to;
+	// 	if (!route.id) return;
+	// 	for (const key in entityTypes) {
+	// 		const type = entityTypes[key as EntityTypeKey];
+	// 		if (route.id.startsWith(`/${type.urlParam}`)) {
+	// 			entityType = type;
+	// 			break;
+	// 		}
 	// 	}
 	// 	if (!id || !entityType) return;
-	// 	const newSegment: TrailSegment = {
-	// 		id,
-	// 		entityType,
-	// 		color: rotatePalette(
-	// 			trail.segments.length > 0 ? trail.segments.slice(-1)[0].color : settings.palette
-	// 		)
-	// 	};
-	// 	console.log(newSegment);
-	// 	trail.addSegment(newSegment);
+	// 	trail.addSegment(entityType, id);
 	// 	cancel();
 	// });
 
@@ -92,8 +78,6 @@
 		interaction.setAltKeyPressed(event.altKey);
 		interaction.setMetaKeyPressed(event.metaKey);
 	};
-
-	let currentTrail = $derived([...trail.segments]);
 </script>
 
 <svelte:window
@@ -110,17 +94,19 @@
 		{@render children()}
 	</main>
 {/if}
-{#if currentTrail.length > 0}
+{#if trail.length > 0}
 	<aside class="app-trail">
 		<ul class="segments">
-			{#each currentTrail as { id, entityType, color } (id)}
+			{#each trail.segments as { entityId, entityType, color, addedOn } (addedOn)}
 				<li class={classnames('chromatic', color)}>
 					<hr class="separator" />
 					<article class="segment">
 						<h3>{entityType.title}</h3>
-						<p>{id}</p>
+						<p>{entityId}</p>
 						<p>This is segment {color}</p>
-						<button type="reset" onclick={() => trail.removeSegment(id)}>Close</button>
+						<button type="reset" onclick={() => trail.removeSegment(entityId)}
+							>Close</button
+						>
 					</article>
 				</li>
 			{/each}

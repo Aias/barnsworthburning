@@ -4,12 +4,11 @@
 
 	let { data } = $props();
 
-	let spaces = $derived(data.selectedSpacesData);
-	let extracts = $derived(data.extractsInSpaces);
+	let space = $derived(data.space);
+	let extracts = $derived(data.extractsInSpace);
 
 	let title = $derived.by(() => {
-		const primarySpace = spaces[0];
-		const { title, topic } = primarySpace;
+		const { title, topic } = space;
 		let str = capitalize(title || topic);
 		// if (icon) str += ` ${icon}`;
 		return str;

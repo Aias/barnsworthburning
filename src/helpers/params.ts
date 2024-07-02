@@ -1,5 +1,6 @@
+export type EntityTypeKey = 'creator' | 'space' | 'extract';
 export type EntityType = {
-	id: 'creator' | 'space' | 'extract';
+	key: EntityTypeKey;
 	urlParam: string;
 	title: string;
 	plural: string;
@@ -12,9 +13,9 @@ type Segment = {
 	id: string;
 };
 
-export const entityTypes: Record<string, EntityType> = {
+export const entityTypes: Record<EntityTypeKey, EntityType> = {
 	creator: {
-		id: 'creator',
+		key: 'creator',
 		urlParam: 'creators',
 		title: 'Creator',
 		plural: 'Creators',
@@ -22,7 +23,7 @@ export const entityTypes: Record<string, EntityType> = {
 		description: 'A person, group, or organization that creates or contributes to a work.'
 	},
 	space: {
-		id: 'space',
+		key: 'space',
 		urlParam: 'spaces',
 		title: 'Space',
 		plural: 'Spaces',
@@ -30,7 +31,7 @@ export const entityTypes: Record<string, EntityType> = {
 		description: 'A topic, category, or tag that a work or extract is associated with.'
 	},
 	extract: {
-		id: 'extract',
+		key: 'extract',
 		urlParam: 'extracts',
 		title: 'Extract',
 		plural: 'Extracts',
