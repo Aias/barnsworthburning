@@ -28,12 +28,12 @@
 	"dependencies": {
 		"@radix-ui/colors": "^3.0.0",
 		"airtable": "^0.12.2",
-		"marked": "^13.0.1",
+		"marked": "^13.0.2",
 		"normalize.css": "^8.0.1",
-		"xml-formatter": "^3.6.2"
+		"xml-formatter": "^3.6.3"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-netlify": "^4.3.0",
+		"@sveltejs/adapter-netlify": "^4.3.1",
 		"@sveltejs/adapter-node": "^5.2.0",
 		"@sveltejs/kit": "^2.5.18",
 		"@sveltejs/vite-plugin-svelte": "^3.1.1",
@@ -48,10 +48,10 @@
 		"prettier": "^3.3.2",
 		"prettier-plugin-svelte": "^3.2.5",
 		"sass": "^1.77.6",
-		"svelte": "^5.0.0-next.170",
+		"svelte": "^5.0.0-next.175",
 		"svelte-check": "^3.8.4",
 		"tslib": "^2.6.3",
 		"typescript": "^5.5.3",
-		"vite": "^5.3.2"
+		"vite": "^5.3.3"
 	}
 }

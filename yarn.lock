@@ -563,16 +563,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/adapter-netlify@npm:^4.3.0":
-  version: 4.3.0
-  resolution: "@sveltejs/adapter-netlify@npm:4.3.0"
+"@sveltejs/adapter-netlify@npm:^4.3.1":
+  version: 4.3.1
+  resolution: "@sveltejs/adapter-netlify@npm:4.3.1"
   dependencies:
     "@iarna/toml": "npm:^2.2.5"
     esbuild: "npm:^0.21.5"
     set-cookie-parser: "npm:^2.6.0"
   peerDependencies:
     "@sveltejs/kit": ^2.4.0
-  checksum: 10c0/094406ec4916da9c6390c8c282f7a86a0bfff9934381ab0ad764ad14ec844a0f1ca829d60ea14dd21ff8be3eb3774fad21fc6e082d1ada072cb24f7eb081f660
+  checksum: 10c0/6fcc1cbf2c0956757b03a192952b8cfca0088144ca332fc7f9d70cf1763a2b3650fc9204d516d8ad62df9e7ec7dc54055952e83c87676fc1245f2c3623e00bea
   languageName: node
   linkType: hard
 
@@ -1011,7 +1011,7 @@ __metadata:
   resolution: "barnsworthburning@workspace:."
   dependencies:
     "@radix-ui/colors": "npm:^3.0.0"
-    "@sveltejs/adapter-netlify": "npm:^4.3.0"
+    "@sveltejs/adapter-netlify": "npm:^4.3.1"
     "@sveltejs/adapter-node": "npm:^5.2.0"
     "@sveltejs/kit": "npm:^2.5.18"
     "@sveltejs/vite-plugin-svelte": "npm:^3.1.1"
@@ -1024,17 +1024,17 @@ __metadata:
     eslint: "npm:^9.6.0"
     eslint-config-prettier: "npm:^9.1.0"
     eslint-plugin-svelte: "npm:^2.41.0"
-    marked: "npm:^13.0.1"
+    marked: "npm:^13.0.2"
     normalize.css: "npm:^8.0.1"
     prettier: "npm:^3.3.2"
     prettier-plugin-svelte: "npm:^3.2.5"
     sass: "npm:^1.77.6"
-    svelte: "npm:^5.0.0-next.170"
+    svelte: "npm:^5.0.0-next.175"
     svelte-check: "npm:^3.8.4"
     tslib: "npm:^2.6.3"
     typescript: "npm:^5.5.3"
-    vite: "npm:^5.3.2"
-    xml-formatter: "npm:^3.6.2"
+    vite: "npm:^5.3.3"
+    xml-formatter: "npm:^3.6.3"
   languageName: unknown
   linkType: soft
 
@@ -2325,12 +2325,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:^13.0.1":
-  version: 13.0.1
-  resolution: "marked@npm:13.0.1"
+"marked@npm:^13.0.2":
+  version: 13.0.2
+  resolution: "marked@npm:13.0.2"
   bin:
     marked: bin/marked.js
-  checksum: 10c0/f14b83b65397ce5c5c4703b2808db6ca0e580d89a52e0f61e204b2451774cd87a7d79a40127d3f7e867e6e03486d1b3f508eb9af7d74623dc7f57adb6a7f8890
+  checksum: 10c0/c8d0f63674b8de406029d58df9ef91f42464a58c6a914f063e88b270dd59d4cdafa378c2ac96a04eec13ca06566737829e27d45a5da6ef4f640811d7a7becdee
   languageName: node
   linkType: hard
 
@@ -2718,6 +2718,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"picocolors@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "picocolors@npm:1.0.1"
+  checksum: 10c0/c63cdad2bf812ef0d66c8db29583802355d4ca67b9285d846f390cc15c2f6ccb94e8cb7eb6a6e97fc5990a6d3ad4ae42d86c84d3146e667c739a4234ed50d400
+  languageName: node
+  linkType: hard
+
 "picomatch@npm:^2.0.4, picomatch@npm:^2.2.1, picomatch@npm:^2.3.1":
   version: 2.3.1
   resolution: "picomatch@npm:2.3.1"
@@ -2779,6 +2786,17 @@ __metadata:
     picocolors: "npm:^1.0.0"
     source-map-js: "npm:^1.2.0"
   checksum: 10c0/955407b8f70cf0c14acf35dab3615899a2a60a26718a63c848cf3c29f2467b0533991b985a2b994430d890bd7ec2b1963e36352b0774a19143b5f591540f7c06
+  languageName: node
+  linkType: hard
+
+"postcss@npm:^8.4.39":
+  version: 8.4.39
+  resolution: "postcss@npm:8.4.39"
+  dependencies:
+    nanoid: "npm:^3.3.7"
+    picocolors: "npm:^1.0.1"
+    source-map-js: "npm:^1.2.0"
+  checksum: 10c0/16f5ac3c4e32ee76d1582b3c0dcf1a1fdb91334a45ad755eeb881ccc50318fb8d64047de4f1601ac96e30061df203f0f2e2edbdc0bfc49b9c57bc9fb9bedaea3
   languageName: node
   linkType: hard
 
@@ -3312,9 +3330,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte@npm:^5.0.0-next.170":
-  version: 5.0.0-next.170
-  resolution: "svelte@npm:5.0.0-next.170"
+"svelte@npm:^5.0.0-next.175":
+  version: 5.0.0-next.175
+  resolution: "svelte@npm:5.0.0-next.175"
   dependencies:
     "@ampproject/remapping": "npm:^2.2.1"
     "@jridgewell/sourcemap-codec": "npm:^1.4.15"
@@ -3329,7 +3347,7 @@ __metadata:
     locate-character: "npm:^3.0.0"
     magic-string: "npm:^0.30.5"
     zimmerframe: "npm:^1.1.2"
-  checksum: 10c0/89a36f8deda601dce172a2caa37f011e93aff7282fb3e8448b1fe90a3fe4c740e4114ecd4e40707dac9c4fbbdc09765b49b3e5a3e203ac39e11f862c388d1d4b
+  checksum: 10c0/ed0b7858cfc86e929a2765549ce2e3b058c8451249db11ca54ccf5dfe9dcba1b9edcfe299b7be5a7c4364b6c77ea6716790947380a00c43d5468367fcd8b1495
   languageName: node
   linkType: hard
 
@@ -3486,13 +3504,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.3.2":
-  version: 5.3.2
-  resolution: "vite@npm:5.3.2"
+"vite@npm:^5.3.3":
+  version: 5.3.3
+  resolution: "vite@npm:5.3.3"
   dependencies:
     esbuild: "npm:^0.21.3"
     fsevents: "npm:~2.3.3"
-    postcss: "npm:^8.4.38"
+    postcss: "npm:^8.4.39"
     rollup: "npm:^4.13.0"
   peerDependencies:
     "@types/node": ^18.0.0 || >=20.0.0
@@ -3522,7 +3540,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10c0/3ed576d18c6c008ae92be68f9c79bf7556dae10978a3e8b4c4b42199424755e5c99836e6d4f81fb8b533b957d7f4e351abc60b8a93f4c4b5eb9890b5b6450926
+  checksum: 10c0/a796872e1d11875d994615cd00da185c80eeb7753034d35c096050bf3c269c02004070cf623c5fe2a4a90ea2f12488e6f9d13933ec810f117f1b931e1b5e3385
   languageName: node
   linkType: hard
 
@@ -3606,19 +3624,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xml-formatter@npm:^3.6.2":
-  version: 3.6.2
-  resolution: "xml-formatter@npm:3.6.2"
+"xml-formatter@npm:^3.6.3":
+  version: 3.6.3
+  resolution: "xml-formatter@npm:3.6.3"
   dependencies:
-    xml-parser-xo: "npm:^4.1.0"
-  checksum: 10c0/b50f085c935d0cb23e5f39cba39a1e22c511d2a247e960d7c6976236ad5bb9355f090adaa5416b074a8769493f03daf610cc0f121e5bfe85ced052401dbd14c5
+    xml-parser-xo: "npm:^4.1.2"
+  checksum: 10c0/0c2d2417e694c6706153fca75a3c696d428c5ceb4a5ae90808868a49784cd5ff9714d174acfa4e0ce61e45e2d7cc2df49c19868cf1cf6137e1f7d210ee265b5c
   languageName: node
   linkType: hard
 
-"xml-parser-xo@npm:^4.1.0":
-  version: 4.1.1
-  resolution: "xml-parser-xo@npm:4.1.1"
-  checksum: 10c0/e14ae3820a6a34f309f8126c44e57d82429eca18770ee25f9b7845bf991a5ebc2071d25d2472e418c9a399abf713ec0a1ecbefc608b933e431245e19036c73bc
+"xml-parser-xo@npm:^4.1.2":
+  version: 4.1.2
+  resolution: "xml-parser-xo@npm:4.1.2"
+  checksum: 10c0/7929b0c65c9a92f3d831d0fb0c7164fa23a8721655e79f9b26168a5835f84a281e6c41caa768d8ada5a0ad858933432aad87347b6379f330e4d3f1443a50e012
   languageName: node
   linkType: hard
 
