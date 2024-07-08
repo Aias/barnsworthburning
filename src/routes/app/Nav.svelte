@@ -76,8 +76,9 @@
 		{ name: 'Extracts', path: '/extracts', icon: '📝' },
 		{ name: 'Search', path: '/search', icon: '🔍' }
 	];
+
 	let activeRoute = $derived.by(() => {
-		const currentRoute = $page.route.id;
+		const currentRoute = $page.url.pathname;
 		const [indexRoute, ...otherRoutes] = routes;
 		if (!currentRoute) return undefined;
 		if (currentRoute === '/') return indexRoute;

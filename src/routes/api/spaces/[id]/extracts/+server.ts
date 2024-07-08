@@ -6,7 +6,7 @@ import { Table, type IBaseExtract, ExtractView } from '$types/Airtable';
 export async function GET({ params }) {
 	const extracts = await airtableFetch<IBaseExtract>(Table.Extracts, {
 		filterByFormula: `FIND('${params.id}', spacesLookup) > 0`,
-		view: ExtractView.ByEntryDate
+		view: ExtractView.Best
 	});
 
 	return json(extracts.map(mapExtractRecord));
