@@ -1,7 +1,6 @@
 <script lang="ts">
 	import cache from '$lib/cache.svelte';
-	import { entityTypes } from '$helpers/params';
-	import LinkGroup from '$components/LinkGroup.svelte';
+	import CreatorList from '../app/CreatorList.svelte';
 
 	let { data } = $props();
 
@@ -15,15 +14,4 @@
 <svelte:head>
 	<title>barnsworthburning</title>
 </svelte:head>
-<ul class="entity-list">
-	{#each cachedCreators as entity (entity.id)}
-		<li>
-			<LinkGroup
-				groupType={entityTypes.creator}
-				groupId={entity.id}
-				groupName={entity.name || 'Unknown'}
-				links={entity.extracts}
-			/>
-		</li>
-	{/each}
-</ul>
+<CreatorList creators={cachedCreators} />

@@ -1,27 +1,15 @@
 <script lang="ts">
-	import ExtractGallery from '$components/ExtractGallery.svelte';
+	import EntityItem from '../../app/EntityItem.svelte';
 
 	let { data } = $props();
 
 	let creator = $derived(data.creator);
 	let extracts = $derived(data.extractsByCreator);
 
-	let title = $derived.by(() => {
-		const { name } = creator;
-		return name;
-	});
+	let title = $derived(creator.name ?? 'Unknown');
 </script>
 
 <svelte:head>
 	<title>{title}</title>
 </svelte:head>
-<h1>
-	{title}
-</h1>
-<ExtractGallery {extracts} />
-
-<style lang="scss">
-	h1 {
-		margin-block-end: 0.5em;
-	}
-</style>
+<EntityItem {title} {extracts} />

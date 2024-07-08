@@ -47,8 +47,6 @@
 		}
 	});
 
-	$inspect(entityTypes);
-
 	// beforeNavigate(({ from, to, type, cancel }) => {
 	// 	const isNavigating = ['link', 'goto'].includes(type);
 	// 	if (!isNavigating) return;

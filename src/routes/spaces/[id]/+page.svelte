@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ExtractGallery from '$components/ExtractGallery.svelte';
+	import EntityItem from '../../app/EntityItem.svelte';
 	import { capitalize } from '$helpers/grammar.js';
 
 	let { data } = $props();
@@ -18,13 +18,4 @@
 <svelte:head>
 	<title>{title}</title>
 </svelte:head>
-<h1>
-	{title}
-</h1>
-<ExtractGallery {extracts} />
-
-<style lang="scss">
-	h1 {
-		margin-block-end: 0.5em;
-	}
-</style>
+<EntityItem {title} {extracts} />
