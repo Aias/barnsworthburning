@@ -9,9 +9,10 @@
 	import settings from '$lib/settings.svelte';
 	import interaction from '$lib/interaction.svelte';
 	import trail from '$lib/trail.svelte';
-	import { entityTypes, type EntityTypeKey } from '$helpers/params';
+	import { entityTypes, type EntityType, type EntityTypeKey } from '$helpers/params';
 	import { getCookie } from '$helpers/cookies';
 	import { classnames } from '$helpers/classnames';
+	import TrailSegment from './app/TrailSegment.svelte';
 
 	let { children, data } = $props();
 	let bodyEl: HTMLBodyElement | undefined;
@@ -50,20 +51,31 @@
 	// beforeNavigate(({ from, to, type, cancel }) => {
 	// 	const isNavigating = ['link', 'goto'].includes(type);
 	// 	if (!isNavigating) return;
-	// 	if (!to?.params?.id) return;
-	// 	let id = to.params.id;
-	// 	let entityType;
-	// 	const { route } = to;
-	// 	if (!route.id) return;
+	// 	const fromId = from?.params?.id;
+	// 	const toId = to?.params?.id;
+	// 	const toEntityParam = to?.params?.entityType;
+	// 	if (!(fromId && toId)) return; // Only add segments when an entity is already selected.
+	// 	let toEntityType: EntityType | undefined;
 	// 	for (const key in entityTypes) {
 	// 		const type = entityTypes[key as EntityTypeKey];
-	// 		if (route.id.startsWith(`/${type.urlParam}`)) {
-	// 			entityType = type;
+	// 		if (type.urlParam === toEntityParam) {
+	// 			toEntityType = type;
 	// 			break;
 	// 		}
 	// 	}
-	// 	if (!id || !entityType) return;
-	// 	trail.addSegment(entityType, id);
+	// 	if (!toEntityType) return; // Don't add segments for unknown entity types.
+	// 	if (
+	// 		trail.segments.some(
+	// 			({ entityType, entityId }) =>
+	// 				$state.is(entityType, toEntityType) && $state.is(entityId, toId)
+	// 		)
+	// 	) {
+	// 		// Don't add duplicate segments.
+	// 		trail.removeSegment(toId);
+	// 		return;
+	// 	}
+	// 	// If above checks pass, add a new segment.
+	// 	trail.addSegment(toEntityType, toId);
 	// 	cancel();
 	// });
 
@@ -75,6 +87,11 @@
 	const handleInteractions = (event: KeyboardEvent | MouseEvent) => {
 		interaction.setAltKeyPressed(event.altKey);
 		interaction.setMetaKeyPressed(event.metaKey);
+		// if (event instanceof KeyboardEvent) {
+		// 	if (event.key === 'Escape') {
+		// 		trail.clearTrail();
+		// 	}
+		// }
 	};
 </script>
 
@@ -98,14 +115,9 @@
 			{#each trail.segments as { entityId, entityType, color, addedOn } (addedOn)}
 				<li class={classnames('chromatic', color)}>
 					<hr class="separator" />
-					<article class="segment">
-						<h3>{entityType.title}</h3>
-						<p>{entityId}</p>
-						<p>This is segment {color}</p>
-						<button type="reset" onclick={() => trail.removeSegment(entityId)}
-							>Close</button
-						>
-					</article>
+					<div class="segment">
+						<TrailSegment {entityId} {entityType} />
+					</div>
 				</li>
 			{/each}
 		</ul>

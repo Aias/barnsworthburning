@@ -3,10 +3,10 @@
 	import type { IExtract } from '$types/Airtable';
 
 	type SpaceItemProps = {
-		title: string;
+		title?: string;
 		extracts: IExtract[];
 	};
-	let { title, extracts }: SpaceItemProps = $props();
+	let { title = 'Unknown', extracts }: SpaceItemProps = $props();
 </script>
 
 <h1>

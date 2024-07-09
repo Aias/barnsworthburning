@@ -17,16 +17,15 @@
 	});
 
 	let title = $derived.by(() => {
-		const UNKNOWN = 'Unknown';
-		if (creator) return creator.name ?? UNKNOWN;
-		if (space) return capitalize(space.title || space.topic) ?? UNKNOWN;
-		if (extracts) return cache.extractsById.get(id)?.title ?? UNKNOWN;
-		return UNKNOWN;
+		if (creator) return creator.name;
+		if (space) return capitalize(space.title || space.topic);
+		if (extracts) return cache.extractsById.get(id)?.title;
+		return undefined;
 	});
 </script>
 
 <svelte:head>
-	<title>{title}</title>
+	<title>{title ?? 'barnsworthburning'}</title>
 </svelte:head>
 
 {#if creator || space}

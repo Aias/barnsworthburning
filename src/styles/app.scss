@@ -128,7 +128,7 @@
 	position: fixed;
 	inset-block: 0;
 	inset-inline-end: 0;
-	max-width: 50%;
+	// max-width: 50%;
 	height: 100dvh;
 	overflow: auto;
 	z-index: 10;
@@ -156,12 +156,15 @@
 	.segment {
 		background-color: var(--background);
 		padding: var(--padding);
+		width: 30rem;
+		overflow-y: auto;
 	}
 
 	.separator {
 		border-inline-end: 1px solid var(--edge);
 		position: sticky;
-		inset-inline-start: 0;
+		inset-inline-start: 1px;
+		margin-inline-start: -1px;
 		width: 1px;
 		z-index: 100;
 	}

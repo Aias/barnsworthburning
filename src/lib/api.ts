@@ -31,4 +31,6 @@ function createApi(customFetch: FetchFunction) {
 	};
 }
 
+export const api = createApi(fetch);
+
 export { createApi };
