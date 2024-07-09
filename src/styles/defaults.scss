@@ -9,14 +9,14 @@ html {
 	font-variant-ligatures: common-ligatures;
 	font-variant-numeric: tabular-nums;
 	hanging-punctuation: first last;
+	background-color: var(--background);
+	accent-color: var(--link);
+	scrollbar-width: thin;
+
 	input,
 	textarea {
 		hanging-punctuation: none; /* https://adactio.com/journal/21027 */
 	}
-
-	background-color: var(--background);
-	accent-color: var(--link);
-	scrollbar-width: thin;
 }
 
 body {
@@ -159,14 +159,13 @@ fieldset {
 .link {
 	color: var(--link);
 	text-decoration: none;
+	transition: color var(--transition-snappy);
 
 	&:hover {
 		color: var(--link-active);
 		text-decoration: underline;
 		cursor: pointer;
 	}
-
-	transition: color var(--transition-snappy);
 }
 
 button,

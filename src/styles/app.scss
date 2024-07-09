@@ -10,6 +10,7 @@
 .app {
 	--padding: 1rem;
 	--sidebar-width: 14rem;
+	min-height: 100dvh;
 }
 
 .app-header {
@@ -24,29 +25,6 @@
 .app-nav {
 	display: flex;
 	flex-direction: column;
-}
-
-.nav-link {
-	border-radius: var(--border-radius-small);
-	padding-inline: 0.5em;
-	display: flex;
-	flex-direction: row;
-	gap: 1ch;
-	text-decoration: none;
-
-	&:hover {
-		background-color: var(--flood);
-	}
-
-	&::before {
-		content: attr(data-icon);
-		display: inline-block;
-	}
-
-	&.active {
-		background-color: var(--main);
-		color: var(--main-contrast);
-	}
 }
 
 .app:has(.app-main) {

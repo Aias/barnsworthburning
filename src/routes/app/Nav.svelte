@@ -18,6 +18,8 @@
 	let currentSort = $state('name');
 	let nameFilter = $state('');
 
+	let pageParams = $derived($page.params || {});
+
 	const fullIndex = $derived.by(() => {
 		const creators = cache.allCreators.map((c) => ({
 			type: entityTypes.creator,
@@ -104,10 +106,16 @@
 	</form>
 	<ol class="index">
 		{#each filteredIndex as entry (entry.id)}
+			{@const { type, name, id, count } = entry}
 			<li class="index-entry">
-				<a class="name" href="/{entry.type.urlParam}/{entry.id}">
-					{entry.name}
-				</a>&nbsp;<span class="count">{entry.count}</span>
+				<Link
+					class="entity-link"
+					toType={type.key}
+					toId={id}
+					active={type.urlParam === pageParams.entityType && id === pageParams.id}
+				>
+					{name}
+				</Link>&nbsp;<span class="count">{count}</span>
 			</li>
 		{/each}
 		{#if numMissing > 0}
@@ -116,6 +124,26 @@
 			{/each}
 		{/if}
 	</ol>
+	<!-- <hr role="presentation" class="section-break" />
+	<ol class="extras">
+		<li>
+			<Link toType="extract" toId="rechxgCFt4OkQUsKD">About</Link>
+		</li>
+		<li>
+			<Link href="/feed.xml">RSS Feed</Link>
+		</li>
+		<li>
+			<Link href="https://airtable.com/appfed8INlDShDOoQ/shrJoAnWxZHyd33nA" target="_blank"
+				>Contact</Link
+			>
+		</li>
+		<li>
+			<Link
+				href="https://www.airtable.com/universe/expKiUBA3E8no5Dgp/a-commonplace-book"
+				target="_blank">Source</Link
+			>
+		</li>
+	</ol> -->
 	<hr role="presentation" class="section-break" />
 	<Toolbar />
 </header>
@@ -142,25 +170,6 @@
 			content: '⁘  ⁘  ⁘';
 			display: inline-block;
 			color: var(--hint);
-		}
-	}
-	.index-entry {
-		--indent: 1.5em;
-		padding-inline-start: var(--indent);
-		text-indent: calc(-1 * var(--indent));
-		min-height: 1lh;
-
-		.name {
-			margin-inline-end: 1em;
-		}
-
-		.count {
-			color: var(--hint);
-			transition: color var(--transition-snappy);
-
-			&:hover {
-				color: var(--secondary);
-			}
 		}
 	}
 </style>

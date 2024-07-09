@@ -48,36 +48,36 @@
 		}
 	});
 
-	// beforeNavigate(({ from, to, type, cancel }) => {
-	// 	const isNavigating = ['link', 'goto'].includes(type);
-	// 	if (!isNavigating) return;
-	// 	const fromId = from?.params?.id;
-	// 	const toId = to?.params?.id;
-	// 	const toEntityParam = to?.params?.entityType;
-	// 	if (!(fromId && toId)) return; // Only add segments when an entity is already selected.
-	// 	let toEntityType: EntityType | undefined;
-	// 	for (const key in entityTypes) {
-	// 		const type = entityTypes[key as EntityTypeKey];
-	// 		if (type.urlParam === toEntityParam) {
-	// 			toEntityType = type;
-	// 			break;
-	// 		}
-	// 	}
-	// 	if (!toEntityType) return; // Don't add segments for unknown entity types.
-	// 	if (
-	// 		trail.segments.some(
-	// 			({ entityType, entityId }) =>
-	// 				$state.is(entityType, toEntityType) && $state.is(entityId, toId)
-	// 		)
-	// 	) {
-	// 		// Don't add duplicate segments.
-	// 		trail.removeSegment(toId);
-	// 		return;
-	// 	}
-	// 	// If above checks pass, add a new segment.
-	// 	trail.addSegment(toEntityType, toId);
-	// 	cancel();
-	// });
+	beforeNavigate(({ from, to, type, cancel }) => {
+		const isNavigating = ['link', 'goto'].includes(type);
+		if (!isNavigating) return;
+		const fromId = from?.params?.id;
+		const toId = to?.params?.id;
+		const toEntityParam = to?.params?.entityType;
+		if (!(fromId && toId)) return; // Only add segments when an entity is already selected.
+		let toEntityType: EntityType | undefined;
+		for (const key in entityTypes) {
+			const type = entityTypes[key as EntityTypeKey];
+			if (type.urlParam === toEntityParam) {
+				toEntityType = type;
+				break;
+			}
+		}
+		if (!toEntityType) return; // Don't add segments for unknown entity types.
+		if (
+			trail.segments.some(
+				({ entityType, entityId }) =>
+					$state.is(entityType, toEntityType) && $state.is(entityId, toId)
+			)
+		) {
+			// Don't add duplicate segments.
+			trail.removeSegment(toId);
+			return;
+		}
+		// If above checks pass, add a new segment.
+		trail.addSegment(toEntityType, toId);
+		cancel();
+	});
 
 	$effect(() => {
 		if (!bodyEl) return;
@@ -87,11 +87,11 @@
 	const handleInteractions = (event: KeyboardEvent | MouseEvent) => {
 		interaction.setAltKeyPressed(event.altKey);
 		interaction.setMetaKeyPressed(event.metaKey);
-		// if (event instanceof KeyboardEvent) {
-		// 	if (event.key === 'Escape') {
-		// 		trail.clearTrail();
-		// 	}
-		// }
+		if (event instanceof KeyboardEvent) {
+			if (event.key === 'Escape') {
+				trail.clearTrail();
+			}
+		}
 	};
 </script>
 
