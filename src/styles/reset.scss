@@ -3,6 +3,8 @@
 *::before,
 *::after {
 	box-sizing: border-box;
+	scrollbar-width: thin;
+	scroll-behavior: smooth;
 }
 
 /* Prevent font size inflation */

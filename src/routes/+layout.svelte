@@ -3,7 +3,7 @@
 	import SEO from '$components/SEO.svelte';
 	import Nav from './app/Nav.svelte';
 	import { page } from '$app/stores';
-	import { beforeNavigate } from '$app/navigation';
+	import { afterNavigate, beforeNavigate } from '$app/navigation';
 	import cache from '$lib/cache.svelte';
 	import { Palette, Mode, Chroma } from '$types/Theme';
 	import settings from '$lib/settings.svelte';
@@ -75,8 +75,15 @@
 			return;
 		}
 		// If above checks pass, add a new segment.
-		trail.addSegment(toEntityType, toId);
-		cancel();
+		// trail.addSegment(toEntityType, toId);
+		// cancel();
+	});
+
+	afterNavigate(() => {
+		const main = document.getElementById('app-main');
+		if (main) {
+			main.scrollTo({ top: 0, behavior: 'instant' });
+		}
 	});
 
 	$effect(() => {
@@ -105,7 +112,7 @@
 <svelte:body bind:this={bodyEl} />
 <Nav class="app-header" />
 {#if !isIndex}
-	<main class="app-main">
+	<main class="app-main" id="app-main">
 		{@render children()}
 	</main>
 {/if}
