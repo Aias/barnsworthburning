@@ -27,8 +27,7 @@ export function createTrailState() {
 		},
 		addSegment: (entityType: EntityType, entityId: string) => {
 			const lastSegment = trail[trail.length - 1];
-			const lastColor = lastSegment ? lastSegment.color : settings.palette;
-			const nextColor = rotatePalette(lastColor);
+			const nextColor = lastSegment ? rotatePalette(lastSegment.color) : settings.palette;
 			trail = [...trail, { entityType, entityId, color: nextColor, addedOn: new Date() }];
 		},
 		removeSegment: (id: string) => {

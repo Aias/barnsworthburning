@@ -11,8 +11,9 @@
 	import trail from '$lib/trail.svelte';
 	import { entityTypes, type EntityType, type EntityTypeKey } from '$helpers/params';
 	import { getCookie } from '$helpers/cookies';
-	import { classnames } from '$helpers/classnames';
-	import TrailSegment from './app/TrailSegment.svelte';
+	import Trail from './app/Trail.svelte';
+	import Index from './app/Index.svelte';
+	import SettingsMenu from './app/SettingsMenu.svelte';
 
 	let { children, data } = $props();
 	let bodyEl: HTMLBodyElement | undefined;
@@ -110,23 +111,23 @@
 />
 <SEO />
 <svelte:body bind:this={bodyEl} />
-<Nav class="app-header" />
-{#if !isIndex}
-	<main class="app-main" id="app-main">
-		{@render children()}
-	</main>
-{/if}
+<div class="app-contents">
+	<Nav class="app-nav themed" />
+	<div class="app-toolbar">
+		<SettingsMenu class="app-settings" />
+	</div>
+	{#if !isIndex}
+		<main class="app-main" id="app-main">
+			{@render children()}
+		</main>
+	{/if}
+	<hr />
+	<footer class="app-footer">
+		<Index class="app-index" />
+	</footer>
+</div>
 {#if trail.length > 0}
-	<aside class="app-trail">
-		<ul class="segments">
-			{#each trail.segments as { entityId, entityType, color, addedOn } (addedOn)}
-				<li class={classnames('chromatic', color)}>
-					<hr class="separator" />
-					<div class="segment">
-						<TrailSegment {entityId} {entityType} />
-					</div>
-				</li>
-			{/each}
-		</ul>
+	<aside class="app-aside">
+		<Trail class="app-trail" />
 	</aside>
 {/if}

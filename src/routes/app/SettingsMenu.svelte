@@ -2,6 +2,8 @@
 	import settings from '$lib/settings.svelte';
 	import { Chroma, Mode, Palette } from '$types/Theme';
 
+	let { ...restProps } = $props();
+
 	let themeColor = $state('#000000');
 
 	const titleCase = (str: string) => str[0].toUpperCase() + str.slice(1);
@@ -35,7 +37,7 @@
 	<meta name="theme-color" content={themeColor} />
 </svelte:head>
 
-<menu class="settings">
+<menu {...restProps}>
 	<li>
 		<fieldset class="theme-selector">
 			{#each settings.paletteOptions as paletteKey (paletteKey)}

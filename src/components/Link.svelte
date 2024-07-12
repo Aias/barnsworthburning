@@ -15,13 +15,13 @@
 		href?: never;
 	}
 
-	interface ExternalLinkProps extends LinkBaseProps {
+	interface StaticLinkProps extends LinkBaseProps {
 		href: string;
 		toType?: never;
 		toId?: never;
 	}
 
-	type LinkProps = InternalLinkProps | ExternalLinkProps;
+	type LinkProps = InternalLinkProps | StaticLinkProps;
 
 	let {
 		toType = 'extract',
