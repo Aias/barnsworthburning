@@ -76,7 +76,7 @@
 					</Link>
 				</h2>
 				<button
-					class="ssm source-opener chromatic"
+					class="ssm content-opener chromatic"
 					onclick={openInAirtable}
 					title="Open in Airtable">☁️</button
 				>
