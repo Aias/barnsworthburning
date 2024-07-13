@@ -71,7 +71,7 @@
 			}
 			if (fromEntityType && toEntityType) break;
 		}
-		if (!fromEntityType || !toEntityType) return; // Don't add segments for unknown entity types.
+		if (!toEntityType) return; // Don't add segments for unknown entity types.
 
 		// Check if toId already exists in the trail and remove it
 		const existingSegmentIndex = trail.segments.findIndex(
