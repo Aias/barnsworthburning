@@ -25,13 +25,32 @@
 	transition: margin-right var(--transition-snappy) ease;
 }
 
-.app-aside {
+.aside-container {
 	position: absolute;
 	inset-inline-end: 0;
 	inset-block: 0;
 	z-index: 10;
-	max-width: calc(100% - var(--sidebar-width));
 	min-width: var(--trail-width);
+
+	.trail-controls {
+		--size: 1.5rem;
+		position: absolute;
+		inset-inline-start: 0;
+		inset-block-start: 1rem;
+		z-index: 10;
+		font-size: var(--size);
+		width: var(--size);
+		height: var(--size);
+		border-radius: var(--border-radius-medium) 0 0 var(--border-radius-medium);
+		border-inline-end: 0;
+		transform: translateX(-100%);
+	}
+}
+
+.app-aside {
+	width: 100%;
+	height: 100%;
+	max-width: calc(100vw - var(--sidebar-width) - 1rem);
 	display: flex;
 	flex-direction: row-reverse;
 	overflow-x: auto;
@@ -67,7 +86,10 @@
 }
 
 @media (width < 42rem) {
-	.app-aside {
+	.app {
+		height: auto;
+	}
+	.aside-container {
 		display: none;
 	}
 	.app-nav {

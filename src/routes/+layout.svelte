@@ -152,7 +152,14 @@
 	</footer>
 </div>
 {#if trail.length > 0}
-	<aside class="app-aside">
-		<Trail class="app-trail" />
-	</aside>
+	<div class="aside-container">
+		<button
+			class="trail-controls chromatic"
+			aria-label="Close Panel"
+			onclick={() => trail.clearTrail()}>×</button
+		>
+		<aside class="app-aside">
+			<Trail class="app-trail" />
+		</aside>
+	</div>
 {/if}
