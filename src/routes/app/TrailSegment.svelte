@@ -1,17 +1,20 @@
 <script lang="ts">
+	import { setContext } from 'svelte';
 	import EntityItem from './EntityItem.svelte';
 	import ExtractItem from './ExtractItem.svelte';
-	import { type EntityType, entityTypes } from '$helpers/params';
+	import { entityTypes } from '$helpers/params';
 	import { api } from '$lib/api';
 	import cache from '$lib/cache.svelte';
 	import type { ICreator, IExtract, ISpace } from '$types/Airtable';
 	import { capitalize } from '$helpers/grammar';
+	import type { TrailSegment } from '$lib/trail.svelte';
 
 	type TrailSegmentProps = {
-		entityId: string;
-		entityType: EntityType;
+		segment: TrailSegment;
 	};
-	let { entityId, entityType }: TrailSegmentProps = $props();
+	let { segment }: TrailSegmentProps = $props();
+
+	let { entityType, entityId } = $derived(segment);
 
 	let creator = $state<ICreator>();
 	let space = $state<ISpace>();
@@ -46,6 +49,10 @@
 		extracts = extractsPromise;
 		cache.addExtracts(extractsPromise);
 	}
+
+	$effect.pre(() => {
+		setContext('trailSegment', segment);
+	});
 
 	$effect(() => {
 		if ($state.is(entityType, entityTypes.creator)) {

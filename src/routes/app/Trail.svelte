@@ -7,11 +7,11 @@
 </script>
 
 <ol class:trail={true} {...restProps}>
-	{#each trail.segments as { entityId, entityType, color, addedOn } (addedOn)}
-		<li class={classnames('segment', 'chromatic', color)}>
+	{#each trail.segments as segment (segment.addedOn)}
+		<li class={classnames('segment', 'chromatic', segment.color)}>
 			<hr class="segment-separator" />
 			<div class="segment-contents">
-				<TrailSegment {entityId} {entityType} />
+				<TrailSegment {segment} />
 			</div>
 		</li>
 	{/each}
@@ -23,29 +23,37 @@
 		display: flex;
 		flex-direction: column;
 		flex-wrap: wrap;
-		flex: 1 0 auto;
-
-		> .segment {
-			display: contents;
-		}
 	}
 
-	.segment-separator,
-	.segment-contents {
+	.segment {
 		flex: 0 1 100%;
+		width: var(--segment-width);
+		height: 100%;
+		display: flex;
+		flex-direction: row;
+		background-color: var(--background);
+	}
+
+	.segment-contents,
+	.segment-separator {
+		height: 100%;
 	}
 
 	.segment-contents {
-		background-color: var(--background);
+		flex: 1;
 		padding: 1rem;
-		width: var(--segment-width);
 		overflow-y: auto;
 	}
 
 	.segment-separator {
+		position: sticky;
+		inset-inline-start: 0;
+		inset-block: 0;
 		border-inline-end: 1px solid var(--edge);
-		inset-inline-start: 1px;
-		width: 1px;
-		z-index: 100;
+		border-block: none;
+		padding: 0;
+		margin: 0;
+		width: 0;
+		z-index: 1;
 	}
 </style>

@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import type { Snippet } from 'svelte';
 	import type { HTMLAttributes } from 'svelte/elements';
@@ -31,7 +30,7 @@
 		const nearestLink = target.closest(`${linkSelector}, ${blockClass}`);
 		if (!container || !container.isSameNode(nearestLink)) return; // If we clicked within a link that's not the container, no special handling.
 
-		const mainLink = container.querySelector('.main-link');
+		const mainLink = container.querySelector('.main-link') as HTMLAnchorElement;
 		const allLinks = container.querySelectorAll(linkSelector);
 		if (!mainLink || window.getSelection()?.toString()) return; // If the user has selected text, don't navigate.
 		if (allLinks && Array.from(allLinks).some((item) => item === target)) return; // If the click target is a link, no special handling.
@@ -43,7 +42,7 @@
 		// No other special cases apply, treat the click as a navigation to the main link's href.
 		event.preventDefault();
 		event.stopPropagation();
-		goto(href);
+		mainLink.click();
 	};
 </script>
 

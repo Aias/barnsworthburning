@@ -9,16 +9,38 @@
 
 .app {
 	--sidebar-width: 14rem;
-	--segment-width: 30rem;
+	--segment-width: 28rem;
+	--trail-width: var(--segment-width);
 	height: 100%;
 	width: 100%;
+	max-width: 100%;
 	display: flex;
-	gap: 1rem;
+	overflow-x: hidden;
+	position: relative;
 }
 
 .app-contents {
 	flex: 1;
 	max-width: 100%;
+	transition: margin-right var(--transition-snappy) ease;
+}
+
+.app-aside {
+	position: absolute;
+	inset-inline-end: 0;
+	inset-block: 0;
+	z-index: 10;
+	max-width: calc(100% - var(--sidebar-width));
+	min-width: var(--trail-width);
+	display: flex;
+	flex-direction: row-reverse;
+	overflow-x: auto;
+	background-color: var(--background);
+	transition: width var(--transition-snappy) ease;
+
+	.app-trail {
+		flex: 1 0 auto;
+	}
 }
 
 .app-nav,
@@ -44,7 +66,10 @@
 	display: none;
 }
 
-@media (width < 600px) {
+@media (width < 42rem) {
+	.app-aside {
+		display: none;
+	}
 	.app-nav {
 		--chroma: 100%;
 		position: fixed;
@@ -85,7 +110,14 @@
 	}
 }
 
-@media (width >= 600px) {
+@media (width >= 42rem) {
+	.app:has(.app-aside) {
+		.app-contents {
+			margin-right: var(--trail-width);
+			min-width: calc(var(--sidebar-width) + var(--trail-width));
+		}
+	}
+
 	.app-contents:not(:has(.app-main)) {
 		display: flex;
 		flex-direction: column;

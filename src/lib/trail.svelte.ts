@@ -17,10 +17,14 @@ const rotatePalette = (start: Palette, steps: number = 1) => {
 
 export function createTrailState() {
 	let trail = $state<TrailSegment[]>([]);
+	let selectedSegment = $state<TrailSegment>();
 
 	return {
 		get segments() {
 			return trail;
+		},
+		get selected() {
+			return selectedSegment;
 		},
 		get length() {
 			return trail.length;
@@ -33,8 +37,23 @@ export function createTrailState() {
 		removeSegment: (id: string) => {
 			trail = trail.filter((segment) => segment.entityId !== id);
 		},
+		removeAfterSegment: (id: string) => {
+			const index = trail.findIndex((segment) => segment.entityId === id);
+			if (index >= 0) {
+				trail = trail.slice(0, index + 1);
+			}
+		},
+		removeExceptSegment: (id: string) => {
+			const index = trail.findIndex((segment) => segment.entityId === id);
+			if (index >= 0) {
+				trail = trail.slice(index, index + 1);
+			}
+		},
 		clearTrail: () => {
 			trail = [];
+		},
+		selectSegment: (id?: string) => {
+			selectedSegment = trail.find((segment) => segment.entityId === id);
 		}
 	};
 }

@@ -2,6 +2,7 @@
 	import { setContext } from 'svelte';
 	import { makeHierarchy } from '$lib/extractHierarchy.svelte';
 	import Extract from '$components/Extract.svelte';
+	import ExtractList from './ExtractList.svelte';
 
 	type ExtractItemProps = {
 		extractId: string;
@@ -35,11 +36,7 @@
 			<small class="text-secondary text-mono">See ⮂ Also</small>
 			<hr />
 		</div>
-		<ul class="connections block-list">
-			{#each connections as connection (connection.id)}
-				<Extract element="li" extract={connection} />
-			{/each}
-		</ul>
+		<ExtractList extracts={connections} />
 	{/if}
 </article>
 
@@ -62,7 +59,7 @@
 		}
 	}
 
-	.connections {
+	.connections-separator ~ :global(*) {
 		font-size: var(--font-size-small);
 	}
 </style>

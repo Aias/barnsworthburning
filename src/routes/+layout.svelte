@@ -17,6 +17,7 @@
 
 	let { children, data } = $props();
 	let bodyEl: HTMLBodyElement | undefined;
+	let bodyWidth: number = $state(0);
 	let isIndex = $derived($page.route.id === '/');
 
 	$effect.pre(() => {
@@ -50,34 +51,58 @@
 	});
 
 	beforeNavigate(({ from, to, type, cancel }) => {
+		if (bodyWidth < 720) return; // Don't add segments when the screen is too small.
 		const isNavigating = ['link', 'goto'].includes(type);
 		if (!isNavigating) return;
 		const fromId = from?.params?.id;
+		const fromEntityParam = from?.params?.entityType;
 		const toId = to?.params?.id;
+		if (!toId) return; // Don't add segments for unknown entities.
 		const toEntityParam = to?.params?.entityType;
-		if (!(fromId && toId)) return; // Only add segments when an entity is already selected.
+		let fromEntityType: EntityType | undefined;
 		let toEntityType: EntityType | undefined;
 		for (const key in entityTypes) {
 			const type = entityTypes[key as EntityTypeKey];
+			if (type.urlParam === fromEntityParam) {
+				fromEntityType = type;
+			}
 			if (type.urlParam === toEntityParam) {
 				toEntityType = type;
-				break;
+			}
+			if (fromEntityType && toEntityType) break;
+		}
+		if (!fromEntityType || !toEntityType) return; // Don't add segments for unknown entity types.
+
+		// Check if toId already exists in the trail and remove it
+		const existingSegmentIndex = trail.segments.findIndex(
+			(segment) => segment.entityId === toId
+		);
+		if (existingSegmentIndex >= 0) {
+			trail.removeSegment(toId);
+		}
+
+		const selectedSegment = trail.selected;
+		if (selectedSegment) {
+			const { entityId: selectedId } = selectedSegment;
+			if (selectedId === toId) {
+				// Don't cancel navigation if the selected segment is the same as toId.
+				return;
+			}
+			// if (toId === fromId) return; // Don't add segments for the same entity.
+			if (toEntityType === entityTypes.extract) {
+				trail.removeAfterSegment(selectedId);
+				trail.addSegment(toEntityType, toId);
+				cancel();
+			} else {
+				trail.removeExceptSegment(selectedId);
+			}
+		} else {
+			if (toEntityType === entityTypes.extract) {
+				trail.clearTrail();
+				trail.addSegment(toEntityType, toId);
+				cancel();
 			}
 		}
-		if (!toEntityType) return; // Don't add segments for unknown entity types.
-		if (
-			trail.segments.some(
-				({ entityType, entityId }) =>
-					$state.is(entityType, toEntityType) && $state.is(entityId, toId)
-			)
-		) {
-			// Don't add duplicate segments.
-			trail.removeSegment(toId);
-			return;
-		}
-		// If above checks pass, add a new segment.
-		// trail.addSegment(toEntityType, toId);
-		// cancel();
 	});
 
 	afterNavigate(() => {
@@ -110,7 +135,7 @@
 	on:mouseleave={handleInteractions}
 />
 <SEO />
-<svelte:body bind:this={bodyEl} />
+<svelte:body bind:this={bodyEl} bind:clientWidth={bodyWidth} />
 <div class="app-contents">
 	<Nav class="app-nav themed" />
 	<div class="app-toolbar">
