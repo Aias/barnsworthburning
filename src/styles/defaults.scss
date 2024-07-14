@@ -23,7 +23,7 @@ body {
 	margin: 0;
 	color: var(--display);
 	font-size: calc(0.875em);
-	line-height: calc(1.725);
+	line-height: var(--line-height-normal);
 	letter-spacing: 0.01em;
 }
 

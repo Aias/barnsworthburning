@@ -48,7 +48,6 @@
 }
 
 .app-aside {
-	width: 100%;
 	height: 100%;
 	max-width: calc(100vw - var(--sidebar-width) - 1rem);
 	display: flex;
@@ -66,7 +65,7 @@
 .app-toolbar,
 .app-footer {
 	font-size: var(--font-size-small);
-	line-height: 1.75em;
+	line-height: 1.75;
 }
 
 .app-index {
@@ -95,13 +94,15 @@
 	.app-nav {
 		--chroma: 100%;
 		position: fixed;
-		inset-block-end: 0.5rem;
+		inset-block-end: calc(env(safe-area-inset-bottom) + 0.5rem);
 		inset-inline: 1rem;
 		background-color: var(--float);
 		z-index: 1;
 		border-radius: var(--border-radius-small);
 		border: 1px solid var(--border);
 		display: flex;
+		justify-content: center;
+		overflow-x: auto;
 		padding: 0.25em;
 		gap: 0.25em;
 

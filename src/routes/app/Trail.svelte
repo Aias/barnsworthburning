@@ -21,12 +21,12 @@
 	.trail {
 		height: 100%;
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 		flex-wrap: wrap;
 	}
 
 	.segment {
-		flex: 0 1 100%;
+		flex: 0 0 auto;
 		width: var(--segment-width);
 		height: 100%;
 		display: flex;

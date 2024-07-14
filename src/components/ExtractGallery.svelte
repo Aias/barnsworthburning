@@ -19,13 +19,17 @@
 	.gallery {
 		column-width: 40ch;
 		column-gap: 1em;
+		line-height: 0;
 
 		> :global(*) {
-			margin-block: 1em;
+			// Line height and display/width vars here fix a weird safari bug
+			// where the first item in a column has margin at the top
+			line-height: var(--line-height-normal);
+			display: inline-block;
+			width: 100%;
+			margin-block-end: 1em;
+			margin-block-start: 0;
 			break-inside: avoid;
-			&:first-of-type {
-				margin-block-start: 0;
-			}
 			&:last-of-type {
 				margin-block-end: 0;
 			}
