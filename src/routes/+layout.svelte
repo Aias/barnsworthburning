@@ -1,6 +1,5 @@
 <script lang="ts">
 	import '$styles/app.scss';
-	import SEO from '$components/SEO.svelte';
 	import Nav from './app/Nav.svelte';
 	import { page } from '$app/stores';
 	import { afterNavigate, beforeNavigate } from '$app/navigation';
@@ -134,7 +133,6 @@
 	on:mouseenter={handleInteractions}
 	on:mouseleave={handleInteractions}
 />
-<SEO />
 <svelte:body bind:this={bodyEl} bind:clientWidth={bodyWidth} />
 <div class="app-contents">
 	<Nav class="app-nav themed" />
