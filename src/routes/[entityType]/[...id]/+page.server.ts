@@ -59,9 +59,6 @@ export async function load({ params, fetch }) {
 		case 'extracts':
 			extractsPromise = api.extracts.related(id);
 			break;
-
-		default:
-			error(500, 'Invalid entity type');
 	}
 
 	const [creator, space, extracts] = await Promise.all([

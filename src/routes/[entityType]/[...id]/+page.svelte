@@ -13,7 +13,7 @@
 	$effect.pre(() => {
 		if (creator) cache.addCreators([creator]);
 		if (space) cache.addSpaces([space]);
-		cache.addExtracts(extracts);
+		if (extracts) cache.addExtracts(extracts);
 	});
 
 	let title = $derived.by(() => {

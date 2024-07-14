@@ -4,7 +4,7 @@
 
 	type SpaceItemProps = {
 		title?: string;
-		extracts: IExtract[];
+		extracts?: IExtract[];
 	};
 	let { title = 'Unknown', extracts }: SpaceItemProps = $props();
 </script>
@@ -12,7 +12,11 @@
 <h1>
 	{title}
 </h1>
-<ExtractGallery {extracts} />
+{#if extracts}
+	<ExtractGallery {extracts} />
+{:else}
+	<em>No associated extracts.</em>
+{/if}
 
 <style lang="scss">
 	h1 {
