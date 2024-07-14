@@ -11,7 +11,9 @@
 
 <div class="gallery">
 	{#each extracts as extract (extract.id)}
-		<Extract {extract} variant="card" />
+		<div class="extract-wrapper">
+			<Extract {extract} variant="card" />
+		</div>
 	{/each}
 </div>
 
@@ -19,20 +21,12 @@
 	.gallery {
 		column-width: 40ch;
 		column-gap: 1em;
-		line-height: 0;
-
-		> :global(*) {
-			// Line height and display/width vars here fix a weird safari bug
-			// where the first item in a column has margin at the top
-			line-height: var(--line-height-normal);
-			display: inline-block;
-			width: 100%;
-			margin-block-end: 1em;
-			margin-block-start: 0;
-			break-inside: avoid;
-			&:last-of-type {
-				margin-block-end: 0;
-			}
+	}
+	.extract-wrapper {
+		break-inside: avoid;
+		padding-block-end: 1em;
+		&:last-of-type {
+			padding-block-end: 0;
 		}
 	}
 	// @supports (grid-template-rows: masonry) {
