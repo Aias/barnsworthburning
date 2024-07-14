@@ -27,7 +27,6 @@
 		row-gap: 0;
 	}
 	.tag {
-		color: var(--secondary);
 		text-transform: uppercase;
 
 		&::before {
@@ -35,6 +34,12 @@
 			display: inline;
 			margin-inline-end: 0.5ch;
 			color: var(--hint);
+		}
+	}
+	.tag :global(a) {
+		color: var(--accent);
+		&:hover {
+			color: var(--link);
 		}
 	}
 </style>
