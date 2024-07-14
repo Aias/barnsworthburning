@@ -1,7 +1,0 @@
-# https://github.com/ai-robots-txt/ai.robots.txt
-# Spawning AI
-# Prevent datasets from using the following file types
-
-User-Agent: *
-Disallow: /
-Disallow: *
