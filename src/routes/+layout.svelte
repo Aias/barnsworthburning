@@ -19,6 +19,8 @@
 	let bodyWidth: number = $state(0);
 	let isIndex = $derived($page.route.id === '/');
 
+	let { creators, spaces } = $derived(data);
+
 	$effect.pre(() => {
 		const storedMode = getCookie('barnsworthburning-mode') as Mode | null;
 		const storedChroma = getCookie('barnsworthburning-chroma') as Chroma | null;
@@ -146,7 +148,7 @@
 	{/if}
 	<hr />
 	<footer class="app-footer">
-		<Index class="app-index" />
+		<Index {creators} {spaces} class="app-index" />
 	</footer>
 </div>
 {#if trail.length > 0}

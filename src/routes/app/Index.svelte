@@ -1,11 +1,15 @@
 <script lang="ts">
-	import cache from '$lib/cache.svelte';
 	import { page } from '$app/stores';
 	import { entityTypes, type EntityType } from '$helpers/params';
-	import TextInput from '$components/TextInput.svelte';
 	import Link from '$components/Link.svelte';
+	import type { ICreator, ISpace } from '$types/Airtable';
+	import type { HTMLOlAttributes } from 'svelte/elements';
 
-	let { ...restProps } = $props();
+	interface IndexProps extends HTMLOlAttributes {
+		creators: ICreator[];
+		spaces: ISpace[];
+	}
+	let { creators, spaces, ...restProps }: IndexProps = $props();
 
 	type IndexEntry = {
 		type: EntityType;
@@ -15,45 +19,27 @@
 	};
 
 	let currentSort = $state('name');
-	let nameFilter = $state('');
 
 	let pageParams = $derived($page.params || {});
 
-	const fullIndex = $derived.by(() => {
-		const creators = cache.allCreators.map((c) => ({
+	const index = $derived.by(() => {
+		const creatorEntries = creators.map((c) => ({
 			type: entityTypes.creator,
 			name: c.name || 'Unknown',
 			id: c.id,
 			count: c.numExtracts
 		}));
-		const spaces = cache.allSpaces.map((s) => ({
+		const spaceEntries = spaces.map((s) => ({
 			type: entityTypes.space,
 			name: s.topic || 'general',
 			id: s.id,
 			count: s.numExtracts
 		}));
-		const all = [...creators, ...spaces].sort(
+		const all = [...creatorEntries, ...spaceEntries].sort(
 			currentSort === 'name' ? sortByName : sortByCount
 		);
 
 		return all;
-	});
-
-	$effect(() => {
-		const routeId = $page.route.id;
-		if (routeId) {
-			nameFilter = '';
-		}
-	});
-
-	const filteredIndex = $derived.by(() => {
-		let filtered = fullIndex;
-		if (nameFilter) {
-			filtered = filtered.filter((entry) =>
-				entry.name.toLowerCase().includes(nameFilter.toLowerCase())
-			);
-		}
-		return filtered;
 	});
 
 	function sortByCount(a: IndexEntry, b: IndexEntry) {
@@ -64,12 +50,8 @@
 	}
 </script>
 
-<!-- <form action="/search">
-		<TextInput type="search" name="q" inline bind:value={nameFilter} placeholder="Filter..." />
-		<button class="screenreader" type="submit">Search</button>
-	</form> -->
 <ol class="index" class:themed={true} {...restProps}>
-	{#each filteredIndex as entry (entry.id)}
+	{#each index as entry (entry.id)}
 		{@const { type, name, id, count } = entry}
 		<li class="index-entry">
 			<Link
@@ -112,15 +94,6 @@
 		overflow: auto;
 		margin-bottom: 1lh;
 	}
-	// form {
-	// 	display: flex;
-	// 	margin-block-end: 0.5lh;
-
-	// 	:global(input) {
-	// 		flex: 1;
-	// 		text-align: center;
-	// 	}
-	// }
 	.section-break {
 		margin-block: 0.5lh;
 		display: flex;
