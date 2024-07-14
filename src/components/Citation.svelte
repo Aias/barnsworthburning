@@ -21,7 +21,7 @@
 	let { format = Format.Extract, creators, source } = $derived(extract);
 </script>
 
-{#if creators || source}
+{#if creators || source || format !== Format.Fragment}
 	<svelte:element this={element} class:citation={true} class={classnames(className, 'text-mono')}>
 		{#if format !== Format.Fragment}
 			<span class="article">{getArticle(format)}</span>
