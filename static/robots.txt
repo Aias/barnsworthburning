@@ -23,7 +23,9 @@ User-agent: PerplexityBot
 User-agent: YouBot
 Disallow: /
 
+User-agent: Barkrowler
 User-agent: SemrushBot
+User-agent: YandexBot
 Disallow: /
 
 User-agent: *
