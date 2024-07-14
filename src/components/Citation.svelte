@@ -1,84 +1,82 @@
-<script>
-	import get from '$helpers/get'
-	import { article } from '$helpers/isFirstLetterAVowel';
-	import domainOfUrl from '$helpers/domainOfUrl';
-	import CreatorNames from './CreatorNames.svelte';
-	import InternalLink from './InternalLink.svelte';
-	import { getContext } from 'svelte';
+<script lang="ts">
+	import { getArticle } from '$helpers/grammar';
+	import CreatorList from './CreatorList.svelte';
+	import { type IExtract } from '$types/Airtable';
+	import { classnames } from '$helpers/classnames';
+	import Link from './Link.svelte';
 
-	const parentContainer = getContext('parentContainer');
+	interface CitationProps {
+		extract: IExtract;
+		element?: string;
+		class?: string;
+	}
 
-	export let extract = {};
-	export let suppressCitation = false;
+	let { extract, element = 'div', class: className }: CitationProps = $props();
 
-	const combinedCreatorNames = get(extract, 'combined_creator_names', []);
-	const parentCreatorNames = get(extract, 'parent_creator_names', []);
-	const slug = get(extract, 'slug');
-	const parentTitle = get(extract, 'parent_title[0]');
-	const parentSlug = get(extract, 'parent_slug[0]');
-	const type = get(extract, 'type', 'Work');
-	const source = get(extract, 'source');
-	const isWork = get(extract, 'is_work');
+	enum Format {
+		Fragment = 'Fragment',
+		Extract = 'Extract'
+	}
 
-	$: creatorNames = suppressCitation ? combinedCreatorNames.filter(name => parentCreatorNames.indexOf(name) === -1) : combinedCreatorNames;
-	$: showCitation = isWork ? true : suppressCitation ? creatorNames.length > 0 : true;
+	let { format = Format.Extract, creators, source } = $derived(extract);
 </script>
 
-{#if showCitation}
-	<div class="{isWork ? 'work' : 'extract'} text-mono">
-	{#if isWork}
-		<span>
-			{article(type)}&nbsp;<span class="extract-type">{type}</span>
-			{#if parentTitle && !suppressCitation}
-			from <InternalLink class="parent" toExtract="{parentSlug}" toFragment="{parentContainer === 'panel' ? slug : undefined}"><cite>{parentTitle}</cite></InternalLink>
-			{/if}
-			{#if creatorNames.length > 0}
-			by <CreatorNames creatorNames="{creatorNames}" />
-			{/if}		
-		</span>
-	{:else}
-		{#if creatorNames.length > 0}
-		<CreatorNames class="creator-names" creatorNames="{creatorNames}" />{#if parentTitle && !suppressCitation}<span>, </span>{/if}
+{#if creators || source || format !== Format.Fragment}
+	<svelte:element this={element} class:citation={true} class={classnames(className, 'text-mono')}>
+		{#if format !== Format.Fragment}
+			<span class="article">{getArticle(format)}</span>
+			<strong class="format">{format}</strong>
 		{/if}
-		{#if parentTitle && !suppressCitation}
-		<InternalLink class="parent" toExtract="{parentSlug}" toFragment="{parentContainer === 'panel' ? slug : undefined}"><cite>{parentTitle}</cite></InternalLink>
-		{/if}	
-	{/if}
-	{#if source}
-		<div class="small extract-source">
-			<a href="{source}" target="_blank" rel="noreferrer">{domainOfUrl(source)}</a>
-		</div>
-	{/if}
-	</div>
+		{#if format && creators && creators.length > 0}
+			<span> by </span>
+		{/if}
+		{#if creators && creators.length > 0}
+			<CreatorList {creators} />
+		{/if}
+		{#if source}
+			{@const sourceUrl = new URL(source)}
+			<Link href={source} class="source-link" target="_blank" rel="noopener">
+				{sourceUrl.hostname}
+			</Link>
+		{/if}
+	</svelte:element>
 {/if}
 
-<style>
-	.extract-type {
+<style lang="scss">
+	.citation {
+		color: var(--primary);
+
+		& > :first-child {
+			text-transform: capitalize;
+		}
+	}
+
+	.format {
 		text-transform: lowercase;
+		color: var(--display);
 	}
 
-	cite {
-		font-style: italic;
-	}
+	:global(.source-link) {
+		display: inline-block;
+		padding-inline: 0.5em;
+		background-color: var(--splash);
+		border: 1px solid var(--divider);
+		border-radius: var(--border-radius-small);
+		opacity: 0.5;
+		color: var(--accent);
+		text-decoration: none;
+		font-size: var(--font-size-tiny);
+		transform: translateY(-0.065lh);
 
-	.extract-source {
-		display: inline;
-		--opacity: 0.8;
-		opacity: var(--opacity);
-		transition: opacity 0.25s;
-		margin-left: 0.25em;
-	}
+		&::after {
+			content: '⤤';
+			margin-inline-start: 0.75ch;
+		}
 
-	.extract-source:hover {
-		opacity: 1;
-	}
-
-	.extract-source:before {
-		opacity: var(--opacity);
-		content: '[';
-	}
-	.extract-source:after {
-		opacity: var(--opacity);
-		content: ']';
+		&:hover {
+			opacity: 1;
+			border-color: var(--border);
+			text-decoration: none;
+		}
 	}
 </style>

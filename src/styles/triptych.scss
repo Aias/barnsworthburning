@@ -1,0 +1,174 @@
+@import './palette.scss';
+
+:root {
+	--black: black;
+	--white: white;
+	color-scheme: light dark;
+	--chroma: 0%;
+	--mode-contrast: light-dark(var(--black), var(--white));
+}
+
+@supports (color: color(display-p3 1 1 1)) {
+	@media (color-gamut: p3) {
+		:root {
+			--black: color(display-p3 0 0 0);
+			--white: color(display-p3 1 1 1);
+		}
+	}
+}
+
+.light {
+	color-scheme: light;
+}
+
+.dark {
+	color-scheme: dark;
+}
+
+.neutral {
+	--chroma: 0%;
+}
+
+.chromatic {
+	--chroma: 100%;
+}
+
+:where(
+		.gray,
+		.mauve,
+		.slate,
+		.sage,
+		.olive,
+		.sand,
+		.bronze,
+		.gold,
+		.brown,
+		.orange,
+		.tomato,
+		.red,
+		.ruby,
+		.crimson,
+		.pink,
+		.plum,
+		.purple,
+		.violet,
+		.iris,
+		.indigo,
+		.blue,
+		.cyan,
+		.teal,
+		.jade,
+		.green,
+		.grass
+	) {
+	--clr-contrast: var(--white);
+}
+
+:where(.sky, .mint, .lime, .yellow, .amber) {
+	--clr-contrast: var(--black);
+}
+
+:where(:root, .dark, .light, .neutral, .chromatic, .themed) {
+	// Neutral
+	--display-neutral: color-mix(in oklch, var(--neu-a12), var(--mode-contrast));
+	--primary-neutral: var(--neu-a12);
+	--secondary-neutral: var(--neu-a11);
+	--hint-neutral: var(--neu-a8);
+	--accent-neutral: var(--neu-a11);
+
+	--background-neutral: light-dark(var(--neu-2), var(--neu-1));
+	--paper-neutral: light-dark(var(--neu-1), var(--neu-2));
+	--container-neutral: var(--neu-3);
+	--float-neutral: light-dark(white, var(--neu-3));
+
+	--divider-neutral: light-dark(var(--neu-6), var(--neu-5));
+	--border-neutral: light-dark(var(--neu-7), var(--neu-6));
+	--boundary-neutral: light-dark(var(--neu-8), var(--neu-7));
+	--edge-neutral: light-dark(var(--neu-9), var(--neu-8));
+
+	--splash-neutral: var(--neu-a2);
+	--flood-neutral: var(--neu-a3);
+	--sink-neutral: var(--neu-a4);
+	--shadow-neutral: light-dark(var(--splash-neutral), var(--black-a4));
+
+	// Chromatic
+	--display-chromatic: light-dark(
+		var(--clr-a12),
+		color-mix(in oklch, var(--clr-a12), var(--mode-contrast))
+	);
+	--primary-chromatic: light-dark(
+		color-mix(in oklch, var(--clr-a11), var(--neu-a12)),
+		var(--clr-a12)
+	);
+	--secondary-chromatic: light-dark(
+		color-mix(in oklch, var(--clr-a9), var(--neu-a12)),
+		color-mix(in oklch, var(--clr-a12), var(--neu-a9))
+	);
+	--hint-chromatic: var(--clr-a7);
+	--accent-chromatic: var(--clr-a11);
+
+	--background-chromatic: light-dark(
+		color-mix(in oklch, var(--clr-1), var(--clr-2)),
+		var(--clr-1)
+	);
+	--paper-chromatic: light-dark(color-mix(in oklch, var(--clr-2), var(--clr-3)), var(--clr-2));
+	--container-chromatic: light-dark(
+		color-mix(in oklch, var(--clr-3), var(--clr-4)),
+		var(--clr-3)
+	);
+	--float-chromatic: var(--container-chromatic);
+
+	--divider-chromatic: light-dark(var(--clr-6), var(--clr-4));
+	--border-chromatic: light-dark(var(--clr-7), var(--clr-5));
+	--boundary-chromatic: light-dark(var(--clr-8), var(--clr-6));
+	--edge-chromatic: light-dark(var(--clr-9), var(--clr-8));
+
+	--splash-chromatic: light-dark(var(--clr-a3), var(--clr-a2));
+	--flood-chromatic: light-dark(var(--clr-a4), var(--clr-a3));
+	--sink-chromatic: light-dark(var(--clr-a5), var(--clr-a4));
+	--shadow-chromatic: light-dark(var(--splash-chromatic), var(--black-a4));
+
+	// Final Tokens
+	--display: color-mix(in oklch, var(--display-neutral), var(--display-chromatic) var(--chroma));
+	--primary: color-mix(in oklch, var(--primary-neutral), var(--primary-chromatic) var(--chroma));
+	--secondary: color-mix(
+		in oklch,
+		var(--secondary-neutral),
+		var(--secondary-chromatic) var(--chroma)
+	);
+	--hint: color-mix(in oklch, var(--hint-neutral), var(--hint-chromatic) var(--chroma));
+	--accent: color-mix(in oklch, var(--accent-neutral), var(--accent-chromatic) var(--chroma));
+
+	--background: color-mix(
+		in oklch,
+		var(--background-neutral),
+		var(--background-chromatic) var(--chroma)
+	);
+	--paper: color-mix(in oklch, var(--paper-neutral), var(--paper-chromatic) var(--chroma));
+	--container: color-mix(
+		in oklch,
+		var(--container-neutral),
+		var(--container-chromatic) var(--chroma)
+	);
+	--float: color-mix(in oklch, var(--float-neutral), var(--float-chromatic) var(--chroma));
+
+	--divider: color-mix(in oklch, var(--divider-neutral), var(--divider-chromatic) var(--chroma));
+	--border: color-mix(in oklch, var(--border-neutral), var(--border-chromatic) var(--chroma));
+	--boundary: color-mix(
+		in oklch,
+		var(--boundary-neutral),
+		var(--boundary-chromatic) var(--chroma)
+	);
+	--edge: color-mix(in oklch, var(--edge-neutral), var(--edge-chromatic) var(--chroma));
+
+	--splash: color-mix(in oklch, var(--splash-neutral), var(--splash-chromatic) var(--chroma));
+	--flood: color-mix(in oklch, var(--flood-neutral), var(--flood-chromatic) var(--chroma));
+	--sink: color-mix(in oklch, var(--sink-neutral), var(--sink-chromatic) var(--chroma));
+	--shadow: color-mix(in oklch, var(--shadow-neutral), var(--shadow-chromatic) var(--chroma));
+
+	--main: var(--clr-9);
+	--main-active: var(--clr-10);
+	--main-contrast: var(--clr-contrast);
+	--link: var(--clr-11);
+	--link-active: var(--clr-12);
+}

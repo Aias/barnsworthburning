@@ -1,76 +1,165 @@
-<script>
-	export let data;
-
-	$: creators = data.creators;
-	$: spaces = data.spaces;
-
-	let error;
-
-	import { page } from '$app/stores';
-	import { setContext, afterUpdate, tick } from 'svelte';
-	import { writable } from 'svelte/store';
-	import { fade } from 'svelte/transition';
-
+<script lang="ts">
+	import '$styles/app.scss';
 	import SEO from '$components/SEO.svelte';
-	import Index from '$components/Index.svelte';
-	import Loading from '$components/Loading.svelte';
-	import Error from '$components/Error.svelte';
+	import Nav from './app/Nav.svelte';
+	import { page } from '$app/stores';
+	import { afterNavigate, beforeNavigate } from '$app/navigation';
+	import cache from '$lib/cache.svelte';
+	import { Palette, Mode, Chroma } from '$types/Theme';
+	import settings from '$lib/settings.svelte';
+	import interaction from '$lib/interaction.svelte';
+	import trail from '$lib/trail.svelte';
+	import { entityTypes, type EntityType, type EntityTypeKey } from '$helpers/params';
+	import { getCookie } from '$helpers/cookies';
+	import Trail from './app/Trail.svelte';
+	import Index from './app/Index.svelte';
+	import SettingsMenu from './app/SettingsMenu.svelte';
 
-	let activeParams = $page.params;
-	const activeWindow = writable(activeParams.extract ? 'panel' : activeParams.slug || activeParams.entity ? 'gallery' : 'index');
-	setContext('activeWindow', activeWindow);
+	let { children, data } = $props();
+	let bodyEl: HTMLBodyElement | undefined;
+	let bodyWidth: number = $state(0);
+	let isIndex = $derived($page.route.id === '/');
 
-	$: {
-		const { entity: newEntity, slug: newSlug, extract: newExtract = [] } = $page.params;
-		const { entity: activeEntity, slug: activeSlug, extract: activeExtract = [] } = activeParams;
+	$effect.pre(() => {
+		const storedMode = getCookie('barnsworthburning-mode') as Mode | null;
+		const storedChroma = getCookie('barnsworthburning-chroma') as Chroma | null;
+		const storedPalette = getCookie('barnsworthburning-palette') as Palette | null;
 
-		let needsUpdate = false;
-		if(activeEntity && !newEntity) { // Navigating to index.
-			needsUpdate = true;
-			$activeWindow = 'index';
+		if (storedMode) {
+			settings.setMode(storedMode);
 		}
-		else if(newEntity !== activeEntity || newSlug !== activeSlug) {
-			needsUpdate = true;
-			$activeWindow = 'gallery';
+		if (storedChroma) {
+			settings.setChroma(storedChroma);
 		}
-		else if(newExtract[0] !== activeExtract[0]) {
-			needsUpdate = true;
-			$activeWindow = 'panel';
+		if (storedPalette) {
+			settings.setPalette(storedPalette);
 		}
 
-		if(needsUpdate) {
-			activeParams = $page.params;
-		}
-	}
+		document.documentElement.className = settings.themeClass;
+	});
 
-	afterUpdate(async () => {
-		await tick();
-		try {
-			const container = document.getElementById("layout");
-			const child = document.querySelector(`.layout__${$activeWindow}`);
-			
-			if(container && child) {
-				container.scrollTo({
-					left: child.offsetLeft,
-					behavior: 'smooth'
-				});	
-			}
+	$effect(() => {
+		if (data.extracts) {
+			cache.addExtracts(data.extracts);
 		}
-		catch(error) {
-			console.log("Could not scroll.", error);
+		if (data.creators) {
+			cache.addCreators(data.creators);
+		}
+		if (data.spaces) {
+			cache.addSpaces(data.spaces);
 		}
 	});
+
+	beforeNavigate(({ from, to, type, cancel }) => {
+		if (bodyWidth < 720) return; // Don't add segments when the screen is too small.
+		const isNavigating = ['link', 'goto'].includes(type);
+		if (!isNavigating) return;
+		const fromId = from?.params?.id;
+		const fromEntityParam = from?.params?.entityType;
+		const toId = to?.params?.id;
+		if (!toId) return; // Don't add segments for unknown entities.
+		const toEntityParam = to?.params?.entityType;
+		let fromEntityType: EntityType | undefined;
+		let toEntityType: EntityType | undefined;
+		for (const key in entityTypes) {
+			const type = entityTypes[key as EntityTypeKey];
+			if (type.urlParam === fromEntityParam) {
+				fromEntityType = type;
+			}
+			if (type.urlParam === toEntityParam) {
+				toEntityType = type;
+			}
+			if (fromEntityType && toEntityType) break;
+		}
+		if (!toEntityType) return; // Don't add segments for unknown entity types.
+
+		// Check if toId already exists in the trail and remove it
+		const existingSegmentIndex = trail.segments.findIndex(
+			(segment) => segment.entityId === toId
+		);
+		if (existingSegmentIndex >= 0) {
+			trail.removeSegment(toId);
+		}
+
+		const selectedSegment = trail.selected;
+		if (selectedSegment) {
+			const { entityId: selectedId } = selectedSegment;
+			if (selectedId === toId) {
+				// Don't cancel navigation if the selected segment is the same as toId.
+				return;
+			}
+			// if (toId === fromId) return; // Don't add segments for the same entity.
+			if (toEntityType === entityTypes.extract) {
+				trail.removeAfterSegment(selectedId);
+				trail.addSegment(toEntityType, toId);
+				cancel();
+			} else {
+				trail.removeExceptSegment(selectedId);
+			}
+		} else {
+			if (toEntityType === entityTypes.extract) {
+				trail.clearTrail();
+				trail.addSegment(toEntityType, toId);
+				cancel();
+			}
+		}
+	});
+
+	afterNavigate(() => {
+		const main = document.getElementById('app-main');
+		if (main) {
+			main.scrollTo({ top: 0, behavior: 'instant' });
+		}
+	});
+
+	$effect(() => {
+		if (!bodyEl) return;
+		bodyEl.classList.toggle('show-super-secret-menus', interaction.metaKeyPressed);
+	});
+
+	const handleInteractions = (event: KeyboardEvent | MouseEvent) => {
+		interaction.setAltKeyPressed(event.altKey);
+		interaction.setMetaKeyPressed(event.metaKey);
+		if (event instanceof KeyboardEvent) {
+			if (event.key === 'Escape') {
+				trail.clearTrail();
+			}
+		}
+	};
 </script>
 
+<svelte:window
+	on:keydown={handleInteractions}
+	on:keyup={handleInteractions}
+	on:mouseenter={handleInteractions}
+	on:mouseleave={handleInteractions}
+/>
 <SEO />
-
-<Loading />
-{#if creators && spaces}
-<main id="layout" class="layout active--{$activeWindow}" in:fade="{{duration: 1000, delay: 500}}" class:panel-open="{activeParams.extract}">
-	<Index {creators} {spaces} />
-	<slot></slot>
-</main>
-{/if}
-{#if error}
-<Error {error} />
+<svelte:body bind:this={bodyEl} bind:clientWidth={bodyWidth} />
+<div class="app-contents">
+	<Nav class="app-nav themed" />
+	<div class="app-toolbar">
+		<SettingsMenu class="app-settings" />
+	</div>
+	{#if !isIndex}
+		<main class="app-main" id="app-main">
+			{@render children()}
+		</main>
+	{/if}
+	<hr />
+	<footer class="app-footer">
+		<Index class="app-index" />
+	</footer>
+</div>
+{#if trail.length > 0}
+	<div class="aside-container">
+		<button
+			class="trail-controls chromatic"
+			aria-label="Close Panel"
+			onclick={() => trail.clearTrail()}>×</button
+		>
+		<aside class="app-aside">
+			<Trail class="app-trail" />
+		</aside>
+	</div>
 {/if}

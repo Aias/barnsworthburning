@@ -1,172 +1,122 @@
-<script>
+<script lang="ts">
 	import markdown from '$helpers/markdown';
-	import slugify from '$helpers/slugify';
-	import get from '$helpers/get';
+	import BlockLink from './BlockLink.svelte';
 	import Citation from './Citation.svelte';
-	import InternalLink from './InternalLink.svelte';
-	import ImageCarousel from './ImageCarousel.svelte';
-	import { setContext } from 'svelte';
+	import TopicList from './TopicList.svelte';
+	import RelationList from './RelationList.svelte';
+	import AirtableImage from './AirtableImage.svelte';
+	import Link from './Link.svelte';
+	import { AirtableBaseId, ExtractView, Table, type IExtract } from '$types/Airtable';
+	import { classnames } from '$helpers/classnames';
+	import type { HTMLAttributes } from 'svelte/elements';
+	import CreatorList from './CreatorList.svelte';
+	// import SourceLink from './SourceLink.svelte';
 
-	export let extract = {};
-	export let suppressCitation = false;
-	export let idPrefix = '';
-	export let fromRssFeed = false;
+	interface ExtractProps<T extends keyof HTMLElementTagNameMap>
+		extends HTMLAttributes<HTMLElementTagNameMap[T]> {
+		extract: IExtract;
+		element?: T;
+		suppressBlockLink?: boolean;
+		variant?: 'default' | 'card';
+	}
 
-	setContext('fromRssFeed', fromRssFeed);
+	let {
+		extract,
+		element = 'article',
+		suppressBlockLink = false,
+		class: className,
+		variant = 'default'
+	}: ExtractProps<any> = $props();
 
-	const isWork = get(extract, 'is_work');
+	let id = $derived(extract.id);
+	let title = $derived(extract.title);
+	let extractContent = $derived(extract.extract);
+	let notes = $derived(extract.notes);
+	let images = $derived(extract.images);
+	let imageCaption = $derived(extract.imageCaption);
+	let source = $derived(extract.source);
 
-	const title = get(extract, 'title');
-	const slug = get(extract, 'slug', slugify(title));
-	const parentSlug = get(extract, 'parent_slug[0]');
-	const text = get(extract, 'extract', '');
-	const notes = get(extract, 'notes');
-	const topics = get(extract, 'space_topics');
+	let parent = $derived(extract.parent);
+	let parentCreators = $derived(extract.parentCreators);
+	let children = $derived(extract.children);
+	let connections = $derived(extract.connections);
+	let spaces = $derived(extract.spaces);
 
-	const elementId = idPrefix ? `${idPrefix}--${slug}` : slug;
+	let hasRelations = $derived(children || connections || spaces);
 
-	const childTitles = get(extract, 'child_titles');
-	const connectionTitles = get(extract, 'connection_titles'); 
-
-	const images = get(extract, 'extract_image');
-	const imageCaption = get(extract, 'image_caption');
-
-	const maxChildren = 5;
-	let showAllChildren = false;
-	$: truncatedChildren = !showAllChildren && (childTitles && childTitles.length > maxChildren);
+	let airtableUrl = $derived(
+		`https://airtable.com/${AirtableBaseId}/${Table.Extracts}/${ExtractView.EntryView}/${extract.id}`
+	);
+	const openInAirtable = (event: MouseEvent) => {
+		event.preventDefault();
+		window.open(airtableUrl, '_blank');
+	};
 </script>
 
-<article id="{elementId}" class="extract {isWork ? 'extract--work' : 'extract--fragment'}">
-	{#if title}
-	<header>
-		<h2 class="extract-title">
-		{#if fromRssFeed}
-			{title}
-		{:else}
-			<InternalLink toExtract="{isWork ? slug : parentSlug}" toFragment="{isWork ? '' : slug}">{title}</InternalLink>
-		{/if}
-		</h2>
-	</header>
-	{/if}
-	<figure class="extract-main">
-		{#if isWork}
-		<figcaption class="extract-caption"><Citation {extract} {suppressCitation} /></figcaption>
-		{/if}
-		{#if images}
-		<ImageCarousel {images} {imageCaption} />
-		{/if}
-		{#if text}
-		<blockquote class="extract-text markdown-block" cite={extract.source}>
-			{@html markdown.render(text)}
-		</blockquote>
-		{/if}
-		{#if !isWork}
-		<figcaption class="extract-caption"><Citation {extract} {suppressCitation} /></figcaption>
-		{/if}
-	</figure>
-	{#if childTitles || connectionTitles || topics}
-	<section>
-		{#if childTitles}
-		<ol class="linked-list extract-children">
-			{#each childTitles as child, i}
-			{#if truncatedChildren && i > maxChildren}
-			<!-- Don't render anything. -->
-			{:else if truncatedChildren && i === maxChildren}
-			<li><button on:click="{() => showAllChildren = true}" class="link caption">+{childTitles.length - maxChildren} More</button></li>
-			{:else}
-			<li>&ZeroWidthSpace;<InternalLink class="link link--child" toExtract="{slug}" toFragment="{slugify(child)}">&ZeroWidthSpace;{child}&ZeroWidthSpace;</InternalLink>&ZeroWidthSpace;</li>
+<BlockLink
+	{element}
+	class={classnames('extract', `extract--${variant}`, 'ssm-container', className)}
+	suppress={suppressBlockLink}
+>
+	{#if parent}
+		<section class="extract-parent">
+			<strong class="parent-title"><Link toId={parent.id} inherit>{parent.name}</Link></strong
+			>
+			{#if parentCreators}
+				<CreatorList class="parent-creators" creators={parentCreators} />
 			{/if}
-			{/each}
-		</ol>
+		</section>
+	{/if}
+	<section class="extract-body">
+		{#if title}
+			<header>
+				<h2 class="extract-title">
+					<Link toId={id} class="main-link" inherit>
+						{title}
+					</Link>
+				</h2>
+				<button
+					class="ssm content-opener chromatic"
+					onclick={openInAirtable}
+					title="Open in Airtable">☁️</button
+				>
+			</header>
 		{/if}
-		{#if connectionTitles}
-		<ol class="linked-list extract-connections">
-			{#each connectionTitles as connection}
-			<li>&ZeroWidthSpace;<InternalLink class="link link--connection" toExtract="{slugify(connection)}">&ZeroWidthSpace;{connection}&ZeroWidthSpace;</InternalLink>&ZeroWidthSpace;</li>
-			{/each}
-		</ol>
-		{/if}
-		{#if topics}
-		<ul class="extract-spaces">
-			{#each topics as topic}
-			<li><InternalLink class="topic" toType="spaces" toEntity="{topic}">{topic}</InternalLink></li>
-			{/each}
-		</ul>
+		<figure class="extract-main">
+			{#if images}
+				{#each images as image (image.id)}
+					<AirtableImage {image} />
+				{/each}
+				{#if imageCaption}
+					<div class="extract-image-caption content">
+						{@html markdown.parse(imageCaption)}
+					</div>
+				{/if}
+			{/if}
+			{#if extractContent}
+				<blockquote class="extract-text content" cite={extract.source}>
+					{@html markdown.parse(extractContent)}
+				</blockquote>
+			{/if}
+			<Citation {extract} element="figcaption" />
+		</figure>
+		{#if hasRelations}
+			<nav class="relations">
+				{#if children}
+					<RelationList items={children} symbol="↳" label="Children" />
+				{/if}
+				{#if connections}
+					<RelationList items={connections} symbol="⮂" label="Connections" />
+				{/if}
+				{#if spaces}
+					<TopicList topics={spaces} />
+				{/if}
+			</nav>
 		{/if}
 	</section>
-	{/if}
 	{#if notes}
-	<footer class="caption markdown-block">
-		{@html markdown.render(notes)}
-	</footer>
+		<footer class="extract-footer content">
+			{@html markdown.parse(notes)}
+		</footer>
 	{/if}
-</article>
-
-<style>
-	.extract-title > :global(a) {
-		font-family: inherit;
-		color: var(--text-primary);
-		font-size: inherit;
-		line-height: inherit;
-	}
-
-	.extract-main {
-		display: flex;
-		flex-direction: column;
-	}
-
-	.extract-text {
-		padding: 0;
-		border: none;
-		font-style: inherit;
-		font-size: inherit;
-		font-family: inherit;
-	}
-
-	.extract-caption:empty {
-		display: none;
-	}
-
-	section > * {
-		--spacing: 0.5em;
-		font-size: var(--font-size-0);
-	}
-
-	.linked-list {
-		padding-left: 20px;
-	}
-
-	.linked-list::before {
-		position: absolute;
-		left: 0;
-	}
-
-	.extract-children::before {
-		content: '↳';
-	}
-
-	.extract-connections::before {
-		content: '⮂';
-	}
-
-	.extract-spaces {
-		--spacing: 1em;
-		list-style-type: none;
-		margin-bottom: 0;
-		margin-left: calc(-1 * var(--spacing));
-		display: flex;
-		flex-wrap: wrap;
-		max-width: 100%;
-	}
-
-	.extract-spaces > li {
-		margin-left: var(--spacing);
-	}
-
-	footer {
-		border-top: 1px solid var(--divider);
-		padding-top: 1rem;
-		margin-top: 1rem;
-	}
-</style>
-
+</BlockLink>

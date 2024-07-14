@@ -1,0 +1,209 @@
+@layer theme, normalize, reset, defaults, layout, components, utilities;
+
+@import './triptych.scss' layer(theme);
+@import 'normalize.css' layer(normalize);
+@import './reset.scss' layer(reset);
+@import './defaults.scss' layer(defaults);
+@import './components.scss' layer(components);
+@import './utilities.scss' layer(utilities);
+
+.app {
+	--sidebar-width: 14rem;
+	--segment-width: 28rem;
+	--trail-width: var(--segment-width);
+	height: 100%;
+	width: 100%;
+	max-width: 100%;
+	display: flex;
+	overflow-x: hidden;
+	position: relative;
+}
+
+.app-contents {
+	flex: 1;
+	max-width: 100%;
+	transition: margin-right var(--transition-snappy) ease;
+}
+
+.aside-container {
+	position: absolute;
+	inset-inline-end: 0;
+	inset-block: 0;
+	z-index: 10;
+	min-width: var(--trail-width);
+
+	.trail-controls {
+		--size: 1.5rem;
+		position: absolute;
+		inset-inline-start: 0;
+		inset-block-start: 1rem;
+		z-index: 10;
+		font-size: var(--size);
+		width: var(--size);
+		height: var(--size);
+		border-radius: var(--border-radius-medium) 0 0 var(--border-radius-medium);
+		border-inline-end: 0;
+		transform: translateX(-100%);
+	}
+}
+
+.app-aside {
+	height: 100%;
+	max-width: calc(100vw - var(--sidebar-width) - 1rem);
+	display: flex;
+	flex-direction: row-reverse;
+	overflow-x: auto;
+	background-color: var(--background);
+	transition: width var(--transition-snappy) ease;
+
+	.app-trail {
+		flex: 1 0 auto;
+	}
+}
+
+.app-nav,
+.app-toolbar,
+.app-footer {
+	font-size: var(--font-size-small);
+	line-height: 1.75;
+}
+
+.app-index {
+	column-width: 25ch;
+	column-gap: 1rem;
+}
+
+.app-main,
+.app-footer,
+.app-nav,
+.app-toolbar {
+	padding: 1rem;
+}
+
+.app-contents > hr {
+	display: none;
+}
+
+@media (width < 42rem) {
+	.app {
+		height: auto;
+	}
+	.app-contents {
+		display: flex;
+		flex-direction: column;
+	}
+	.aside-container {
+		display: none;
+	}
+	.app-nav {
+		--chroma: 100%;
+		position: fixed;
+		inset-block-end: calc(env(safe-area-inset-bottom) + 0.5rem);
+		inset-inline: 1rem;
+		background-color: var(--float);
+		z-index: 1;
+		border-radius: var(--border-radius-small);
+		border: 1px solid var(--border);
+		display: flex;
+		justify-content: center;
+		overflow-x: auto;
+		padding: 0.25em;
+		gap: 0.25em;
+
+		.nav-link {
+			flex: 1 0 0;
+			display: flex;
+			flex-direction: column;
+			gap: 0;
+			align-items: center;
+
+			&::before {
+				transform: translateY(0.25cap);
+			}
+		}
+	}
+	.app-toolbar {
+		order: 1;
+		padding-block-start: 0;
+	}
+	.app-main,
+	.app-toolbar {
+		padding-block-end: 4.5rem;
+	}
+	.app-contents:has(.app-main) :where(.app-footer, .app-toolbar) {
+		display: none;
+	}
+	.app-index {
+		column-width: 20ch;
+	}
+}
+
+@media (width >= 42rem) {
+	.app:has(.app-aside) {
+		.app-contents {
+			margin-right: var(--trail-width);
+			min-width: calc(var(--sidebar-width) + var(--trail-width));
+		}
+	}
+
+	.app-contents:not(:has(.app-main)) {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+
+		.app-toolbar {
+			order: 1;
+		}
+
+		.app-footer {
+			flex: 0 1 auto;
+			overflow: auto;
+		}
+
+		.app-nav {
+			--chroma: 100%;
+			margin: 1rem;
+			background-color: var(--float);
+			z-index: 1;
+			border-radius: var(--border-radius-small);
+			border: 1px solid var(--border);
+			display: flex;
+			padding: 0.25em;
+			gap: 0.25em;
+			width: calc(100% - 2rem);
+			max-width: 720px;
+			align-self: center;
+
+			.nav-link {
+				flex: 1 0 0;
+				justify-content: center;
+				padding: 0.125em 0.5em;
+			}
+		}
+	}
+
+	.app-contents:has(.app-main) {
+		display: grid;
+		grid-template-areas:
+			'nav     hr main'
+			'index   hr main'
+			'toolbar hr main';
+		grid-template-columns: var(--sidebar-width) auto 1fr;
+		grid-template-rows: auto 1fr auto;
+
+		.app-nav {
+			grid-area: nav;
+		}
+		.app-footer {
+			grid-area: index;
+			overflow: auto;
+		}
+		.app-main {
+			grid-area: main;
+			overflow: auto;
+		}
+		.app-toolbar {
+			grid-area: toolbar;
+		}
+	}
+}

@@ -1,12 +1,12 @@
-<script>
-	import { seo } from '../stores';
-</script>
-
 <svelte:head>
-	<title>{$seo.title}</title>
+	<title>barnsworthburning</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="robots" content="noai, noimageai" />
+	<meta name="author" content="Nick Trombley" />
+	<meta name="description" content="Collected fragments of a life." />
+	<meta
+		name="keywords"
+		content="Nick Trombley, design, barnsworthburning, barns worth burning, commonplace, reading, writing, art, books"
+	/>
 	<meta property="og:type" content="website" />
-	<meta name="author" content="{$seo.author}" />
-	<meta name="description" content="{$seo.description}" />
-	<meta name="keywords" content="{$seo.keywords}" />
-	<meta name="theme-color" content="{$seo.themeColor}" />
 </svelte:head>
