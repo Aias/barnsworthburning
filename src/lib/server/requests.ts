@@ -2,6 +2,7 @@ import Airtable from 'airtable';
 import { error } from '@sveltejs/kit';
 import type { Record, FieldSet, SelectOptions, Error } from 'airtable';
 import { type IBaseRecord, AirtableBaseId, Table } from '$types/Airtable';
+import { slugify, recordIdRegex } from '$helpers/params';
 
 Airtable.configure({
 	endpointUrl: 'https://api.airtable.com',
@@ -37,7 +38,7 @@ async function airtableFetch<T extends IBaseRecord>(
 		.all()
 		.then((records) => records.map(mapReceivedRecord<T>))
 		.catch((err: Error) => {
-			error(500, {
+			error(err.statusCode, {
 				...err
 			});
 		});
@@ -54,11 +55,22 @@ async function airtableFind<T extends IBaseRecord>(
 	table: Table = Table.Extracts,
 	recordId: Record<FieldSet>['id']
 ): Promise<T> {
+	if (!recordIdRegex.test(recordId)) {
+		// If the record ID is not a valid Airtable record ID, assume it's a slug.
+		return airtableFetch<T>(table, {
+			filterByFormula: `slug = "${slugify(recordId)}"`
+		}).then((records) => {
+			if (records.length === 0) {
+				error(404, `Record with ID "${recordId}" not found.`);
+			}
+			return records[0];
+		});
+	}
 	return base(table)
 		.find(recordId)
-		.then((record) => mapReceivedRecord<T>(record))
+		.then(mapReceivedRecord<T>)
 		.catch((err: Error) => {
-			error(500, {
+			error(err.statusCode, {
 				...err
 			});
 		});

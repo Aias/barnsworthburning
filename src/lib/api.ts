@@ -7,7 +7,7 @@ function createApi(customFetch: FetchFunction) {
 	async function fetchJson<T>(url: string): Promise<T> {
 		const response = await customFetch(url);
 		if (!response.ok) {
-			error(500, `HTTP error! status: ${response.status}`);
+			error(response.status, `Failed to fetch. Status: ${response.status}`);
 		}
 		return await response.json();
 	}
