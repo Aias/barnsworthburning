@@ -88,6 +88,10 @@
 	.app {
 		height: auto;
 	}
+	.app-contents {
+		display: flex;
+		flex-direction: column;
+	}
 	.aside-container {
 		display: none;
 	}
@@ -119,17 +123,18 @@
 		}
 	}
 	.app-toolbar {
-		display: none;
+		order: 1;
+		padding-block-start: 0;
 	}
-	.app-contents:has(.app-main) .app-footer {
+	.app-main,
+	.app-toolbar {
+		padding-block-end: 4.5rem;
+	}
+	.app-contents:has(.app-main) :where(.app-footer, .app-toolbar) {
 		display: none;
 	}
 	.app-index {
 		column-width: 20ch;
-	}
-	.app-main,
-	.app-footer {
-		padding-block-end: 4.5rem;
 	}
 }
 
