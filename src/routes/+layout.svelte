@@ -151,7 +151,7 @@
 		<Index {creators} {spaces} class="app-index" />
 	</footer>
 </div>
-{#if trail.length > 0}
+{#if !isIndex && trail.length > 0}
 	<div class="aside-container">
 		<button
 			class="trail-controls chromatic"

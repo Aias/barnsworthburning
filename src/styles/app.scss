@@ -139,9 +139,9 @@
 }
 
 @media (width >= 42rem) {
-	.app:has(.app-aside) {
+	.app:has(.aside-container) {
 		.app-contents {
-			margin-right: var(--trail-width);
+			margin-inline-end: var(--trail-width);
 			min-width: calc(var(--sidebar-width) + var(--trail-width));
 		}
 	}
@@ -151,6 +151,8 @@
 		flex-direction: column;
 		justify-content: center;
 		padding-inline: 2rem;
+		max-width: 80rem;
+		margin-inline: auto;
 
 		.app-toolbar {
 			order: 1;
