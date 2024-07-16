@@ -74,9 +74,7 @@
 		<Link href="/feed.xml" data-sveltekit-preload-data="off">RSS Feed</Link>
 	</li>
 	<li class="index-entry">
-		<Link href="https://airtable.com/appfed8INlDShDOoQ/pagEv9MxBcQJ15xwp/form" target="_blank"
-			>Contact</Link
-		>
+		<Link toType="extract" toId="recBkp3allrWUXK72">Contact</Link>
 	</li>
 	<li class="index-entry">
 		<Link
