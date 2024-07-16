@@ -7,9 +7,13 @@
 @import './components.scss' layer(components);
 @import './utilities.scss' layer(utilities);
 
+$sidebar-width: 14rem;
+$segment-width: 30rem;
+$breakpoint: $sidebar-width + $segment-width + 1rem;
+
 .app {
-	--sidebar-width: 14rem;
-	--segment-width: 28rem;
+	--sidebar-width: #{$sidebar-width};
+	--segment-width: #{$segment-width};
 	--trail-width: var(--segment-width);
 	height: 100%;
 	width: 100%;
@@ -84,7 +88,7 @@
 	display: none;
 }
 
-@media (width < 42rem) {
+@media (width < $breakpoint) {
 	.app {
 		height: auto;
 	}
@@ -138,7 +142,7 @@
 	}
 }
 
-@media (width >= 42rem) {
+@media (width >= $breakpoint) {
 	.app:has(.aside-container) {
 		.app-contents {
 			margin-inline-end: var(--trail-width);
