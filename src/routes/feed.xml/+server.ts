@@ -5,8 +5,21 @@ import markdown from '$helpers/markdown';
 import { getArticle, combineAsList } from '$helpers/grammar';
 import xmlFormatter from 'xml-formatter';
 
+const makeSiteLink = (relativePath: string, title: string) =>
+	`<a href="${meta.url}/${relativePath}">${title}</a>`;
+
 const generateContentMarkup = (extract: IExtract) => {
-	const { extract: content, notes, format, source, images, imageCaption, creators } = extract;
+	const {
+		extract: content,
+		notes,
+		format,
+		source,
+		images,
+		imageCaption,
+		creators,
+		connections,
+		spaces
+	} = extract;
 	let type = (format || 'extract').toLowerCase();
 	let markup = '<article>\n';
 	markup += '<header>\n';
@@ -38,6 +51,24 @@ const generateContentMarkup = (extract: IExtract) => {
 	}
 	if (source) {
 		markup += `<p>[<a href="${source}">Source</a>]</p>\n`;
+	}
+	if (connections) {
+		markup += '<p>Related:</p>\n';
+		markup += '<ul>\n';
+		markup += connections
+			.map(
+				(connection) =>
+					`<li>${makeSiteLink(`extracts/${connection.id}`, connection.name)}</li>\n`
+			)
+			.join('');
+		markup += '</ul>\n';
+	}
+	if (spaces) {
+		markup += `<p>\n<small>`;
+		markup += spaces
+			.map((space) => makeSiteLink(`spaces/${space.id}`, `# ${space.name}`))
+			.join(' • ');
+		markup += `</small>\n</p>\n`;
 	}
 	if (notes) {
 		markup += '<hr />\n';
