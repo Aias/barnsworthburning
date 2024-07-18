@@ -1,5 +1,4 @@
 import type { IExtract } from '$types/Airtable';
-import cache from './cache.svelte';
 
 type ExtractHierarchy = {
 	selected: IExtract;
@@ -8,65 +7,63 @@ type ExtractHierarchy = {
 	connections?: IExtract[];
 };
 
-export function makeHierarchy(extractId: string) {
-	const hierarchy: ExtractHierarchy | undefined = $derived.by(() => {
-		const currentExtract = cache.extractsById.get(extractId);
-		if (!currentExtract) return undefined;
+export function makeHierarchy(extracts: IExtract[], selectedExtractId: string) {
+	const extractsById = new Map(extracts.map((extract) => [extract.id, extract]));
+	const selectedExtract = extractsById.get(selectedExtractId);
 
-		const getParents = (extract: IExtract): IExtract[] => {
-			if (!extract.parent) return [];
-
-			const parent = cache.extractsById.get(extract.parent.id);
-			if (!parent) return [];
-
-			if (parent.id === currentExtract.id) return [parent];
-
-			return [...getParents(parent), parent];
-		};
-
-		const parents = getParents(currentExtract);
-
-		const children = currentExtract.children
-			?.map((child) => {
-				const childExtract = cache.extractsById.get(child.id);
-				if (!childExtract) return undefined;
-
-				return childExtract;
-			})
-			.filter(Boolean) as IExtract[];
-
-		const connections = currentExtract.connections
-			?.map((connection) => {
-				const connectionExtract = cache.extractsById.get(connection.id);
-				if (!connectionExtract) return undefined;
-
-				return connectionExtract;
-			})
-			.filter(Boolean) as IExtract[];
-
+	if (!selectedExtract) {
 		return {
-			selected: currentExtract,
-			parents: parents.length ? parents : undefined,
-			children,
-			connections
+			full: undefined,
+			selected: undefined,
+			parents: undefined,
+			children: undefined,
+			connections: undefined
 		};
-	});
+	}
+
+	const getParents = (extract: IExtract): IExtract[] => {
+		if (!extract.parent) return [];
+
+		const parent = extractsById.get(extract.parent.id);
+		if (!parent) return [];
+
+		if (parent.id === selectedExtract.id) return [parent];
+
+		return [...getParents(parent), parent];
+	};
+
+	const parents = getParents(selectedExtract);
+
+	const children = selectedExtract.children
+		?.map((child) => extractsById.get(child.id))
+		.filter((child): child is IExtract => !!child);
+
+	const connections = selectedExtract.connections
+		?.map((connection) => extractsById.get(connection.id))
+		.filter((connection): connection is IExtract => !!connection);
+
+	const hierarchy: ExtractHierarchy = {
+		selected: selectedExtract,
+		parents: parents.length ? parents : undefined,
+		children: children?.length ? children : undefined,
+		connections: connections?.length ? connections : undefined
+	};
 
 	return {
 		get full() {
 			return hierarchy;
 		},
 		get selected() {
-			return hierarchy?.selected;
+			return hierarchy.selected;
 		},
 		get parents() {
-			return hierarchy?.parents;
+			return hierarchy.parents;
 		},
 		get children() {
-			return hierarchy?.children;
+			return hierarchy.children;
 		},
 		get connections() {
-			return hierarchy?.connections;
+			return hierarchy.connections;
 		}
 	};
 }

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import cache from '$lib/cache.svelte';
+	// import cache from '$lib/cache.svelte';
 	import ExtractList from '../app/ExtractList.svelte';
 	import SpaceList from '../app/SpaceList.svelte';
 	import CreatorList from '../app/CreatorList.svelte';
@@ -8,11 +8,11 @@
 
 	let { recentCreators, recentSpaces, recentExtracts } = $derived(data);
 
-	$effect.pre(() => {
-		if (recentCreators) cache.addCreators(recentCreators);
-		if (recentSpaces) cache.addSpaces(recentSpaces);
-		if (recentExtracts) cache.addExtracts(recentExtracts);
-	});
+	// $effect.pre(() => {
+	// 	if (recentCreators) cache.addCreators(recentCreators);
+	// 	if (recentSpaces) cache.addSpaces(recentSpaces);
+	// 	if (recentExtracts) cache.addExtracts(recentExtracts);
+	// });
 </script>
 
 <svelte:head>

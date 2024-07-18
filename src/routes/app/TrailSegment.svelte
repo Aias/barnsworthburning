@@ -4,7 +4,7 @@
 	import ExtractItem from './ExtractItem.svelte';
 	import { entityTypes } from '$helpers/params';
 	import { api } from '$lib/api';
-	import cache from '$lib/cache.svelte';
+	// import cache from '$lib/cache.svelte';
 	import type { ICreator, IExtract, ISpace } from '$types/Airtable';
 	import { capitalize } from '$helpers/grammar';
 	import type { TrailSegment } from '$lib/trail.svelte';
@@ -26,10 +26,10 @@
 			api.creators.extracts(creatorId)
 		]);
 		creator = creatorPromise;
-		cache.addCreators([creatorPromise]);
 		space = undefined;
 		extracts = extractsPromise;
-		cache.addExtracts(extractsPromise);
+		// cache.addCreators([creatorPromise]);
+		// cache.addExtracts(extractsPromise);
 	}
 	async function fetchSpace(spaceId: string) {
 		const [spacePromise, extractsPromise] = await Promise.all([
@@ -38,16 +38,16 @@
 		]);
 		creator = undefined;
 		space = spacePromise;
-		cache.addSpaces([spacePromise]);
 		extracts = extractsPromise;
-		cache.addExtracts(extractsPromise);
+		// cache.addSpaces([spacePromise]);
+		// cache.addExtracts(extractsPromise);
 	}
 	async function fetchExtracts(extractId: string) {
 		const extractsPromise = await api.extracts.related(extractId);
 		creator = undefined;
 		space = undefined;
 		extracts = extractsPromise;
-		cache.addExtracts(extractsPromise);
+		// cache.addExtracts(extractsPromise);
 	}
 
 	$effect.pre(() => {
@@ -71,7 +71,7 @@
 	{:else if space}
 		<EntityItem title={capitalize(space.title || space.topic)} {extracts} />
 	{:else}
-		<ExtractItem extractId={entityId} />
+		<ExtractItem {extracts} selectedId={entityId} />
 	{/if}
 {:else}
 	<div class="loading-container">

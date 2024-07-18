@@ -3,7 +3,7 @@
 	import Nav from './app/Nav.svelte';
 	import { page } from '$app/stores';
 	import { afterNavigate, beforeNavigate } from '$app/navigation';
-	import cache from '$lib/cache.svelte';
+	// import cache from '$lib/cache.svelte';
 	import { Palette, Mode, Chroma } from '$types/Theme';
 	import settings from '$lib/settings.svelte';
 	import interaction from '$lib/interaction.svelte';
@@ -39,17 +39,17 @@
 		document.documentElement.className = settings.themeClass;
 	});
 
-	$effect(() => {
-		if (data.extracts) {
-			cache.addExtracts(data.extracts);
-		}
-		if (data.creators) {
-			cache.addCreators(data.creators);
-		}
-		if (data.spaces) {
-			cache.addSpaces(data.spaces);
-		}
-	});
+	// $effect(() => {
+	// 	if (data.extracts) {
+	// 		cache.addExtracts(data.extracts);
+	// 	}
+	// 	if (data.creators) {
+	// 		cache.addCreators(data.creators);
+	// 	}
+	// 	if (data.spaces) {
+	// 		cache.addSpaces(data.spaces);
+	// 	}
+	// });
 
 	beforeNavigate(({ from, to, type, cancel }) => {
 		if (bodyWidth < 720) return; // Don't add segments when the screen is too small.

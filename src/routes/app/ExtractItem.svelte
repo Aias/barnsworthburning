@@ -3,16 +3,15 @@
 	import { makeHierarchy } from '$lib/extractHierarchy.svelte';
 	import Extract from '$components/Extract.svelte';
 	import ExtractList from './ExtractList.svelte';
+	import type { IExtract } from '$types/Airtable';
 
 	type ExtractItemProps = {
-		extractId: string;
+		selectedId: string;
+		extracts: IExtract[];
 	};
-	let { extractId }: ExtractItemProps = $props();
+	let { selectedId, extracts }: ExtractItemProps = $props();
 
-	let tree = $derived(makeHierarchy(extractId));
-	let selected = $derived(tree.selected);
-	let children = $derived(tree.children);
-	let connections = $derived(tree.connections);
+	let { selected, children, connections } = $derived(makeHierarchy(extracts, selectedId));
 
 	$effect.pre(() => {
 		setContext('extract', selected);
