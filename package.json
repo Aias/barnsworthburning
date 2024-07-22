@@ -2,7 +2,7 @@
 	"name": "barnsworthburning",
 	"version": "5.0.0",
 	"type": "module",
-	"packageManager": "yarn@4.1.1",
+	"packageManager": "yarn@4.3.1",
 	"engines": {
 		"node": "20.x"
 	},
@@ -36,10 +36,10 @@
 		"@sveltejs/adapter-auto": "3.2.2",
 		"@sveltejs/kit": "^2.5.18",
 		"@sveltejs/vite-plugin-svelte": "^3.1.1",
-		"@types/eslint": "8.56.11",
+		"@types/eslint": "9.6.0",
 		"@types/remarkable": "^2.0.8",
-		"@typescript-eslint/eslint-plugin": "^7.16.1",
-		"@typescript-eslint/parser": "^7.16.1",
+		"@typescript-eslint/eslint-plugin": "^7.17.0",
+		"@typescript-eslint/parser": "^7.17.0",
 		"dotenv": "^16.4.5",
 		"eslint": "^9.7.0",
 		"eslint-config-prettier": "^9.1.0",
