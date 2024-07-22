@@ -1,11 +1,23 @@
-import { setCookie } from '$helpers/cookies';
-import { Palette, Mode, Chroma, paletteOptions } from '$types/Theme';
+import { setCookie, getCookie } from '$helpers/cookies';
+import {
+	Palette,
+	Mode,
+	Chroma,
+	paletteOptions,
+	DEFAULT_MODE,
+	DEFAULT_CHROMA,
+	DEFAULT_PALETTE
+} from '$types/Theme';
 import { MODE_COOKIE, CHROMA_COOKIE, PALETTE_COOKIE } from './themePreferences';
 
 export function createSettings() {
-	let mode: Mode | undefined = $state();
-	let chroma: Chroma | undefined = $state();
-	let palette: Palette | undefined = $state();
+	const modeCookie = getCookie(MODE_COOKIE) as Mode | null;
+	const chromaCookie = getCookie(CHROMA_COOKIE) as Chroma | null;
+	const paletteCookie = getCookie(PALETTE_COOKIE) as Palette | null;
+
+	let mode: Mode = $state(modeCookie ?? DEFAULT_MODE);
+	let chroma: Chroma = $state(chromaCookie ?? DEFAULT_CHROMA);
+	let palette: Palette = $state(paletteCookie ?? DEFAULT_PALETTE);
 	const themeClass = $derived(`${mode} ${chroma} ${palette}`);
 
 	const setMode = (newMode?: Mode) => {
