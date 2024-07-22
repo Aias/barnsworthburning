@@ -1,5 +1,5 @@
 import { type EntityType } from '$helpers/params';
-import { type Palette, paletteOptions } from '$types/Theme';
+import { DEFAULT_PALETTE, type Palette, paletteOptions } from '$types/Theme';
 import settings from './settings.svelte';
 
 export type TrailSegment = {
@@ -31,7 +31,9 @@ export function createTrailState() {
 		},
 		addSegment: (entityType: EntityType, entityId: string) => {
 			const lastSegment = trail[trail.length - 1];
-			const nextColor = lastSegment ? rotatePalette(lastSegment.color) : settings.palette;
+			const nextColor = lastSegment
+				? rotatePalette(lastSegment.color)
+				: (settings.palette ?? DEFAULT_PALETTE);
 			trail = [...trail, { entityType, entityId, color: nextColor, addedOn: new Date() }];
 		},
 		removeSegment: (id: string) => {

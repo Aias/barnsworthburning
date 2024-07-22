@@ -15,7 +15,7 @@
 	import SettingsMenu from './app/SettingsMenu.svelte';
 
 	let { children, data } = $props();
-	let bodyEl: HTMLBodyElement | undefined;
+	let bodyEl: HTMLBodyElement | undefined = $state();
 	let bodyWidth: number = $state(0);
 	let isIndex = $derived($page.route.id === '/');
 

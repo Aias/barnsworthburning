@@ -50,6 +50,7 @@ export const paletteOptions: Palette[] = [
 	Palette.Tomato,
 	Palette.Orange
 ];
+export const DEFAULT_PALETTE = Palette.Indigo;
 
 export const neutralsMap: Record<Neutral, Palette[]> = {
 	[Palette.Gray]: [Palette.Gray],
@@ -95,8 +96,10 @@ export enum Mode {
 	Light = 'light',
 	Dark = 'dark'
 }
+export const DEFAULT_MODE = Mode.Auto;
 
 export enum Chroma {
 	Neutral = 'neutral',
 	Chromatic = 'chromatic'
 }
+export const DEFAULT_CHROMA = Chroma.Neutral;

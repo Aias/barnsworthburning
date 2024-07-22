@@ -1,5 +1,14 @@
 import radix from '@radix-ui/colors';
-import { Palette, Shade, paletteOptions, neutralsMap, type Neutral } from '../types/Theme';
+import {
+	Palette,
+	Shade,
+	paletteOptions,
+	neutralsMap,
+	type Neutral,
+	DEFAULT_MODE,
+	DEFAULT_CHROMA,
+	DEFAULT_PALETTE
+} from '../types/Theme';
 
 interface Ramp {
 	[key: string]: string;
@@ -65,7 +74,11 @@ const generateVariableRamp = (palette: Palette, isP3: Boolean, isNeutral: Boolea
 const generateColorClasses = (isP3: Boolean = false) => {
 	let scss = '';
 	for (const palette of paletteOptions) {
-		scss += `.${palette} {\n`;
+		const selectors = [`.${palette}`];
+		if (palette === DEFAULT_PALETTE) {
+			selectors.push(':root:not([class])');
+		}
+		scss += `${selectors.join(', ')} {\n`;
 		scss += generateVariableRamp(palette, isP3, false);
 		scss += `}\n\n`;
 	}
@@ -77,7 +90,11 @@ const generateNeutralClasses = (isP3: Boolean = false) => {
 	let scss = '';
 	for (const neutral in neutralsMap) {
 		const palettes = neutralsMap[neutral as Neutral];
-		scss += `${palettes.map((palette) => `.${palette}`).join(', ')} {`;
+		const selectors = palettes.map((palette) => `.${palette}`);
+		if (palettes.includes(DEFAULT_PALETTE)) {
+			selectors.push(':root:not([class])');
+		}
+		scss += `${selectors.join(', ')} {`;
 		scss += generateVariableRamp(palettes[0], isP3, true);
 		scss += '}\n\n';
 	}

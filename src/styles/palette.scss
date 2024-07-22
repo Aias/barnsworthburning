@@ -138,7 +138,8 @@
   --clr-a12: light-dark(#002540e2, #c2f3ff);
 }
 
-.indigo {
+.indigo,
+:root:not([class]) {
   --clr-1: light-dark(#fdfdfe, #11131f);
   --clr-2: light-dark(#f7f9ff, #141726);
   --clr-3: light-dark(#edf2fe, #182449);
@@ -347,7 +348,8 @@
 .indigo,
 .blue,
 .sky,
-.cyan {
+.cyan,
+:root:not([class]) {
   --neu-1: light-dark(#fcfcfd, #111113);
   --neu-2: light-dark(#f9f9fb, #18191b);
   --neu-3: light-dark(#f0f0f3, #212225);
@@ -901,7 +903,8 @@
       );
     }
 
-    .indigo {
+    .indigo,
+    :root:not([class]) {
       --clr-1: light-dark(
         color(display-p3 0.992 0.992 0.996),
         color(display-p3 0.068 0.074 0.118)
@@ -1614,7 +1617,8 @@
     .indigo,
     .blue,
     .sky,
-    .cyan {
+    .cyan,
+    :root:not([class]) {
       --neu-1: light-dark(
         color(display-p3 0.988 0.988 0.992),
         color(display-p3 0.067 0.067 0.074)
