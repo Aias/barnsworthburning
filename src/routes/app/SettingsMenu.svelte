@@ -4,7 +4,7 @@
 
 	let { ...restProps } = $props();
 
-	let themeColor = $state('#000000');
+	let themeColor = $state<string>();
 
 	const titleCase = (str: string) => str[0].toUpperCase() + str.slice(1);
 
@@ -22,6 +22,8 @@
 		setThemeColor();
 	});
 
+	let { mode: currentMode, palette: currentPalette, chroma: currentChroma } = $derived(settings);
+
 	const handleThemeChange = (e: Event) => {
 		const target = e.target as HTMLInputElement;
 		const newTheme = target.value as Palette;
@@ -34,7 +36,9 @@
 </script>
 
 <svelte:head>
-	<meta name="theme-color" content={themeColor} />
+	{#if themeColor}
+		<meta name="theme-color" content={themeColor} />
+	{/if}
 </svelte:head>
 
 <menu {...restProps}>
@@ -53,7 +57,7 @@
 						class="screenreader"
 						value={paletteKey}
 						onchange={handleThemeChange}
-						checked={settings.palette === paletteKey}
+						checked={currentPalette === paletteKey}
 					/>
 				</label>
 			{/each}
@@ -66,7 +70,7 @@
 					type="radio"
 					name="modeKey"
 					class="screenreader"
-					checked={settings.mode === Mode.Light}
+					checked={currentMode === Mode.Light}
 					onchange={() => settings.setMode(Mode.Light)}
 				/>🌅</label
 			>
@@ -75,7 +79,7 @@
 					type="radio"
 					name="modeKey"
 					class="screenreader"
-					checked={settings.mode === Mode.Auto}
+					checked={currentMode === Mode.Auto}
 					onchange={() => settings.setMode(Mode.Auto)}
 				/>🌄</label
 			>
@@ -84,7 +88,7 @@
 					type="radio"
 					name="modeKey"
 					class="screenreader"
-					checked={settings.mode === Mode.Dark}
+					checked={currentMode === Mode.Dark}
 					onchange={() => settings.setMode(Mode.Dark)}
 				/>🌌</label
 			>
@@ -97,7 +101,7 @@
 					type="checkbox"
 					name="modeKey"
 					class="screenreader"
-					checked={settings.chroma === Chroma.Chromatic}
+					checked={currentChroma === Chroma.Chromatic}
 					onchange={() => settings.setChroma()}
 				/>🎨</label
 			>

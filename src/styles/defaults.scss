@@ -8,14 +8,14 @@ html {
 	font-weight: var(--font-weight-normal);
 	font-variant-ligatures: common-ligatures;
 	font-variant-numeric: tabular-nums;
-	hanging-punctuation: first last;
+	//hanging-punctuation: first last;
 	background-color: var(--background);
 	accent-color: var(--link);
 
-	input,
-	textarea {
-		hanging-punctuation: none; /* https://adactio.com/journal/21027 */
-	}
+	// input,
+	// textarea {
+	// 	hanging-punctuation: none; /* https://adactio.com/journal/21027 */
+	// }
 }
 
 body {

@@ -5,8 +5,6 @@ import {
 	paletteOptions,
 	neutralsMap,
 	type Neutral,
-	DEFAULT_MODE,
-	DEFAULT_CHROMA,
 	DEFAULT_PALETTE
 } from '../types/Theme';
 
@@ -71,12 +69,14 @@ const generateVariableRamp = (palette: Palette, isP3: Boolean, isNeutral: Boolea
 	return scss;
 };
 
+const NO_CLASS = ':root:where(:not([class]), [class=""])';
+
 const generateColorClasses = (isP3: Boolean = false) => {
 	let scss = '';
 	for (const palette of paletteOptions) {
 		const selectors = [`.${palette}`];
 		if (palette === DEFAULT_PALETTE) {
-			selectors.push(':root:not([class])');
+			selectors.push(NO_CLASS);
 		}
 		scss += `${selectors.join(', ')} {\n`;
 		scss += generateVariableRamp(palette, isP3, false);
@@ -92,7 +92,7 @@ const generateNeutralClasses = (isP3: Boolean = false) => {
 		const palettes = neutralsMap[neutral as Neutral];
 		const selectors = palettes.map((palette) => `.${palette}`);
 		if (palettes.includes(DEFAULT_PALETTE)) {
-			selectors.push(':root:not([class])');
+			selectors.push(NO_CLASS);
 		}
 		scss += `${selectors.join(', ')} {`;
 		scss += generateVariableRamp(palettes[0], isP3, true);

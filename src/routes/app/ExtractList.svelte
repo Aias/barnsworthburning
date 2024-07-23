@@ -49,7 +49,8 @@
 							{@html markdown
 								.parse(content)
 								.toString()
-								.replaceAll('<br>', '<span class="line-break"></span>')}
+								.replaceAll('<br>', '<span class="line-break"></span>')
+								.replaceAll(/<a(?:\s+[^>]*)?>([^<]*)<\/a>/g, '$1')}
 						</blockquote>
 					{:else}
 						<p class="summary">
