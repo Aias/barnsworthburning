@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { setContext } from 'svelte';
-	import { makeHierarchy } from '$lib/extractHierarchy.svelte';
+	import { makeHierarchy } from '$helpers/mapping';
 	import Extract from '$components/Extract.svelte';
 	import ExtractList from './ExtractList.svelte';
 	import type { IExtract } from '$types/Airtable';

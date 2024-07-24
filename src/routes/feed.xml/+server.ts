@@ -71,7 +71,7 @@ const generateContentMarkup = (extract: IExtract) => {
 		markup += `</small>\n</p>\n`;
 	}
 	if (notes) {
-		markup += '<hr />\n';
+		markup += '<hr>\n';
 		markup += `<small>${markdown.parse(notes)}</small>\n`;
 	}
 	markup += '</section>\n';
@@ -96,8 +96,8 @@ const meta = {
 	url: 'https://barnsworthburning.net'
 };
 
-const atom = (extracts: IExtract[] = []) => {
-	const feedUpdated = new Date(extracts[0].lastUpdated).toISOString();
+const atom = (entries: IExtract[] = [], children: IExtract[] = []) => {
+	const feedUpdated = new Date(entries[0].lastUpdated).toISOString();
 	return `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>${meta.url}/feed</id>
@@ -113,10 +113,14 @@ const atom = (extracts: IExtract[] = []) => {
     </author>
     <updated>${feedUpdated}</updated>
 	${meta.tags.map((tag) => `<category term="${tag}" />`).join('\n')}
-	${extracts
+	${entries
 		.map((extract) => {
 			const { title, id, creators, source, lastUpdated, extractedOn, spaces, images } =
 				extract;
+			const extractChildren =
+				extract.children
+					?.map((child) => children.find((entry) => entry.id === child.id))
+					.filter((child): child is IExtract => !!child) || [];
 
 			let entry = `<entry>`;
 			entry += `<id>${meta.url}/extracts/${id}</id>`;
@@ -143,7 +147,20 @@ const atom = (extracts: IExtract[] = []) => {
 			if (spaces) {
 				entry += spaces.map((space) => `<category term="${space.name}" />`).join('\n');
 			}
-			entry += `<content type="html"><![CDATA[${generateContentMarkup(extract)}]]></content>`;
+			entry += `<content type="html"><![CDATA[`;
+			entry += generateContentMarkup(extract);
+			if (extractChildren.length) {
+				entry += extractChildren
+					.map((child) => {
+						const { title } = child;
+						let childMarkup = `<br><hr><br>`;
+						childMarkup += `<h3>${title}</h3>`;
+						childMarkup += generateContentMarkup(child);
+						return childMarkup;
+					})
+					.join('\n');
+			}
+			entry += `]]></content>`;
 			entry += '</entry>';
 			return entry;
 		})
@@ -152,16 +169,22 @@ const atom = (extracts: IExtract[] = []) => {
 };
 
 export async function GET() {
-	const fetchOptions = {
+	const fetchEntryOptions = {
 		view: ExtractView.Works,
-		maxRecords: 50
-		// filterByFormula: `lastUpdated < DATEADD(NOW(), -12, 'hour')`
+		maxRecords: 30,
+		filterByFormula: `AND(lastUpdated < DATEADD(NOW(), -10, 'minute'), NOT(parent))`
 	};
+	const extracts = await airtableFetch<IBaseExtract>(Table.Extracts, fetchEntryOptions);
+	const feedEntries = extracts.map(mapExtractRecord);
+	const parentIds = feedEntries.map((extract) => extract.id).join(',');
 
-	const extracts = await airtableFetch<IBaseExtract>(Table.Extracts, fetchOptions);
-	const mappedExtracts = extracts.map(mapExtractRecord);
+	const fetchChildOptions = {
+		filterByFormula: `AND(parent, FIND(ARRAYJOIN(parentId), '${parentIds}') > 0)`
+	};
+	const childExtracts = await airtableFetch<IBaseExtract>(Table.Extracts, fetchChildOptions);
+	const entryChildren = childExtracts.map(mapExtractRecord);
 
-	const responseBody = xmlFormatter(atom(mappedExtracts), {
+	const responseBody = xmlFormatter(atom(feedEntries, entryChildren), {
 		collapseContent: true
 	});
 	const responseOptions = {
