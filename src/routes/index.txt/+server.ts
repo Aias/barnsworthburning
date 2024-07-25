@@ -1,4 +1,5 @@
 import { createApi } from '$lib/api';
+import { text } from '@sveltejs/kit';
 
 export async function GET({ fetch }) {
 	const api = createApi(fetch);
@@ -34,7 +35,7 @@ export async function GET({ fetch }) {
 		rootPageContent += `| ${item.nameWithLink.padEnd(columnWidths.nameWithLink)} | ${item.type.padEnd(columnWidths.type)} | ${String(item.numExtracts).padStart(columnWidths.numExtracts)} |\n`;
 	});
 
-	return new Response(rootPageContent, {
+	return text(rootPageContent, {
 		headers: {
 			'Content-Type': 'text/plain; charset=utf-8'
 		}
