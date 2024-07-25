@@ -190,6 +190,7 @@ code,
 kbd,
 samp {
 	font-family: var(--font-stack-mono);
+	// TODO: Add font-size-adjust now that support has landed in Interop 2024.
 	letter-spacing: -0.01em;
 }
 

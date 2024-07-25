@@ -2,10 +2,10 @@
 	import ExtractGallery from '$components/ExtractGallery.svelte';
 	import type { IExtract } from '$types/Airtable';
 
-	type SpaceItemProps = {
+	interface SpaceItemProps {
 		title?: string;
 		extracts?: IExtract[];
-	};
+	}
 	let { title = 'Unknown', extracts }: SpaceItemProps = $props();
 </script>
 

@@ -6,9 +6,9 @@
 	import BlockLink from '$components/BlockLink.svelte';
 	import type { IExtract } from '$types/Airtable';
 
-	type ExtractListProps = {
+	interface ExtractListProps {
 		extracts: IExtract[];
-	};
+	}
 	let { extracts }: ExtractListProps = $props();
 </script>
 

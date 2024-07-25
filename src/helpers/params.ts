@@ -1,17 +1,17 @@
 export type EntityTypeKey = 'creator' | 'space' | 'extract';
-export type EntityType = {
+export interface EntityType {
 	key: EntityTypeKey;
 	urlParam: string;
 	title: string;
 	plural: string;
 	prefix: string;
 	description: string;
-};
+}
 
-type Segment = {
+interface Segment {
 	entityType: EntityType;
 	id: string;
-};
+}
 
 export const entityTypes: Record<EntityTypeKey, EntityType> = {
 	creator: {

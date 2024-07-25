@@ -3,9 +3,9 @@
 	import LinkGroup from '$components/LinkGroup.svelte';
 	import type { ICreator } from '$types/Airtable';
 
-	type CreatorListProps = {
+	interface CreatorListProps {
 		creators: ICreator[];
-	};
+	}
 	let { creators }: CreatorListProps = $props();
 </script>
 

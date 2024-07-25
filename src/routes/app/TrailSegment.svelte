@@ -9,9 +9,9 @@
 	import { capitalize } from '$helpers/grammar';
 	import type { TrailSegment } from '$lib/trail.svelte';
 
-	type TrailSegmentProps = {
+	interface TrailSegmentProps {
 		segment: TrailSegment;
-	};
+	}
 	let { segment }: TrailSegmentProps = $props();
 
 	let { entityType, entityId } = $derived(segment);

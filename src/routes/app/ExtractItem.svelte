@@ -5,10 +5,10 @@
 	import ExtractList from './ExtractList.svelte';
 	import type { IExtract } from '$types/Airtable';
 
-	type ExtractItemProps = {
+	interface ExtractItemProps {
 		selectedId: string;
 		extracts: IExtract[];
-	};
+	}
 	let { selectedId, extracts }: ExtractItemProps = $props();
 
 	let { selected, children, connections } = $derived(makeHierarchy(extracts, selectedId));

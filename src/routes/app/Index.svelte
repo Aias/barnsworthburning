@@ -11,12 +11,12 @@
 	}
 	let { creators, spaces, ...restProps }: IndexProps = $props();
 
-	type IndexEntry = {
+	interface IndexEntry {
 		type: EntityType;
 		name: string;
 		id: string;
 		count: number;
-	};
+	}
 
 	let currentSort = $state('name');
 

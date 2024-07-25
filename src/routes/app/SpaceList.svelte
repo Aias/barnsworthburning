@@ -3,9 +3,9 @@
 	import LinkGroup from '$components/LinkGroup.svelte';
 	import type { ISpace } from '$types/Airtable';
 
-	type SpaceListProps = {
+	interface SpaceListProps {
 		spaces: ISpace[];
-	};
+	}
 	let { spaces }: SpaceListProps = $props();
 </script>
 

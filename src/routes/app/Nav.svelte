@@ -4,11 +4,11 @@
 
 	let { ...restProps } = $props();
 
-	type Route = {
+	interface Route {
 		name: string;
 		path: string;
 		icon: string;
-	};
+	}
 	const routes: Route[] = [
 		{ name: 'Index', path: '/', icon: '🗂️' },
 		{ name: 'Creators', path: '/creators', icon: '🧑‍🎨' },
