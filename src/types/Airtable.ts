@@ -15,7 +15,8 @@ export enum ExtractView {
 	ByEntryDate = 'viwLItZEyHOGtcoHe',
 	Gallery = 'viwEHJGOwWKp7Zebc',
 	Works = 'viwTkCBV6uRoHplvP',
-	EntryView = 'viw4zAxRJhQbhTddm'
+	EntryView = 'viw4zAxRJhQbhTddm',
+	Feed = 'viwAdvAy1vJlbCVas'
 }
 export enum CreatorView {
 	Alphabetical = 'viwGZDVJxyNDDfOjV',

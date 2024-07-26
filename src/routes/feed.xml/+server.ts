@@ -8,7 +8,7 @@ import xmlFormatter from 'xml-formatter';
 const makeSiteLink = (relativePath: string, title: string) =>
 	`<a href="${meta.url}/${relativePath}">${title}</a>`;
 
-const generateContentMarkup = (extract: IExtract) => {
+const generateContentMarkup = (extract: IExtract, isChild: boolean = false) => {
 	const {
 		extract: content,
 		notes,
@@ -18,21 +18,27 @@ const generateContentMarkup = (extract: IExtract) => {
 		imageCaption,
 		creators,
 		connections,
-		spaces
+		spaces,
+		parent
 	} = extract;
 	let type = (format || 'extract').toLowerCase();
 	let markup = '<article>\n';
-	markup += '<header>\n';
-	markup += '<p>';
-	markup += `${getArticle(type)} <strong>${type}</strong>`;
-	if (creators) {
-		const creatorsMarkup = markdown.parseInline(
-			combineAsList(creators.map((c) => `[${c.name}](${meta.url}/creators/${c.id})`))
-		);
-		markup += ` by ${creatorsMarkup}`;
+	if (!isChild) {
+		markup += '<header>\n';
+		markup += '<p>';
+		markup += `${getArticle(type)} <strong>${type}</strong>`;
+		if (creators) {
+			const creatorsMarkup = markdown.parseInline(
+				combineAsList(creators.map((c) => `[${c.name}](${meta.url}/creators/${c.id})`))
+			);
+			markup += ` by ${creatorsMarkup}`;
+		}
+		if (parent) {
+			markup += ` from <em>${parent.name}</em>`;
+		}
+		markup += '.</p>\n';
+		markup += '</header>\n';
 	}
-	markup += '</p>\n';
-	markup += '</header>\n';
 	markup += '<section>\n';
 	if (images) {
 		markup += '<figure>\n';
@@ -155,7 +161,7 @@ const atom = (entries: IExtract[] = [], children: IExtract[] = []) => {
 						const { title } = child;
 						let childMarkup = `<br><hr><br>`;
 						childMarkup += `<h3>${title}</h3>`;
-						childMarkup += generateContentMarkup(child);
+						childMarkup += generateContentMarkup(child, true);
 						return childMarkup;
 					})
 					.join('\n');
@@ -170,9 +176,9 @@ const atom = (entries: IExtract[] = [], children: IExtract[] = []) => {
 
 export async function GET() {
 	const fetchEntryOptions = {
-		view: ExtractView.Works,
+		view: ExtractView.Feed,
 		maxRecords: 30,
-		filterByFormula: `AND(lastUpdated < DATEADD(NOW(), -10, 'minute'), NOT(parent))`
+		filterByFormula: `lastUpdated < DATEADD(NOW(), -5, 'minute')`
 	};
 	const extracts = await airtableFetch<IBaseExtract>(Table.Extracts, fetchEntryOptions);
 	const feedEntries = extracts.map(mapExtractRecord);
