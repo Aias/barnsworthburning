@@ -24,9 +24,12 @@ User-agent: YouBot
 Disallow: /
 
 User-agent: Barkrowler
+User-agent: BLEXBot
 User-agent: SemrushBot
 User-agent: YandexBot
-Disallow: /
+Disallow: /creators/
+Disallow: /spaces/
+Disallow: /extracts/
 
 User-agent: *
 Allow: /
