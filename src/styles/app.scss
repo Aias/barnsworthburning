@@ -53,7 +53,7 @@ $breakpoint: $sidebar-width + $segment-width + 1rem;
 
 .app-aside {
 	height: 100%;
-	max-width: calc(100vw - var(--sidebar-width) - 1rem);
+	max-width: calc(100vi - var(--sidebar-width) - 1rem);
 	display: flex;
 	flex-direction: row-reverse;
 	overflow-x: auto;
