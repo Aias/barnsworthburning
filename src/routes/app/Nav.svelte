@@ -11,9 +11,9 @@
 	}
 	const routes: Route[] = [
 		{ name: 'Index', path: '/', icon: '🗂️' },
+		{ name: 'Extracts', path: '/extracts', icon: '📝' },
 		{ name: 'Creators', path: '/creators', icon: '🧑‍🎨' },
 		{ name: 'Spaces', path: '/spaces', icon: '🏷️' },
-		{ name: 'Extracts', path: '/extracts', icon: '📝' },
 		{ name: 'Search', path: '/search', icon: '🔍' }
 	];
 
