@@ -55,10 +55,9 @@
 		if (bodyWidth < 720) return; // Don't add segments when the screen is too small.
 		const isNavigating = ['link', 'goto'].includes(type);
 		if (!isNavigating) return;
-		const fromId = from?.params?.id;
 		const fromEntityParam = from?.params?.entityType;
 		const toId = to?.params?.id;
-		if (!fromEntityParam) return; // Only add segments when navigating from an entity.
+		if (!(fromEntityParam || from?.route.id === '/search')) return; // Only add segments when navigating from an entity.
 		if (!toId) return; // Don't add segments for unknown entities.
 		const toEntityParam = to?.params?.entityType;
 		let fromEntityType: EntityType | undefined;

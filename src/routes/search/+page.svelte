@@ -15,9 +15,46 @@
 		}
 	});
 
+	$effect(() => {
+		if (results) {
+			highlightSearchResults(searchValue);
+		}
+	});
+
 	function updateSearchValue(event: Event) {
 		const target = event.target as HTMLInputElement;
 		searchValue = target.value;
+	}
+
+	function highlightSearchResults(searchValue: string) {
+		if (!CSS.highlights) return; // Check for browser support
+
+		CSS.highlights.clear();
+
+		if (!searchValue.trim()) return;
+
+		const ranges: Range[] = [];
+		const extractElements = document.querySelectorAll('.extract');
+		const query = searchValue.toLowerCase();
+
+		extractElements.forEach((el) => {
+			const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+			let node: Text | null;
+			while ((node = walker.nextNode() as Text | null)) {
+				const text = node.textContent?.toLowerCase() ?? '';
+				let match: RegExpExecArray | null;
+				const regex = new RegExp(query, 'gi');
+				while ((match = regex.exec(text)) !== null) {
+					const range = new Range();
+					range.setStart(node, match.index);
+					range.setEnd(node, match.index + query.length);
+					ranges.push(range);
+				}
+			}
+		});
+
+		const searchHighlight = new Highlight(...ranges);
+		CSS.highlights.set('search-results', searchHighlight);
 	}
 </script>
 
@@ -72,5 +109,9 @@
 		background-color: var(--shadow);
 		border: 1px solid var(--divider);
 		border-radius: var(--border-radius-medium);
+	}
+	:global(::highlight(search-results)) {
+		background-color: var(--main);
+		color: var(--main-contrast);
 	}
 </style>
