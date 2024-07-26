@@ -1,7 +1,8 @@
+import { getContentType } from '$helpers/content';
 import { createApi } from '$lib/api';
 import { text } from '@sveltejs/kit';
 
-export async function GET({ fetch }) {
+export async function GET({ fetch, url }) {
 	const api = createApi(fetch);
 
 	const [creators, spaces] = await Promise.all([api.creators.list(), api.spaces.list()]);
@@ -37,7 +38,7 @@ export async function GET({ fetch }) {
 
 	return text(rootPageContent, {
 		headers: {
-			'Content-Type': 'text/plain; charset=utf-8'
+			'Content-Type': getContentType(url)
 		}
 	});
 }
