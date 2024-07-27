@@ -126,10 +126,6 @@ export const mapCreatorRecord = (record: IBaseCreator): ICreator => {
 		totalStars,
 		extracts = [],
 		extractTitles = [],
-		spaces = [],
-		spaceTopics = [],
-		connectedCreators = [],
-		connectedCreatorNames = [],
 		createdTime,
 		lastUpdated
 	} = record;
@@ -137,16 +133,6 @@ export const mapCreatorRecord = (record: IBaseCreator): ICreator => {
 	const mappedExtracts = zip<ILinkedRecord>({
 		id: extracts,
 		name: extractTitles
-	});
-
-	const mappedSpaces = zip<ILinkedRecord>({
-		id: spaces,
-		name: spaceTopics
-	});
-
-	const mappedConnectedCreators = zip<ILinkedRecord>({
-		id: connectedCreators,
-		name: connectedCreatorNames
 	});
 
 	return {
@@ -162,9 +148,7 @@ export const mapCreatorRecord = (record: IBaseCreator): ICreator => {
 		numFragments,
 		numExtracts,
 		extracts: mappedExtracts,
-		spaces: mappedSpaces,
 		totalStars,
-		connectedCreators: mappedConnectedCreators,
 		createdTime: new Date(createdTime),
 		lastUpdated: new Date(lastUpdated)
 	};
@@ -179,8 +163,6 @@ export const mapSpaceRecord = (record: IBaseSpace): ISpace => {
 		description,
 		extracts = [],
 		extractTitles = [],
-		connectedSpaces = [],
-		connectedSpaceTopics = [],
 		numExtracts,
 		totalStars,
 		createdTime,
@@ -192,11 +174,6 @@ export const mapSpaceRecord = (record: IBaseSpace): ISpace => {
 		name: extractTitles
 	});
 
-	const mappedConnectedSpaces = zip<ILinkedRecord>({
-		id: connectedSpaces,
-		name: connectedSpaceTopics
-	});
-
 	return {
 		id,
 		topic,
@@ -204,7 +181,6 @@ export const mapSpaceRecord = (record: IBaseSpace): ISpace => {
 		icon,
 		description,
 		extracts: mappedExtracts,
-		connectedSpaces: mappedConnectedSpaces,
 		numExtracts,
 		totalStars,
 		createdTime: new Date(createdTime),

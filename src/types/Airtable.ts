@@ -100,10 +100,6 @@ export interface IBaseCreator extends IBaseRecord {
 	nationality?: string[];
 	extracts?: AirtableRecordId[];
 	extractTitles?: string[];
-	spaces?: AirtableRecordId[];
-	spaceTopics?: string[];
-	connectedCreators?: AirtableRecordId[];
-	connectedCreatorNames?: string[];
 	numWorks: number;
 	numFragments: number;
 	numExtracts: number;
@@ -122,8 +118,6 @@ export interface ICreator {
 	organizations?: string[];
 	nationality?: string[];
 	extracts?: ILinkedRecord[];
-	spaces?: ILinkedRecord[];
-	connectedCreators?: ILinkedRecord[];
 	numWorks: number;
 	numFragments: number;
 	numExtracts: number;
@@ -140,8 +134,6 @@ export interface IBaseSpace extends IBaseRecord {
 	description?: string;
 	extracts?: AirtableRecordId[];
 	extractTitles?: string[];
-	connectedSpaces?: AirtableRecordId[];
-	connectedSpaceTopics?: string[];
 	numExtracts: number;
 	totalStars: number;
 	lastUpdated: string;
@@ -155,7 +147,6 @@ export interface ISpace {
 	icon?: string;
 	description?: string;
 	extracts?: ILinkedRecord[];
-	connectedSpaces?: ILinkedRecord[];
 	numExtracts: number;
 	totalStars: number;
 	lastUpdated: Date;
