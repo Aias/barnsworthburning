@@ -1,6 +1,12 @@
 import { mapExtractRecord } from '$helpers/mapping';
 import { airtableFetch } from '$lib/server/requests';
-import { ExtractView, Table, type IBaseExtract, type IExtract } from '$types/Airtable';
+import {
+	extractFields,
+	ExtractView,
+	Table,
+	type IBaseExtract,
+	type IExtract
+} from '$types/Airtable';
 import markdown from '$helpers/markdown';
 import { getArticle, combineAsList } from '$helpers/grammar';
 import xmlFormatter from 'xml-formatter';
@@ -178,14 +184,16 @@ export async function GET() {
 	const fetchEntryOptions = {
 		view: ExtractView.Feed,
 		maxRecords: 30,
-		filterByFormula: `lastUpdated < DATEADD(NOW(), -5, 'minute')`
+		filterByFormula: `lastUpdated < DATEADD(NOW(), -5, 'minute')`,
+		fields: extractFields
 	};
 	const extracts = await airtableFetch<IBaseExtract>(Table.Extracts, fetchEntryOptions);
 	const feedEntries = extracts.map(mapExtractRecord);
 	const parentIds = feedEntries.map((extract) => extract.id).join(',');
 
 	const fetchChildOptions = {
-		filterByFormula: `AND(parent, FIND(ARRAYJOIN(parentId), '${parentIds}') > 0)`
+		filterByFormula: `AND(parent, FIND(ARRAYJOIN(parentId), '${parentIds}') > 0)`,
+		fields: extractFields
 	};
 	const childExtracts = await airtableFetch<IBaseExtract>(Table.Extracts, fetchChildOptions);
 	const entryChildren = childExtracts.map(mapExtractRecord);
@@ -196,7 +204,7 @@ export async function GET() {
 	const responseOptions = {
 		status: 200,
 		headers: {
-			'Content-Type': 'application/atom+xml',
+			'Content-Type': 'application/atom+xml; charset=utf-8',
 			'Cache-Control': `max-age=0, s-maxage=0`
 		}
 	};
