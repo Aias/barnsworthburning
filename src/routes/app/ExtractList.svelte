@@ -25,7 +25,7 @@
 			imageCaption,
 			notes
 		} = extract}
-		{@const content = quote || notes}
+		{@const content = quote || imageCaption || notes}
 		<BlockLink element="li">
 			<article>
 				<section>
