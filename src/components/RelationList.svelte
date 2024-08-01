@@ -71,5 +71,12 @@
 	}
 	.show-more {
 		margin-inline-start: -1ch; // Remove extra white space.
+
+		button {
+			color: var(--hint);
+			&:hover {
+				color: var(--accent);
+			}
+		}
 	}
 </style>
