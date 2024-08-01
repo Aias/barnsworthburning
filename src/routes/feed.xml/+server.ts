@@ -184,7 +184,6 @@ export async function GET() {
 	const fetchEntryOptions = {
 		view: ExtractView.Feed,
 		maxRecords: 30,
-		filterByFormula: `extractedOn < DATEADD(NOW(), -5, 'minute')`,
 		fields: extractFields
 	};
 	const extracts = await airtableFetch<IBaseExtract>(Table.Extracts, fetchEntryOptions);

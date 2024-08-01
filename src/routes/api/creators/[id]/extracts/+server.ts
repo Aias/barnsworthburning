@@ -7,11 +7,7 @@ export async function GET({ params }) {
 	const extracts = await airtableFetch<IBaseExtract>(Table.Extracts, {
 		filterByFormula: `FIND('${params.id}', creatorsLookup) > 0`,
 		view: ExtractView.Works,
-		fields: extractFields,
-		sort: [
-			{ field: 'michelinStars', direction: 'desc' },
-			{ field: 'lastUpdated', direction: 'desc' }
-		]
+		fields: extractFields
 	});
 
 	return json(extracts.map(mapExtractRecord));

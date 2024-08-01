@@ -5,7 +5,7 @@ import { Table, type IBaseExtract, ExtractView, extractFields } from '$types/Air
 
 export async function GET() {
 	const extracts = await airtableFetch<IBaseExtract>(Table.Extracts, {
-		view: ExtractView.Works,
+		view: ExtractView.Feed,
 		maxRecords: 100,
 		fields: extractFields
 	});
