@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 import { airtableFetch } from '$lib/server/requests';
 import { mapExtractRecord } from '$helpers/mapping';
-import { ExtractView, type IBaseExtract, Table } from '$types/Airtable';
+import { extractFields, ExtractView, type IBaseExtract, Table } from '$types/Airtable';
 
 const MAX_RECORDS = 200;
 
@@ -17,7 +17,8 @@ export async function load({ url }) {
 	const extractResults = await airtableFetch<IBaseExtract>(Table.Extracts, {
 		view: ExtractView.Best,
 		maxRecords: MAX_RECORDS,
-		filterByFormula: `FIND('${query}', search) > 0`
+		filterByFormula: `FIND('${query}', search) > 0`,
+		fields: extractFields
 	});
 
 	if (!extractResults) {
