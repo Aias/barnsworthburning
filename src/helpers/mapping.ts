@@ -61,7 +61,8 @@ export const mapExtractRecord = (record: IBaseExtract): IExtract => {
 		spaceTopics = [],
 		spaces = [],
 		title,
-		format
+		format,
+		publishedOn
 	} = record;
 
 	const mappedChildren = zip<ILinkedRecord>({
@@ -106,7 +107,8 @@ export const mapExtractRecord = (record: IBaseExtract): IExtract => {
 		notes,
 		source,
 		lastUpdated: new Date(lastUpdated),
-		extractedOn: new Date(extractedOn)
+		extractedOn: new Date(extractedOn),
+		publishedOn: new Date(publishedOn)
 	};
 };
 

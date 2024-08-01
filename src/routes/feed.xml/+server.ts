@@ -127,7 +127,7 @@ const atom = (entries: IExtract[] = [], children: IExtract[] = []) => {
 	${meta.tags.map((tag) => `<category term="${tag}" />`).join('\n')}
 	${entries
 		.map((extract) => {
-			const { title, id, creators, source, lastUpdated, extractedOn, spaces, images } =
+			const { title, id, creators, source, lastUpdated, publishedOn, spaces, images } =
 				extract;
 			const extractChildren =
 				extract.children
@@ -142,8 +142,8 @@ const atom = (entries: IExtract[] = [], children: IExtract[] = []) => {
 					.map((creator) => `<author><name><![CDATA[${creator.name}]]></name></author>`)
 					.join('\n');
 			}
-			entry += `<published>${new Date(extractedOn).toISOString()}</published>`;
-			entry += `<updated>${new Date(lastUpdated).toISOString()}</updated>`;
+			entry += `<published>${new Date(publishedOn).toISOString()}</published>`;
+			entry += `<updated>${new Date(Math.max(new Date(publishedOn).getTime(), new Date(lastUpdated).getTime())).toISOString()}</updated>`;
 			entry += `<link rel="alternate" href="${meta.url}/extracts/${id}" />`;
 			if (source) {
 				entry += `<link rel="via" href="${cleanLink(source)}" />`;
@@ -177,7 +177,7 @@ const atom = (entries: IExtract[] = [], children: IExtract[] = []) => {
 			return entry;
 		})
 		.join('\n')}
-</feed>`;
+</feed>`.trim();
 };
 
 export async function GET() {

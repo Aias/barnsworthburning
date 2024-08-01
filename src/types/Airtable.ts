@@ -63,6 +63,7 @@ export interface IBaseExtract extends IBaseRecord {
 	parentCreatorIds?: AirtableRecordId[];
 	parentCreatorNames?: string[];
 	parentTitle?: string[];
+	publishedOn: string;
 	source?: string;
 	spaceTopics?: string[];
 	spaces?: AirtableRecordId[];
@@ -95,6 +96,7 @@ export interface IExtract {
 	format?: string;
 	extractedOn: Date;
 	lastUpdated: Date;
+	publishedOn: Date;
 }
 
 export interface IBaseCreator extends IBaseRecord {
