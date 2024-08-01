@@ -109,7 +109,17 @@ const meta = {
 };
 
 const atom = (entries: IExtract[] = [], children: IExtract[] = []) => {
-	const feedUpdated = new Date(entries[0].lastUpdated).toISOString();
+	const feedUpdated = new Date(
+		Math.max(
+			...entries.map((entry) =>
+				Math.max(
+					new Date(entry.lastUpdated).getTime(),
+					new Date(entry.publishedOn).getTime(),
+					new Date(entry.extractedOn).getTime()
+				)
+			)
+		)
+	).toISOString();
 	return `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>${meta.url}/feed</id>
@@ -127,8 +137,17 @@ const atom = (entries: IExtract[] = [], children: IExtract[] = []) => {
 	${meta.tags.map((tag) => `<category term="${tag}" />`).join('\n')}
 	${entries
 		.map((extract) => {
-			const { title, id, creators, source, lastUpdated, publishedOn, spaces, images } =
-				extract;
+			const {
+				title,
+				id,
+				creators,
+				source,
+				lastUpdated,
+				publishedOn,
+				extractedOn,
+				spaces,
+				images
+			} = extract;
 			const extractChildren =
 				extract.children
 					?.map((child) => children.find((entry) => entry.id === child.id))
@@ -142,7 +161,7 @@ const atom = (entries: IExtract[] = [], children: IExtract[] = []) => {
 					.map((creator) => `<author><name><![CDATA[${creator.name}]]></name></author>`)
 					.join('\n');
 			}
-			entry += `<published>${new Date(publishedOn).toISOString()}</published>`;
+			entry += `<published>${new Date(extractedOn).toISOString()}</published>`;
 			entry += `<updated>${new Date(Math.max(new Date(publishedOn).getTime(), new Date(lastUpdated).getTime())).toISOString()}</updated>`;
 			entry += `<link rel="alternate" href="${meta.url}/extracts/${id}" />`;
 			if (source) {
