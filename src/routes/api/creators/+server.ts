@@ -5,8 +5,7 @@ import { Table, type IBaseCreator, CreatorView, creatorFields } from '$types/Air
 
 export async function GET() {
 	const creators = await airtableFetch<IBaseCreator>(Table.Creators, {
-		view: CreatorView.ByCount,
-		filterByFormula: 'numExtracts > 0',
+		view: CreatorView.Best,
 		maxRecords: 100,
 		fields: creatorFields
 	});

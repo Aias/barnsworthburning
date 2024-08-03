@@ -20,12 +20,14 @@ export enum ExtractView {
 }
 export enum CreatorView {
 	Alphabetical = 'viwGZDVJxyNDDfOjV',
+	Best = 'viwxE8m6ZZM5CfhB7',
 	ByCount = 'viwcIFF6YBJV0SgE1',
 	ByStars = 'viwdUV8VFOvylVdtY',
 	RecentlyUpdated = 'viw8aHvPsBm7AJfcC'
 }
 export enum SpaceView {
 	Alphabetical = 'viwXFuJApmneAzKEh',
+	Best = 'viwdhSigvrkEJBvOH',
 	ByCount = 'viw6rBrUfPPkrqMVC',
 	ByStars = 'viwYHuokhqY6LpWb3',
 	RecentlyUpdated = 'viwmSxAVAT3uJc6xk'
