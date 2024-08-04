@@ -219,9 +219,13 @@ blockquote {
 	border-inline-start: 0.35em solid var(--flood);
 	font-style: italic;
 	font-family: var(--font-stack-serif);
-
-	&:not(:is(.extract-text, .content)) em {
+}
+blockquote:not(:is(.extract-text, .content)) {
+	em {
 		font-style: normal;
+	}
+	strong {
+		font-weight: var(--font-weight-bold);
 	}
 }
 
