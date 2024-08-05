@@ -2,20 +2,14 @@
 	import ExtractGallery from '$components/ExtractGallery.svelte';
 	import type { IExtract } from '$types/Airtable';
 
-	interface EntityItemProps {
-		title?: string;
+	interface EntityLayoutProps {
+		title: string;
 		extracts?: IExtract[];
 	}
-	let { title = 'Unknown', extracts }: EntityItemProps = $props();
+	let { title, extracts }: EntityLayoutProps = $props();
 </script>
 
-<svelte:head>
-	<title>{title ?? 'barnsworthburning'}</title>
-</svelte:head>
-
-<h1>
-	{title}
-</h1>
+<h1>{title}</h1>
 {#if extracts}
 	<ExtractGallery {extracts} />
 {:else}
