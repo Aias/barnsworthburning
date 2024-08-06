@@ -2,6 +2,7 @@
 	import EntityLayout from './EntityLayout.svelte';
 	import { capitalize } from '$helpers/grammar';
 	import type { ISpace, IExtract } from '$types/Airtable';
+	import { findFirstImageUrl } from '$helpers/images';
 
 	interface SpaceItemProps {
 		space: ISpace;
@@ -9,23 +10,30 @@
 	}
 	let { space, extracts }: SpaceItemProps = $props();
 
-	let title = $derived(capitalize(space.title || space.topic || 'Unknown Space'));
-	let description = $derived(`Explore the ${title} space on barnsworthburning`);
+	let title = $derived(capitalize(space.title || space.topic || 'Untagged'));
+	let description = $derived(`Curated extracts related to ${title.toLocaleLowerCase()}.`);
+
+	let firstImageUrl = $derived(findFirstImageUrl(extracts));
 </script>
 
 <svelte:head>
-	<title>{title} | barnsworthburning</title>
-	<meta name="description" content={description} />
+	<title>{title}</title>
 	<meta property="og:title" content={title} />
+	<meta name="description" content={description} />
 	<meta property="og:description" content={description} />
-	<meta property="og:type" content="website" />
-	<meta property="og:url" content={`https://barnsworthburning.net/space/${space.id}`} />
-	{#if space.image}
-		<meta property="og:image" content={space.image[0].url} />
+	<meta property="og:site_name" content="barnsworthburning" />
+	<meta property="og:type" content="article" />
+	<meta property="og:url" content={`https://barnsworthburning.net/spaces/${space.id}`} />
+	<meta property="article:section" content={title} />
+	<meta property="article:tag" content={space.topic} />
+	{#if firstImageUrl}
+		<meta property="og:image" content={firstImageUrl} />
 	{/if}
-	{#if space.creators && space.creators.length > 0}
-		<meta name="author" content={space.creators.map((creator) => creator.name).join(', ')} />
-	{/if}
+	<meta
+		property="og:article:published_time"
+		content={new Date(space.createdTime).toISOString()}
+	/>
+	<meta property="og:article:modified_time" content={new Date(space.lastUpdated).toISOString()} />
 </svelte:head>
 
 <EntityLayout {title} {extracts} />

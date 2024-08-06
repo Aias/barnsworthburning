@@ -4,17 +4,6 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta http-equiv="x-ua-compatible" content="ie=edge" />
-		<title>barnsworthburning</title>
-		<meta name="description" content="A commonplace book." />
-		<meta name="author" content="Nick Trombley" />
-		<meta property="og:type" content="website" />
-		<meta property="og:title" content="barnsworthburning" />
-		<meta property="og:description" content="A commonplace book." />
-		<meta property="og:url" content="https://barnsworthburning.net" />
-		<meta
-			name="keywords"
-			content="Nick Trombley, design, barnsworthburning, barns worth burning, commonplace, reading, writing, art, books"
-		/>
 		<script src="/themePreferences.js"></script>
 		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 		<link rel="icon" href="/favicon.png" />
@@ -24,13 +13,13 @@
 			href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap"
 			rel="stylesheet"
 		/>
+		%sveltekit.head%
 		<link
 			rel="alternate"
 			type="application/atom+xml"
 			title="RSS Feed (Atom)"
 			href="/feed.xml"
 		/>
-		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
 		<div id="app" class="app">%sveltekit.body%</div>

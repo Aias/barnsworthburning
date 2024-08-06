@@ -4,7 +4,6 @@
 	import ExtractItem from './ExtractItem.svelte';
 	import { entityTypes } from '$helpers/params';
 	import { api } from '$lib/api';
-	// import cache from '$lib/cache.svelte';
 	import type { ICreator, IExtract, ISpace } from '$types/Airtable';
 	import { capitalize } from '$helpers/grammar';
 	import type { TrailSegment } from '$lib/trail.svelte';
@@ -28,8 +27,6 @@
 		creator = creatorPromise;
 		space = undefined;
 		extracts = extractsPromise;
-		// cache.addCreators([creatorPromise]);
-		// cache.addExtracts(extractsPromise);
 	}
 	async function fetchSpace(spaceId: string) {
 		const [spacePromise, extractsPromise] = await Promise.all([
@@ -39,15 +36,12 @@
 		creator = undefined;
 		space = spacePromise;
 		extracts = extractsPromise;
-		// cache.addSpaces([spacePromise]);
-		// cache.addExtracts(extractsPromise);
 	}
 	async function fetchExtracts(extractId: string) {
 		const extractsPromise = await api.extracts.related(extractId);
 		creator = undefined;
 		space = undefined;
 		extracts = extractsPromise;
-		// cache.addExtracts(extractsPromise);
 	}
 
 	$effect.pre(() => {
@@ -75,7 +69,7 @@
 	{/if}
 {:else}
 	<div class="loading-container">
-		<p><em>Loading..</em>.</p>
+		<p><em>Loading...</em></p>
 		<div class="loader"></div>
 	</div>
 {/if}

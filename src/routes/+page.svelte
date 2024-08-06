@@ -6,7 +6,3 @@
 		trail.clearTrail();
 	});
 </script>
-
-<svelte:head>
-	<title>barnsworthburning</title>
-</svelte:head>

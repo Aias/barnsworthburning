@@ -4,6 +4,7 @@
 	import Extract from '$components/Extract.svelte';
 	import ExtractList from './ExtractList.svelte';
 	import type { IExtract } from '$types/Airtable';
+	import { getArticle } from '$helpers/grammar';
 
 	interface ExtractItemProps {
 		selectedId: string;
@@ -17,34 +18,48 @@
 		setContext('extract', selected);
 	});
 
-	let title = $derived(selected?.title || 'Extract');
-	let description = $derived(
-		selected?.description || 'Explore this extract on barnsworthburning'
-	);
+	let title = $derived(selected.title || 'Extract');
+
+	let description = $derived.by(() => {
+		const type = selected.format || 'extract';
+		const creators =
+			(selected.creators || selected.parentCreators)?.map((c) => c.name).join(', ') ||
+			'Unknown';
+		const parent = selected.parent?.name || '';
+		return `${getArticle(type)} ${type.toLowerCase()} by ${creators}${parent ? ` from ${parent}` : ''}`;
+	});
+
+	let modified = $derived.by(() => {
+		const lastUpdated = new Date(selected.lastUpdated);
+		const publishedOn = new Date(selected.extractedOn);
+		return new Date(Math.max(lastUpdated.getTime(), publishedOn.getTime())).toISOString();
+	});
 </script>
 
 <svelte:head>
-	<title>{title} | barnsworthburning</title>
-	<meta name="description" content={description} />
+	<title>{title}</title>
 	<meta property="og:title" content={title} />
+	<meta name="description" content={description} />
 	<meta property="og:description" content={description} />
+	<meta property="og:site_name" content="barnsworthburning" />
 	<meta property="og:type" content="article" />
-	<meta property="og:url" content={`https://barnsworthburning.net/extract/${selected?.id}`} />
-	{#if selected?.image}
-		<meta property="og:image" content={selected.image[0].url} />
-	{/if}
-	{#if selected?.creators && selected.creators.length > 0}
-		<meta name="author" content={selected.creators.map((creator) => creator.name).join(', ')} />
-	{/if}
-	{#if selected?.date_published}
-		<meta property="article:published_time" content={selected.date_published} />
-	{/if}
+	<meta property="og:url" content={`https://barnsworthburning.net/extracts/${selectedId}`} />
+	{#each selected.creators || [] as creator}
+		<meta name="author" content={creator.name} />
+		<meta property="og:article:author" content={creator.name} />
+	{/each}
+	{#each selected.images || [] as image}
+		<meta property="og:image" content={image.url} />
+	{/each}
+	<meta
+		property="og:article:published_time"
+		content={new Date(selected.extractedOn).toISOString()}
+	/>
+	<meta property="og:article:modified_time" content={modified} />
 </svelte:head>
 
 <article>
-	{#if selected}
-		<Extract extract={selected} class="chromatic" variant="card" suppressBlockLink />
-	{/if}
+	<Extract extract={selected} class="chromatic" variant="card" suppressBlockLink />
 
 	{#if children}
 		{#each children as child (child.id)}

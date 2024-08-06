@@ -1,6 +1,7 @@
 <script lang="ts">
 	import EntityLayout from './EntityLayout.svelte';
 	import type { ICreator, IExtract } from '$types/Airtable';
+	import { findFirstImageUrl } from '$helpers/images';
 
 	interface CreatorItemProps {
 		creator: ICreator;
@@ -8,21 +9,32 @@
 	}
 	let { creator, extracts }: CreatorItemProps = $props();
 
-	let title = $derived(creator.name || 'Anonymous');
-	let description = $derived(`Curated works by ${title} on barnsworthburning`);
+	let creatorName = $derived(creator.name || 'Anonymous');
+	let description = $derived(`Curated works by ${creatorName}.`);
+
+	let firstImageUrl = $derived(findFirstImageUrl(extracts));
 </script>
 
 <svelte:head>
-	<title>{title} | barnsworthburning</title>
+	<title>{creatorName}</title>
+	<meta property="og:title" content={creatorName} />
 	<meta name="description" content={description} />
-	<meta property="og:title" content={title} />
 	<meta property="og:description" content={description} />
-	<meta property="og:type" content="profile" />
-	<meta property="og:url" content={`https://barnsworthburning.net/creator/${creator.id}`} />
-	{#if creator.image}
-		<meta property="og:image" content={creator.image[0].url} />
+	<meta property="og:site_name" content="barnsworthburning" />
+	<meta property="og:type" content="article" />
+	<meta property="og:url" content={`https://barnsworthburning.net/creators/${creator.id}`} />
+	<meta property="og:article:author" content={creatorName} />
+	{#if firstImageUrl}
+		<meta property="og:image" content={firstImageUrl} />
 	{/if}
-	<meta property="profile:username" content={creator.name} />
+	<meta
+		property="og:article:published_time"
+		content={new Date(creator.createdTime).toISOString()}
+	/>
+	<meta
+		property="og:article:modified_time"
+		content={new Date(creator.lastUpdated).toISOString()}
+	/>
 </svelte:head>
 
-<EntityLayout {title} {extracts} />
+<EntityLayout title={creatorName} {extracts} />

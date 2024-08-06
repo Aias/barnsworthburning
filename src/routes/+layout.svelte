@@ -1,16 +1,16 @@
 <script lang="ts">
 	import '$styles/app.scss';
-	import Nav from './app/Nav.svelte';
 	import { page } from '$app/stores';
 	import { afterNavigate, beforeNavigate } from '$app/navigation';
-	// import cache from '$lib/cache.svelte';
 	import { Palette, Mode, Chroma } from '$types/Theme';
 	import settings from '$lib/settings.svelte';
 	import interaction from '$lib/interaction.svelte';
 	import trail from '$lib/trail.svelte';
 	import { entityTypes, type EntityType, type EntityTypeKey } from '$helpers/params';
 	import { getCookie } from '$helpers/cookies';
+	import SEO from '$components/SEO.svelte';
 	import Trail from './app/Trail.svelte';
+	import Nav from './app/Nav.svelte';
 	import Index from './app/Index.svelte';
 	import SettingsMenu from './app/SettingsMenu.svelte';
 
@@ -18,6 +18,7 @@
 	let bodyEl = $state<HTMLBodyElement>();
 	let bodyWidth = $state<number>(0);
 	let isIndex = $derived($page.route.id === '/');
+	let isEntityDetail = $derived($page.params.id);
 
 	let { creators, spaces } = $derived(data);
 
@@ -38,18 +39,6 @@
 
 		document.documentElement.className = settings.themeClass;
 	});
-
-	// $effect(() => {
-	// 	if (data.extracts) {
-	// 		cache.addExtracts(data.extracts);
-	// 	}
-	// 	if (data.creators) {
-	// 		cache.addCreators(data.creators);
-	// 	}
-	// 	if (data.spaces) {
-	// 		cache.addSpaces(data.spaces);
-	// 	}
-	// });
 
 	beforeNavigate(({ from, to, type, cancel }) => {
 		if (bodyWidth < 720) return; // Don't add segments when the screen is too small.
@@ -135,6 +124,9 @@
 	on:mouseenter={handleInteractions}
 	on:mouseleave={handleInteractions}
 />
+{#if !isEntityDetail}
+	<SEO />
+{/if}
 <svelte:body bind:this={bodyEl} bind:clientWidth={bodyWidth} />
 <div class="app-contents">
 	<Nav class="app-nav themed" />
