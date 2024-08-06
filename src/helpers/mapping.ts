@@ -106,9 +106,9 @@ export const mapExtractRecord = (record: IBaseExtract): IExtract => {
 		michelinStars,
 		notes,
 		source,
-		lastUpdated: new Date(lastUpdated),
-		extractedOn: new Date(extractedOn),
-		publishedOn: new Date(publishedOn)
+		lastUpdated,
+		extractedOn,
+		publishedOn
 	};
 };
 
@@ -151,8 +151,8 @@ export const mapCreatorRecord = (record: IBaseCreator): ICreator => {
 		numExtracts,
 		extracts: mappedExtracts,
 		totalStars,
-		createdTime: new Date(createdTime),
-		lastUpdated: new Date(lastUpdated)
+		createdTime,
+		lastUpdated
 	};
 };
 
@@ -185,8 +185,8 @@ export const mapSpaceRecord = (record: IBaseSpace): ISpace => {
 		extracts: mappedExtracts,
 		numExtracts,
 		totalStars,
-		createdTime: new Date(createdTime),
-		lastUpdated: new Date(lastUpdated)
+		createdTime,
+		lastUpdated
 	};
 };
 
@@ -197,19 +197,9 @@ type ExtractHierarchy = {
 	connections?: IExtract[];
 };
 
-export function makeHierarchy(extracts: IExtract[], selectedExtractId: string) {
+export function makeHierarchy(extracts: IExtract[], selectedExtractId: string): ExtractHierarchy {
 	const extractsById = new Map(extracts.map((extract) => [extract.id, extract]));
-	const selectedExtract = extractsById.get(selectedExtractId);
-
-	if (!selectedExtract) {
-		return {
-			full: undefined,
-			selected: undefined,
-			parents: undefined,
-			children: undefined,
-			connections: undefined
-		};
-	}
+	const selectedExtract = extractsById.get(selectedExtractId) ?? extracts[0];
 
 	const getParents = (extract: IExtract): IExtract[] => {
 		if (!extract.parent) return [];
@@ -239,21 +229,5 @@ export function makeHierarchy(extracts: IExtract[], selectedExtractId: string) {
 		connections: connections?.length ? connections : undefined
 	};
 
-	return {
-		get full() {
-			return hierarchy;
-		},
-		get selected() {
-			return hierarchy.selected;
-		},
-		get parents() {
-			return hierarchy.parents;
-		},
-		get children() {
-			return hierarchy.children;
-		},
-		get connections() {
-			return hierarchy.connections;
-		}
-	};
+	return hierarchy;
 }

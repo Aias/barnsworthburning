@@ -96,9 +96,9 @@ export interface IExtract {
 	michelinStars?: number;
 	source?: string;
 	format?: string;
-	extractedOn: Date;
-	lastUpdated: Date;
-	publishedOn: Date;
+	extractedOn: string;
+	lastUpdated: string;
+	publishedOn: string;
 }
 
 export interface IBaseCreator extends IBaseRecord {
@@ -142,8 +142,8 @@ export interface ICreator {
 	numFragments: number;
 	numExtracts: number;
 	totalStars: number;
-	createdTime: Date;
-	lastUpdated: Date;
+	createdTime: string;
+	lastUpdated: string;
 }
 
 export interface IBaseSpace extends IBaseRecord {
@@ -177,6 +177,6 @@ export interface ISpace {
 	extracts?: ILinkedRecord[];
 	numExtracts: number;
 	totalStars: number;
-	lastUpdated: Date;
-	createdTime: Date;
+	lastUpdated: string;
+	createdTime: string;
 }

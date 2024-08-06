@@ -58,9 +58,6 @@
 	}
 </script>
 
-<svelte:head>
-	<title>barnsworthburning</title>
-</svelte:head>
 <div class="toolbar">
 	<form data-sveltekit-keepfocus class="search-input">
 		<TextInput
