@@ -8,7 +8,6 @@ const linkRenderer = ({ href, title, text }: Tokens.Link) => {
 
 const markdown = new Marked({
 	breaks: true,
-	useNewRenderer: true,
 	renderer: {
 		link: linkRenderer
 	}
