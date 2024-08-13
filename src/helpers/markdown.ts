@@ -1,4 +1,4 @@
-import { Marked, type Tokens, parse } from 'marked';
+import { Marked, type Tokens } from 'marked';
 
 const linkRenderer = ({ href, title, text }: Tokens.Link) => {
 	const target = '_blank';
