@@ -7,6 +7,7 @@
 	import type { ICreator, IExtract, ISpace } from '$types/Airtable';
 	import { capitalize } from '$helpers/grammar';
 	import type { TrailSegment } from '$lib/trail.svelte';
+	import { error } from '@sveltejs/kit';
 
 	interface TrailSegmentProps {
 		segment: TrailSegment;
@@ -49,12 +50,19 @@
 	});
 
 	$effect(() => {
-		if ($state.is(entityType, entityTypes.creator)) {
-			fetchCreator(entityId);
-		} else if ($state.is(entityType, entityTypes.space)) {
-			fetchSpace(entityId);
-		} else if ($state.is(entityType, entityTypes.extract)) {
-			fetchExtracts(entityId);
+		switch (entityType.key) {
+			case entityTypes.extract.key:
+				fetchExtracts(entityId);
+				break;
+			case entityTypes.creator.key:
+				fetchCreator(entityId);
+				break;
+			case entityTypes.space.key:
+				fetchSpace(entityId);
+				break;
+			default:
+				error(500, 'Unknown entity type');
+				break;
 		}
 	});
 </script>

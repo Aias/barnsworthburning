@@ -13,17 +13,17 @@
 
 	let { extract, element = 'div', class: className }: CitationProps = $props();
 
-	enum Format {
-		Fragment = 'Fragment',
-		Extract = 'Extract'
-	}
+	const formats = {
+		Fragment: 'Fragment',
+		Extract: 'Extract'
+	};
 
-	let { format = Format.Extract, creators, source } = $derived(extract);
+	let { format = formats.Extract, creators, source } = $derived(extract);
 </script>
 
-{#if creators || source || format !== Format.Fragment}
+{#if creators || source || format !== formats.Fragment}
 	<svelte:element this={element} class:citation={true} class={classnames(className, 'text-mono')}>
-		{#if format !== Format.Fragment}
+		{#if format !== formats.Fragment}
 			<span class="article">{getArticle(format)}</span>
 			<strong class="format">{format}</strong>
 		{/if}
