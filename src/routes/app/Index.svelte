@@ -18,8 +18,6 @@
 		count: number;
 	}
 
-	let currentSort = $state('name');
-
 	let pageParams = $derived($page.params || {});
 
 	const index = $derived.by(() => {
@@ -35,16 +33,11 @@
 			id: s.id,
 			count: s.numExtracts
 		}));
-		const all = [...creatorEntries, ...spaceEntries].sort(
-			currentSort === 'name' ? sortByName : sortByCount
-		);
+		const all = [...creatorEntries, ...spaceEntries].sort(sortByName);
 
 		return all;
 	});
 
-	function sortByCount(a: IndexEntry, b: IndexEntry) {
-		return b.count - a.count;
-	}
 	function sortByName(a: IndexEntry, b: IndexEntry) {
 		return a.name.localeCompare(b.name);
 	}
