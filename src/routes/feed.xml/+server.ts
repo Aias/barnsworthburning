@@ -78,7 +78,7 @@ const generateContentMarkup = (extract: IExtract, isChild: boolean = false) => {
 	if (spaces) {
 		markup += `<p>\n<small>`;
 		markup += spaces
-			.map((space) => makeSiteLink(`spaces/${space.id}`, `# ${space.name}`))
+			.map((space) => makeSiteLink(`spaces/${space.id}`, `#${space.name}`))
 			.join(' • ');
 		markup += `</small>\n</p>\n`;
 	}
