@@ -34,24 +34,24 @@
 	"devDependencies": {
 		"@radix-ui/colors": "^3.0.0",
 		"@sveltejs/adapter-cloudflare": "4.7.2",
-		"@sveltejs/kit": "^2.5.26",
+		"@sveltejs/kit": "^2.5.27",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0-next.7",
 		"@types/eslint": "9.6.1",
 		"@types/remarkable": "^2.0.8",
-		"@typescript-eslint/eslint-plugin": "^8.5.0",
-		"@typescript-eslint/parser": "^8.5.0",
+		"@typescript-eslint/eslint-plugin": "^8.6.0",
+		"@typescript-eslint/parser": "^8.6.0",
 		"dotenv": "^16.4.5",
 		"eslint": "^9.10.0",
 		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-svelte": "^2.43.0",
+		"eslint-plugin-svelte": "^2.44.0",
 		"prettier": "^3.3.3",
 		"prettier-plugin-svelte": "^3.2.6",
 		"sass": "^1.78.0",
-		"svelte": "^5.0.0-next.244",
+		"svelte": "^5.0.0-next.247",
 		"svelte-check": "^4.0.2",
 		"tslib": "^2.7.0",
 		"typescript": "^5.6.2",
-		"vite": "^5.4.4",
-		"wrangler": "^3.76.0"
+		"vite": "^5.4.6",
+		"wrangler": "^3.78.3"
 	}
 }
