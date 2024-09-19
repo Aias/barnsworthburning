@@ -2,7 +2,7 @@
 	"name": "barnsworthburning",
 	"version": "5.0.0",
 	"type": "module",
-	"packageManager": "yarn@4.4.1",
+	"packageManager": "yarn@4.5.0",
 	"engines": {
 		"node": "20.x"
 	},
@@ -34,7 +34,7 @@
 	"devDependencies": {
 		"@radix-ui/colors": "^3.0.0",
 		"@sveltejs/adapter-cloudflare": "4.7.2",
-		"@sveltejs/kit": "^2.5.27",
+		"@sveltejs/kit": "^2.5.28",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0-next.7",
 		"@types/eslint": "9.6.1",
 		"@types/remarkable": "^2.0.8",
@@ -46,12 +46,12 @@
 		"eslint-plugin-svelte": "^2.44.0",
 		"prettier": "^3.3.3",
 		"prettier-plugin-svelte": "^3.2.6",
-		"sass": "^1.78.0",
-		"svelte": "^5.0.0-next.247",
+		"sass": "^1.79.1",
+		"svelte": "^5.0.0-next.255",
 		"svelte-check": "^4.0.2",
 		"tslib": "^2.7.0",
 		"typescript": "^5.6.2",
 		"vite": "^5.4.6",
-		"wrangler": "^3.78.3"
+		"wrangler": "^3.78.6"
 	}
 }
