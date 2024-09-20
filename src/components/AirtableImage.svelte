@@ -39,7 +39,7 @@
 	<img alt={image.filename} {src} loading="lazy" />
 </div>
 
-<style lang="scss">
+<style>
 	.image-container {
 		inline-size: 100%;
 		aspect-ratio: var(--aspect-ratio, 'auto');

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '$styles/app.scss';
+	import '$styles/app.css';
 	import TestCard from './TestCard.svelte';
 
 	const themes = [
@@ -32,7 +32,7 @@
 	{/each}
 </main>
 
-<style lang="scss">
+<style>
 	h2 {
 		text-transform: capitalize;
 	}

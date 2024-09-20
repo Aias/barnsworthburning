@@ -42,7 +42,7 @@
 	</svelte:element>
 {/if}
 
-<style lang="scss">
+<style>
 	.citation {
 		color: var(--primary);
 
@@ -68,12 +68,12 @@
 		font-size: var(--font-size-tiny);
 		transform: translateY(-0.065lh);
 
-		&::after {
+		:global(&::after) {
 			content: '⤤';
 			margin-inline-start: 0.75ch;
 		}
 
-		&:hover {
+		:global(&:hover) {
 			opacity: 1;
 			border-color: var(--border);
 			text-decoration: none;

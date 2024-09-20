@@ -19,7 +19,7 @@
 	</ul>
 </article>
 
-<style lang="scss">
+<style>
 	article {
 		padding: 1em;
 		border: 1px solid var(--divider);

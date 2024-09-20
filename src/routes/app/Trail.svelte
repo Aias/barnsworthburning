@@ -17,7 +17,7 @@
 	{/each}
 </ol>
 
-<style lang="scss">
+<style>
 	.trail {
 		height: 100%;
 		display: flex;

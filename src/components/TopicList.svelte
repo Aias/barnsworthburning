@@ -16,7 +16,7 @@
 	</ul>
 {/if}
 
-<style lang="scss">
+<style>
 	.tag-list {
 		list-style: none;
 		margin: 0;

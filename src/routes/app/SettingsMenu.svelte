@@ -109,7 +109,7 @@
 	</li>
 </menu>
 
-<style lang="scss">
+<style>
 	menu {
 		display: flex;
 		flex-direction: column;

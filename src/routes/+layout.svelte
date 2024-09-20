@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '$styles/app.scss';
+	import '$styles/app.css';
 	import { page } from '$app/stores';
 	import { afterNavigate, beforeNavigate } from '$app/navigation';
 	import { Palette, Mode, Chroma } from '$types/Theme';

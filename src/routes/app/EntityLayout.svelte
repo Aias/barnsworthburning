@@ -16,7 +16,7 @@
 	<em>No associated extracts.</em>
 {/if}
 
-<style lang="scss">
+<style>
 	h1 {
 		margin-block-end: 0.5em;
 	}

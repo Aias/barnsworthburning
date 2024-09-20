@@ -41,17 +41,16 @@
 		"@typescript-eslint/eslint-plugin": "^8.6.0",
 		"@typescript-eslint/parser": "^8.6.0",
 		"dotenv": "^16.4.5",
-		"eslint": "^9.10.0",
+		"eslint": "^9.11.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.44.0",
 		"prettier": "^3.3.3",
 		"prettier-plugin-svelte": "^3.2.6",
-		"sass": "^1.79.1",
-		"svelte": "^5.0.0-next.255",
+		"svelte": "^5.0.0-next.257",
 		"svelte-check": "^4.0.2",
 		"tslib": "^2.7.0",
 		"typescript": "^5.6.2",
-		"vite": "^5.4.6",
-		"wrangler": "^3.78.6"
+		"vite": "^5.4.7",
+		"wrangler": "^3.78.7"
 	}
 }

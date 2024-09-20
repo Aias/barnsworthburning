@@ -17,7 +17,7 @@
 	{/each}
 </div>
 
-<style lang="scss">
+<style>
 	.gallery {
 		column-width: 40ch;
 		column-gap: 1em;
@@ -29,17 +29,17 @@
 			padding-block-end: 0;
 		}
 	}
-	// @supports (grid-template-rows: masonry) {
-	// 	.gallery {
-	// 		all: initial;
-	// 		display: grid;
-	// 		grid-template-columns: repeat(auto-fill, minmax(40ch, 1fr));
-	// 		grid-template-rows: masonry;
-	// 		gap: 1em;
+	@supports (grid-template-rows: masonry) {
+		.gallery {
+			all: initial;
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(40ch, 1fr));
+			grid-template-rows: masonry;
+			gap: 1em;
 
-	// 		> :global(*) {
-	// 			margin-block: 0;
-	// 		}
-	// 	}
-	// }
+			& > :global(*) {
+				margin-block: 0;
+			}
+		}
+	}
 </style>

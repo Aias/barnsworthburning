@@ -35,7 +35,7 @@
 	<span class="group-item more" aria-hidden="true">+{moreItems}</span>
 {/if}
 
-<style lang="scss">
+<style>
 	* + *::before {
 		display: inline;
 		content: ' • ';

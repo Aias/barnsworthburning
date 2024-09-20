@@ -7,15 +7,15 @@ import prettier from 'prettier';
 import { generateFullTheme } from './src/styles/generators';
 
 const makeThemeFile = async () => {
-	const scssContent = generateFullTheme();
+	const cssContent = generateFullTheme();
 	let formattedContent = '';
 	try {
-		formattedContent = await prettier.format(scssContent, {
-			parser: 'scss'
+		formattedContent = await prettier.format(cssContent, {
+			parser: 'css'
 		});
 	} catch (e) {
 		console.error(e);
-		formattedContent = scssContent;
+		formattedContent = cssContent;
 	}
 
 	const outputDir = './src/styles'; // Ensure this directory exists or use your path
@@ -23,7 +23,7 @@ const makeThemeFile = async () => {
 		await fs.mkdir(outputDir);
 	}
 
-	await fs.writeFile(path.resolve(outputDir, 'palette.scss'), formattedContent);
+	await fs.writeFile(path.resolve(outputDir, 'palette.css'), formattedContent);
 };
 
 const colorGeneratorPlugin = (): Plugin => {

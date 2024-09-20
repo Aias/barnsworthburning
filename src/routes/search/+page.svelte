@@ -82,7 +82,7 @@
 	<p>No results.</p>
 {/if}
 
-<style lang="scss">
+<style>
 	.toolbar {
 		margin-block-end: 1em;
 		display: flex;
@@ -93,7 +93,7 @@
 			gap: 0.5em;
 			flex: 1;
 
-			> :global(input) {
+			& > :global(input) {
 				flex: 1;
 			}
 		}

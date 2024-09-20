@@ -22,21 +22,21 @@ const generateShadeRamp = (shade: Shade, isP3: Boolean) => {
 	const p3 = isP3 ? p3Suffix : '';
 	const alphaRamp: Ramp = radix[`${shade}${p3}${alphaSuffix}`];
 
-	let scss = '';
+	let css = '';
 	for (const level of rampLevels) {
 		const key = `${shade}${alphaSuffix}${level}`;
-		scss += `--${shade}-a${level}: ${alphaRamp[key]};\n`;
+		css += `--${shade}-a${level}: ${alphaRamp[key]};\n`;
 	}
-	return scss;
+	return css;
 };
 
 const generateShadeClasses = (isP3: Boolean = false) => {
-	let scss = ':root {\n';
-	scss += generateShadeRamp(Shade.Black, isP3);
-	scss += '\n';
-	scss += generateShadeRamp(Shade.White, isP3);
-	scss += '}\n\n';
-	return scss;
+	let css = ':root {\n';
+	css += generateShadeRamp(Shade.Black, isP3);
+	css += '\n';
+	css += generateShadeRamp(Shade.White, isP3);
+	css += '}\n\n';
+	return css;
 };
 
 const generateVariableRamp = (palette: Palette, isP3: Boolean, isNeutral: Boolean) => {
@@ -47,74 +47,74 @@ const generateVariableRamp = (palette: Palette, isP3: Boolean, isNeutral: Boolea
 	const lightAlphaRamp: Ramp = radix[`${palette}${p3}${alphaSuffix}`];
 	const darkAlphaRamp: Ramp = radix[`${palette}${darkSuffix}${p3}${alphaSuffix}`];
 
-	let scss = '';
+	let css = '';
 	for (const level of rampLevels) {
 		const key = `${palette}${level}`;
 
 		const lightColor = lightRamp[key];
 		const darkColor = darkRamp[key];
 
-		scss += `--${type}-${level}: light-dark(${lightColor}, ${darkColor});\n`;
+		css += `--${type}-${level}: light-dark(${lightColor}, ${darkColor});\n`;
 	}
-	scss += '\n';
+	css += '\n';
 	for (const level of rampLevels) {
 		const key = `${palette}${alphaSuffix}${level}`;
 
 		const lightColor = lightAlphaRamp[key];
 		const darkColor = darkAlphaRamp[key];
 
-		scss += `--${type}-a${level}: light-dark(${lightColor}, ${darkColor});\n`;
+		css += `--${type}-a${level}: light-dark(${lightColor}, ${darkColor});\n`;
 	}
 
-	return scss;
+	return css;
 };
 
 const NO_CLASS = ':root:where(:not([class]), [class=""])';
 
 const generateColorClasses = (isP3: Boolean = false) => {
-	let scss = '';
+	let css = '';
 	for (const palette of paletteOptions) {
 		const selectors = [`.${palette}`];
 		if (palette === DEFAULT_PALETTE) {
 			selectors.push(NO_CLASS);
 		}
-		scss += `${selectors.join(', ')} {\n`;
-		scss += generateVariableRamp(palette, isP3, false);
-		scss += `}\n\n`;
+		css += `${selectors.join(', ')} {\n`;
+		css += generateVariableRamp(palette, isP3, false);
+		css += `}\n\n`;
 	}
 
-	return scss;
+	return css;
 };
 
 const generateNeutralClasses = (isP3: Boolean = false) => {
-	let scss = '';
+	let css = '';
 	for (const neutral in neutralsMap) {
 		const palettes = neutralsMap[neutral as Neutral];
 		const selectors = palettes.map((palette) => `.${palette}`);
 		if (palettes.includes(DEFAULT_PALETTE)) {
 			selectors.push(NO_CLASS);
 		}
-		scss += `${selectors.join(', ')} {`;
-		scss += generateVariableRamp(palettes[0], isP3, true);
-		scss += '}\n\n';
+		css += `${selectors.join(', ')} {`;
+		css += generateVariableRamp(palettes[0], isP3, true);
+		css += '}\n\n';
 	}
-	return scss;
+	return css;
 };
 
 export const generateFullTheme = () => {
-	let scss = '';
+	let css = '';
 
-	scss += generateShadeClasses(false);
-	scss += generateColorClasses(false);
-	scss += generateNeutralClasses(false);
+	css += generateShadeClasses(false);
+	css += generateColorClasses(false);
+	css += generateNeutralClasses(false);
 
-	scss += '@supports (color: color(display-p3 1 1 1)) {\n';
-	scss += '@media (color-gamut: p3) {\n';
-	scss += generateShadeClasses(true);
-	scss += generateColorClasses(true);
-	scss += generateNeutralClasses(true);
-	scss += '}\n';
-	scss += '}\n';
+	css += '@supports (color: color(display-p3 1 1 1)) {\n';
+	css += '@media (color-gamut: p3) {\n';
+	css += generateShadeClasses(true);
+	css += generateColorClasses(true);
+	css += generateNeutralClasses(true);
+	css += '}\n';
+	css += '}\n';
 
-	return scss;
+	return css;
 };

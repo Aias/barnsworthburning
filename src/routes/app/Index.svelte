@@ -77,7 +77,7 @@
 	</li>
 </ol>
 
-<style lang="scss">
+<style>
 	.index {
 		column-width: 25ch;
 		column-gap: 2em;

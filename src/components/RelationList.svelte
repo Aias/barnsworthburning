@@ -39,7 +39,7 @@
 	</ol>
 {/if}
 
-<style lang="scss">
+<style>
 	.relation-list {
 		display: block;
 		position: relative;
@@ -70,7 +70,9 @@
 		}
 	}
 	.show-more {
-		margin-inline-start: -1ch; // Remove extra white space.
+		margin-inline-start: -1ch;
+
+		/* Remove extra white space. */
 
 		button {
 			color: var(--hint);

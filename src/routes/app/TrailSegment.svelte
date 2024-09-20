@@ -82,7 +82,7 @@
 	</div>
 {/if}
 
-<style lang="scss">
+<style>
 	.loading-container {
 		display: flex;
 		flex-direction: column;
@@ -94,7 +94,7 @@
 	p {
 		color: var(--accent);
 	}
-	// https://css-loaders.com/progress/
+	/* https://css-loaders.com/progress/ */
 	.loader {
 		height: 0.25rem;
 		width: 100%;

@@ -1,19 +1,15 @@
 @layer theme, normalize, reset, defaults, layout, components, utilities;
 
-@import './triptych.scss' layer(theme);
+@import './triptych.css' layer(theme);
 @import 'normalize.css' layer(normalize);
-@import './reset.scss' layer(reset);
-@import './defaults.scss' layer(defaults);
-@import './components.scss' layer(components);
-@import './utilities.scss' layer(utilities);
-
-$sidebar-width: 14rem;
-$segment-width: 30rem;
-$breakpoint: $sidebar-width + $segment-width + 1rem;
+@import './reset.css' layer(reset);
+@import './defaults.css' layer(defaults);
+@import './components.css' layer(components);
+@import './utilities.css' layer(utilities);
 
 .app {
-	--sidebar-width: #{$sidebar-width};
-	--segment-width: #{$segment-width};
+	--sidebar-width: 14rem;
+	--segment-width: 30rem;
 	--trail-width: var(--segment-width);
 	height: 100%;
 	width: 100%;
@@ -88,7 +84,7 @@ $breakpoint: $sidebar-width + $segment-width + 1rem;
 	display: none;
 }
 
-@media (width < $breakpoint) {
+@media (width < 45rem) {
 	.app {
 		height: auto;
 	}
@@ -142,7 +138,7 @@ $breakpoint: $sidebar-width + $segment-width + 1rem;
 	}
 }
 
-@media (width >= $breakpoint) {
+@media (width >= 45rem) {
 	.app:has(.aside-container) {
 		.app-contents {
 			margin-inline-end: var(--trail-width);
