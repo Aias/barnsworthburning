@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { IExtract } from '$types/Airtable';
-	import { getArticle } from '$helpers/grammar';
+	import { getArticle, combineAsList } from '$helpers/grammar';
 
 	interface ExtractSEOProps {
 		extract: IExtract;
@@ -8,14 +8,13 @@
 	let { extract }: ExtractSEOProps = $props();
 
 	let title = $derived(extract.title || 'Extract');
+	let creators = $derived(extract.creators || extract.parentCreators || []);
 
 	let description = $derived.by(() => {
 		const type = extract.format || 'extract';
-		const creators =
-			(extract.creators || extract.parentCreators)?.map((c) => c.name).join(', ') ||
-			'Unknown';
+		const creatorNames = combineAsList(creators.map((c) => c.name));
 		const parent = extract.parent?.name || '';
-		return `${getArticle(type)} ${type.toLowerCase()} by ${creators}${parent ? ` from ${parent}` : ''}.`;
+		return `${getArticle(type)} ${type.toLowerCase()} by ${creatorNames}${parent ? ` from ${parent}` : ''}.`;
 	});
 
 	let modified = $derived.by(() => {
@@ -33,7 +32,7 @@
 	<meta property="og:site_name" content="barnsworthburning" />
 	<meta property="og:url" content={`https://barnsworthburning.net/extracts/${extract.id}`} />
 	<meta property="og:type" content="article" />
-	{#each extract.creators || [] as creator}
+	{#each extract.creators || extract.parentCreators || [] as creator}
 		<meta name="author" content={creator.name} />
 		<meta property="og:article:author" content={creator.name} />
 	{/each}

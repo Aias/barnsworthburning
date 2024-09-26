@@ -38,19 +38,19 @@
 		"@sveltejs/vite-plugin-svelte": "^4.0.0-next.7",
 		"@types/eslint": "9.6.1",
 		"@types/remarkable": "^2.0.8",
-		"@typescript-eslint/eslint-plugin": "^8.6.0",
-		"@typescript-eslint/parser": "^8.6.0",
+		"@typescript-eslint/eslint-plugin": "^8.7.0",
+		"@typescript-eslint/parser": "^8.7.0",
 		"dotenv": "^16.4.5",
-		"eslint": "^9.11.0",
+		"eslint": "^9.11.1",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.44.0",
 		"prettier": "^3.3.3",
-		"prettier-plugin-svelte": "^3.2.6",
-		"svelte": "^5.0.0-next.257",
-		"svelte-check": "^4.0.2",
+		"prettier-plugin-svelte": "^3.2.7",
+		"svelte": "^5.0.0-next.259",
+		"svelte-check": "^4.0.3",
 		"tslib": "^2.7.0",
 		"typescript": "^5.6.2",
-		"vite": "^5.4.7",
-		"wrangler": "^3.78.7"
+		"vite": "^5.4.8",
+		"wrangler": "^3.78.10"
 	}
 }
