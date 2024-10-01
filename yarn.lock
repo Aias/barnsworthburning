@@ -1228,7 +1228,7 @@ __metadata:
     tslib: "npm:^2.7.0"
     typescript: "npm:^5.6.2"
     vite: "npm:^5.4.8"
-    wrangler: "npm:^3.78.12"
+    wrangler: "npm:^3.79.0"
     xml-formatter: "npm:^3.6.3"
   languageName: unknown
   linkType: soft
@@ -3831,9 +3831,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrangler@npm:^3.78.12":
-  version: 3.78.12
-  resolution: "wrangler@npm:3.78.12"
+"wrangler@npm:^3.79.0":
+  version: 3.79.0
+  resolution: "wrangler@npm:3.79.0"
   dependencies:
     "@cloudflare/kv-asset-handler": "npm:0.3.4"
     "@cloudflare/workers-shared": "npm:0.5.4"
@@ -3864,7 +3864,7 @@ __metadata:
   bin:
     wrangler: bin/wrangler.js
     wrangler2: bin/wrangler.js
-  checksum: 10c0/3999ae518d43cea6c00f2be806f934e20e79460a8ba01629250e85a48c0c281399be5782f0bdc94aa245295cb464e346f59edd601fee3f924e03acccbb96ffe9
+  checksum: 10c0/7c96c8bd8e5152d0106991188f86bdcfb18e51c1f0dae47198cea6f0964a990506f50779b4de683d489a587fb8d21e7cfebe91b884bcc68a66e94e07223748f8
   languageName: node
   linkType: hard
 
