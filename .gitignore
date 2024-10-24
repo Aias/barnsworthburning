@@ -14,3 +14,4 @@ vite.config.ts.timestamp-*
 .pnp.loader.mjs
 .vscode
 .cursorignore
+.temp
