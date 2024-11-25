@@ -34,7 +34,7 @@
 	"devDependencies": {
 		"@radix-ui/colors": "^3.0.0",
 		"@sveltejs/adapter-cloudflare": "4.7.4",
-		"@sveltejs/kit": "^2.8.1",
+		"@sveltejs/kit": "^2.8.3",
 		"@sveltejs/vite-plugin-svelte": "^4.0.1",
 		"@types/eslint": "9.6.1",
 		"@types/remarkable": "^2.0.8",

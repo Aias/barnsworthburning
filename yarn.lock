@@ -811,9 +811,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/kit@npm:^2.8.1":
-  version: 2.8.1
-  resolution: "@sveltejs/kit@npm:2.8.1"
+"@sveltejs/kit@npm:^2.8.3":
+  version: 2.8.3
+  resolution: "@sveltejs/kit@npm:2.8.3"
   dependencies:
     "@types/cookie": "npm:^0.6.0"
     cookie: "npm:^0.6.0"
@@ -833,7 +833,7 @@ __metadata:
     vite: ^5.0.3
   bin:
     svelte-kit: svelte-kit.js
-  checksum: 10c0/531cf8fdff0e039f51ad3e9aa288acea5fd9eb03b3189fda68dc45e7ac12a288f6a1792aace9c9fec3979475b5e487eb3af4b6160ad23c5bea1f503b89da5cd2
+  checksum: 10c0/ffd15835c807f5d9401ef26b2bd9ac6603f46647c2b51ea9b8f9a43d64f8e549c44fb2274e10ca527362d8fda011c1fb814ea5a0287a024a8051349e5e2873d4
   languageName: node
   linkType: hard
 
@@ -1243,7 +1243,7 @@ __metadata:
   dependencies:
     "@radix-ui/colors": "npm:^3.0.0"
     "@sveltejs/adapter-cloudflare": "npm:4.7.4"
-    "@sveltejs/kit": "npm:^2.8.1"
+    "@sveltejs/kit": "npm:^2.8.3"
     "@sveltejs/vite-plugin-svelte": "npm:^4.0.1"
     "@types/eslint": "npm:9.6.1"
     "@types/remarkable": "npm:^2.0.8"
