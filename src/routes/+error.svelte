@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
-	let { status, error } = $page;
+	let { status, error } = page;
 </script>
 
 <svelte:head>

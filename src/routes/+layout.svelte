@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '$styles/app.css';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { afterNavigate, beforeNavigate } from '$app/navigation';
 	import { Palette, Mode, Chroma } from '$types/Theme';
 	import settings from '$lib/settings.svelte';
@@ -17,8 +17,8 @@
 	let { children, data } = $props();
 	let bodyEl = $state<HTMLBodyElement>();
 	let bodyWidth = $state<number>(0);
-	let isIndex = $derived($page.route.id === '/');
-	let isEntityDetail = $derived($page.params.id);
+	let isIndex = $derived(page.route.id === '/');
+	let isEntityDetail = $derived(page.params.id);
 
 	let { creators, spaces } = $derived(data);
 
@@ -64,9 +64,7 @@
 		if (!toEntityType) return; // Don't add segments for unknown entity types.
 
 		// Check if toId already exists in the trail and remove it
-		const existingSegmentIndex = trail.segments.findIndex(
-			(segment) => segment.entityId === toId
-		);
+		const existingSegmentIndex = trail.segments.findIndex((segment) => segment.entityId === toId);
 		if (existingSegmentIndex >= 0) {
 			trail.removeSegment(toId);
 		}

@@ -4,11 +4,11 @@
 		"checkJs": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
-		"moduleResolution": "bundler",
-		// "noUncheckedIndexedAccess": true,
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
+		"sourceMap": true,
 		"strict": true,
-		"verbatimModuleSyntax": true
+		"moduleResolution": "bundler",
+		"noImplicitAny": true
 	}
 }

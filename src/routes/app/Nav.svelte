@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import Link from '$components/Link.svelte';
 
 	let { ...restProps } = $props();
@@ -18,7 +18,7 @@
 	];
 
 	let activeRoute = $derived.by(() => {
-		const currentRoute = $page.url.pathname;
+		const currentRoute = page.url.pathname;
 		const [indexRoute, ...otherRoutes] = routes;
 		if (!currentRoute) return undefined;
 		if (currentRoute === '/') return indexRoute;
@@ -28,11 +28,8 @@
 
 <nav {...restProps}>
 	{#each routes as route (route.path)}
-		<Link
-			class="nav-link"
-			active={route === activeRoute}
-			href={route.path}
-			data-icon={route.icon}>{route.name}</Link
+		<Link class="nav-link" active={route === activeRoute} href={route.path} data-icon={route.icon}
+			>{route.name}</Link
 		>
 	{/each}
 </nav>

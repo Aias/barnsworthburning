@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import CreatorItem from '../../app/CreatorItem.svelte';
 	import CreatorSEO from '../../app/CreatorSEO.svelte';
 	import SpaceItem from '../../app/SpaceItem.svelte';
@@ -10,7 +10,7 @@
 	let { data } = $props();
 
 	let { creator, space, extracts = [] } = $derived(data);
-	let { id } = $derived($page.params);
+	let { id } = $derived(page.params);
 </script>
 
 {#if creator}

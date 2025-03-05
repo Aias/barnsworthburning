@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import type { Snippet } from 'svelte';
 	import type { HTMLAttributes } from 'svelte/elements';
 
@@ -9,12 +9,7 @@
 		suppress?: boolean;
 		children: Snippet;
 	}
-	let {
-		element = 'div',
-		suppress = false,
-		children,
-		...restProps
-	}: BlockLinkProps<any> = $props();
+	let { element = 'div', suppress = false, children, ...restProps }: BlockLinkProps<any> = $props();
 
 	const handleBlockLinkClick = (event: MouseEvent) => {
 		if (suppress) return; // If we're suppressing the block link, no special handling.
@@ -36,7 +31,7 @@
 		if (allLinks && Array.from(allLinks).some((item) => item === target)) return; // If the click target is a link, no special handling.
 
 		const href = mainLink.getAttribute('href');
-		const { url } = $page;
+		const { url } = page;
 		if (!href || href === url.href) return; // If the main link doesn't have an href, or we're already on the page, no special handling.
 
 		// No other special cases apply, treat the click as a navigation to the main link's href.

@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import ExtractGallery from '$components/ExtractGallery.svelte';
 	import TextInput from '$components/TextInput.svelte';
 
 	const { data } = $props();
-	const results = $derived(data.search);
-
-	const currentQuery = $derived($page.url.searchParams.get('q'));
+	const results = $derived(data.results);
+	const currentQuery = $derived(page.url.searchParams.get('q'));
 	let searchValue = $state('');
 
 	$effect(() => {

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { entityTypes, type EntityType } from '$helpers/params';
 	import Link from '$components/Link.svelte';
 	import type { ICreator, ISpace } from '$types/Airtable';
@@ -18,7 +18,7 @@
 		count: number;
 	}
 
-	let pageParams = $derived($page.params || {});
+	let pageParams = $derived(page.params || {});
 
 	const index = $derived.by(() => {
 		const creatorEntries = creators.map((c) => ({
