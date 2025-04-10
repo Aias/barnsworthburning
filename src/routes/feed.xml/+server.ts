@@ -16,6 +16,7 @@ const makeSiteLink = (relativePath: string, title: string) =>
 
 const generateContentMarkup = (extract: IExtract, isChild: boolean = false) => {
 	const {
+		id,
 		extract: content,
 		notes,
 		format,
@@ -62,15 +63,20 @@ const generateContentMarkup = (extract: IExtract, isChild: boolean = false) => {
 		markup += '</blockquote>\n';
 	}
 	if (source) {
-		markup += `<p>[<a href="${source}">Source</a>]</p>\n`;
+		let linkText;
+		try {
+			linkText = new URL(source).hostname;
+		} catch (error) {
+			linkText = source;
+		}
+		markup += `<p>Source: <a href="${source}">${linkText}</a></p>\n`;
 	}
 	if (connections) {
 		markup += '<p>Related:</p>\n';
 		markup += '<ul>\n';
 		markup += connections
 			.map(
-				(connection) =>
-					`<li>${makeSiteLink(`extracts/${connection.id}`, connection.name)}</li>\n`
+				(connection) => `<li>${makeSiteLink(`extracts/${connection.id}`, connection.name)}</li>\n`
 			)
 			.join('');
 		markup += '</ul>\n';
@@ -85,6 +91,10 @@ const generateContentMarkup = (extract: IExtract, isChild: boolean = false) => {
 	if (notes) {
 		markup += '<hr>\n';
 		markup += `<small>${markdown.parse(notes)}</small>\n`;
+	}
+	if (images) {
+		markup += '<hr>\n';
+		markup += `<p><small><em>Content Note: This entry contains attached images, which may not display due to Airtable's link expiration settings. ${makeSiteLink(`extracts/${id}`, 'Open in a browser')} to view.</em></small></p>\n`;
 	}
 	markup += '</section>\n';
 	markup += '</article>';
@@ -137,8 +147,7 @@ const atom = (entries: IExtract[] = [], children: IExtract[] = []) => {
 	${meta.tags.map((tag) => `<category term="${tag}" />`).join('\n')}
 	${entries
 		.map((extract) => {
-			const { title, id, creators, source, lastUpdated, publishedOn, spaces, images } =
-				extract;
+			const { title, id, creators, source, lastUpdated, publishedOn, spaces, images } = extract;
 			const extractChildren =
 				extract.children
 					?.map((child) => children.find((entry) => entry.id === child.id))
