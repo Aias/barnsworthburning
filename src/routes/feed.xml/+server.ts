@@ -1,6 +1,7 @@
 import { mapExtractRecord } from '$helpers/mapping';
 import { airtableFetch } from '$lib/server/requests';
 import {
+	AirtableBaseId,
 	extractFields,
 	ExtractView,
 	Table,
@@ -10,6 +11,10 @@ import {
 import markdown from '$helpers/markdown';
 import { getArticle, combineAsList } from '$helpers/grammar';
 import xmlFormatter from 'xml-formatter';
+
+const generateImageProxyUrl = (recordId: string, index: number) => {
+	return `${meta.imageProxyUrl}/${AirtableBaseId}/${Table.Extracts}/${recordId}?index=${index}`;
+};
 
 const makeSiteLink = (relativePath: string, title: string) =>
 	`<a href="${meta.url}/${relativePath}">${title}</a>`;
@@ -50,7 +55,10 @@ const generateContentMarkup = (extract: IExtract, isChild: boolean = false) => {
 	if (images) {
 		markup += '<figure>\n';
 		markup += images
-			.map(({ url, filename }) => `<img src="${url}" alt="${filename}" />\n`)
+			.map(
+				({ filename, type = 'image/*' }, index) =>
+					`<img src="${generateImageProxyUrl(id, index)}" alt="${filename}" type="${type}" />\n`
+			)
 			.join('');
 		if (imageCaption) {
 			markup += `<figcaption>${markdown.parse(imageCaption)}</figcaption>\n`;
@@ -92,10 +100,6 @@ const generateContentMarkup = (extract: IExtract, isChild: boolean = false) => {
 		markup += '<hr>\n';
 		markup += `<small>${markdown.parse(notes)}</small>\n`;
 	}
-	if (images) {
-		markup += '<hr>\n';
-		markup += `<p><small><em>Content Note: This entry contains attached images, which may not display due to Airtable's link expiration settings. ${makeSiteLink(`extracts/${id}`, 'Open in a browser')} to view.</em></small></p>\n`;
-	}
 	markup += '</section>\n';
 	markup += '</article>';
 
@@ -115,7 +119,8 @@ const meta = {
 		url: 'https://nicktrombley.design'
 	},
 	tags: ['design', 'knowledge', 'making', 'architecture', 'art'],
-	url: 'https://barnsworthburning.net'
+	url: 'https://barnsworthburning.net',
+	imageProxyUrl: 'https://airtable-media-proxy.trombley-nick.workers.dev'
 };
 
 const atom = (entries: IExtract[] = [], children: IExtract[] = []) => {
@@ -131,7 +136,7 @@ const atom = (entries: IExtract[] = [], children: IExtract[] = []) => {
 		)
 	).toISOString();
 	return `<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <id>${meta.url}/feed</id>
     <title>${meta.title}</title>
     <subtitle>${meta.description}</subtitle>
@@ -170,8 +175,8 @@ const atom = (entries: IExtract[] = [], children: IExtract[] = []) => {
 			if (images) {
 				entry += images
 					.map(
-						(image) =>
-							`<link rel="enclosure" href="${cleanLink(image.url)}" type="${image.type}" />`
+						({ filename, type = 'image/*' }, index) =>
+							`<link rel="enclosure" href="${generateImageProxyUrl(id, index)}" type="${type}" title="${filename}" />`
 					)
 					.join('\n');
 			}
@@ -223,7 +228,7 @@ export async function GET() {
 		status: 200,
 		headers: {
 			'Content-Type': 'application/atom+xml; charset=utf-8',
-			'Cache-Control': `max-age=0, s-maxage=0`
+			'Cache-Control': `max-age=0, s-maxage=300`
 		}
 	};
 
