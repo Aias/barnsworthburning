@@ -32,7 +32,7 @@
 	<meta property="og:site_name" content="barnsworthburning" />
 	<meta property="og:url" content={`https://barnsworthburning.net/extracts/${extract.id}`} />
 	<meta property="og:type" content="article" />
-	{#each extract.creators || extract.parentCreators || [] as creator}
+	{#each extract.creators || extract.parentCreators || [] as creator (creator.id)}
 		<meta name="author" content={creator.name} />
 		<meta property="og:article:author" content={creator.name} />
 	{/each}
@@ -41,7 +41,7 @@
 		content={new Date(extract.extractedOn).toISOString()}
 	/>
 	<meta property="og:article:modified_time" content={modified} />
-	{#each extract.images || [] as image}
+	{#each extract.images || [] as image (image.id)}
 		<meta property="og:image" content={image.url} />
 	{/each}
 </svelte:head>

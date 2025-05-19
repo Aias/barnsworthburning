@@ -18,7 +18,7 @@ export async function load({ params, fetch }) {
 	}
 
 	if (!recordIdRegex.test(id)) {
-		let idSegments = id.split('/');
+		const idSegments = id.split('/');
 		let searchTable;
 		if (idSegments.length > 1) {
 			const extractId = idSegments[1];

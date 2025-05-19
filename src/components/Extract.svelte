@@ -18,6 +18,7 @@
 		element?: T;
 		suppressBlockLink?: boolean;
 		variant?: 'default' | 'card';
+		class?: string;
 	}
 
 	let {
