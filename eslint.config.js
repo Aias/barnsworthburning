@@ -31,7 +31,11 @@ export default tseslint.config(
 		rules: {
 			'no-undef': 'off',
 			'svelte/no-at-html-tags': 'off',
-			'svelte/prefer-writable-derived': 'off'
+			'svelte/prefer-writable-derived': 'off',
+			'@typescript-eslint/no-unused-vars': [
+				'warn',
+				{ argsIgnorePattern: '^_', varsIgnorePattern: '^_' }
+			]
 		}
 	},
 	{

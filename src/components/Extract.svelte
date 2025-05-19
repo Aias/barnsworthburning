@@ -35,7 +35,7 @@
 	let notes = $derived(extract.notes);
 	let images = $derived(extract.images);
 	let imageCaption = $derived(extract.imageCaption);
-
+	let source = $derived(extract.source);
 	let parent = $derived(extract.parent);
 	let parentCreators = $derived(extract.parentCreators);
 	let children = $derived(extract.children);
@@ -93,7 +93,7 @@
 				{/if}
 			{/if}
 			{#if extractContent}
-				<blockquote class="extract-text content" cite={extract.source}>
+				<blockquote class="extract-text content" cite={source}>
 					{@html markdown.parse(extractContent)}
 				</blockquote>
 			{/if}
