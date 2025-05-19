@@ -5,7 +5,7 @@
 		href: string;
 	}
 
-	let { href, children, ...restProps }: SourceLinkProps = $props();
+	let { href, children: _, ...restProps }: SourceLinkProps = $props();
 </script>
 
 <a class="source" {href} target="_blank" rel="noreferrer" title="View source" {...restProps}>

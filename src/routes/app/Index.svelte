@@ -94,7 +94,7 @@
 		border: none;
 
 		&::before {
-			content: '⁘  ⁘  ⁘';
+			content: '⁘\2007\2007⁘\2007\2007⁘';
 			display: inline-block;
 			color: var(--hint);
 		}

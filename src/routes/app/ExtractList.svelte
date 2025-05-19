@@ -32,7 +32,7 @@
 					<header>
 						{#if michelinStars}
 							<span class="stars">
-								{#each Array(michelinStars) as _}
+								{#each Array(michelinStars) as _, index (index)}
 									<span>⭐</span>
 								{/each}
 							</span>
