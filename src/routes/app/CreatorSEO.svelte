@@ -27,10 +27,7 @@
 		property="og:article:published_time"
 		content={new Date(creator.createdTime).toISOString()}
 	/>
-	<meta
-		property="og:article:modified_time"
-		content={new Date(creator.lastUpdated).toISOString()}
-	/>
+	<meta property="og:article:modified_time" content={new Date(creator.lastUpdated).toISOString()} />
 	{#if firstImageUrl}
 		<meta property="og:image" content={firstImageUrl} />
 	{/if}

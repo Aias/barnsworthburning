@@ -61,11 +61,7 @@
 				{#if images}
 					{@const mainImage = images[0]}
 					<figure>
-						<img
-							src={mainImage.url}
-							alt={imageCaption ?? mainImage.filename}
-							loading="lazy"
-						/>
+						<img src={mainImage.url} alt={imageCaption ?? mainImage.filename} loading="lazy" />
 					</figure>
 				{/if}
 			</article>

@@ -34,33 +34,33 @@
 }
 
 :where(
-		.gray,
-		.mauve,
-		.slate,
-		.sage,
-		.olive,
-		.sand,
-		.bronze,
-		.gold,
-		.brown,
-		.orange,
-		.tomato,
-		.red,
-		.ruby,
-		.crimson,
-		.pink,
-		.plum,
-		.purple,
-		.violet,
-		.iris,
-		.indigo,
-		.blue,
-		.cyan,
-		.teal,
-		.jade,
-		.green,
-		.grass
-	) {
+	.gray,
+	.mauve,
+	.slate,
+	.sage,
+	.olive,
+	.sand,
+	.bronze,
+	.gold,
+	.brown,
+	.orange,
+	.tomato,
+	.red,
+	.ruby,
+	.crimson,
+	.pink,
+	.plum,
+	.purple,
+	.violet,
+	.iris,
+	.indigo,
+	.blue,
+	.cyan,
+	.teal,
+	.jade,
+	.green,
+	.grass
+) {
 	--clr-contrast: var(--white);
 }
 
@@ -107,15 +107,9 @@
 	--hint-chromatic: var(--clr-a7);
 	--accent-chromatic: var(--clr-a11);
 
-	--background-chromatic: light-dark(
-		color-mix(in oklch, var(--clr-1), var(--clr-2)),
-		var(--clr-1)
-	);
+	--background-chromatic: light-dark(color-mix(in oklch, var(--clr-1), var(--clr-2)), var(--clr-1));
 	--paper-chromatic: light-dark(color-mix(in oklch, var(--clr-2), var(--clr-3)), var(--clr-2));
-	--container-chromatic: light-dark(
-		color-mix(in oklch, var(--clr-3), var(--clr-4)),
-		var(--clr-3)
-	);
+	--container-chromatic: light-dark(color-mix(in oklch, var(--clr-3), var(--clr-4)), var(--clr-3));
 	--float-chromatic: var(--container-chromatic);
 
 	--divider-chromatic: light-dark(var(--clr-6), var(--clr-4));
@@ -154,11 +148,7 @@
 
 	--divider: color-mix(in oklch, var(--divider-neutral), var(--divider-chromatic) var(--chroma));
 	--border: color-mix(in oklch, var(--border-neutral), var(--border-chromatic) var(--chroma));
-	--boundary: color-mix(
-		in oklch,
-		var(--boundary-neutral),
-		var(--boundary-chromatic) var(--chroma)
-	);
+	--boundary: color-mix(in oklch, var(--boundary-neutral), var(--boundary-chromatic) var(--chroma));
 	--edge: color-mix(in oklch, var(--edge-neutral), var(--edge-chromatic) var(--chroma));
 
 	--splash: color-mix(in oklch, var(--splash-neutral), var(--splash-chromatic) var(--chroma));

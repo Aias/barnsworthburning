@@ -60,8 +60,7 @@
 >
 	{#if parent}
 		<section class="extract-parent">
-			<strong class="parent-title"><Link toId={parent.id} inherit>{parent.name}</Link></strong
-			>
+			<strong class="parent-title"><Link toId={parent.id} inherit>{parent.name}</Link></strong>
 			{#if parentCreators}
 				<CreatorList class="parent-creators" creators={parentCreators} />
 			{/if}

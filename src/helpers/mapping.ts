@@ -17,8 +17,7 @@ export function zip<Type>(input: Input<Type>): Type[] | undefined {
 
 	// Check if any values in input are undefined or have length 0
 	const hasUndefinedOrEmptyValues = Object.values(input).some(
-		(values) =>
-			values !== null && (values === undefined || (values as Array<unknown>).length === 0)
+		(values) => values !== null && (values === undefined || (values as Array<unknown>).length === 0)
 	);
 
 	// Check if any required properties are missing in the input object

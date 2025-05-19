@@ -14,19 +14,19 @@ export default tseslint.config(
 		languageOptions: {
 			globals: {
 				...globals.browser,
-				...globals.node,
-			},
-		},
+				...globals.node
+			}
+		}
 	},
 	{
 		files: ['**/*.svelte'],
 		languageOptions: {
 			parserOptions: {
-				parser: tseslint.parser,
-			},
-		},
+				parser: tseslint.parser
+			}
+		}
 	},
 	{
-		ignores: ['build/', '.svelte-kit/', 'dist/'],
-	},
+		ignores: ['build/', '.svelte-kit/', 'dist/']
+	}
 );

@@ -25,10 +25,7 @@
 	<meta property="og:type" content="article" />
 	<meta property="article:section" content={title} />
 	<meta property="article:tag" content={space.topic} />
-	<meta
-		property="og:article:published_time"
-		content={new Date(space.createdTime).toISOString()}
-	/>
+	<meta property="og:article:published_time" content={new Date(space.createdTime).toISOString()} />
 	<meta property="og:article:modified_time" content={new Date(space.lastUpdated).toISOString()} />
 	{#if firstImageUrl}
 		<meta property="og:image" content={firstImageUrl} />
