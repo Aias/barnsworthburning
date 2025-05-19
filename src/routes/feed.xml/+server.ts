@@ -123,6 +123,67 @@ const meta = {
 	imageProxyUrl: 'https://airtable-media-proxy.trombley-nick.workers.dev'
 };
 
+const getChildExtracts = (extract: IExtract, children: IExtract[]): IExtract[] =>
+	extract.children
+		?.map((child) => children.find((entry) => entry.id === child.id))
+		.filter((child): child is IExtract => !!child) || [];
+
+const generateEntry = (extract: IExtract, children: IExtract[]): string => {
+	const { title, id, creators, source, lastUpdated, publishedOn, spaces, images } = extract;
+	const extractChildren = getChildExtracts(extract, children);
+
+	const entryParts: string[] = [];
+	entryParts.push(`<entry>`);
+	entryParts.push(`<id>${meta.url}/extracts/${id}</id>`);
+	entryParts.push(`<title><![CDATA[${title}]]></title>`);
+	if (creators) {
+		entryParts.push(
+			creators
+				.map((creator) => `<author><name><![CDATA[${creator.name}]]></name></author>`)
+				.join('\n')
+		);
+	}
+	entryParts.push(`<published>${new Date(publishedOn).toISOString()}</published>`);
+	entryParts.push(
+		`<updated>${new Date(
+			Math.max(new Date(publishedOn).getTime(), new Date(lastUpdated).getTime())
+		).toISOString()}</updated>`
+	);
+	entryParts.push(`<link rel="alternate" href="${meta.url}/extracts/${id}" />`);
+	if (source) {
+		entryParts.push(`<link rel="via" href="${cleanLink(source)}" />`);
+	}
+	if (images) {
+		entryParts.push(
+			images
+				.map(
+					({ filename, type = 'image/*' }, index) =>
+						`<link rel="enclosure" href="${generateImageProxyUrl(id, index)}" type="${type}" title="${filename}" />`
+				)
+				.join('\n')
+		);
+	}
+	if (spaces) {
+		entryParts.push(spaces.map((space) => `<category term="${space.name}" />`).join('\n'));
+	}
+	entryParts.push(`<content type="html"><![CDATA[`);
+	entryParts.push(generateContentMarkup(extract));
+	if (extractChildren.length) {
+		entryParts.push(
+			extractChildren
+				.map((child) => {
+					const { title } = child;
+					return `<br><hr><br><h3>${title}</h3>${generateContentMarkup(child, true)}`;
+				})
+				.join('\n')
+		);
+	}
+	entryParts.push(`]]></content>`);
+	entryParts.push(`</entry>`);
+
+	return entryParts.join('');
+};
+
 const atom = (entries: IExtract[] = [], children: IExtract[] = []) => {
 	const feedUpdated = new Date(
 		Math.max(
@@ -150,57 +211,7 @@ const atom = (entries: IExtract[] = [], children: IExtract[] = []) => {
     </author>
     <updated>${feedUpdated}</updated>
 	${meta.tags.map((tag) => `<category term="${tag}" />`).join('\n')}
-	${entries
-		.map((extract) => {
-			const { title, id, creators, source, lastUpdated, publishedOn, spaces, images } = extract;
-			const extractChildren =
-				extract.children
-					?.map((child) => children.find((entry) => entry.id === child.id))
-					.filter((child): child is IExtract => !!child) || [];
-
-			let entry = `<entry>`;
-			entry += `<id>${meta.url}/extracts/${id}</id>`;
-			entry += `<title><![CDATA[${title}]]></title>`;
-			if (creators) {
-				entry += creators
-					.map((creator) => `<author><name><![CDATA[${creator.name}]]></name></author>`)
-					.join('\n');
-			}
-			entry += `<published>${new Date(publishedOn).toISOString()}</published>`;
-			entry += `<updated>${new Date(Math.max(new Date(publishedOn).getTime(), new Date(lastUpdated).getTime())).toISOString()}</updated>`;
-			entry += `<link rel="alternate" href="${meta.url}/extracts/${id}" />`;
-			if (source) {
-				entry += `<link rel="via" href="${cleanLink(source)}" />`;
-			}
-			if (images) {
-				entry += images
-					.map(
-						({ filename, type = 'image/*' }, index) =>
-							`<link rel="enclosure" href="${generateImageProxyUrl(id, index)}" type="${type}" title="${filename}" />`
-					)
-					.join('\n');
-			}
-			if (spaces) {
-				entry += spaces.map((space) => `<category term="${space.name}" />`).join('\n');
-			}
-			entry += `<content type="html"><![CDATA[`;
-			entry += generateContentMarkup(extract);
-			if (extractChildren.length) {
-				entry += extractChildren
-					.map((child) => {
-						const { title } = child;
-						let childMarkup = `<br><hr><br>`;
-						childMarkup += `<h3>${title}</h3>`;
-						childMarkup += generateContentMarkup(child, true);
-						return childMarkup;
-					})
-					.join('\n');
-			}
-			entry += `]]></content>`;
-			entry += '</entry>';
-			return entry;
-		})
-		.join('\n')}
+        ${entries.map((extract) => generateEntry(extract, children)).join('\n')}
 </feed>`.trim();
 };
 
