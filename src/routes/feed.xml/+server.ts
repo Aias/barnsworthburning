@@ -33,7 +33,7 @@ const generateContentMarkup = (extract: IExtract, isChild: boolean = false) => {
 		spaces,
 		parent
 	} = extract;
-	let type = (format || 'extract').toLowerCase();
+	const type = (format || 'extract').toLowerCase();
 	let markup = '<article>\n';
 	if (!isChild) {
 		markup += '<header>\n';
@@ -74,7 +74,7 @@ const generateContentMarkup = (extract: IExtract, isChild: boolean = false) => {
 		let linkText;
 		try {
 			linkText = new URL(source).hostname;
-		} catch (error) {
+		} catch {
 			linkText = source;
 		}
 		markup += `<p>Source: <a href="${source}">${linkText}</a></p>\n`;
