@@ -20,11 +20,11 @@
 </script>
 
 <main>
-	{#each testSections as testClass}
+	{#each testSections as testClass (testClass)}
 		<section class={testClass}>
 			<h2>{testClass}</h2>
 			<div>
-				{#each themes as { mode, palette, chroma }}
+				{#each themes as { mode, palette, chroma } (`${mode || ''} ${palette || ''} ${chroma || ''}`)}
 					<TestCard {mode} {palette} {chroma} />
 				{/each}
 			</div>

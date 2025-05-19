@@ -18,7 +18,7 @@ const alphaSuffix = 'A';
 const numSteps = 12;
 const rampLevels = Array.from({ length: numSteps }, (_, i) => i + 1);
 
-const generateShadeRamp = (shade: Shade, isP3: Boolean) => {
+const generateShadeRamp = (shade: Shade, isP3: boolean) => {
 	const p3 = isP3 ? p3Suffix : '';
 	const alphaRamp: Ramp = radix[`${shade}${p3}${alphaSuffix}`];
 
@@ -30,7 +30,7 @@ const generateShadeRamp = (shade: Shade, isP3: Boolean) => {
 	return css;
 };
 
-const generateShadeClasses = (isP3: Boolean = false) => {
+const generateShadeClasses = (isP3: boolean = false) => {
 	let css = ':root {\n';
 	css += generateShadeRamp(Shade.Black, isP3);
 	css += '\n';
@@ -39,7 +39,7 @@ const generateShadeClasses = (isP3: Boolean = false) => {
 	return css;
 };
 
-const generateVariableRamp = (palette: Palette, isP3: Boolean, isNeutral: Boolean) => {
+const generateVariableRamp = (palette: Palette, isP3: boolean, isNeutral: boolean) => {
 	const p3 = isP3 ? p3Suffix : '';
 	const type = isNeutral ? 'neu' : 'clr';
 	const lightRamp: Ramp = radix[`${palette}${p3}`];
@@ -71,7 +71,7 @@ const generateVariableRamp = (palette: Palette, isP3: Boolean, isNeutral: Boolea
 
 const NO_CLASS = ':root:where(:not([class]), [class=""])';
 
-const generateColorClasses = (isP3: Boolean = false) => {
+const generateColorClasses = (isP3: boolean = false) => {
 	let css = '';
 	for (const palette of paletteOptions) {
 		const selectors = [`.${palette}`];
@@ -86,7 +86,7 @@ const generateColorClasses = (isP3: Boolean = false) => {
 	return css;
 };
 
-const generateNeutralClasses = (isP3: Boolean = false) => {
+const generateNeutralClasses = (isP3: boolean = false) => {
 	let css = '';
 	for (const neutral in neutralsMap) {
 		const palettes = neutralsMap[neutral as Neutral];

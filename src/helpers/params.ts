@@ -1,4 +1,5 @@
 export type EntityTypeKey = 'creator' | 'space' | 'extract';
+
 export interface EntityType {
 	key: EntityTypeKey;
 	urlParam: string;
