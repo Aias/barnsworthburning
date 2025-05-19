@@ -9,7 +9,12 @@
 		suppress?: boolean;
 		children: Snippet;
 	}
-	let { element = 'div', suppress = false, children, ...restProps }: BlockLinkProps<any> = $props();
+	let {
+		element = 'div',
+		suppress = false,
+		children,
+		...restProps
+	}: BlockLinkProps<keyof HTMLElementTagNameMap> = $props();
 
 	const handleBlockLinkClick = (event: MouseEvent) => {
 		if (suppress) return; // If we're suppressing the block link, no special handling.
@@ -41,7 +46,6 @@
 	};
 </script>
 
-<!-- svelte-ignore a11y_no_static_element_interactions -->
 <svelte:element
 	this={element}
 	class:block-link={!suppress}

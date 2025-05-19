@@ -27,7 +27,7 @@
 		suppressBlockLink = false,
 		class: className,
 		variant = 'default'
-	}: ExtractProps<any> = $props();
+	}: ExtractProps<keyof HTMLElementTagNameMap> = $props();
 
 	let id = $derived(extract.id);
 	let title = $derived(extract.title);
@@ -35,7 +35,6 @@
 	let notes = $derived(extract.notes);
 	let images = $derived(extract.images);
 	let imageCaption = $derived(extract.imageCaption);
-	let source = $derived(extract.source);
 
 	let parent = $derived(extract.parent);
 	let parentCreators = $derived(extract.parentCreators);

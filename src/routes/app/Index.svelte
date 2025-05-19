@@ -94,7 +94,8 @@
 		border: none;
 
 		&::before {
-			content: '⁘  ⁘  ⁘';
+			/* eslint-disable-next-line no-irregular-whitespace */
+			content: '\2058\2007\2007\2058\2007\2007\2058';
 			display: inline-block;
 			color: var(--hint);
 		}

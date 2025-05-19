@@ -32,7 +32,8 @@
 					<header>
 						{#if michelinStars}
 							<span class="stars">
-								{#each Array(michelinStars) as _}
+								<!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
+								{#each Array(michelinStars) as _star, index (index)}
 									<span>⭐</span>
 								{/each}
 							</span>

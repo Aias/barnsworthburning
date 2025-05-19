@@ -27,6 +27,27 @@ export default tseslint.config(
 		}
 	},
 	{
-		ignores: ['build/', '.svelte-kit/', 'dist/']
+		files: ['**/*.{ts,js,svelte}'],
+		rules: {
+			'no-undef': 'off',
+			'svelte/no-at-html-tags': 'off',
+			'svelte/prefer-writable-derived': 'off'
+		}
+	},
+	{
+		ignores: [
+			'build/',
+			'.svelte-kit/',
+			'dist/',
+			'node_modules/',
+			'.DS_Store',
+			'/package',
+			'.env',
+			'.env.*',
+			'pnpm-lock.yaml',
+			'package-lock.json',
+			'yarn.lock',
+			'src/lib/*.svelte.ts'
+		]
 	}
 );
