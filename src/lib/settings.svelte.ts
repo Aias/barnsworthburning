@@ -12,10 +12,16 @@ import {
 	DEFAULT_PALETTE
 } from '$types/Theme';
 
-export function createSettings() {
-	const modeCookie = getCookie<Mode>(MODE_COOKIE);
-	const chromaCookie = getCookie<Chroma>(CHROMA_COOKIE);
-	const paletteCookie = getCookie<Palette>(PALETTE_COOKIE);
+export interface ThemePrefs {
+	mode: Mode;
+	chroma: Chroma;
+	palette: Palette;
+}
+
+export function createSettings(initial?: Partial<ThemePrefs>) {
+	const modeCookie = initial?.mode ?? getCookie<Mode>(MODE_COOKIE);
+	const chromaCookie = initial?.chroma ?? getCookie<Chroma>(CHROMA_COOKIE);
+	const paletteCookie = initial?.palette ?? getCookie<Palette>(PALETTE_COOKIE);
 
 	let mode = $state(modeCookie ?? DEFAULT_MODE);
 	let chroma = $state(chromaCookie ?? DEFAULT_CHROMA);
@@ -43,6 +49,13 @@ export function createSettings() {
 		setCookie(PALETTE_COOKIE, palette);
 	};
 
+	const initialize = (prefs?: Partial<ThemePrefs>) => {
+		if (!prefs) return;
+		if (prefs.mode) mode = prefs.mode;
+		if (prefs.chroma) chroma = prefs.chroma;
+		if (prefs.palette) palette = prefs.palette;
+	};
+
 	return {
 		get mode() {
 			return mode;
@@ -61,7 +74,8 @@ export function createSettings() {
 		},
 		setMode,
 		setChroma,
-		setPalette
+		setPalette,
+		initialize
 	};
 }
 

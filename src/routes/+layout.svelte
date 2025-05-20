@@ -2,12 +2,10 @@
 	import '$styles/app.css';
 	import { page } from '$app/state';
 	import { afterNavigate, beforeNavigate } from '$app/navigation';
-	import { Palette, Mode, Chroma } from '$types/Theme';
 	import settings from '$lib/settings.svelte';
 	import interaction from '$lib/interaction.svelte';
 	import trail from '$lib/trail.svelte';
 	import { entityTypes, type EntityType, type EntityTypeKey } from '$helpers/params';
-	import { getCookie } from '$helpers/cookies';
 	import SEO from '$components/SEO.svelte';
 	import Trail from './app/Trail.svelte';
 	import Nav from './app/Nav.svelte';
@@ -22,21 +20,10 @@
 
 	let { creators, spaces } = $derived(data);
 
-	$effect.pre(() => {
-		const storedMode = getCookie('barnsworthburning-mode') as Mode | null;
-		const storedChroma = getCookie('barnsworthburning-chroma') as Chroma | null;
-		const storedPalette = getCookie('barnsworthburning-palette') as Palette | null;
+	settings.initialize(data?.theme);
 
-		if (storedMode) {
-			settings.setMode(storedMode);
-		}
-		if (storedChroma) {
-			settings.setChroma(storedChroma);
-		}
-		if (storedPalette) {
-			settings.setPalette(storedPalette);
-		}
-
+	$effect(() => {
+		if (typeof document === 'undefined') return;
 		document.documentElement.className = settings.themeClass;
 	});
 

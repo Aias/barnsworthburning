@@ -3,7 +3,14 @@
 declare global {
 	namespace App {
 		// interface Error {}
-		// interface Locals {}
+		interface Locals {
+			theme: {
+				mode: import('./types/Theme').Mode;
+				chroma: import('./types/Theme').Chroma;
+				palette: import('./types/Theme').Palette;
+				class: string;
+			};
+		}
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}

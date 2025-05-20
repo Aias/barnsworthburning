@@ -1,6 +1,7 @@
 import { createApi } from '$lib/api';
+import type { LayoutServerLoad } from './$types';
 
-export async function load({ fetch }) {
+export const load: LayoutServerLoad = async ({ fetch, locals }) => {
 	const api = createApi(fetch);
 
 	const [creators, spaces] = await Promise.all([api.creators.list(), api.spaces.list()]);
@@ -8,6 +9,7 @@ export async function load({ fetch }) {
 	return {
 		creators,
 		spaces,
-		extracts: undefined
+		extracts: undefined,
+		theme: locals.theme
 	};
-}
+};
