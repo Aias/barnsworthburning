@@ -40,6 +40,7 @@ export default tseslint.config(
 	},
 	{
 		ignores: [
+			'.claude/**',
 			'build/',
 			'.svelte-kit/',
 			'dist/',
