@@ -1,6 +1,7 @@
 import { getContentType } from '$helpers/content';
 import { createApi } from '$lib/api';
 import { text } from '@sveltejs/kit';
+import { getCacheHeaders } from '$helpers/cache';
 
 export async function GET({ fetch, url }) {
 	const api = createApi(fetch);
@@ -38,7 +39,8 @@ export async function GET({ fetch, url }) {
 
 	return text(rootPageContent, {
 		headers: {
-			'Content-Type': getContentType(url)
+			'Content-Type': getContentType(url),
+			...getCacheHeaders('entityList')
 		}
 	});
 }

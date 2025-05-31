@@ -9,8 +9,13 @@
 
 	let { data } = $props();
 
-	let { creator, space, extracts = [] } = $derived(data);
+	let { creator, space, extract, extracts = [] } = $derived(data);
 	let { id } = $derived(page.params);
+
+	// For extract pages, combine the main extract with related extracts
+	let allExtracts = $derived(
+		extract && !extracts.some((e) => e.id === extract.id) ? [extract, ...extracts] : extracts
+	);
 </script>
 
 {#if creator}
@@ -20,6 +25,6 @@
 	<SpaceItem {space} {extracts} />
 	<SpaceSEO {space} {extracts} />
 {:else}
-	<ExtractItem {extracts} selectedId={id} />
-	<ExtractSEO extract={extracts.find((e) => e.id === id) ?? extracts[0]} />
+	<ExtractItem extracts={allExtracts} selectedId={id} />
+	<ExtractSEO extract={extract ?? allExtracts.find((e) => e.id === id) ?? allExtracts[0]} />
 {/if}

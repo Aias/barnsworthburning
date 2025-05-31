@@ -1,4 +1,4 @@
-import { json } from '@sveltejs/kit';
+import { cachedJson } from '$helpers/cache';
 import { airtableFetch } from '$lib/server/requests';
 import { mapExtractRecord } from '$helpers/mapping';
 import { Table, type IBaseExtract, ExtractView, extractFields } from '$types/Airtable';
@@ -10,5 +10,5 @@ export async function GET({ params }) {
 		fields: extractFields
 	});
 
-	return json(extracts.map(mapExtractRecord));
+	return cachedJson(extracts.map(mapExtractRecord), 'entityList');
 }

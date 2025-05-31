@@ -11,6 +11,20 @@ Airtable.configure({
 
 export const base = Airtable.base(AirtableBaseId);
 
+// Request deduplication
+const pendingRequests = new Map<string, Promise<any>>();
+
+/**
+ * Creates a cache key for deduplication based on table and options
+ */
+function createCacheKey(table: Table, options: SelectOptions<FieldSet> | string): string {
+	if (typeof options === 'string') {
+		return `${table}:${options}`;
+	}
+	const sortedOptions = JSON.stringify(options, Object.keys(options).sort());
+	return `${table}:${sortedOptions}`;
+}
+
 /**
  * Maps a received record to an IBaseRecord.
  * @param record The record to be mapped.
@@ -33,7 +47,15 @@ async function airtableFetch<T extends IBaseRecord>(
 	table: Table,
 	options: SelectOptions<FieldSet>
 ): Promise<T[]> {
-	return base(table)
+	const cacheKey = createCacheKey(table, options);
+
+	// Check if request is already pending
+	if (pendingRequests.has(cacheKey)) {
+		return pendingRequests.get(cacheKey) as Promise<T[]>;
+	}
+
+	// Create new request and store in pending map
+	const requestPromise = base(table)
 		.select(options)
 		.all()
 		.then((records) => records.map(mapReceivedRecord<T>))
@@ -41,7 +63,14 @@ async function airtableFetch<T extends IBaseRecord>(
 			error(err.statusCode, {
 				...err
 			});
+		})
+		.finally(() => {
+			// Clean up after request completes
+			pendingRequests.delete(cacheKey);
 		});
+
+	pendingRequests.set(cacheKey, requestPromise);
+	return requestPromise;
 }
 
 /**
@@ -66,14 +95,30 @@ async function airtableFind<T extends IBaseRecord>(
 			return records[0];
 		});
 	}
-	return base(table)
+
+	const cacheKey = createCacheKey(table, recordId);
+
+	// Check if request is already pending
+	if (pendingRequests.has(cacheKey)) {
+		return pendingRequests.get(cacheKey) as Promise<T>;
+	}
+
+	// Create new request and store in pending map
+	const requestPromise = base(table)
 		.find(recordId)
 		.then(mapReceivedRecord<T>)
 		.catch((err: Error) => {
 			error(err.statusCode, {
 				...err
 			});
+		})
+		.finally(() => {
+			// Clean up after request completes
+			pendingRequests.delete(cacheKey);
 		});
+
+	pendingRequests.set(cacheKey, requestPromise);
+	return requestPromise;
 }
 
 export { airtableFetch, airtableFind };

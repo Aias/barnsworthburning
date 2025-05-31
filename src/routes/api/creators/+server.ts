@@ -1,4 +1,4 @@
-import { json } from '@sveltejs/kit';
+import { cachedJson } from '$helpers/cache';
 import { airtableFetch } from '$lib/server/requests';
 import { mapCreatorRecord } from '$helpers/mapping';
 import { Table, type IBaseCreator, CreatorView, creatorFields } from '$types/Airtable';
@@ -10,5 +10,5 @@ export async function GET() {
 		fields: creatorFields
 	});
 
-	return json(creators.map(mapCreatorRecord));
+	return cachedJson(creators.map(mapCreatorRecord), 'entityList');
 }

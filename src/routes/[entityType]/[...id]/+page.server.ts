@@ -11,6 +11,7 @@ export async function load({ params, fetch }) {
 
 	let creatorPromise;
 	let spacePromise;
+	let extractPromise;
 	let extractsPromise;
 
 	if (!['creators', 'spaces', 'extracts'].includes(entityType)) {
@@ -57,19 +58,22 @@ export async function load({ params, fetch }) {
 			break;
 
 		case 'extracts':
+			extractPromise = api.extracts.get(id);
 			extractsPromise = api.extracts.related(id);
 			break;
 	}
 
-	const [creator, space, extracts] = await Promise.all([
+	const [creator, space, extract, extracts] = await Promise.all([
 		creatorPromise,
 		spacePromise,
+		extractPromise,
 		extractsPromise
 	]);
 
 	return {
 		creator,
 		space,
+		extract,
 		extracts
 	};
 }

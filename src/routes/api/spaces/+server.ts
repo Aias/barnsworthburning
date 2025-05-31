@@ -1,4 +1,4 @@
-import { json } from '@sveltejs/kit';
+import { cachedJson } from '$helpers/cache';
 import { airtableFetch } from '$lib/server/requests';
 import { mapSpaceRecord } from '$helpers/mapping';
 import { Table, type IBaseSpace, SpaceView, spaceFields } from '$types/Airtable';
@@ -10,5 +10,5 @@ export async function GET() {
 		fields: spaceFields
 	});
 
-	return json(spaces.map(mapSpaceRecord));
+	return cachedJson(spaces.map(mapSpaceRecord), 'entityList');
 }

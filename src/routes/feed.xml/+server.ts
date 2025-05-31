@@ -11,6 +11,7 @@ import {
 import markdown from '$helpers/markdown';
 import { getArticle, combineAsList } from '$helpers/grammar';
 import xmlFormatter from 'xml-formatter';
+import { getCacheHeaders } from '$helpers/cache';
 
 const generateImageProxyUrl = (recordId: string, index: number) => {
 	return `${meta.imageProxyUrl}/${AirtableBaseId}/${Table.Extracts}/${recordId}?index=${index}`;
@@ -239,7 +240,7 @@ export async function GET() {
 		status: 200,
 		headers: {
 			'Content-Type': 'application/atom+xml; charset=utf-8',
-			'Cache-Control': `max-age=0, s-maxage=300`
+			...getCacheHeaders('feed')
 		}
 	};
 

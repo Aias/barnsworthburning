@@ -1,4 +1,4 @@
-import { json } from '@sveltejs/kit';
+import { cachedJson } from '$helpers/cache';
 import { airtableFetch } from '$lib/server/requests';
 import { mapExtractRecord } from '$helpers/mapping';
 import { extractFields, ExtractView, type IBaseExtract, Table } from '$types/Airtable';
@@ -9,7 +9,7 @@ export const GET = async ({ url }) => {
 	const queryParam = url.searchParams.get('q');
 
 	if (!queryParam) {
-		return json({ search: undefined });
+		return cachedJson({ search: undefined }, 'search');
 	}
 
 	const query = decodeURIComponent(queryParam).toLowerCase().replace(/'/g, "\\'");
@@ -22,12 +22,15 @@ export const GET = async ({ url }) => {
 	});
 
 	if (!extractResults) {
-		return json({ search: [] }, { status: 404 });
+		return cachedJson({ search: [] }, 'search');
 	}
 
 	const results = extractResults.map(mapExtractRecord);
 
-	return json({
-		results
-	});
+	return cachedJson(
+		{
+			results
+		},
+		'search'
+	);
 };
