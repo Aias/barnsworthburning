@@ -1,16 +1,10 @@
 import { setCookie, getCookie } from '$helpers/cookies';
-import {
-	paletteOptions,
-	Palette,
-	Chroma,
-	Mode,
-	MODE_COOKIE,
-	CHROMA_COOKIE,
-	PALETTE_COOKIE,
-	DEFAULT_MODE,
-	DEFAULT_CHROMA,
-	DEFAULT_PALETTE
-} from '$types/Theme';
+import { paletteOptions, Palette, Chroma, Mode } from '$types/Theme';
+import { THEME_CONFIG, DEFAULT_MODE, DEFAULT_CHROMA, DEFAULT_PALETTE } from '$lib/theme/config';
+
+const MODE_COOKIE = THEME_CONFIG.cookies.mode;
+const CHROMA_COOKIE = THEME_CONFIG.cookies.chroma;
+const PALETTE_COOKIE = THEME_CONFIG.cookies.palette;
 
 export function createSettings() {
 	const modeCookie = getCookie<Mode>(MODE_COOKIE);

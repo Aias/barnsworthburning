@@ -1,7 +1,7 @@
 <script lang="ts">
 	import CreatorList from '$components/CreatorList.svelte';
 	import markdown from '$helpers/markdown';
-	import { getArticle } from '$helpers/grammar.js';
+	import { getArticle } from '$helpers/grammar';
 	import Link from '$components/Link.svelte';
 	import BlockLink from '$components/BlockLink.svelte';
 	import type { IExtract } from '$types/Airtable';

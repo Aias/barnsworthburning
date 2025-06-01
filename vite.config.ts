@@ -5,6 +5,7 @@ import path from 'path';
 import dotenv from 'dotenv';
 import prettier from 'prettier';
 import { generateFullTheme } from './src/styles/generators';
+import { generateThemeScript } from './src/lib/theme/generate';
 
 const makeThemeFile = async () => {
 	const cssContent = generateFullTheme();
@@ -35,6 +36,16 @@ const colorGeneratorPlugin = (): Plugin => {
 	};
 };
 
+const themeScriptPlugin = (): Plugin => {
+	return {
+		name: 'vite-plugin-theme-script',
+		buildStart: async () => {
+			await generateThemeScript();
+			console.log('✓ Generated themePreferences.js');
+		}
+	};
+};
+
 // Load environment variables from .env files
 dotenv.config({ path: '.env' });
 dotenv.config({ path: '.env.local' });
@@ -45,8 +56,10 @@ export default defineConfig(({ mode }) => {
 	if (mode === 'development') {
 		dotenv.config({ path: '.env.development' });
 		plugins.push(colorGeneratorPlugin());
+		plugins.push(themeScriptPlugin());
 	} else if (mode === 'production') {
 		dotenv.config({ path: '.env.production' });
+		plugins.push(themeScriptPlugin());
 	}
 	plugins.push(sveltekit());
 
