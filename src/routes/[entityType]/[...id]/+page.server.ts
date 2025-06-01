@@ -1,8 +1,8 @@
 import { createApi } from '$lib/api';
 import { error } from '@sveltejs/kit';
-import { recordIdRegex } from '$helpers/params.js';
-import { Table } from '$types/Airtable.js';
-import { airtableFind } from '$lib/server/requests.js';
+import { recordIdRegex } from '$helpers/params';
+import { Table } from '$types/Airtable';
+import { airtableFind } from '$lib/server/requests';
 import { redirect } from '@sveltejs/kit';
 
 export async function load({ params, fetch }) {

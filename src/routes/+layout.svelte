@@ -2,12 +2,10 @@
 	import '$styles/app.css';
 	import { page } from '$app/state';
 	import { afterNavigate, beforeNavigate } from '$app/navigation';
-	import { Palette, Mode, Chroma } from '$types/Theme';
 	import settings from '$lib/settings.svelte';
 	import interaction from '$lib/interaction.svelte';
 	import trail from '$lib/trail.svelte';
 	import { entityTypes, type EntityType, type EntityTypeKey } from '$helpers/params';
-	import { getCookie } from '$helpers/cookies';
 	import SEO from '$components/SEO.svelte';
 	import Trail from './app/Trail.svelte';
 	import Nav from './app/Nav.svelte';
@@ -20,23 +18,9 @@
 	let isIndex = $derived(page.route.id === '/');
 	let isEntityDetail = $derived(page.params.id);
 
-	let { creators, spaces } = $derived(data);
+	let { creators, spaces, theme } = $derived(data);
 
 	$effect.pre(() => {
-		const storedMode = getCookie('barnsworthburning-mode') as Mode | null;
-		const storedChroma = getCookie('barnsworthburning-chroma') as Chroma | null;
-		const storedPalette = getCookie('barnsworthburning-palette') as Palette | null;
-
-		if (storedMode) {
-			settings.setMode(storedMode);
-		}
-		if (storedChroma) {
-			settings.setChroma(storedChroma);
-		}
-		if (storedPalette) {
-			settings.setPalette(storedPalette);
-		}
-
 		document.documentElement.className = settings.themeClass;
 	});
 
@@ -129,7 +113,7 @@
 <div class="app-contents">
 	<Nav class="app-nav themed" />
 	<div class="app-toolbar">
-		<SettingsMenu class="app-settings" />
+		<SettingsMenu class="app-settings" initialTheme={theme} />
 	</div>
 	{#if !isIndex}
 		<main class="app-main" id="app-main">

@@ -1,5 +1,6 @@
 import { type EntityType } from '$helpers/params';
-import { DEFAULT_PALETTE, type Palette, paletteOptions } from '$types/Theme';
+import { type Palette, paletteOptions } from '$types/Theme';
+import { DEFAULT_PALETTE } from '$lib/theme/config';
 import settings from './settings.svelte';
 
 export type TrailSegment = {

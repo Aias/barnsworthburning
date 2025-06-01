@@ -2,7 +2,12 @@
 	import settings from '$lib/settings.svelte';
 	import { Chroma, Mode, Palette } from '$types/Theme';
 
-	let { ...restProps } = $props();
+	interface SettingsMenuProps {
+		initialTheme?: { mode: Mode; chroma: Chroma; palette: Palette };
+		class?: string;
+	}
+
+	let { initialTheme, ...restProps }: SettingsMenuProps = $props();
 
 	let themeColor = $state<string>();
 
@@ -22,7 +27,25 @@
 		setThemeColor();
 	});
 
-	let { mode: currentMode, palette: currentPalette, chroma: currentChroma } = $derived(settings);
+	// Use initial theme from server if available, otherwise fall back to settings
+	let currentMode = $state(initialTheme?.mode ?? settings.mode);
+	let currentPalette = $state(initialTheme?.palette ?? settings.palette);
+	let currentChroma = $state(initialTheme?.chroma ?? settings.chroma);
+
+	// After initial render, sync with settings
+	$effect(() => {
+		if (
+			!initialTheme ||
+			(settings.mode === currentMode &&
+				settings.palette === currentPalette &&
+				settings.chroma === currentChroma)
+		) {
+			// Already in sync or no initial theme, use settings values
+			currentMode = settings.mode;
+			currentPalette = settings.palette;
+			currentChroma = settings.chroma;
+		}
+	});
 
 	const handleThemeChange = (e: Event) => {
 		const target = e.target as HTMLInputElement;

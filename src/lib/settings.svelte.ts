@@ -1,25 +1,40 @@
 import { setCookie, getCookie } from '$helpers/cookies';
-import {
-	paletteOptions,
-	Palette,
-	Chroma,
-	Mode,
-	MODE_COOKIE,
-	CHROMA_COOKIE,
-	PALETTE_COOKIE,
-	DEFAULT_MODE,
-	DEFAULT_CHROMA,
-	DEFAULT_PALETTE
-} from '$types/Theme';
+import { paletteOptions, Palette, Chroma, Mode } from '$types/Theme';
+import { THEME_CONFIG, DEFAULT_MODE, DEFAULT_CHROMA, DEFAULT_PALETTE } from '$lib/theme/config';
+
+const MODE_COOKIE = THEME_CONFIG.cookies.mode;
+const CHROMA_COOKIE = THEME_CONFIG.cookies.chroma;
+const PALETTE_COOKIE = THEME_CONFIG.cookies.palette;
 
 export function createSettings() {
+	// During SSR or initial client render, read from DOM classes if available
+	// This ensures we get the values set by themePreferences.js
+	const getInitialValue = <T extends string>(
+		enumObj: Record<string, T>,
+		cookieValue: T | undefined,
+		defaultValue: T
+	): T => {
+		if (typeof document !== 'undefined' && document.documentElement) {
+			const classes = document.documentElement.classList;
+			for (const value of Object.values(enumObj)) {
+				if (classes.contains(value)) {
+					return value;
+				}
+			}
+		}
+		// If no DOM value found, use cookie value or default
+		return cookieValue ?? defaultValue;
+	};
+
+	// Get cookie values
 	const modeCookie = getCookie<Mode>(MODE_COOKIE);
 	const chromaCookie = getCookie<Chroma>(CHROMA_COOKIE);
 	const paletteCookie = getCookie<Palette>(PALETTE_COOKIE);
 
-	let mode = $state(modeCookie ?? DEFAULT_MODE);
-	let chroma = $state(chromaCookie ?? DEFAULT_CHROMA);
-	let palette = $state(paletteCookie ?? DEFAULT_PALETTE);
+	// Use DOM values if available (from themePreferences.js), otherwise cookies, otherwise defaults
+	let mode = $state(getInitialValue(Mode, modeCookie, DEFAULT_MODE));
+	let chroma = $state(getInitialValue(Chroma, chromaCookie, DEFAULT_CHROMA));
+	let palette = $state(getInitialValue(Palette, paletteCookie, DEFAULT_PALETTE));
 	const themeClass = $derived([mode, chroma, palette].filter(Boolean).join(' '));
 
 	const setMode = (newMode?: Mode) => {
