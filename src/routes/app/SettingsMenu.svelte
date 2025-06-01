@@ -2,13 +2,12 @@
 	import settings from '$lib/settings.svelte';
 	import { Chroma, Mode, Palette } from '$types/Theme';
 
-	let {
-		initialTheme,
-		...restProps
-	}: {
+	interface SettingsMenuProps {
 		initialTheme?: { mode: Mode; chroma: Chroma; palette: Palette };
-		[key: string]: any;
-	} = $props();
+		class?: string;
+	}
+
+	let { initialTheme, ...restProps }: SettingsMenuProps = $props();
 
 	let themeColor = $state<string>();
 

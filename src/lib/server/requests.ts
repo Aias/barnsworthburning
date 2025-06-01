@@ -11,8 +11,9 @@ Airtable.configure({
 
 export const base = Airtable.base(AirtableBaseId);
 
-// Request deduplication
-const pendingRequests = new Map<string, Promise<any>>();
+// Request deduplication with separate caches for different return types
+const pendingListRequests = new Map<string, Promise<IBaseRecord[]>>();
+const pendingSingleRequests = new Map<string, Promise<IBaseRecord>>();
 
 /**
  * Creates a cache key for deduplication based on table and options
@@ -50,8 +51,8 @@ async function airtableFetch<T extends IBaseRecord>(
 	const cacheKey = createCacheKey(table, options);
 
 	// Check if request is already pending
-	if (pendingRequests.has(cacheKey)) {
-		return pendingRequests.get(cacheKey) as Promise<T[]>;
+	if (pendingListRequests.has(cacheKey)) {
+		return pendingListRequests.get(cacheKey)! as Promise<T[]>;
 	}
 
 	// Create new request and store in pending map
@@ -66,10 +67,10 @@ async function airtableFetch<T extends IBaseRecord>(
 		})
 		.finally(() => {
 			// Clean up after request completes
-			pendingRequests.delete(cacheKey);
+			pendingListRequests.delete(cacheKey);
 		});
 
-	pendingRequests.set(cacheKey, requestPromise);
+	pendingListRequests.set(cacheKey, requestPromise);
 	return requestPromise;
 }
 
@@ -99,8 +100,8 @@ async function airtableFind<T extends IBaseRecord>(
 	const cacheKey = createCacheKey(table, recordId);
 
 	// Check if request is already pending
-	if (pendingRequests.has(cacheKey)) {
-		return pendingRequests.get(cacheKey) as Promise<T>;
+	if (pendingSingleRequests.has(cacheKey)) {
+		return pendingSingleRequests.get(cacheKey)! as Promise<T>;
 	}
 
 	// Create new request and store in pending map
@@ -114,10 +115,10 @@ async function airtableFind<T extends IBaseRecord>(
 		})
 		.finally(() => {
 			// Clean up after request completes
-			pendingRequests.delete(cacheKey);
+			pendingSingleRequests.delete(cacheKey);
 		});
 
-	pendingRequests.set(cacheKey, requestPromise);
+	pendingSingleRequests.set(cacheKey, requestPromise);
 	return requestPromise;
 }
 

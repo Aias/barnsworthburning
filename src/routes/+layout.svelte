@@ -2,12 +2,10 @@
 	import '$styles/app.css';
 	import { page } from '$app/state';
 	import { afterNavigate, beforeNavigate } from '$app/navigation';
-	import { Palette, Mode, Chroma } from '$types/Theme';
 	import settings from '$lib/settings.svelte';
 	import interaction from '$lib/interaction.svelte';
 	import trail from '$lib/trail.svelte';
 	import { entityTypes, type EntityType, type EntityTypeKey } from '$helpers/params';
-	import { getCookie } from '$helpers/cookies';
 	import SEO from '$components/SEO.svelte';
 	import Trail from './app/Trail.svelte';
 	import Nav from './app/Nav.svelte';
