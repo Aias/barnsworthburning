@@ -67,6 +67,11 @@
 			}
 		}
 	}
+	@supports (-webkit-touch-callout: none) {
+		.toolbar {
+			font-size: max(1rem, 16px); /* Prevent Safari auto-zooming on input focus. */
+		}
+	}
 	.empty-state {
 		display: flex;
 		align-items: center;

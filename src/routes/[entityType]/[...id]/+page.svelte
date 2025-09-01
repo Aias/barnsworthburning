@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/state';
 	import CreatorItem from '../../app/CreatorItem.svelte';
 	import CreatorSEO from '../../app/CreatorSEO.svelte';
 	import SpaceItem from '../../app/SpaceItem.svelte';
@@ -9,8 +8,7 @@
 
 	let { data } = $props();
 
-	let { creator, space, extract, extracts = [] } = $derived(data);
-	let { id } = $derived(page.params);
+	let { creator, space, extract, extracts = [], selectedId } = $derived(data);
 
 	// For extract pages, combine the main extract with related extracts
 	let allExtracts = $derived(
@@ -25,6 +23,6 @@
 	<SpaceItem {space} {extracts} />
 	<SpaceSEO {space} {extracts} />
 {:else}
-	<ExtractItem extracts={allExtracts} selectedId={id} />
-	<ExtractSEO extract={extract ?? allExtracts.find((e) => e.id === id) ?? allExtracts[0]} />
+	<ExtractItem extracts={allExtracts} {selectedId} />
+	<ExtractSEO extract={extract ?? allExtracts.find((e) => e.id === selectedId) ?? allExtracts[0]} />
 {/if}

@@ -74,6 +74,7 @@ export async function load({ params, fetch }) {
 		creator,
 		space,
 		extract,
-		extracts
+		extracts,
+		selectedId: id
 	};
 }
