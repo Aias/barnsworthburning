@@ -31,6 +31,7 @@
 		"drizzle-orm": "1.0.0-beta.1-4e7eaa6",
 		"marked": "^17.0.1",
 		"normalize.css": "^8.0.1",
+		"pg": "^8.16.3",
 		"xml-formatter": "^3.6.7",
 		"zod": "^4.1.12"
 	},
@@ -40,6 +41,7 @@
 		"@sveltejs/kit": "^2.49.0",
 		"@sveltejs/vite-plugin-svelte": "^6.2.1",
 		"@types/eslint": "9.6.1",
+		"@types/pg": "^8.15.6",
 		"@types/remarkable": "^2.0.8",
 		"@typescript-eslint/eslint-plugin": "^8.47.0",
 		"@typescript-eslint/parser": "^8.47.0",
