@@ -5,15 +5,15 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
-"@aias/hozo@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@aias/hozo@npm:0.1.0"
+"@aias/hozo@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "@aias/hozo@npm:0.2.1"
   dependencies:
     drizzle-zod: "npm:0.8.3-4e7eaa6"
   peerDependencies:
     drizzle-orm: 1.0.0-beta.1-4e7eaa6
     zod: ^4.1.12
-  checksum: 10c0/3ec19325455ea12f4d0aefb4d50cfb3782bfd6d1785c63a0ccf2f2f4680908b3ebe815818a91c81ec6e181b01cc1846799f3ce20c2983f9cc20669c9af6bd1dd
+  checksum: 10c0/50438e0e2ecfce375792c9bc3682e688cf476a23fa625b3c13cf43e532133ff13ccf1808aea00f7aef89266be059835c62e8d9f9ba6f123fe1018fc3005f3188
   languageName: node
   linkType: hard
 
@@ -1595,7 +1595,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "barnsworthburning@workspace:."
   dependencies:
-    "@aias/hozo": "npm:^0.1.0"
+    "@aias/hozo": "npm:^0.2.1"
     "@radix-ui/colors": "npm:^3.0.0"
     "@sveltejs/adapter-cloudflare": "npm:7.2.4"
     "@sveltejs/kit": "npm:^2.49.0"
