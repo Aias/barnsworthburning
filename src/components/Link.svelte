@@ -2,6 +2,7 @@
 	import type { Snippet } from 'svelte';
 	import { getContext } from 'svelte';
 	import { entityTypes } from '$helpers/params';
+	import { resolve } from '$app/paths';
 	import type { HTMLAnchorAttributes } from 'svelte/elements';
 	import trail, { type TrailSegment } from '$lib/trail.svelte';
 
@@ -40,7 +41,7 @@
 	let url = $derived.by(() => {
 		if (href) return href;
 		let segment = entityTypes[toType].urlParam;
-		return `/${segment}/${toId}`;
+		return resolve(`/${segment}/${toId}`);
 	});
 
 	const handleClick = () => {
@@ -48,6 +49,7 @@
 	};
 </script>
 
+<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 <a onclick={handleClick} href={url} class:inherit class:active {...restProps}
 	>{@render children()}</a
 >

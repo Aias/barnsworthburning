@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { classnames } from '$helpers/classnames';
+	import { resolve } from '$app/paths';
 	interface TestCardProps {
 		mode?: string;
 		palette?: string;
@@ -11,7 +12,7 @@
 <article class={classnames(mode, palette, chroma)}>
 	<h3>Attention to Detail</h3>
 	<p>Truly functional design only comes from the most careful and intense attention to detail.</p>
-	<a href="./">Christopher Alexander</a>
+	<a href={resolve('/#')}>Christopher Alexander</a>
 	<ul>
 		{#if mode}<li>#{mode}</li>{/if}
 		{#if palette}<li>#{palette}</li>{/if}

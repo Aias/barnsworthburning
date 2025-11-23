@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { entityTypes, type EntityType } from '$helpers/params';
 	import type { ILinkedRecord } from '$types/Airtable';
+	import { resolve } from '$app/paths';
 	import Link from '$components/Link.svelte';
 
 	interface ExtractGroupProps {
@@ -23,7 +24,7 @@
 	const visibleLinks = links ? links.slice(0, maxItems) : [];
 </script>
 
-<a class="group-name" href={`/${groupType.urlParam}/${groupId}`}>{groupName}</a>
+<a class="group-name" href={resolve(`/${groupType.urlParam}/${groupId}`)}>{groupName}</a>
 {#if links}
 	{#each visibleLinks as link (link.id)}
 		<span class="group-item">

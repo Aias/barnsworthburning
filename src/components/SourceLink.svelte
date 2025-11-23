@@ -8,6 +8,7 @@
 	let { href, children: _, ...restProps }: SourceLinkProps = $props();
 </script>
 
+<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 <a class="source" {href} target="_blank" rel="noreferrer" title="View source" {...restProps}>
 	{new URL(href).hostname}
 </a>
