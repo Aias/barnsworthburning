@@ -72,13 +72,33 @@ export interface IBaseExtract extends IBaseRecord {
 	title?: string;
 }
 
-// Add this type to get all keys of IBaseExtract except 'id'
 export type ExtractFields = Exclude<keyof IBaseExtract, 'id'>;
 
-// Create a const array with all ExtractFields
-export const extractFields: ExtractFields[] = Object.keys(
-	{} as Omit<IBaseExtract, 'id'>
-) as ExtractFields[];
+export const extractFields: ExtractFields[] = [
+	'childTitles',
+	'children',
+	'connectionTitles',
+	'connections',
+	'creatorNames',
+	'creators',
+	'extract',
+	'extractedOn',
+	'format',
+	'imageCaption',
+	'images',
+	'lastUpdated',
+	'michelinStars',
+	'notes',
+	'parent',
+	'parentCreatorIds',
+	'parentCreatorNames',
+	'parentTitle',
+	'publishedOn',
+	'source',
+	'spaceTopics',
+	'spaces',
+	'title'
+];
 
 export interface IExtract {
 	id: string;
@@ -120,13 +140,25 @@ export interface IBaseCreator extends IBaseRecord {
 	lastUpdated: string;
 }
 
-// Add this type to get all keys of IBaseCreator except 'id'
 export type CreatorFields = Exclude<keyof IBaseCreator, 'id'>;
 
-// Create a const array with all CreatorFields
-export const creatorFields: CreatorFields[] = Object.keys(
-	{} as Omit<IBaseCreator, 'id'>
-) as CreatorFields[];
+export const creatorFields: CreatorFields[] = [
+	'name',
+	'type',
+	'site',
+	'primaryProject',
+	'professions',
+	'organizations',
+	'nationality',
+	'extracts',
+	'extractTitles',
+	'numWorks',
+	'numFragments',
+	'numExtracts',
+	'totalStars',
+	'createdTime',
+	'lastUpdated'
+];
 
 export interface ICreator {
 	id: AirtableRecordId;
@@ -160,13 +192,20 @@ export interface IBaseSpace extends IBaseRecord {
 	createdTime: string;
 }
 
-// Add this type to get all keys of IBaseSpace except 'id'
 export type SpaceFields = Exclude<keyof IBaseSpace, 'id'>;
 
-// Create a const array with all SpaceFields
-export const spaceFields: SpaceFields[] = Object.keys(
-	{} as Omit<IBaseSpace, 'id'>
-) as SpaceFields[];
+export const spaceFields: SpaceFields[] = [
+	'topic',
+	'title',
+	'icon',
+	'description',
+	'extracts',
+	'extractTitles',
+	'numExtracts',
+	'totalStars',
+	'lastUpdated',
+	'createdTime'
+];
 
 export interface ISpace {
 	id: string;

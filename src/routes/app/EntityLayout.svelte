@@ -10,7 +10,7 @@
 </script>
 
 <h1>{title}</h1>
-{#if extracts}
+{#if extracts?.length}
 	<ExtractGallery {extracts} />
 {:else}
 	<em>No associated extracts.</em>

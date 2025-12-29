@@ -13,6 +13,19 @@ import { getArticle, combineAsList } from '$helpers/grammar';
 import xmlFormatter from 'xml-formatter';
 import { getCacheHeaders } from '$helpers/cache';
 
+const escapeXml = (str: string): string =>
+	str
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;')
+		.replace(/'/g, '&apos;');
+
+const safeDate = (dateStr: string): Date => {
+	const date = new Date(dateStr);
+	return isNaN(date.getTime()) ? new Date() : date;
+};
+
 const generateImageProxyUrl = (recordId: string, index: number) => {
 	return `${meta.imageProxyUrl}/${AirtableBaseId}/${Table.Extracts}/${recordId}?index=${index}`;
 };
@@ -58,7 +71,7 @@ const generateContentMarkup = (extract: IExtract, isChild: boolean = false) => {
 		markup += images
 			.map(
 				({ filename, type = 'image/*' }, index) =>
-					`<img src="${generateImageProxyUrl(id, index)}" alt="${filename}" type="${type}" />\n`
+					`<img src="${generateImageProxyUrl(id, index)}" alt="${escapeXml(filename || 'Image from extract')}" type="${type}" />\n`
 			)
 			.join('');
 		if (imageCaption) {
@@ -132,23 +145,23 @@ const getChildExtracts = (extract: IExtract, children: IExtract[]): IExtract[] =
 const generateEntry = (extract: IExtract, children: IExtract[]): string => {
 	const { title, id, creators, source, lastUpdated, publishedOn, spaces, images } = extract;
 	const extractChildren = getChildExtracts(extract, children);
+	const publishedDate = safeDate(publishedOn);
+	const updatedDate = safeDate(lastUpdated);
 
 	const entryParts: string[] = [];
 	entryParts.push(`<entry>`);
 	entryParts.push(`<id>${meta.url}/extracts/${id}</id>`);
-	entryParts.push(`<title><![CDATA[${title}]]></title>`);
+	entryParts.push(`<title><![CDATA[${title || 'Untitled'}]]></title>`);
 	if (creators) {
 		entryParts.push(
 			creators
-				.map((creator) => `<author><name><![CDATA[${creator.name}]]></name></author>`)
+				.map((creator) => `<author><name><![CDATA[${creator.name || 'Unknown'}]]></name></author>`)
 				.join('\n')
 		);
 	}
-	entryParts.push(`<published>${new Date(publishedOn).toISOString()}</published>`);
+	entryParts.push(`<published>${publishedDate.toISOString()}</published>`);
 	entryParts.push(
-		`<updated>${new Date(
-			Math.max(new Date(publishedOn).getTime(), new Date(lastUpdated).getTime())
-		).toISOString()}</updated>`
+		`<updated>${new Date(Math.max(publishedDate.getTime(), updatedDate.getTime())).toISOString()}</updated>`
 	);
 	entryParts.push(`<link rel="alternate" href="${meta.url}/extracts/${id}" />`);
 	if (source) {
@@ -159,13 +172,15 @@ const generateEntry = (extract: IExtract, children: IExtract[]): string => {
 			images
 				.map(
 					({ filename, type = 'image/*' }, index) =>
-						`<link rel="enclosure" href="${generateImageProxyUrl(id, index)}" type="${type}" title="${filename}" />`
+						`<link rel="enclosure" href="${generateImageProxyUrl(id, index)}" type="${type}" title="${escapeXml(filename || 'image')}" />`
 				)
 				.join('\n')
 		);
 	}
 	if (spaces) {
-		entryParts.push(spaces.map((space) => `<category term="${space.name}" />`).join('\n'));
+		entryParts.push(
+			spaces.map((space) => `<category term="${escapeXml(space.name)}" />`).join('\n')
+		);
 	}
 	entryParts.push(`<content type="html"><![CDATA[`);
 	entryParts.push(generateContentMarkup(extract));
@@ -186,17 +201,20 @@ const generateEntry = (extract: IExtract, children: IExtract[]): string => {
 };
 
 const atom = (entries: IExtract[] = [], children: IExtract[] = []) => {
-	const feedUpdated = new Date(
-		Math.max(
-			...entries.map((entry) =>
-				Math.max(
-					new Date(entry.lastUpdated).getTime(),
-					new Date(entry.publishedOn).getTime(),
-					new Date(entry.extractedOn).getTime()
-				)
-			)
-		)
-	).toISOString();
+	const feedUpdated =
+		entries.length > 0
+			? new Date(
+					Math.max(
+						...entries.map((entry) =>
+							Math.max(
+								safeDate(entry.lastUpdated).getTime(),
+								safeDate(entry.publishedOn).getTime(),
+								safeDate(entry.extractedOn).getTime()
+							)
+						)
+					)
+				).toISOString()
+			: new Date().toISOString();
 	return `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <id>${meta.url}/feed</id>

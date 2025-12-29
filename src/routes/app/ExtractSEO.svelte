@@ -7,19 +7,29 @@
 	}
 	let { extract }: ExtractSEOProps = $props();
 
+	const safeDate = (dateStr: string): Date => {
+		const date = new Date(dateStr);
+		return isNaN(date.getTime()) ? new Date() : date;
+	};
+
 	let title = $derived(extract.title || 'Extract');
 	let creators = $derived(extract.creators || extract.parentCreators || []);
 
 	let description = $derived.by(() => {
 		const type = extract.format || 'extract';
 		const creatorNames = combineAsList(creators.map((c) => c.name));
+		if (!creatorNames) {
+			return `${getArticle(type)} ${type.toLowerCase()}.`;
+		}
 		const parent = extract.parent?.name || '';
 		return `${getArticle(type)} ${type.toLowerCase()} by ${creatorNames}${parent ? ` from ${parent}` : ''}.`;
 	});
 
+	let published = $derived(safeDate(extract.extractedOn).toISOString());
+
 	let modified = $derived.by(() => {
-		const lastUpdated = new Date(extract.lastUpdated);
-		const publishedOn = new Date(extract.extractedOn);
+		const lastUpdated = safeDate(extract.lastUpdated);
+		const publishedOn = safeDate(extract.extractedOn);
 		return new Date(Math.max(lastUpdated.getTime(), publishedOn.getTime())).toISOString();
 	});
 </script>
@@ -34,13 +44,10 @@
 	<meta property="og:type" content="article" />
 	{#each extract.creators || extract.parentCreators || [] as creator (creator.id)}
 		<meta name="author" content={creator.name} />
-		<meta property="og:article:author" content={creator.name} />
+		<meta property="article:author" content={creator.name} />
 	{/each}
-	<meta
-		property="og:article:published_time"
-		content={new Date(extract.extractedOn).toISOString()}
-	/>
-	<meta property="og:article:modified_time" content={modified} />
+	<meta property="article:published_time" content={published} />
+	<meta property="article:modified_time" content={modified} />
 	{#each extract.images || [] as image (image.id)}
 		<meta property="og:image" content={image.url} />
 	{/each}

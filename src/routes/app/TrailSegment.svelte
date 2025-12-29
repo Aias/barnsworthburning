@@ -19,30 +19,56 @@
 	let creator = $state<ICreator>();
 	let space = $state<ISpace>();
 	let extracts = $state<IExtract[]>();
+	let fetchError = $state<string>();
+	let currentFetchId = $state<string>();
 
 	async function fetchCreator(creatorId: string) {
-		const [creatorPromise, extractsPromise] = await Promise.all([
-			api.creators.get(creatorId),
-			api.creators.extracts(creatorId)
-		]);
-		creator = creatorPromise;
-		space = undefined;
-		extracts = extractsPromise;
+		currentFetchId = creatorId;
+		try {
+			const [creatorResult, extractsResult] = await Promise.all([
+				api.creators.get(creatorId),
+				api.creators.extracts(creatorId)
+			]);
+			if (currentFetchId !== creatorId) return;
+			creator = creatorResult;
+			space = undefined;
+			extracts = extractsResult;
+			fetchError = undefined;
+		} catch (e) {
+			if (currentFetchId !== creatorId) return;
+			fetchError = e instanceof Error ? e.message : 'Failed to load creator';
+		}
 	}
 	async function fetchSpace(spaceId: string) {
-		const [spacePromise, extractsPromise] = await Promise.all([
-			api.spaces.get(spaceId),
-			api.spaces.extracts(spaceId)
-		]);
-		creator = undefined;
-		space = spacePromise;
-		extracts = extractsPromise;
+		currentFetchId = spaceId;
+		try {
+			const [spaceResult, extractsResult] = await Promise.all([
+				api.spaces.get(spaceId),
+				api.spaces.extracts(spaceId)
+			]);
+			if (currentFetchId !== spaceId) return;
+			creator = undefined;
+			space = spaceResult;
+			extracts = extractsResult;
+			fetchError = undefined;
+		} catch (e) {
+			if (currentFetchId !== spaceId) return;
+			fetchError = e instanceof Error ? e.message : 'Failed to load space';
+		}
 	}
 	async function fetchExtracts(extractId: string) {
-		const extractsPromise = await api.extracts.related(extractId);
-		creator = undefined;
-		space = undefined;
-		extracts = extractsPromise;
+		currentFetchId = extractId;
+		try {
+			const extractsResult = await api.extracts.related(extractId);
+			if (currentFetchId !== extractId) return;
+			creator = undefined;
+			space = undefined;
+			extracts = extractsResult;
+			fetchError = undefined;
+		} catch (e) {
+			if (currentFetchId !== extractId) return;
+			fetchError = e instanceof Error ? e.message : 'Failed to load extracts';
+		}
 	}
 
 	$effect.pre(() => {
@@ -50,6 +76,8 @@
 	});
 
 	$effect(() => {
+		fetchError = undefined;
+		extracts = undefined;
 		switch (entityType.key) {
 			case entityTypes.extract.key:
 				fetchExtracts(entityId);
@@ -67,7 +95,11 @@
 	});
 </script>
 
-{#if extracts}
+{#if fetchError}
+	<div class="error-container" role="alert">
+		<p>Error: {fetchError}</p>
+	</div>
+{:else if extracts}
 	{#if creator}
 		<EntityItem title={creator.name} {extracts} />
 	{:else if space}
@@ -76,14 +108,15 @@
 		<ExtractItem {extracts} selectedId={entityId} />
 	{/if}
 {:else}
-	<div class="loading-container">
+	<div class="loading-container" role="status" aria-busy="true">
 		<p><em>Loading...</em></p>
 		<div class="loader"></div>
 	</div>
 {/if}
 
 <style>
-	.loading-container {
+	.loading-container,
+	.error-container {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -91,8 +124,11 @@
 		height: 100%;
 		gap: 0.5rem;
 	}
-	p {
+	.loading-container p {
 		color: var(--accent);
+	}
+	.error-container p {
+		color: var(--danger, #c53030);
 	}
 	/* https://css-loaders.com/progress/ */
 	.loader {

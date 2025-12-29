@@ -9,15 +9,19 @@
 	let { creators }: CreatorListProps = $props();
 </script>
 
-<ul class="entity-list">
-	{#each creators as entity (entity.id)}
-		<li>
-			<LinkGroup
-				groupType={entityTypes.creator}
-				groupId={entity.id}
-				groupName={entity.name || 'Unknown'}
-				links={entity.extracts}
-			/>
-		</li>
-	{/each}
-</ul>
+{#if creators.length}
+	<ul class="entity-list">
+		{#each creators as entity (entity.id)}
+			<li>
+				<LinkGroup
+					groupType={entityTypes.creator}
+					groupId={entity.id}
+					groupName={entity.name || 'Unknown'}
+					links={entity.extracts}
+				/>
+			</li>
+		{/each}
+	</ul>
+{:else}
+	<em>No creators found.</em>
+{/if}

@@ -7,9 +7,9 @@
 </script>
 
 <ol class:trail={true} {...restProps}>
-	{#each trail.segments as segment (segment.addedOn)}
+	{#each trail.segments as segment (segment.entityId)}
 		<li class={classnames('segment', 'chromatic', segment.color)}>
-			<hr class="segment-separator" />
+			<div class="segment-separator" role="presentation" aria-hidden="true"></div>
 			<div class="segment-contents">
 				<TrailSegment {segment} />
 			</div>

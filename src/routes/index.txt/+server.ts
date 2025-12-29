@@ -10,7 +10,7 @@ export async function GET({ fetch, url }) {
 
 	const combinedList = [
 		...creators.map((creator) => ({
-			nameWithLink: `[${creator.name}](https://barnsworthburning.net/creators/${creator.id})`,
+			nameWithLink: `[${creator.name || 'Anonymous'}](https://barnsworthburning.net/creators/${creator.id})`,
 			type: 'Creator',
 			numExtracts: creator.numExtracts
 		})),

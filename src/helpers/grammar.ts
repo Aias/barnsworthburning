@@ -23,7 +23,7 @@ export const combineAsList = (arr: string[], transformer?: (txt: string) => stri
 		return ''; // Return an empty string if no elements exist
 	}
 	if (mapped.length === 1) {
-		return arr[0]; // Return the single entry if only one element exists
+		return mapped[0]; // Return the single entry if only one element exists
 	}
 	const lastElement = mapped.pop(); // Remove the last element from the array
 	return mapped.join(', ') + ' & ' + lastElement; // Join with commas and last with an ampersand

@@ -10,7 +10,7 @@
 </script>
 
 <svelte:head>
-	<title>{title ?? 'barnsworthburning'}</title>
+	<title>{title}</title>
 </svelte:head>
 
 <h1>

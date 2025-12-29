@@ -31,14 +31,14 @@
 				<section>
 					<header>
 						{#if michelinStars}
-							<span class="stars">
+							<span class="stars" aria-label="{michelinStars} star{michelinStars > 1 ? 's' : ''}">
 								{#each Array(michelinStars) as _, index (index)}
-									<span>⭐</span>
+									<span aria-hidden="true">⭐</span>
 								{/each}
 							</span>
 						{/if}
 						<strong class="title">
-							<Link class="main-link" toId={id} inherit>{title}</Link>
+							<Link class="main-link" toId={id} inherit>{title || 'Untitled'}</Link>
 						</strong>
 						{#if creators}
 							<CreatorList {creators} class="creators" />
@@ -61,7 +61,7 @@
 				{#if images}
 					{@const mainImage = images[0]}
 					<figure>
-						<img src={mainImage.url} alt={imageCaption ?? mainImage.filename} loading="lazy" />
+						<img src={mainImage.url} alt={imageCaption || 'Image from extract'} loading="lazy" />
 					</figure>
 				{/if}
 			</article>

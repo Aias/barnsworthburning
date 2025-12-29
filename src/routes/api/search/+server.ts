@@ -1,3 +1,4 @@
+import { escapeFormulaString } from '$helpers/airtable';
 import { cachedJson } from '$helpers/cache';
 import { airtableFetch } from '$lib/server/requests';
 import { mapExtractRecord } from '$helpers/mapping';
@@ -9,10 +10,10 @@ export const GET = async ({ url }) => {
 	const queryParam = url.searchParams.get('q');
 
 	if (!queryParam) {
-		return cachedJson({ search: undefined }, 'search');
+		return cachedJson({ results: [] }, 'search');
 	}
 
-	const query = decodeURIComponent(queryParam).toLowerCase().replace(/'/g, "\\'");
+	const query = escapeFormulaString(queryParam.toLowerCase());
 
 	const extractResults = await airtableFetch<IBaseExtract>(Table.Extracts, {
 		view: ExtractView.Best,
@@ -22,15 +23,8 @@ export const GET = async ({ url }) => {
 	});
 
 	if (!extractResults) {
-		return cachedJson({ search: [] }, 'search');
+		return cachedJson({ results: [] }, 'search');
 	}
 
-	const results = extractResults.map(mapExtractRecord);
-
-	return cachedJson(
-		{
-			results
-		},
-		'search'
-	);
+	return cachedJson({ results: extractResults.map(mapExtractRecord) }, 'search');
 };

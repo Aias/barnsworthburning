@@ -10,7 +10,6 @@
 
 	let creatorName = $derived(creator.name || 'Anonymous');
 	let description = $derived(`Curated works by ${creatorName}.`);
-
 	let firstImageUrl = $derived(findFirstImageUrl(extracts));
 </script>
 
@@ -21,13 +20,8 @@
 	<meta property="og:description" content={description} />
 	<meta property="og:site_name" content="barnsworthburning" />
 	<meta property="og:url" content={`https://barnsworthburning.net/creators/${creator.id}`} />
-	<meta property="og:type" content="article" />
-	<meta property="og:article:author" content={creatorName} />
-	<meta
-		property="og:article:published_time"
-		content={new Date(creator.createdTime).toISOString()}
-	/>
-	<meta property="og:article:modified_time" content={new Date(creator.lastUpdated).toISOString()} />
+	<meta property="og:type" content="profile" />
+	<meta property="profile:username" content={creatorName} />
 	{#if firstImageUrl}
 		<meta property="og:image" content={firstImageUrl} />
 	{/if}

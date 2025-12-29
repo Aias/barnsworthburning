@@ -23,7 +23,7 @@ export async function load({ fetch, params }) {
 			break;
 
 		default:
-			error(500, 'Invalid entity type');
+			error(404, 'Invalid entity type');
 	}
 
 	const [creators, spaces, extracts] = await Promise.all([
