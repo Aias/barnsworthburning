@@ -3,11 +3,13 @@
 	import { Chroma, Mode, Palette } from '$types/Theme';
 
 	interface SettingsMenuProps {
-		initialTheme?: { mode: Mode; chroma: Chroma; palette: Palette };
+		initialMode?: Mode;
+		initialPalette?: Palette;
+		initialChroma?: Chroma;
 		class?: string;
 	}
 
-	let { initialTheme, ...restProps }: SettingsMenuProps = $props();
+	let { initialMode, initialPalette, initialChroma, ...restProps }: SettingsMenuProps = $props();
 
 	let themeColor = $state<string>();
 
@@ -28,14 +30,19 @@
 	});
 
 	// Use initial theme from server if available, otherwise fall back to settings
-	let currentMode = $state(initialTheme?.mode ?? settings.mode);
-	let currentPalette = $state(initialTheme?.palette ?? settings.palette);
-	let currentChroma = $state(initialTheme?.chroma ?? settings.chroma);
+	// eslint-disable-next-line svelte/no-unused-svelte-ignore -- needed for svelte-check
+	// svelte-ignore state_referenced_locally -- intentional SSR hydration pattern
+	let currentMode = $state(initialMode ?? settings.mode);
+	// svelte-ignore state_referenced_locally
+	let currentPalette = $state(initialPalette ?? settings.palette);
+	// svelte-ignore state_referenced_locally
+	let currentChroma = $state(initialChroma ?? settings.chroma);
 
 	// After initial render, sync with settings
 	$effect(() => {
+		const hasInitialTheme = initialMode !== undefined;
 		if (
-			!initialTheme ||
+			!hasInitialTheme ||
 			(settings.mode === currentMode &&
 				settings.palette === currentPalette &&
 				settings.chroma === currentChroma)

@@ -113,7 +113,12 @@
 <div class="app-contents">
 	<Nav class="app-nav themed" />
 	<div class="app-toolbar">
-		<SettingsMenu class="app-settings" initialTheme={theme} />
+		<SettingsMenu
+			class="app-settings"
+			initialMode={theme?.mode}
+			initialPalette={theme?.palette}
+			initialChroma={theme?.chroma}
+		/>
 	</div>
 	{#if !isIndex}
 		<main class="app-main" id="app-main">

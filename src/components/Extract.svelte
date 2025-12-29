@@ -12,8 +12,9 @@
 	import CreatorList from './CreatorList.svelte';
 	// import SourceLink from './SourceLink.svelte';
 
-	interface ExtractProps<T extends keyof HTMLElementTagNameMap>
-		extends HTMLAttributes<HTMLElementTagNameMap[T]> {
+	interface ExtractProps<T extends keyof HTMLElementTagNameMap> extends HTMLAttributes<
+		HTMLElementTagNameMap[T]
+	> {
 		extract: IExtract;
 		element?: T;
 		suppressBlockLink?: boolean;

@@ -21,7 +21,7 @@
 
 	const maxItems = 5;
 	const moreItems = $derived(links ? links.length - maxItems : 0);
-	const visibleLinks = links ? links.slice(0, maxItems) : [];
+	const visibleLinks = $derived(links ? links.slice(0, maxItems) : []);
 </script>
 
 <a class="group-name" href={resolve(`/${groupType.urlParam}/${groupId}`)}>{groupName}</a>

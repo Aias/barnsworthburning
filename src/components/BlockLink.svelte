@@ -3,8 +3,9 @@
 	import type { Snippet } from 'svelte';
 	import type { HTMLAttributes } from 'svelte/elements';
 
-	interface BlockLinkProps<T extends keyof HTMLElementTagNameMap>
-		extends HTMLAttributes<HTMLElementTagNameMap[T]> {
+	interface BlockLinkProps<T extends keyof HTMLElementTagNameMap> extends HTMLAttributes<
+		HTMLElementTagNameMap[T]
+	> {
 		element?: T;
 		suppress?: boolean;
 		children: Snippet;
