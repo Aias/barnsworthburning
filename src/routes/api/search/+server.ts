@@ -13,6 +13,7 @@ export const GET = async ({ url }) => {
 		return cachedJson({ results: [] }, 'search');
 	}
 
+	// URLSearchParams.get() already decodes percent-encoded values
 	const query = escapeFormulaString(queryParam.toLowerCase());
 
 	const extractResults = await airtableFetch<IBaseExtract>(Table.Extracts, {

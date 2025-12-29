@@ -7,12 +7,18 @@
 	import type { ICreator, IExtract, ISpace } from '$types/Airtable';
 	import { capitalize } from '$helpers/grammar';
 	import type { TrailSegment } from '$lib/trail.svelte';
-	import { error } from '@sveltejs/kit';
 
 	interface TrailSegmentProps {
 		segment: TrailSegment;
 	}
 	let { segment }: TrailSegmentProps = $props();
+
+	// Provide segment via getter for reactivity (component is keyed by entityId)
+	setContext('trailSegment', {
+		get current() {
+			return segment;
+		}
+	});
 
 	let { entityType, entityId } = $derived(segment);
 
@@ -71,10 +77,6 @@
 		}
 	}
 
-	$effect.pre(() => {
-		setContext('trailSegment', segment);
-	});
-
 	$effect(() => {
 		fetchError = undefined;
 		extracts = undefined;
@@ -89,7 +91,7 @@
 				fetchSpace(entityId);
 				break;
 			default:
-				error(500, 'Unknown entity type');
+				fetchError = 'Unknown entity type';
 				break;
 		}
 	});

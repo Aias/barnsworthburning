@@ -7,7 +7,7 @@
 </script>
 
 <ol class:trail={true} {...restProps}>
-	{#each trail.segments as segment (segment.entityId)}
+	{#each trail.segments as segment, index (`${segment.entityId}-${index}`)}
 		<li class={classnames('segment', 'chromatic', segment.color)}>
 			<div class="segment-separator" role="presentation" aria-hidden="true"></div>
 			<div class="segment-contents">

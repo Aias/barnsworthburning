@@ -1,5 +1,5 @@
-// Airtable record IDs follow the pattern: rec + 14 alphanumeric characters
-const AIRTABLE_RECORD_ID_REGEX = /^rec[A-Za-z0-9]{14}$/;
+// Airtable record IDs follow the pattern: rec + 14-17 alphanumeric characters
+const AIRTABLE_RECORD_ID_REGEX = /^rec[A-Za-z0-9]{14,17}$/;
 
 /**
  * Validates that a string is a valid Airtable record ID.

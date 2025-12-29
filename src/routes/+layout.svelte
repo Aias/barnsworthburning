@@ -6,6 +6,7 @@
 	import interaction from '$lib/interaction.svelte';
 	import trail from '$lib/trail.svelte';
 	import { entityTypes, type EntityType, type EntityTypeKey } from '$helpers/params';
+	import { Mode, Chroma, Palette } from '$types/Theme';
 	import SEO from '$components/SEO.svelte';
 	import Trail from './app/Trail.svelte';
 	import Nav from './app/Nav.svelte';
@@ -20,13 +21,23 @@
 
 	let { creators, spaces, theme } = $derived(data);
 
+	// All possible theme class values derived from Theme enums
+	const THEME_CLASSES: Set<string> = new Set([
+		...Object.values(Mode),
+		...Object.values(Chroma),
+		...Object.values(Palette)
+	]);
+
 	$effect.pre(() => {
 		const classList = document.documentElement.classList;
-		// Remove any existing theme classes before adding the new one
-		classList.forEach((cls) => {
-			if (cls.startsWith('theme-')) classList.remove(cls);
+		// Convert to array to avoid mutating during iteration
+		const currentClasses = [...classList];
+		// Remove any existing theme classes
+		currentClasses.forEach((cls) => {
+			if (THEME_CLASSES.has(cls)) classList.remove(cls);
 		});
-		classList.add(settings.themeClass);
+		// Add new theme classes (themeClass is space-delimited, so split it)
+		classList.add(...settings.themeClass.split(' ').filter(Boolean));
 	});
 
 	beforeNavigate(({ from, to, type, cancel }) => {

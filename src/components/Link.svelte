@@ -6,6 +6,10 @@
 	import type { HTMLAnchorAttributes } from 'svelte/elements';
 	import trail, { type TrailSegment } from '$lib/trail.svelte';
 
+	interface TrailSegmentContext {
+		readonly current: TrailSegment;
+	}
+
 	interface LinkBaseProps extends HTMLAnchorAttributes {
 		active?: boolean;
 		children: Snippet;
@@ -36,7 +40,7 @@
 		...restProps
 	}: LinkProps = $props();
 
-	let trailSegment: TrailSegment | undefined = getContext('trailSegment');
+	const trailSegmentCtx = getContext<TrailSegmentContext | undefined>('trailSegment');
 
 	let url = $derived.by(() => {
 		if (href) return href;
@@ -45,7 +49,7 @@
 	});
 
 	const handleClick = () => {
-		trail.selectSegment(trailSegment?.entityId);
+		trail.selectSegment(trailSegmentCtx?.current.entityId);
 	};
 </script>
 
