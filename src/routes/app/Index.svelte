@@ -43,7 +43,7 @@
 	}
 </script>
 
-<ol class="index" class:themed={true} {...restProps}>
+<ol class="index themed" {...restProps}>
 	{#each index as entry (entry.id)}
 		{@const { type, name, id, count } = entry}
 		<li class="index-entry">
@@ -72,7 +72,8 @@
 	<li class="index-entry">
 		<Link
 			href="https://www.airtable.com/universe/expKiUBA3E8no5Dgp/a-commonplace-book"
-			target="_blank">Source</Link
+			target="_blank"
+			rel="noopener">Source ↗</Link
 		>
 	</li>
 </ol>

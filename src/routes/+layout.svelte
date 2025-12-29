@@ -6,6 +6,7 @@
 	import interaction from '$lib/interaction.svelte';
 	import trail from '$lib/trail.svelte';
 	import { entityTypes, type EntityType, type EntityTypeKey } from '$helpers/params';
+	import { Mode, Chroma, Palette } from '$types/Theme';
 	import SEO from '$components/SEO.svelte';
 	import Trail from './app/Trail.svelte';
 	import Nav from './app/Nav.svelte';
@@ -14,18 +15,33 @@
 
 	let { children, data } = $props();
 	let bodyEl = $state<HTMLBodyElement>();
-	let bodyWidth = $state<number>(0);
+	let innerWidth = $state<number>(0);
 	let isIndex = $derived(page.route.id === '/');
 	let isEntityDetail = $derived(page.params.id);
 
 	let { creators, spaces, theme } = $derived(data);
 
+	// All possible theme class values derived from Theme enums
+	const THEME_CLASSES: Set<string> = new Set([
+		...Object.values(Mode),
+		...Object.values(Chroma),
+		...Object.values(Palette)
+	]);
+
 	$effect.pre(() => {
-		document.documentElement.className = settings.themeClass;
+		const classList = document.documentElement.classList;
+		// Convert to array to avoid mutating during iteration
+		const currentClasses = [...classList];
+		// Remove any existing theme classes
+		currentClasses.forEach((cls) => {
+			if (THEME_CLASSES.has(cls)) classList.remove(cls);
+		});
+		// Add new theme classes (themeClass is space-delimited, so split it)
+		classList.add(...settings.themeClass.split(' ').filter(Boolean));
 	});
 
 	beforeNavigate(({ from, to, type, cancel }) => {
-		if (bodyWidth < 720) return; // Don't add segments when the screen is too small.
+		if (innerWidth < 720) return; // Don't add segments when the screen is too small.
 		const isNavigating = ['link', 'goto'].includes(type);
 		if (!isNavigating) return;
 		const fromEntityParam = from?.params?.entityType;
@@ -60,7 +76,6 @@
 				// Don't cancel navigation if the selected segment is the same as toId.
 				return;
 			}
-			// if (toId === fromId) return; // Don't add segments for the same entity.
 			if (toEntityType === entityTypes.extract) {
 				trail.removeAfterSegment(selectedId);
 				trail.addSegment(toEntityType, toId);
@@ -101,15 +116,16 @@
 </script>
 
 <svelte:window
-	on:keydown={handleInteractions}
-	on:keyup={handleInteractions}
-	on:mouseenter={handleInteractions}
-	on:mouseleave={handleInteractions}
+	bind:innerWidth
+	onkeydown={handleInteractions}
+	onkeyup={handleInteractions}
+	onmouseenter={handleInteractions}
+	onmouseleave={handleInteractions}
 />
 {#if !isEntityDetail}
 	<SEO />
 {/if}
-<svelte:body bind:this={bodyEl} bind:clientWidth={bodyWidth} />
+<svelte:body bind:this={bodyEl} />
 <div class="app-contents">
 	<Nav class="app-nav themed" />
 	<div class="app-toolbar">

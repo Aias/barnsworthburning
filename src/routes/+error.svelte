@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { page } from '$app/state';
 
-	let { status, error } = page;
+	let status = $derived(page.status);
+	let error = $derived(page.error);
 </script>
 
 <svelte:head>
-	<title>{status}</title>
+	<title>Error {status}</title>
 </svelte:head>
 
 <h1>{status}</h1>

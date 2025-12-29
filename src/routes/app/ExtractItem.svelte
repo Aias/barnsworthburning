@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { setContext } from 'svelte';
 	import { makeHierarchy } from '$helpers/mapping';
 	import Extract from '$components/Extract.svelte';
 	import ExtractList from './ExtractList.svelte';
@@ -12,10 +11,6 @@
 	let { selectedId, extracts }: ExtractItemProps = $props();
 
 	let { selected, children, connections } = $derived(makeHierarchy(extracts, selectedId));
-
-	$effect.pre(() => {
-		setContext('extract', selected);
-	});
 </script>
 
 <article>

@@ -16,25 +16,21 @@
 	});
 
 	$effect(() => {
-		if (results) {
-			highlightSearchResults(searchValue);
+		if (results && currentQuery) {
+			highlightSearchResults(currentQuery);
 		}
 	});
-
-	function updateSearchValue(event: Event) {
-		const target = event.target as HTMLInputElement;
-		searchValue = target.value;
-	}
 </script>
 
 <div class="toolbar">
 	<form data-sveltekit-keepfocus class="search-input">
+		<label for="search-input" class="screenreader">Search extracts</label>
 		<TextInput
+			id="search-input"
 			type="search"
 			name="q"
 			placeholder="Search extracts..."
-			value={searchValue}
-			onchange={updateSearchValue}
+			bind:value={searchValue}
 			autofocus
 		/>
 		<button type="submit">Search</button>

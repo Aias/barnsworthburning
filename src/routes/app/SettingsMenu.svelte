@@ -13,7 +13,7 @@
 
 	let themeColor = $state<string>();
 
-	const titleCase = (str: string) => str[0].toUpperCase() + str.slice(1);
+	const titleCase = (str: string) => (str ? str[0].toUpperCase() + str.slice(1) : '');
 
 	const setThemeColor = () => {
 		const checkedInput = document.querySelector('input[name="paletteKey"]:checked');
@@ -74,6 +74,7 @@
 <menu {...restProps}>
 	<li>
 		<fieldset class="theme-selector">
+			<legend class="screenreader">Color Theme</legend>
 			{#each settings.paletteOptions as paletteKey (paletteKey)}
 				<label
 					class={paletteKey}
@@ -95,6 +96,7 @@
 	</li>
 	<li>
 		<fieldset class="mode-selector">
+			<legend class="screenreader">Light/Dark Mode</legend>
 			<label aria-label="Day Mode" title="Day Mode"
 				><input
 					type="radio"
@@ -126,10 +128,11 @@
 	</li>
 	<li>
 		<fieldset class="chroma-selector">
+			<legend class="screenreader">Chroma Setting</legend>
 			<label aria-label="Toggle Chroma" title="Toggle Chroma"
 				><input
 					type="checkbox"
-					name="modeKey"
+					name="chromaKey"
 					class="screenreader"
 					checked={currentChroma === Chroma.Chromatic}
 					onchange={() => settings.setChroma()}

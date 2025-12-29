@@ -1,4 +1,4 @@
-import type { Attachment, FieldSet, Record } from 'airtable';
+import type { Attachment, FieldSet, Record as AirtableRecord } from 'airtable';
 
 // const AirtableBaseId = 'appHWZbECVKCSjquH' as const;
 export const AirtableBaseId = 'appNAUPSEyCYlPtvG' as const;
@@ -33,7 +33,7 @@ export enum SpaceView {
 	RecentlyUpdated = 'viwmSxAVAT3uJc6xk'
 }
 
-type AirtableRecordId = Record<FieldSet>['id'];
+type AirtableRecordId = AirtableRecord<FieldSet>['id'];
 
 export interface IBaseRecord {
 	id: AirtableRecordId;
@@ -45,8 +45,12 @@ export interface ILinkedRecord {
 	name: string;
 }
 
-export interface IBaseExtract extends IBaseRecord {
-	id: AirtableRecordId;
+// =============================================================================
+// EXTRACT SCHEMA
+// =============================================================================
+
+// Schema: defines all extract fields and their types in one place
+type BaseExtractFieldTypes = {
 	childTitles?: string[];
 	children?: AirtableRecordId[];
 	connectionTitles?: string[];
@@ -70,16 +74,46 @@ export interface IBaseExtract extends IBaseRecord {
 	spaceTopics?: string[];
 	spaces?: AirtableRecordId[];
 	title?: string;
+};
+
+// Interface derived from schema
+export interface IBaseExtract extends IBaseRecord, BaseExtractFieldTypes {
+	id: AirtableRecordId;
 }
 
-// Add this type to get all keys of IBaseExtract except 'id'
-export type ExtractFields = Exclude<keyof IBaseExtract, 'id'>;
+// Type alias for field keys
+export type ExtractFields = keyof BaseExtractFieldTypes;
 
-// Create a const array with all ExtractFields
-export const extractFields: ExtractFields[] = Object.keys(
-	{} as Omit<IBaseExtract, 'id'>
-) as ExtractFields[];
+// Fields array with compile-time completeness check via Record type
+const extractFieldsConfig: Record<ExtractFields, true> = {
+	childTitles: true,
+	children: true,
+	connectionTitles: true,
+	connections: true,
+	creatorNames: true,
+	creators: true,
+	extract: true,
+	extractedOn: true,
+	format: true,
+	imageCaption: true,
+	images: true,
+	lastUpdated: true,
+	michelinStars: true,
+	notes: true,
+	parent: true,
+	parentCreatorIds: true,
+	parentCreatorNames: true,
+	parentTitle: true,
+	publishedOn: true,
+	source: true,
+	spaceTopics: true,
+	spaces: true,
+	title: true
+};
 
+export const extractFields = Object.keys(extractFieldsConfig) as ExtractFields[];
+
+// Mapped/transformed extract type for client use
 export interface IExtract {
 	id: string;
 	title?: string;
@@ -101,8 +135,12 @@ export interface IExtract {
 	publishedOn: string;
 }
 
-export interface IBaseCreator extends IBaseRecord {
-	id: AirtableRecordId;
+// =============================================================================
+// CREATOR SCHEMA
+// =============================================================================
+
+// Schema: defines all creator fields and their types in one place
+type BaseCreatorFieldTypes = {
 	name?: string;
 	type?: string;
 	site?: string;
@@ -118,16 +156,38 @@ export interface IBaseCreator extends IBaseRecord {
 	totalStars: number;
 	createdTime: string;
 	lastUpdated: string;
+};
+
+// Interface derived from schema
+export interface IBaseCreator extends IBaseRecord, BaseCreatorFieldTypes {
+	id: AirtableRecordId;
 }
 
-// Add this type to get all keys of IBaseCreator except 'id'
-export type CreatorFields = Exclude<keyof IBaseCreator, 'id'>;
+// Type alias for field keys
+export type CreatorFields = keyof BaseCreatorFieldTypes;
 
-// Create a const array with all CreatorFields
-export const creatorFields: CreatorFields[] = Object.keys(
-	{} as Omit<IBaseCreator, 'id'>
-) as CreatorFields[];
+// Fields array with compile-time completeness check via Record type
+const creatorFieldsConfig: Record<CreatorFields, true> = {
+	name: true,
+	type: true,
+	site: true,
+	primaryProject: true,
+	professions: true,
+	organizations: true,
+	nationality: true,
+	extracts: true,
+	extractTitles: true,
+	numWorks: true,
+	numFragments: true,
+	numExtracts: true,
+	totalStars: true,
+	createdTime: true,
+	lastUpdated: true
+};
 
+export const creatorFields = Object.keys(creatorFieldsConfig) as CreatorFields[];
+
+// Mapped/transformed creator type for client use
 export interface ICreator {
 	id: AirtableRecordId;
 	name?: string;
@@ -146,8 +206,12 @@ export interface ICreator {
 	lastUpdated: string;
 }
 
-export interface IBaseSpace extends IBaseRecord {
-	id: AirtableRecordId;
+// =============================================================================
+// SPACE SCHEMA
+// =============================================================================
+
+// Schema: defines all space fields and their types in one place
+type BaseSpaceFieldTypes = {
 	topic?: string;
 	title?: string;
 	icon?: string;
@@ -158,16 +222,33 @@ export interface IBaseSpace extends IBaseRecord {
 	totalStars: number;
 	lastUpdated: string;
 	createdTime: string;
+};
+
+// Interface derived from schema
+export interface IBaseSpace extends IBaseRecord, BaseSpaceFieldTypes {
+	id: AirtableRecordId;
 }
 
-// Add this type to get all keys of IBaseSpace except 'id'
-export type SpaceFields = Exclude<keyof IBaseSpace, 'id'>;
+// Type alias for field keys
+export type SpaceFields = keyof BaseSpaceFieldTypes;
 
-// Create a const array with all SpaceFields
-export const spaceFields: SpaceFields[] = Object.keys(
-	{} as Omit<IBaseSpace, 'id'>
-) as SpaceFields[];
+// Fields array with compile-time completeness check via Record type
+const spaceFieldsConfig: Record<SpaceFields, true> = {
+	topic: true,
+	title: true,
+	icon: true,
+	description: true,
+	extracts: true,
+	extractTitles: true,
+	numExtracts: true,
+	totalStars: true,
+	lastUpdated: true,
+	createdTime: true
+};
 
+export const spaceFields = Object.keys(spaceFieldsConfig) as SpaceFields[];
+
+// Mapped/transformed space type for client use
 export interface ISpace {
 	id: string;
 	topic?: string;
