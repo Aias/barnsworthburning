@@ -1,2 +1,4 @@
+name = "barnsworthburning"
 pages_build_output_dir = ".svelte-kit/cloudflare"
+compatibility_date = "2026-02-07"
 compatibility_flags = ["nodejs_compat"]
