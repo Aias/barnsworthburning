@@ -2,14 +2,13 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig, type Plugin, type PluginOption } from 'vite';
 import { promises as fs, existsSync } from 'fs';
 import path from 'path';
-import dotenv from 'dotenv';
 import prettier from 'prettier';
 import { generateFullTheme } from './src/styles/generators';
 import { generateThemeScript } from './src/lib/theme/generate';
 
 const makeThemeFile = async () => {
 	const cssContent = generateFullTheme();
-	let formattedContent = '';
+	let formattedContent;
 	try {
 		formattedContent = await prettier.format(cssContent, {
 			parser: 'css'
@@ -46,19 +45,12 @@ const themeScriptPlugin = (): Plugin => {
 	};
 };
 
-// Load environment variables from .env files
-dotenv.config({ path: '.env' });
-dotenv.config({ path: '.env.local' });
-
 export default defineConfig(({ mode }) => {
 	const plugins: PluginOption[] = [];
-	// Load development or production .env file based on Vite mode
 	if (mode === 'development') {
-		dotenv.config({ path: '.env.development' });
 		plugins.push(colorGeneratorPlugin());
 		plugins.push(themeScriptPlugin());
 	} else if (mode === 'production') {
-		dotenv.config({ path: '.env.production' });
 		plugins.push(themeScriptPlugin());
 	}
 	plugins.push(sveltekit());

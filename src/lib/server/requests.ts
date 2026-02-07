@@ -1,15 +1,22 @@
 import Airtable from 'airtable';
 import { error } from '@sveltejs/kit';
+import { env } from '$env/dynamic/private';
 import type { Record, FieldSet, SelectOptions, Error } from 'airtable';
 import { type IBaseRecord, AirtableBaseId, Table } from '$types/Airtable';
 import { slugify, recordIdRegex } from '$helpers/params';
 
-Airtable.configure({
-	endpointUrl: 'https://api.airtable.com',
-	apiKey: import.meta.env.VITE_AIRTABLE_ACCESS_TOKEN
-});
+let base: ReturnType<typeof Airtable.base>;
 
-export const base = Airtable.base(AirtableBaseId);
+function getBase() {
+	if (!base) {
+		Airtable.configure({
+			endpointUrl: 'https://api.airtable.com',
+			apiKey: env.AIRTABLE_ACCESS_TOKEN
+		});
+		base = Airtable.base(AirtableBaseId);
+	}
+	return base;
+}
 
 // Request deduplication with separate caches for different return types
 const pendingListRequests = new Map<string, Promise<IBaseRecord[]>>();
@@ -56,7 +63,7 @@ async function airtableFetch<T extends IBaseRecord>(
 	}
 
 	// Create new request and store in pending map
-	const requestPromise = base(table)
+	const requestPromise = getBase()(table)
 		.select(options)
 		.all()
 		.then((records) => records.map(mapReceivedRecord<T>))
@@ -105,7 +112,7 @@ async function airtableFind<T extends IBaseRecord>(
 	}
 
 	// Create new request and store in pending map
-	const requestPromise = base(table)
+	const requestPromise = getBase()(table)
 		.find(recordId)
 		.then(mapReceivedRecord<T>)
 		.catch((err: Error) => {
