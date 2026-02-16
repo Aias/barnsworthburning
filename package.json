@@ -26,9 +26,12 @@
 		"format": "prettier --write ."
 	},
 	"dependencies": {
+		"@aias/hozo": "0.3.0",
 		"airtable": "^0.12.2",
+		"drizzle-orm": "1.0.0-beta.15-859cf75",
 		"marked": "^17.0.2",
 		"normalize.css": "^8.0.1",
+		"postgres": "^3.4.8",
 		"xml-formatter": "^3.6.7"
 	},
 	"devDependencies": {
