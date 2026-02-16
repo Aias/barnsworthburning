@@ -1,10 +1,6 @@
 /**
- * Highlight occurrences of a search query within the page using the CSS
- * `::highlight` API.
- *
- * @param query - Search term to highlight.
- * @param target - Optional CSS selector, element or NodeList to search.
- *                 Defaults to elements with the `.extract` class.
+ * Highlight occurrences of a search query using the CSS `::highlight` API.
+ * Defaults to elements with the `.extract` class.
  */
 export function highlightSearchResults(
 	query: string,
@@ -26,19 +22,18 @@ export function highlightSearchResults(
 	}
 
 	const ranges: Range[] = [];
-	const lowerQuery = query.toLowerCase();
 
 	elements.forEach((el) => {
 		const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-		let node: Text | null;
-		while ((node = walker.nextNode() as Text | null)) {
-			const text = node.textContent?.toLowerCase() ?? '';
+		let node: Node | null;
+		while ((node = walker.nextNode())) {
+			const text = node.textContent ?? '';
 			let match: RegExpExecArray | null;
-			const regex = new RegExp(lowerQuery, 'gi');
+			const regex = new RegExp(query, 'gi');
 			while ((match = regex.exec(text)) !== null) {
 				const range = new Range();
 				range.setStart(node, match.index);
-				range.setEnd(node, match.index + lowerQuery.length);
+				range.setEnd(node, match.index + query.length);
 				ranges.push(range);
 			}
 		}

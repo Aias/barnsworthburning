@@ -8,32 +8,9 @@ import type {
 	ISpace
 } from '$types/Airtable';
 
-type Input<Type> = {
-	[Key in keyof Type]: Type[Key][];
-};
-
-export function zip<Type>(input: Input<Type>): Type[] | undefined {
-	const outputArraySize = (Object.values(input)[0] as Array<unknown>).length;
-
-	// Check if any values in input are undefined or have length 0
-	const hasUndefinedOrEmptyValues = Object.values(input).some(
-		(values) => values !== null && (values === undefined || (values as Array<unknown>).length === 0)
-	);
-
-	// Check if any required properties are missing in the input object
-	const hasMissingProperties = Object.keys(input).some(
-		(key) => input[key as keyof Type].length !== outputArraySize
-	);
-
-	if (hasUndefinedOrEmptyValues || hasMissingProperties) {
-		return undefined;
-	}
-
-	return Array.from({ length: outputArraySize }, (_, idx) =>
-		Object.entries(input).reduce((accumulator, [key, values]) => {
-			return { ...accumulator, [key]: (values as Array<unknown>)[idx] };
-		}, {} as Type)
-	);
+function zipRecords(ids: string[], names: string[]): ILinkedRecord[] | undefined {
+	if (ids.length === 0 || ids.length !== names.length) return undefined;
+	return ids.map((id, i) => ({ id, name: names[i] }));
 }
 
 export const mapExtractRecord = (record: IBaseExtract): IExtract => {
@@ -64,30 +41,12 @@ export const mapExtractRecord = (record: IBaseExtract): IExtract => {
 		publishedOn
 	} = record;
 
-	const mappedChildren = zip<ILinkedRecord>({
-		id: children,
-		name: childTitles
-	});
-	const mappedConnections = zip<ILinkedRecord>({
-		id: connections,
-		name: connectionTitles
-	});
-	const mappedCreators = zip<ILinkedRecord>({
-		id: creators,
-		name: creatorNames
-	});
-	const mappedParent = zip<ILinkedRecord>({
-		id: parent,
-		name: parentTitle
-	});
-	const mappedParentCreators = zip<ILinkedRecord>({
-		id: parentCreatorIds,
-		name: parentCreatorNames
-	});
-	const mappedSpaces = zip<ILinkedRecord>({
-		id: spaces,
-		name: spaceTopics
-	});
+	const mappedChildren = zipRecords(children, childTitles);
+	const mappedConnections = zipRecords(connections, connectionTitles);
+	const mappedCreators = zipRecords(creators, creatorNames);
+	const mappedParent = zipRecords(parent, parentTitle);
+	const mappedParentCreators = zipRecords(parentCreatorIds, parentCreatorNames);
+	const mappedSpaces = zipRecords(spaces, spaceTopics);
 
 	return {
 		id,
@@ -131,10 +90,7 @@ export const mapCreatorRecord = (record: IBaseCreator): ICreator => {
 		lastUpdated
 	} = record;
 
-	const mappedExtracts = zip<ILinkedRecord>({
-		id: extracts,
-		name: extractTitles
-	});
+	const mappedExtracts = zipRecords(extracts, extractTitles);
 
 	return {
 		id,
@@ -170,10 +126,7 @@ export const mapSpaceRecord = (record: IBaseSpace): ISpace => {
 		lastUpdated
 	} = record;
 
-	const mappedExtracts = zip<ILinkedRecord>({
-		id: extracts,
-		name: extractTitles
-	});
+	const mappedExtracts = zipRecords(extracts, extractTitles);
 
 	return {
 		id,
@@ -221,12 +174,10 @@ export function makeHierarchy(extracts: IExtract[], selectedExtractId: string): 
 		?.map((connection) => extractsById.get(connection.id))
 		.filter((connection): connection is IExtract => !!connection);
 
-	const hierarchy: ExtractHierarchy = {
+	return {
 		selected: selectedExtract,
 		parents: parents.length ? parents : undefined,
 		children: children?.length ? children : undefined,
 		connections: connections?.length ? connections : undefined
 	};
-
-	return hierarchy;
 }
