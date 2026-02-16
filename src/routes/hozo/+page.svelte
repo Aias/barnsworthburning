@@ -16,7 +16,8 @@
 <ol class="index themed">
 	{#each index as record (record.id)}
 		<li class="index-entry">
-			<a class="entity-link" href="/hozo/{record.id}">{record.title}</a>
+			<a class="entity-link" href="/hozo/{record.id}">{record.title}</a
+			>&nbsp;<span class="count">{record.incomingLinkCount}</span>
 		</li>
 	{/each}
 </ol>
