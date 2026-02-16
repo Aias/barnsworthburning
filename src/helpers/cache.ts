@@ -1,59 +1,36 @@
-/**
- * Cache control header configurations for different types of content
- */
-
 interface CacheConfig {
-	/**
-	 * Browser cache duration in seconds
-	 */
 	maxAge?: number;
-	/**
-	 * CDN cache duration in seconds
-	 */
 	sMaxAge?: number;
-	/**
-	 * Allow serving stale content while revalidating in background
-	 */
 	staleWhileRevalidate?: number;
-	/**
-	 * Cache can be stored by shared caches (CDN)
-	 */
 	public?: boolean;
 }
 
 const CACHE_CONFIGS = {
-	// For entity lists that change occasionally
 	entityList: {
-		maxAge: 60, // 1 minute browser cache
-		sMaxAge: 300, // 5 minutes CDN cache
-		staleWhileRevalidate: 86400, // 1 day stale-while-revalidate
+		maxAge: 60, // 1 min
+		sMaxAge: 300, // 5 min
+		staleWhileRevalidate: 86400, // 1 day
 		public: true
 	},
-	// For individual entities that change rarely
 	entity: {
-		maxAge: 300, // 5 minutes browser cache
-		sMaxAge: 3600, // 1 hour CDN cache
-		staleWhileRevalidate: 604800, // 1 week stale-while-revalidate
+		maxAge: 300, // 5 min
+		sMaxAge: 3600, // 1 hr
+		staleWhileRevalidate: 604800, // 1 week
 		public: true
 	},
-	// For search results that are dynamic
 	search: {
-		maxAge: 0, // No browser cache
-		sMaxAge: 60, // 1 minute CDN cache
-		staleWhileRevalidate: 300, // 5 minutes stale-while-revalidate
+		maxAge: 0,
+		sMaxAge: 60, // 1 min
+		staleWhileRevalidate: 300, // 5 min
 		public: true
 	},
-	// For feed that updates regularly
 	feed: {
-		maxAge: 0, // No browser cache
-		sMaxAge: 300, // 5 minutes CDN cache
+		maxAge: 0,
+		sMaxAge: 300, // 5 min
 		public: true
 	}
 } as const;
 
-/**
- * Generate cache control header string from config
- */
 function generateCacheControl(config: CacheConfig): string {
 	const parts: string[] = [];
 
@@ -76,9 +53,6 @@ function generateCacheControl(config: CacheConfig): string {
 	return parts.join(', ');
 }
 
-/**
- * Get cache headers for a specific cache type
- */
 export function getCacheHeaders(type: keyof typeof CACHE_CONFIGS): HeadersInit {
 	const config = CACHE_CONFIGS[type];
 	return {
@@ -87,9 +61,6 @@ export function getCacheHeaders(type: keyof typeof CACHE_CONFIGS): HeadersInit {
 	};
 }
 
-/**
- * Create a cached JSON response
- */
 export function cachedJson<T>(data: T, cacheType: keyof typeof CACHE_CONFIGS = 'entity'): Response {
 	return new Response(JSON.stringify(data), {
 		headers: {

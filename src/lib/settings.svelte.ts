@@ -7,11 +7,9 @@ const CHROMA_COOKIE = THEME_CONFIG.cookies.chroma;
 const PALETTE_COOKIE = THEME_CONFIG.cookies.palette;
 
 export function createSettings() {
-	// During SSR or initial client render, read from DOM classes if available
-	// This ensures we get the values set by themePreferences.js
 	const getInitialValue = <T extends string>(
 		enumObj: Record<string, T>,
-		cookieValue: T | undefined,
+		cookieValue: string | undefined,
 		defaultValue: T
 	): T => {
 		if (typeof document !== 'undefined' && document.documentElement) {
@@ -22,16 +20,13 @@ export function createSettings() {
 				}
 			}
 		}
-		// If no DOM value found, use cookie value or default
-		return cookieValue ?? defaultValue;
+		return Object.values(enumObj).find((v) => v === cookieValue) ?? defaultValue;
 	};
 
-	// Get cookie values
-	const modeCookie = getCookie<Mode>(MODE_COOKIE);
-	const chromaCookie = getCookie<Chroma>(CHROMA_COOKIE);
-	const paletteCookie = getCookie<Palette>(PALETTE_COOKIE);
+	const modeCookie = getCookie(MODE_COOKIE);
+	const chromaCookie = getCookie(CHROMA_COOKIE);
+	const paletteCookie = getCookie(PALETTE_COOKIE);
 
-	// Use DOM values if available (from themePreferences.js), otherwise cookies, otherwise defaults
 	let mode = $state(getInitialValue(Mode, modeCookie, DEFAULT_MODE));
 	let chroma = $state(getInitialValue(Chroma, chromaCookie, DEFAULT_CHROMA));
 	let palette = $state(getInitialValue(Palette, paletteCookie, DEFAULT_PALETTE));

@@ -1,27 +1,15 @@
-export function getCookie<T = string>(name: string): T | undefined {
-	if (typeof document === 'undefined') {
-		// We're on the server, return undefined.
-		return undefined;
+export function getCookie(name: string): string | undefined {
+	if (typeof document === 'undefined') return undefined;
+
+	for (const pair of document.cookie.split(';')) {
+		const [key, value] = pair.split('=').map((s) => s.trim());
+		if (name === key) return decodeURIComponent(value);
 	}
 
-	const cookieArr = document.cookie.split(';');
-	for (let i = 0; i < cookieArr.length; i++) {
-		const cookiePair = cookieArr[i].split('=').map((cookie) => cookie.trim());
-
-		if (name == cookiePair[0]) {
-			return decodeURIComponent(cookiePair[1]) as T;
-		}
-	}
-	// Return undefined if the cookie by name does not exist.
 	return undefined;
 }
 
 export function setCookie(name: string, value: string) {
-	if (typeof document === 'undefined') {
-		// We're on the server, do nothing.
-		return;
-	}
-
-	const expires = 'Fri, 31 Dec 9999 23:59:59 GMT';
-	document.cookie = `${name}=${value || ''}; expires=${expires}; path=/`;
+	if (typeof document === 'undefined') return;
+	document.cookie = `${name}=${value || ''}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/`;
 }
