@@ -13,6 +13,7 @@ export type RecordLink = Pick<RecordSelect, 'id' | 'type' | 'title' | 'slug'>;
 export interface LinkGroup {
 	predicate: PredicateSlug;
 	label: string;
+	direction: 'outgoing' | 'incoming';
 	records: RecordLink[];
 }
 

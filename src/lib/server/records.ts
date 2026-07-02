@@ -48,7 +48,14 @@ type RecordsQueryConfig = NonNullable<Parameters<typeof db.query.records.findMan
 
 const cardColumns = { textEmbedding: false } satisfies RecordsQueryConfig['columns'];
 
-const linkColumns = { id: true, type: true, title: true, slug: true } as const;
+const linkColumns = {
+	id: true,
+	type: true,
+	title: true,
+	slug: true,
+	isPrivate: true,
+	isCurated: true
+} as const;
 
 const cardWith = {
 	media: {
@@ -89,51 +96,77 @@ const byRecency = ((record, { desc: descend }) => [
 	descend(record.id)
 ]) satisfies RecordsQueryConfig['orderBy'];
 
+type LinkRowRecord = RecordLink & Pick<RecordFields, 'isPrivate' | 'isCurated'>;
+
 interface CardRow extends RecordFields {
 	media: MediaSelect[];
 	outgoingLinks: {
 		predicate: string;
-		target: (RecordLink & { outgoingLinks: { target: RecordLink | null }[] }) | null;
+		target: (LinkRowRecord & { outgoingLinks: { target: LinkRowRecord | null }[] }) | null;
 	}[];
 	incomingLinks: {
 		predicate: string;
-		source: RecordLink | null;
+		source: LinkRowRecord | null;
 	}[];
 }
 
 const pickLink = ({ id, type, title, slug }: RecordLink): RecordLink => ({ id, type, title, slug });
 
+const isVisible = (record: LinkRowRecord | null): record is LinkRowRecord =>
+	record !== null && record.isCurated && !record.isPrivate;
+
+const dedupeById = (items: RecordLink[]): RecordLink[] => {
+	const seen = new Set<number>();
+	return items.filter((item) => {
+		if (seen.has(item.id)) return false;
+		seen.add(item.id);
+		return true;
+	});
+};
+
 function toCard(row: CardRow): RecordCard {
 	const { media, outgoingLinks, incomingLinks, ...fields } = row;
 	const targets = (predicate: PredicateSlug): RecordLink[] =>
 		outgoingLinks.flatMap((link) =>
-			link.predicate === predicate && link.target ? [pickLink(link.target)] : []
+			link.predicate === predicate && isVisible(link.target) ? [pickLink(link.target)] : []
 		);
 	const sources = (predicate: PredicateSlug): RecordLink[] =>
 		incomingLinks.flatMap((link) =>
-			link.predicate === predicate && link.source ? [pickLink(link.source)] : []
+			link.predicate === predicate && isVisible(link.source) ? [pickLink(link.source)] : []
 		);
 
 	const parentTarget =
 		outgoingLinks.find((link) => link.predicate === 'contained_by')?.target ?? null;
-	const parent = parentTarget
+	const parent = isVisible(parentTarget)
 		? {
 				...pickLink(parentTarget),
 				creators: parentTarget.outgoingLinks.flatMap((link) =>
-					link.target ? [pickLink(link.target)] : []
+					isVisible(link.target) ? [pickLink(link.target)] : []
 				)
 			}
 		: null;
 
-	const extras: LinkGroup[] = [];
+	// Self-inverse predicates share a label across directions, so grouping by
+	// label merges them into one deduplicated list.
+	const extras = new Map<string, LinkGroup>();
+	const addExtra = (
+		predicate: PredicateSlug,
+		direction: LinkGroup['direction'],
+		records: RecordLink[]
+	) => {
+		if (records.length === 0) return;
+		const label = direction === 'outgoing' ? outgoingLabel(predicate) : incomingLabel(predicate);
+		const group = extras.get(label) ?? { predicate, label, direction, records: [] };
+		group.records = dedupeById([...group.records, ...records]);
+		extras.set(label, group);
+	};
 	for (const predicate of new Set(outgoingLinks.map((link) => link.predicate))) {
 		if (!isPredicateSlug(predicate) || handledPredicates.includes(predicate)) continue;
-		extras.push({ predicate, label: outgoingLabel(predicate), records: targets(predicate) });
+		addExtra(predicate, 'outgoing', targets(predicate));
 	}
 	for (const predicate of new Set(incomingLinks.map((link) => link.predicate))) {
-		if (!isPredicateSlug(predicate)) continue;
-		if (handledPredicates.includes(predicate) || describingPredicates.includes(predicate)) continue;
-		extras.push({ predicate, label: incomingLabel(predicate), records: sources(predicate) });
+		if (!isPredicateSlug(predicate) || handledPredicates.includes(predicate)) continue;
+		addExtra(predicate, 'incoming', sources(predicate));
 	}
 
 	return {
@@ -144,8 +177,8 @@ function toCard(row: CardRow): RecordCard {
 		format: targets('has_format')[0] ?? null,
 		parent,
 		children: sources('contained_by'),
-		connections: [...targets('related_to'), ...sources('related_to')],
-		extras
+		connections: dedupeById([...targets('related_to'), ...sources('related_to')]),
+		extras: [...extras.values()]
 	};
 }
 
@@ -182,17 +215,31 @@ export async function getRecordPage(id: number): Promise<RecordPage | null> {
 	if (!row) return null;
 
 	const record = toCard(row);
-	const associatedIds = [
-		...new Set(
-			row.incomingLinks.flatMap((link) =>
-				isPredicateSlug(link.predicate) &&
-				describingPredicates.includes(link.predicate) &&
-				link.source
-					? [link.source.id]
-					: []
+
+	// Entity and concept pages render their describing incoming links (works by
+	// an entity, records tagged with a concept) as a full-card gallery; artifact
+	// pages keep them as labeled link rows on the card instead.
+	const collectsRecords = record.type !== 'artifact';
+	const associatedIds = collectsRecords
+		? [
+				...new Set(
+					row.incomingLinks.flatMap((link) =>
+						isPredicateSlug(link.predicate) &&
+						describingPredicates.includes(link.predicate) &&
+						isVisible(link.source)
+							? [link.source.id]
+							: []
+					)
+				)
+			]
+		: [];
+	const extras = collectsRecords
+		? record.extras.filter(
+				(group) =>
+					!(group.direction === 'incoming' && describingPredicates.includes(group.predicate))
 			)
-		)
-	];
+		: record.extras;
+
 	const [children, connections, associated] = await Promise.all([
 		getRecordCards(
 			record.children.map((child) => child.id),
@@ -202,7 +249,7 @@ export async function getRecordPage(id: number): Promise<RecordPage | null> {
 		getRecordCards(associatedIds, 'best', ASSOCIATED_LIMIT)
 	]);
 
-	return { record, children, connections, associated };
+	return { record: { ...record, extras }, children, connections, associated };
 }
 
 export async function listRecordCards(
