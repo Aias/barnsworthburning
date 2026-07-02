@@ -48,11 +48,11 @@ Record detail panels render title, rating stars, content/notes/summary as markdo
 
 ## Work plan: red-cliff-record
 
-1. **Make hozo git-installable**: add a `prepare` script so `pnpm add github:Aias/red-cliff-record#path:packages/hozo` builds `dist/` on install; pin bwb to a commit. During active iteration, a local `file:`/`pnpm link` override to the sibling checkout avoids commit-push cycles.
+1. **Publish `@aias/hozo` 0.4.0 to npm** (a git dependency is unworkable: pnpm 10's bundled `preferred-pm` hits the yarn-workspace heuristic on rcr's `workspaces` field and always tries `yarn install`, with no config override). hozo builds `dist/` via `prepack`, which runs on `npm`/`bun publish`. Until the publish lands, bwb depends on `link:../../red-cliff-record/mumbai/packages/hozo` (the sibling Conductor worktree); swap to `~0.4.0` once published.
 2. **Shared helpers, only as earned**: candidates that serve both apps are a public-visibility filter fragment and a best-sort (elo/rating/recency) order helper. Anything bwb-specific stays in bwb.
 3. **Read-only Postgres role** for bwb with SELECT on `records`, `links`, `media` only (SQL to run by hand against the mini's Postgres).
 4. **No schema or data-model changes.** The records/links/media model already carries everything bwb renders.
-5. **Publish `@aias/hozo` to npm** once the consumption shape has settled and bwb is stable on the git dep; bwb then swaps to the published version.
+5. **Republish hozo** as needed while the consumption shape settles; bwb tracks published versions once the initial 0.4.0 lands.
 
 ## Cutover checklist
 
