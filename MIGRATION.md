@@ -56,15 +56,15 @@ Record detail panels render title, rating stars, content/notes/summary as markdo
 
 ## Cutover checklist
 
-1. Freeze Airtable edits; run the final sync; verify record counts match expectations.
-2. Optionally sweep the 11 non-curated Airtable artifacts (curate or consciously leave hidden).
-3. Stand up bwb on the mini (pm2 + tunnel on a staging hostname) against the read-only role; verify routes, feed, and search against prod data.
-4. Point `barnsworthburning.net` at the tunnel; retire the Workers deployment and image-proxy worker.
-5. Revoke the exposed Airtable token.
+1. Publish `@aias/hozo` 0.4.0 to npm; swap bwb's `file:` dep for `~0.4.0` (the mini can't resolve the worktree path).
+2. Freeze Airtable edits; run the final sync; verify record counts match expectations.
+3. Optionally sweep the 11 non-curated Airtable artifacts (curate or consciously leave hidden).
+4. Stand up bwb on the mini per `scripts/deploy/README.md` (read-only role, pm2, tunnel); verify routes, feed, and search against prod data.
+5. Point `barnsworthburning.net` at the tunnel; retire the Workers deployment and image-proxy worker.
+6. Revoke the exposed Airtable token.
 
 ## Followups (after cutover)
 
 - Review `seed-elo.ts` together, then seed elo scores (until then, rating/recency tiebreaks drive ordering).
-- Publish hozo to npm and swap bwb's git dep for the published package.
 - Disable the Airtable sync job; `airtable_*` tables stay for provenance (removal is a separate, later decision).
 - Revisit making the rcr database/app publicly reachable; bwb's architecture doesn't change when that happens.
