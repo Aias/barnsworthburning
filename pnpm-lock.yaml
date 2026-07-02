@@ -11,6 +11,9 @@ importers:
       '@aias/hozo':
         specifier: file:../../red-cliff-record/mumbai/packages/hozo
         version: file:../../red-cliff-record/mumbai/packages/hozo(drizzle-orm@1.0.0-rc.4-5d5b77c(@cloudflare/workers-types@4.20251229.0)(postgres@3.4.9)(zod@4.4.3))(zod@4.4.3)
+      devalue:
+        specifier: ~5.8.1
+        version: 5.8.1
       drizzle-orm:
         specifier: 1.0.0-rc.4-5d5b77c
         version: 1.0.0-rc.4-5d5b77c(@cloudflare/workers-types@4.20251229.0)(postgres@3.4.9)(zod@4.4.3)

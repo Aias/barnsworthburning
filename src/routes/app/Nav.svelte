@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import Link from '$components/Link.svelte';
+	import { sections } from '$lib/records';
 
 	let { ...restProps } = $props();
 
@@ -11,9 +12,11 @@
 	}
 	const routes: Route[] = [
 		{ name: 'Index', path: '/', icon: '🗂️' },
-		{ name: 'Extracts', path: '/extracts', icon: '📝' },
-		{ name: 'Creators', path: '/creators', icon: '🧑‍🎨' },
-		{ name: 'Spaces', path: '/spaces', icon: '🏷️' },
+		...Object.values(sections).map((section) => ({
+			name: section.label,
+			path: `/${section.path}`,
+			icon: section.icon
+		})),
 		{ name: 'Search', path: '/search', icon: '🔍' }
 	];
 

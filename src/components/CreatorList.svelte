@@ -1,10 +1,10 @@
 <script lang="ts">
 	import Link from './Link.svelte';
-	import type { ILinkedRecord } from '$types/Airtable';
+	import { displayTitle, type RecordLink } from '$lib/records';
 	import type { HTMLAttributes } from 'svelte/elements';
 
 	interface CreatorListProps extends HTMLAttributes<HTMLSpanElement> {
-		creators: ILinkedRecord[];
+		creators: RecordLink[];
 	}
 
 	let { creators, ...restProps }: CreatorListProps = $props();
@@ -16,7 +16,7 @@
 				? ' & '
 				: ', '
 			: ''}
-		<Link toType="creator" toId={creator.id}>{creator.name}</Link>
+		<Link record={creator}>{displayTitle(creator)}</Link>
 	{/each}
 </span>
 

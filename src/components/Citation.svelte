@@ -1,36 +1,32 @@
 <script lang="ts">
 	import { getArticle } from '$helpers/grammar';
 	import CreatorList from './CreatorList.svelte';
-	import { type IExtract } from '$types/Airtable';
-	import { classnames } from '$helpers/classnames';
 	import Link from './Link.svelte';
+	import { classnames } from '$helpers/classnames';
+	import { sections, type RecordCard } from '$lib/records';
 
 	interface CitationProps {
-		extract: IExtract;
+		record: RecordCard;
 		element?: string;
 		class?: string;
 	}
 
-	let { extract, element = 'div', class: className }: CitationProps = $props();
+	let { record, element = 'div', class: className }: CitationProps = $props();
 
-	const formats = {
-		Fragment: 'Fragment',
-		Extract: 'Extract'
-	};
-
-	let { format = formats.Extract, creators, source } = $derived(extract);
+	let format = $derived(record.format?.title ?? sections[record.type].singular);
+	let showFormat = $derived(format.toLowerCase() !== 'fragment');
+	let creators = $derived(record.creators);
+	let source = $derived(record.url);
 </script>
 
-{#if creators || source || format !== formats.Fragment}
+{#if creators.length > 0 || source || showFormat}
 	<svelte:element this={element} class:citation={true} class={classnames(className, 'text-mono')}>
-		{#if format !== formats.Fragment}
+		{#if showFormat}
 			<span class="article">{getArticle(format)}</span>
 			<strong class="format">{format}</strong>
 		{/if}
-		{#if format && creators && creators.length > 0}
+		{#if creators.length > 0}
 			<span> by </span>
-		{/if}
-		{#if creators && creators.length > 0}
 			<CreatorList {creators} />
 		{/if}
 		{#if source}

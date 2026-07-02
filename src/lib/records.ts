@@ -1,4 +1,11 @@
-import { PREDICATES, type MediaSelect, type PredicateSlug, type RecordSelect, type RecordType } from '@aias/hozo';
+import {
+	PREDICATES,
+	type MediaSelect,
+	type PredicateSlug,
+	type RecordSelect,
+	type RecordType
+} from '@aias/hozo';
+import { resolve } from '$app/paths';
 
 export type RecordFields = Omit<RecordSelect, 'textEmbedding'>;
 export type RecordLink = Pick<RecordSelect, 'id' | 'type' | 'title' | 'slug'>;
@@ -27,10 +34,7 @@ export interface RecordPage {
 	associated: RecordCard[];
 }
 
-export interface IndexEntry {
-	id: number;
-	title: string | null;
-	type: RecordType;
+export interface IndexEntry extends RecordLink {
 	count: number;
 }
 
@@ -52,7 +56,13 @@ export interface Section {
 }
 
 export const sections: Record<RecordType, Section> = {
-	artifact: { type: 'artifact', path: 'artifacts', label: 'Artifacts', singular: 'Artifact', icon: '📝' },
+	artifact: {
+		type: 'artifact',
+		path: 'artifacts',
+		label: 'Artifacts',
+		singular: 'Artifact',
+		icon: '📝'
+	},
 	entity: { type: 'entity', path: 'entities', label: 'Entities', singular: 'Entity', icon: '🧑‍🎨' },
 	concept: { type: 'concept', path: 'concepts', label: 'Concepts', singular: 'Concept', icon: '🏷️' }
 };
@@ -70,10 +80,11 @@ export const slugify = (title: string) =>
 export const recordSlug = (record: Pick<RecordSelect, 'title' | 'slug'>): string =>
 	record.slug ?? (record.title ? slugify(record.title) : '');
 
-export const recordPath = (record: Pick<RecordSelect, 'id' | 'title' | 'slug'>): string => {
-	const slug = recordSlug(record);
-	return slug ? `/records/${record.id}/${slug}` : `/records/${record.id}`;
-};
+export const recordPath = (record: Pick<RecordSelect, 'id' | 'title' | 'slug'>) =>
+	resolve('/records/[id=id]/[[slug]]', {
+		id: String(record.id),
+		slug: recordSlug(record) || undefined
+	});
 
 export const displayTitle = (record: Pick<RecordSelect, 'title' | 'type'>): string =>
 	record.title || sections[record.type].singular;

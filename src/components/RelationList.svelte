@@ -1,9 +1,9 @@
 <script lang="ts">
 	import Link from './Link.svelte';
-	import type { ILinkedRecord } from '$types/Airtable';
+	import { displayTitle, type RecordLink } from '$lib/records';
 
 	interface RelationListProps {
-		items: ILinkedRecord[];
+		items: RecordLink[];
 		label: string;
 		symbol: string;
 		maxChildren?: number;
@@ -28,7 +28,7 @@
 {#if items?.length > 0}
 	<ol class="relation-list" data-symbol={symbol} title={label}>
 		{#each displayedItems as item (item.id)}
-			<li><Link toType="extract" toId={item.id}>{item.name}</Link></li>
+			<li><Link record={item}>{displayTitle(item)}</Link></li>
 		{/each}
 		{#if isTruncated}
 			<li class="show-more">

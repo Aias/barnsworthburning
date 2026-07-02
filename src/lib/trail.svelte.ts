@@ -1,11 +1,9 @@
-import { type EntityType } from '$helpers/params';
 import { type Palette, paletteOptions } from '$types/Theme';
 import { DEFAULT_PALETTE } from '$lib/theme/config';
 import settings from './settings.svelte';
 
 export type TrailSegment = {
-	entityType: EntityType;
-	entityId: string;
+	entityId: number;
 	color: Palette;
 	addedOn: Date;
 };
@@ -30,32 +28,26 @@ export function createTrailState() {
 		get length() {
 			return trail.length;
 		},
-		addSegment: (entityType: EntityType, entityId: string) => {
+		addSegment: (entityId: number) => {
 			const lastSegment = trail[trail.length - 1];
 			const nextColor = lastSegment
 				? rotatePalette(lastSegment.color)
 				: (settings.palette ?? DEFAULT_PALETTE);
-			trail = [...trail, { entityType, entityId, color: nextColor, addedOn: new Date() }];
+			trail = [...trail, { entityId, color: nextColor, addedOn: new Date() }];
 		},
-		removeSegment: (id: string) => {
+		removeSegment: (id: number) => {
 			trail = trail.filter((segment) => segment.entityId !== id);
 		},
-		removeAfterSegment: (id: string) => {
+		removeAfterSegment: (id: number) => {
 			const index = trail.findIndex((segment) => segment.entityId === id);
 			if (index >= 0) {
 				trail = trail.slice(0, index + 1);
 			}
 		},
-		removeExceptSegment: (id: string) => {
-			const index = trail.findIndex((segment) => segment.entityId === id);
-			if (index >= 0) {
-				trail = trail.slice(index, index + 1);
-			}
-		},
 		clearTrail: () => {
 			trail = [];
 		},
-		selectSegment: (id?: string) => {
+		selectSegment: (id?: number) => {
 			selectedSegment = trail.find((segment) => segment.entityId === id);
 		}
 	};

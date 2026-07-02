@@ -1,68 +1,65 @@
-import { mapExtractRecord } from '$helpers/mapping';
-import { airtableFetch } from '$lib/server/requests';
-import {
-	AirtableBaseId,
-	extractFields,
-	ExtractView,
-	Table,
-	type IBaseExtract,
-	type IExtract
-} from '$types/Airtable';
+import xmlFormatter from 'xml-formatter';
 import markdown from '$helpers/markdown';
 import { getArticle, combineAsList } from '$helpers/grammar';
-import xmlFormatter from 'xml-formatter';
 import { getCacheHeaders } from '$helpers/cache';
+import { displayTitle, recordPath, sections, type FeedEntry, type RecordCard } from '$lib/records';
+import { getFeedEntries } from '$lib/server/records';
 
-const generateImageProxyUrl = (recordId: string, index: number) => {
-	return `${meta.imageProxyUrl}/${AirtableBaseId}/${Table.Extracts}/${recordId}?index=${index}`;
+const meta = {
+	title: 'barnsworthburning',
+	description: 'A commonplace book.',
+	author: {
+		name: 'Nick Trombley',
+		email: 'trombley.nick@gmail.com',
+		url: 'https://nicktrombley.design'
+	},
+	tags: ['design', 'knowledge', 'making', 'architecture', 'art'],
+	url: 'https://barnsworthburning.net'
 };
 
 const makeSiteLink = (relativePath: string, title: string) =>
-	`<a href="${meta.url}/${relativePath}">${title}</a>`;
+	`<a href="${meta.url}${relativePath}">${title}</a>`;
 
-const generateContentMarkup = (extract: IExtract, isChild: boolean = false) => {
-	const {
-		id,
-		extract: content,
-		notes,
-		format,
-		source,
-		images,
-		imageCaption,
-		creators,
-		connections,
-		spaces,
-		parent
-	} = extract;
-	const type = (format || 'extract').toLowerCase();
+const cleanLink = (link: string) => {
+	return link.replace(/&/g, '&amp;');
+};
+
+const images = (record: RecordCard) => record.media.filter((item) => item.type === 'image');
+
+const generateContentMarkup = (record: RecordCard, isChild: boolean = false) => {
+	const { content, notes, url, mediaCaption, creators, connections, tags, parent } = record;
+	const type = (record.format?.title ?? sections[record.type].singular).toLowerCase();
+	const recordImages = images(record);
 	let markup = '<article>\n';
 	if (!isChild) {
 		markup += '<header>\n';
 		markup += '<p>';
 		markup += `${getArticle(type)} <strong>${type}</strong>`;
-		if (creators) {
+		if (creators.length > 0) {
 			const creatorsMarkup = markdown.parseInline(
-				combineAsList(creators.map((c) => `[${c.name}](${meta.url}/creators/${c.id})`))
+				combineAsList(
+					creators.map((creator) => `[${displayTitle(creator)}](${meta.url}${recordPath(creator)})`)
+				)
 			);
 			markup += ` by ${creatorsMarkup}`;
 		}
 		if (parent) {
-			markup += ` from <em>${parent.name}</em>`;
+			markup += ` from <em>${displayTitle(parent)}</em>`;
 		}
 		markup += '.</p>\n';
 		markup += '</header>\n';
 	}
 	markup += '<section>\n';
-	if (images) {
+	if (recordImages.length > 0) {
 		markup += '<figure>\n';
-		markup += images
+		markup += recordImages
 			.map(
-				({ filename, type = 'image/*' }, index) =>
-					`<img src="${generateImageProxyUrl(id, index)}" alt="${filename}" type="${type}" />\n`
+				(image) =>
+					`<img src="${image.url}" alt="${image.altText ?? ''}" type="${image.contentTypeString}" />\n`
 			)
 			.join('');
-		if (imageCaption) {
-			markup += `<figcaption>${markdown.parse(imageCaption)}</figcaption>\n`;
+		if (mediaCaption) {
+			markup += `<figcaption>${markdown.parse(mediaCaption)}</figcaption>\n`;
 		}
 		markup += '</figure>\n';
 	}
@@ -71,30 +68,29 @@ const generateContentMarkup = (extract: IExtract, isChild: boolean = false) => {
 		markup += markdown.parse(content);
 		markup += '</blockquote>\n';
 	}
-	if (source) {
+	if (url) {
 		let linkText;
 		try {
-			linkText = new URL(source).hostname;
+			linkText = new URL(url).hostname;
 		} catch {
-			linkText = source;
+			linkText = url;
 		}
-		markup += `<p>Source: <a href="${source}">${linkText}</a></p>\n`;
+		markup += `<p>Source: <a href="${url}">${linkText}</a></p>\n`;
 	}
-	if (connections) {
+	if (connections.length > 0) {
 		markup += '<p>Related:</p>\n';
 		markup += '<ul>\n';
 		markup += connections
 			.map(
-				(connection) => `<li>${makeSiteLink(`extracts/${connection.id}`, connection.name)}</li>\n`
+				(connection) =>
+					`<li>${makeSiteLink(recordPath(connection), displayTitle(connection))}</li>\n`
 			)
 			.join('');
 		markup += '</ul>\n';
 	}
-	if (spaces) {
+	if (tags.length > 0) {
 		markup += `<p>\n<small>`;
-		markup += spaces
-			.map((space) => makeSiteLink(`spaces/${space.id}`, `#${space.name}`))
-			.join(' • ');
+		markup += tags.map((tag) => makeSiteLink(recordPath(tag), `#${displayTitle(tag)}`)).join(' • ');
 		markup += `</small>\n</p>\n`;
 	}
 	if (notes) {
@@ -107,75 +103,60 @@ const generateContentMarkup = (extract: IExtract, isChild: boolean = false) => {
 	return markup;
 };
 
-const cleanLink = (link: string) => {
-	return link.replace(/&/g, '&amp;');
-};
+const published = (record: RecordCard) => record.contentCreatedAt ?? record.recordCreatedAt;
 
-const meta = {
-	title: 'barnsworthburning',
-	description: 'A commonplace book.',
-	author: {
-		name: 'Nick Trombley',
-		email: 'trombley.nick@gmail.com',
-		url: 'https://nicktrombley.design'
-	},
-	tags: ['design', 'knowledge', 'making', 'architecture', 'art'],
-	url: 'https://barnsworthburning.net',
-	imageProxyUrl: 'https://airtable-media-proxy.trombley-nick.workers.dev'
-};
+const updated = (record: RecordCard) =>
+	new Date(
+		Math.max(
+			record.recordUpdatedAt.getTime(),
+			(record.contentUpdatedAt ?? record.recordUpdatedAt).getTime()
+		)
+	);
 
-const getChildExtracts = (extract: IExtract, children: IExtract[]): IExtract[] =>
-	extract.children
-		?.map((child) => children.find((entry) => entry.id === child.id))
-		.filter((child): child is IExtract => !!child) || [];
-
-const generateEntry = (extract: IExtract, children: IExtract[]): string => {
-	const { title, id, creators, source, lastUpdated, publishedOn, spaces, images } = extract;
-	const extractChildren = getChildExtracts(extract, children);
-
+const generateEntry = ({ record, children }: FeedEntry): string => {
 	const entryParts: string[] = [];
 	entryParts.push(`<entry>`);
-	entryParts.push(`<id>${meta.url}/extracts/${id}</id>`);
-	entryParts.push(`<title><![CDATA[${title}]]></title>`);
-	if (creators) {
+	entryParts.push(`<id>${meta.url}/records/${record.id}</id>`);
+	entryParts.push(`<title><![CDATA[${displayTitle(record)}]]></title>`);
+	if (record.creators.length > 0) {
 		entryParts.push(
-			creators
-				.map((creator) => `<author><name><![CDATA[${creator.name}]]></name></author>`)
+			record.creators
+				.map((creator) => `<author><name><![CDATA[${displayTitle(creator)}]]></name></author>`)
 				.join('\n')
 		);
 	}
-	entryParts.push(`<published>${new Date(publishedOn).toISOString()}</published>`);
+	entryParts.push(`<published>${published(record).toISOString()}</published>`);
 	entryParts.push(
 		`<updated>${new Date(
-			Math.max(new Date(publishedOn).getTime(), new Date(lastUpdated).getTime())
+			Math.max(published(record).getTime(), updated(record).getTime())
 		).toISOString()}</updated>`
 	);
-	entryParts.push(`<link rel="alternate" href="${meta.url}/extracts/${id}" />`);
-	if (source) {
-		entryParts.push(`<link rel="via" href="${cleanLink(source)}" />`);
+	entryParts.push(`<link rel="alternate" href="${meta.url}${recordPath(record)}" />`);
+	if (record.url) {
+		entryParts.push(`<link rel="via" href="${cleanLink(record.url)}" />`);
 	}
-	if (images) {
+	entryParts.push(
+		images(record)
+			.map(
+				(image) =>
+					`<link rel="enclosure" href="${image.url}" type="${image.contentTypeString}"${image.altText ? ` title="${image.altText}"` : ''} />`
+			)
+			.join('\n')
+	);
+	if (record.tags.length > 0) {
 		entryParts.push(
-			images
-				.map(
-					({ filename, type = 'image/*' }, index) =>
-						`<link rel="enclosure" href="${generateImageProxyUrl(id, index)}" type="${type}" title="${filename}" />`
-				)
-				.join('\n')
+			record.tags.map((tag) => `<category term="${displayTitle(tag)}" />`).join('\n')
 		);
 	}
-	if (spaces) {
-		entryParts.push(spaces.map((space) => `<category term="${space.name}" />`).join('\n'));
-	}
 	entryParts.push(`<content type="html"><![CDATA[`);
-	entryParts.push(generateContentMarkup(extract));
-	if (extractChildren.length) {
+	entryParts.push(generateContentMarkup(record));
+	if (children.length > 0) {
 		entryParts.push(
-			extractChildren
-				.map((child) => {
-					const { title } = child;
-					return `<br><hr><br><h3>${title}</h3>${generateContentMarkup(child, true)}`;
-				})
+			children
+				.map(
+					(child) =>
+						`<br><hr><br><h3>${displayTitle(child)}</h3>${generateContentMarkup(child, true)}`
+				)
 				.join('\n')
 		);
 	}
@@ -185,15 +166,11 @@ const generateEntry = (extract: IExtract, children: IExtract[]): string => {
 	return entryParts.join('');
 };
 
-const atom = (entries: IExtract[] = [], children: IExtract[] = []) => {
+const atom = (entries: FeedEntry[]) => {
 	const feedUpdated = new Date(
 		Math.max(
-			...entries.map((entry) =>
-				Math.max(
-					new Date(entry.lastUpdated).getTime(),
-					new Date(entry.publishedOn).getTime(),
-					new Date(entry.extractedOn).getTime()
-				)
+			...entries.map(({ record }) =>
+				Math.max(updated(record).getTime(), published(record).getTime())
 			)
 		)
 	).toISOString();
@@ -212,28 +189,14 @@ const atom = (entries: IExtract[] = [], children: IExtract[] = []) => {
     </author>
     <updated>${feedUpdated}</updated>
 	${meta.tags.map((tag) => `<category term="${tag}" />`).join('\n')}
-        ${entries.map((extract) => generateEntry(extract, children)).join('\n')}
+        ${entries.map((entry) => generateEntry(entry)).join('\n')}
 </feed>`.trim();
 };
 
 export async function GET() {
-	const fetchEntryOptions = {
-		view: ExtractView.Feed,
-		maxRecords: 30,
-		fields: extractFields
-	};
-	const extracts = await airtableFetch<IBaseExtract>(Table.Extracts, fetchEntryOptions);
-	const feedEntries = extracts.map(mapExtractRecord);
-	const parentIds = feedEntries.map((extract) => extract.id).join(',');
+	const entries = await getFeedEntries();
 
-	const fetchChildOptions = {
-		filterByFormula: `AND(parent, FIND(ARRAYJOIN(parentId), '${parentIds}') > 0)`,
-		fields: extractFields
-	};
-	const childExtracts = await airtableFetch<IBaseExtract>(Table.Extracts, fetchChildOptions);
-	const entryChildren = childExtracts.map(mapExtractRecord);
-
-	const responseBody = xmlFormatter(atom(feedEntries, entryChildren), {
+	const responseBody = xmlFormatter(atom(entries), {
 		collapseContent: true
 	});
 	const responseOptions = {

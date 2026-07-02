@@ -1,4 +1,11 @@
-import { isPredicateSlug, links, records, type MediaSelect, type PredicateSlug, type RecordType } from '@aias/hozo';
+import {
+	isPredicateSlug,
+	links,
+	records,
+	type MediaSelect,
+	type PredicateSlug,
+	type RecordType
+} from '@aias/hozo';
 import { and, count, desc, eq, exists, inArray, lte, sql } from 'drizzle-orm';
 import { alias, type AnyPgColumn } from 'drizzle-orm/pg-core';
 import {
@@ -24,7 +31,13 @@ const FEED_LIMIT = 30;
 const describingPredicates: PredicateSlug[] = ['created_by', 'tagged_with', 'about'];
 
 /** Predicates the card shape models explicitly; everything else lands in `extras`. */
-const handledPredicates: PredicateSlug[] = ['created_by', 'tagged_with', 'has_format', 'contained_by', 'related_to'];
+const handledPredicates: PredicateSlug[] = [
+	'created_by',
+	'tagged_with',
+	'has_format',
+	'contained_by',
+	'related_to'
+];
 
 const isPublic = { isPrivate: false, isCurated: true } as const;
 
@@ -93,15 +106,22 @@ const pickLink = ({ id, type, title, slug }: RecordLink): RecordLink => ({ id, t
 function toCard(row: CardRow): RecordCard {
 	const { media, outgoingLinks, incomingLinks, ...fields } = row;
 	const targets = (predicate: PredicateSlug): RecordLink[] =>
-		outgoingLinks.flatMap((link) => (link.predicate === predicate && link.target ? [pickLink(link.target)] : []));
+		outgoingLinks.flatMap((link) =>
+			link.predicate === predicate && link.target ? [pickLink(link.target)] : []
+		);
 	const sources = (predicate: PredicateSlug): RecordLink[] =>
-		incomingLinks.flatMap((link) => (link.predicate === predicate && link.source ? [pickLink(link.source)] : []));
+		incomingLinks.flatMap((link) =>
+			link.predicate === predicate && link.source ? [pickLink(link.source)] : []
+		);
 
-	const parentTarget = outgoingLinks.find((link) => link.predicate === 'contained_by')?.target ?? null;
+	const parentTarget =
+		outgoingLinks.find((link) => link.predicate === 'contained_by')?.target ?? null;
 	const parent = parentTarget
 		? {
 				...pickLink(parentTarget),
-				creators: parentTarget.outgoingLinks.flatMap((link) => (link.target ? [pickLink(link.target)] : []))
+				creators: parentTarget.outgoingLinks.flatMap((link) =>
+					link.target ? [pickLink(link.target)] : []
+				)
 			}
 		: null;
 
@@ -165,14 +185,19 @@ export async function getRecordPage(id: number): Promise<RecordPage | null> {
 	const associatedIds = [
 		...new Set(
 			row.incomingLinks.flatMap((link) =>
-				isPredicateSlug(link.predicate) && describingPredicates.includes(link.predicate) && link.source
+				isPredicateSlug(link.predicate) &&
+				describingPredicates.includes(link.predicate) &&
+				link.source
 					? [link.source.id]
 					: []
 			)
 		)
 	];
 	const [children, connections, associated] = await Promise.all([
-		getRecordCards(record.children.map((child) => child.id), 'chronological'),
+		getRecordCards(
+			record.children.map((child) => child.id),
+			'chronological'
+		),
 		getRecordCards(record.connections.map((connection) => connection.id)),
 		getRecordCards(associatedIds, 'best', ASSOCIATED_LIMIT)
 	]);
@@ -201,7 +226,13 @@ export async function listRecordCards(
 async function indexEntriesFor(type: RecordType, limit: number, offset = 0): Promise<IndexEntry[]> {
 	const source = alias(records, 'source');
 	return db
-		.select({ id: records.id, title: records.title, type: records.type, count: count(links.id) })
+		.select({
+			id: records.id,
+			title: records.title,
+			slug: records.slug,
+			type: records.type,
+			count: count(links.id)
+		})
 		.from(records)
 		.leftJoin(
 			links,
@@ -253,7 +284,9 @@ async function topRecordsFor(targetIds: number[]): Promise<Map<number, RecordLin
 			})
 			.from(links)
 			.innerJoin(source, and(eq(source.id, links.sourceId), publicRecords(source)))
-			.where(and(inArray(links.targetId, targetIds), inArray(links.predicate, describingPredicates)))
+			.where(
+				and(inArray(links.targetId, targetIds), inArray(links.predicate, describingPredicates))
+			)
 	);
 	const rows = await db.with(ranked).select().from(ranked).where(lte(ranked.rank, 5));
 	for (const { targetId, id, type, title, slug } of rows) {
@@ -309,7 +342,9 @@ export async function getFeedEntries(): Promise<FeedEntry[]> {
 		limit: FEED_LIMIT
 	});
 	const entries = rows.map(toCard);
-	const childIds = [...new Set(entries.flatMap((entry) => entry.children.map((child) => child.id)))];
+	const childIds = [
+		...new Set(entries.flatMap((entry) => entry.children.map((child) => child.id)))
+	];
 	const childCards = new Map(
 		(await getRecordCards(childIds, 'chronological')).map((card) => [card.id, card])
 	);

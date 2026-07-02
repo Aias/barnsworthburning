@@ -1,24 +1,20 @@
-import { error } from '@sveltejs/kit';
-import type { IExtract } from '$types/Airtable';
+import { recordTypes } from '@aias/hozo';
+import { searchRecords } from '$lib/server/records';
+import { getCacheHeaders } from '$helpers/cache';
 
-export async function load({ fetch, url }) {
-	const queryParam = url.searchParams.get('q');
+export async function load({ url, setHeaders }) {
+	const rawType = url.searchParams.get('type');
+	const type = recordTypes.find((recordType) => recordType === rawType);
+	const query = url.searchParams.get('q');
 
-	if (!queryParam) {
-		return {
-			results: undefined
-		};
+	if (!query) {
+		return { results: undefined, query: undefined, type };
 	}
 
-	const response = await fetch(`/api/search?q=${encodeURIComponent(queryParam)}`);
-
-	if (!response.ok) {
-		error(response.status, {
-			message: 'Failed to fetch search results'
-		});
-	}
-
-	const results = await response.json().then((data) => data.results as IExtract[]);
-
-	return { results };
+	setHeaders(getCacheHeaders('search'));
+	return {
+		results: await searchRecords(query, type),
+		query,
+		type
+	};
 }

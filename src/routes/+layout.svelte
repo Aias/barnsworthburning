@@ -5,7 +5,6 @@
 	import settings from '$lib/settings.svelte';
 	import interaction from '$lib/interaction.svelte';
 	import trail from '$lib/trail.svelte';
-	import { entityTypes, type EntityType, type EntityTypeKey } from '$helpers/params';
 	import SEO from '$components/SEO.svelte';
 	import Trail from './app/Trail.svelte';
 	import Nav from './app/Nav.svelte';
@@ -16,9 +15,9 @@
 	let bodyEl = $state<HTMLBodyElement>();
 	let bodyWidth = $state<number>(0);
 	let isIndex = $derived(page.route.id === '/');
-	let isEntityDetail = $derived(page.params.id);
+	let isRecordDetail = $derived(Boolean(page.params.id));
 
-	let { creators, spaces, theme } = $derived(data);
+	let { indexEntries, theme } = $derived(data);
 
 	$effect.pre(() => {
 		document.documentElement.className = settings.themeClass;
@@ -28,53 +27,30 @@
 		if (bodyWidth < 720) return; // Don't add segments when the screen is too small.
 		const isNavigating = ['link', 'goto'].includes(type);
 		if (!isNavigating) return;
-		const fromEntityParam = from?.params?.entityType;
-		const toId = to?.params?.id;
-		if (!(fromEntityParam || from?.route.id === '/search')) return; // Only add segments when navigating from an entity.
-		if (!toId) return; // Don't add segments for unknown entities.
-		const toEntityParam = to?.params?.entityType;
-		let fromEntityType: EntityType | undefined;
-		let toEntityType: EntityType | undefined;
-		for (const key in entityTypes) {
-			const type = entityTypes[key as EntityTypeKey];
-			if (type.urlParam === fromEntityParam) {
-				fromEntityType = type;
-			}
-			if (type.urlParam === toEntityParam) {
-				toEntityType = type;
-			}
-			if (fromEntityType && toEntityType) break;
-		}
-		if (!toEntityType) return; // Don't add segments for unknown entity types.
+		const toId = to?.params?.id ? Number(to.params.id) : undefined;
+		if (!toId) return; // Only records open as panels.
+		const fromRecordContext = Boolean(
+			from?.params?.id || from?.params?.section || from?.route.id === '/search'
+		);
+		if (!fromRecordContext) return; // Only add segments when navigating from records, lists, or search.
 
-		// Check if toId already exists in the trail and remove it
-		const existingSegmentIndex = trail.segments.findIndex((segment) => segment.entityId === toId);
-		if (existingSegmentIndex >= 0) {
+		// A record already in the trail moves to the end.
+		if (trail.segments.some((segment) => segment.entityId === toId)) {
 			trail.removeSegment(toId);
 		}
 
 		const selectedSegment = trail.selected;
 		if (selectedSegment) {
-			const { entityId: selectedId } = selectedSegment;
-			if (selectedId === toId) {
+			if (selectedSegment.entityId === toId) {
 				// Don't cancel navigation if the selected segment is the same as toId.
 				return;
 			}
-			// if (toId === fromId) return; // Don't add segments for the same entity.
-			if (toEntityType === entityTypes.extract) {
-				trail.removeAfterSegment(selectedId);
-				trail.addSegment(toEntityType, toId);
-				cancel();
-			} else {
-				trail.removeExceptSegment(selectedId);
-			}
+			trail.removeAfterSegment(selectedSegment.entityId);
 		} else {
-			if (toEntityType === entityTypes.extract) {
-				trail.clearTrail();
-				trail.addSegment(toEntityType, toId);
-				cancel();
-			}
+			trail.clearTrail();
 		}
+		trail.addSegment(toId);
+		cancel();
 	});
 
 	afterNavigate(() => {
@@ -106,7 +82,7 @@
 	on:mouseenter={handleInteractions}
 	on:mouseleave={handleInteractions}
 />
-{#if !isEntityDetail}
+{#if !isRecordDetail}
 	<SEO />
 {/if}
 <svelte:body bind:this={bodyEl} bind:clientWidth={bodyWidth} />
@@ -127,7 +103,7 @@
 	{/if}
 	<hr />
 	<footer class="app-footer">
-		<Index {creators} {spaces} class="app-index" />
+		<Index entries={indexEntries} class="app-index" />
 	</footer>
 </div>
 {#if !isIndex && trail.length > 0}
