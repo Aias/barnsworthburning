@@ -28,7 +28,7 @@
 	"dependencies": {
 		"@aias/hozo": "file:../../red-cliff-record/mumbai/packages/hozo",
 		"devalue": "~5.8.1",
-		"drizzle-orm": "1.0.0-rc.4-5d5b77c",
+		"drizzle-orm": "1.0.0-rc.4",
 		"marked": "~18.0.5",
 		"normalize.css": "^8.0.1",
 		"postgres": "~3.4.9",

@@ -19,7 +19,7 @@ Working plan for rebasing barnsworthburning on the Red Cliff Record (rcr) Postgr
 - Slugs are absent (2 of ~28k records), hence deriving the URL slug from the title instead of backfilling.
 - All 4,917 media rows point at `assets.barnsworthburning.net` (R2). bwb can render them directly; the `airtable-media-proxy` worker retires. `media.altText` improves on today's filename-as-alt.
 - bwb never renders creator professions/organizations/nationality or space icons, so the sync's lossy mapping of those fields costs nothing.
-- Version pins that bwb must match: `drizzle-orm@1.0.0-rc.4-5d5b77c` and `zod@~4.4.3` (hozo peer deps).
+- Version pins that bwb must match: `drizzle-orm@1.0.0-rc.4` and `zod@~4.4.3` (hozo peer deps).
 - `VITE_AIRTABLE_ACCESS_TOKEN` is client-exposed today (VITE\_ prefix). It dies with Airtable; revoke the token at cutover.
 
 ## Site structure
