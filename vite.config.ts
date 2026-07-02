@@ -56,6 +56,14 @@ export default defineConfig(({ mode }) => {
 	plugins.push(sveltekit());
 
 	return {
-		plugins
+		plugins,
+		build: {
+			// Target browsers that support light-dark() natively so lightningcss keeps
+			// minifying but skips its light-dark() polyfill. Vite 8's default
+			// 'baseline-widely-available' target predates light-dark() and rewrites it into
+			// --lightningcss-light/--lightningcss-dark vars keyed off prefers-color-scheme,
+			// which ignores the .light/.dark class toggle and breaks the color system.
+			cssTarget: ['chrome123', 'edge123', 'firefox120', 'safari17.5', 'ios17.5']
+		}
 	};
 });
