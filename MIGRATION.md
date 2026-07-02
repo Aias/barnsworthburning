@@ -20,19 +20,19 @@ Working plan for rebasing barnsworthburning on the Red Cliff Record (rcr) Postgr
 - All 4,917 media rows point at `assets.barnsworthburning.net` (R2). bwb can render them directly; the `airtable-media-proxy` worker retires. `media.altText` improves on today's filename-as-alt.
 - bwb never renders creator professions/organizations/nationality or space icons, so the sync's lossy mapping of those fields costs nothing.
 - Version pins that bwb must match: `drizzle-orm@1.0.0-rc.4-5d5b77c` and `zod@~4.4.3` (hozo peer deps).
-- `VITE_AIRTABLE_ACCESS_TOKEN` is client-exposed today (VITE_ prefix). It dies with Airtable; revoke the token at cutover.
+- `VITE_AIRTABLE_ACCESS_TOKEN` is client-exposed today (VITE\_ prefix). It dies with Airtable; revoke the token at cutover.
 
 ## Site structure
 
-| Route | Content |
-| --- | --- |
-| `/` | Index/table-of-contents: top entities + concepts by elo (first 100, links to full lists) |
-| `/artifacts`, `/entities`, `/concepts` | Type-filtered record lists, elo-ordered, paginated at 100/page (`?page=N`) |
-| `/records/{id}/{slug}` | Record detail panel for every type; `/records/{id}` and stale slugs 301 to the canonical path |
-| `/extracts`, `/creators`, `/spaces` | 301 → `/artifacts`, `/entities`, `/concepts` (child paths redirect to the section root) |
-| `/search?q=&type=` | Trigram ILIKE over title/content/summary/abbreviation (all pg_trgm-indexed), all types, filterable by type, elo-ordered |
-| `/feed.xml` | 30 most recent curated artifacts by `contentCreatedAt`, with children via `contained_by`; atom IDs change with the URL break (one-time re-delivery accepted) |
-| `/index.txt` | Entities + concepts, mirroring the homepage |
+| Route                                  | Content                                                                                                                                                      |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `/`                                    | Index/table-of-contents: top entities + concepts by elo (first 100, links to full lists)                                                                     |
+| `/artifacts`, `/entities`, `/concepts` | Type-filtered record lists, elo-ordered, paginated at 100/page (`?page=N`)                                                                                   |
+| `/records/{id}/{slug}`                 | Record detail panel for every type; `/records/{id}` and stale slugs 301 to the canonical path                                                                |
+| `/extracts`, `/creators`, `/spaces`    | 301 → `/artifacts`, `/entities`, `/concepts` (child paths redirect to the section root)                                                                      |
+| `/search?q=&type=`                     | Trigram ILIKE over title/content/summary/abbreviation (all pg_trgm-indexed), all types, filterable by type, elo-ordered                                      |
+| `/feed.xml`                            | 30 most recent curated artifacts by `contentCreatedAt`, with children via `contained_by`; atom IDs change with the URL break (one-time re-delivery accepted) |
+| `/index.txt`                           | Entities + concepts, mirroring the homepage                                                                                                                  |
 
 Every query filters `isPrivate = false AND isCurated = true`.
 
