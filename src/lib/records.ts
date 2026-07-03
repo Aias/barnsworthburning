@@ -94,6 +94,7 @@ export const displayTitle = (record: Pick<RecordSelect, 'title' | 'type'>): stri
 // citation line needs the singular ("An essay by …").
 const irregularPlurals: Record<string, string> = {
 	automata: 'automaton',
+	memetics: 'meme',
 	memoranda: 'memorandum',
 	movies: 'movie',
 	series: 'series',
