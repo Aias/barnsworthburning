@@ -58,10 +58,11 @@ Record detail panels render title, rating stars, content/notes/summary as markdo
 
 1. Publish `@aias/hozo` 0.4.0 to npm; swap bwb's `file:` dep for `~0.4.0` (the mini can't resolve the worktree path).
 2. Freeze Airtable edits; run the final sync; verify record counts match expectations.
-3. Optionally sweep the 11 non-curated Airtable artifacts (curate or consciously leave hidden).
-4. Stand up bwb on the mini per `scripts/deploy/README.md` (read-only role, pm2, tunnel); verify routes, feed, and search against prod data.
-5. Point `barnsworthburning.net` at the tunnel; retire the Workers deployment and image-proxy worker.
-6. Revoke the exposed Airtable token.
+3. Delete `has_format` links targeting the Fragments record in prod (`delete from links where predicate = 'has_format' and target_id = 3233;`) — an absent format means fragment, which the site leaves unlabeled.
+4. Optionally sweep the 11 non-curated Airtable artifacts (curate or consciously leave hidden).
+5. Stand up bwb on the mini per `scripts/deploy/README.md` (read-only role, pm2, tunnel); verify routes, feed, and search against prod data.
+6. Point `barnsworthburning.net` at the tunnel; retire the Workers deployment and image-proxy worker.
+7. Revoke the exposed Airtable token.
 
 ## Followups (after cutover)
 

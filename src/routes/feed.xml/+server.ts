@@ -2,7 +2,13 @@ import xmlFormatter from 'xml-formatter';
 import markdown from '$helpers/markdown';
 import { getArticle, combineAsList } from '$helpers/grammar';
 import { getCacheHeaders } from '$helpers/cache';
-import { displayTitle, recordPath, sections, type FeedEntry, type RecordCard } from '$lib/records';
+import {
+	displayTitle,
+	formatLabel,
+	recordPath,
+	type FeedEntry,
+	type RecordCard
+} from '$lib/records';
 import { getFeedEntries } from '$lib/server/records';
 
 const meta = {
@@ -28,25 +34,31 @@ const images = (record: RecordCard) => record.media.filter((item) => item.type =
 
 const generateContentMarkup = (record: RecordCard, isChild: boolean = false) => {
 	const { content, notes, url, mediaCaption, creators, connections, tags, parent } = record;
-	const type = (record.format?.title ?? sections[record.type].singular).toLowerCase();
+	const format = formatLabel(record.format)?.toLowerCase();
 	const recordImages = images(record);
 	let markup = '<article>\n';
-	if (!isChild) {
-		markup += '<header>\n';
-		markup += '<p>';
-		markup += `${getArticle(type)} <strong>${type}</strong>`;
+	if (!isChild && (format || creators.length > 0 || parent)) {
+		const phrases: string[] = [];
+		if (format) {
+			phrases.push(`${getArticle(format)} <strong>${format}</strong>`);
+		}
 		if (creators.length > 0) {
 			const creatorsMarkup = markdown.parseInline(
 				combineAsList(
 					creators.map((creator) => `[${displayTitle(creator)}](${meta.url}${recordPath(creator)})`)
 				)
 			);
-			markup += ` by ${creatorsMarkup}`;
+			phrases.push(format ? `by ${creatorsMarkup}` : `By ${creatorsMarkup}`);
 		}
 		if (parent) {
-			markup += ` from <em>${displayTitle(parent)}</em>`;
+			phrases.push(
+				format || creators.length > 0
+					? `from <em>${displayTitle(parent)}</em>`
+					: `From <em>${displayTitle(parent)}</em>`
+			);
 		}
-		markup += '.</p>\n';
+		markup += '<header>\n';
+		markup += `<p>${phrases.join(' ')}.</p>\n`;
 		markup += '</header>\n';
 	}
 	markup += '<section>\n';

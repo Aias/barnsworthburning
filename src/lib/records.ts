@@ -90,6 +90,36 @@ export const recordPath = (record: Pick<RecordSelect, 'id' | 'title' | 'slug'>) 
 export const displayTitle = (record: Pick<RecordSelect, 'title' | 'type'>): string =>
 	record.title || sections[record.type].singular;
 
+// Format concepts carry plural titles ("Essays", "Research Papers"); the
+// citation line needs the singular ("An essay by …").
+const irregularPlurals: Record<string, string> = {
+	automata: 'automaton',
+	memoranda: 'memorandum',
+	movies: 'movie',
+	series: 'series',
+	theses: 'thesis'
+};
+
+const singularizeWord = (word: string): string => {
+	const irregular = irregularPlurals[word.toLowerCase()];
+	if (irregular) {
+		return word.charAt(0) === word.charAt(0).toUpperCase()
+			? irregular.charAt(0).toUpperCase() + irregular.slice(1)
+			: irregular;
+	}
+	if (/(?:ss|x|z|ch|sh)es$/.test(word)) return word.slice(0, -2);
+	if (/[a-z]ies$/i.test(word)) return `${word.slice(0, -3)}y`;
+	if (/(?:ss|us|is)$/.test(word)) return word;
+	if (word.endsWith('s')) return word.slice(0, -1);
+	return word;
+};
+
+export const formatLabel = (format: Pick<RecordSelect, 'title'> | null): string | undefined => {
+	if (!format?.title) return undefined;
+	const words = format.title.split(' ');
+	return [...words.slice(0, -1), singularizeWord(words[words.length - 1])].join(' ');
+};
+
 export const outgoingLabel = (predicate: PredicateSlug): string => PREDICATES[predicate].name;
 
 export const incomingLabel = (predicate: PredicateSlug): string =>

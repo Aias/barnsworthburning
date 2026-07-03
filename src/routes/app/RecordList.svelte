@@ -4,7 +4,7 @@
 	import { getArticle } from '$helpers/grammar';
 	import Link from '$components/Link.svelte';
 	import BlockLink from '$components/BlockLink.svelte';
-	import { displayTitle, sections, type RecordCard } from '$lib/records';
+	import { displayTitle, formatLabel, type RecordCard } from '$lib/records';
 
 	interface RecordListProps {
 		records: RecordCard[];
@@ -16,7 +16,7 @@
 	{#each records as record (record.id)}
 		{@const snippet = record.content || record.summary || record.mediaCaption || record.notes}
 		{@const image = record.media.find((item) => item.type === 'image')}
-		{@const format = record.format?.title ?? sections[record.type].singular}
+		{@const format = formatLabel(record.format)}
 		<BlockLink element="li">
 			<article>
 				<section>
@@ -43,7 +43,7 @@
 								.replaceAll('<br>', '<span class="line-break"></span>')
 								.replaceAll(/<a(?:\s+[^>]*)?>([^<]*)<\/a>/g, '$1')}
 						</blockquote>
-					{:else}
+					{:else if format}
 						<p class="summary">
 							<span>({getArticle(format)} {format.toLowerCase()})</span>
 						</p>

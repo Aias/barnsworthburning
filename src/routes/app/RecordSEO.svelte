@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getArticle, combineAsList } from '$helpers/grammar';
-	import { displayTitle, recordPath, sections, type RecordPage } from '$lib/records';
+	import { displayTitle, formatLabel, recordPath, type RecordPage } from '$lib/records';
 
 	interface RecordSEOProps {
 		page: RecordPage;
@@ -13,14 +13,20 @@
 	let creators = $derived(
 		record.creators.length > 0 ? record.creators : (record.parent?.creators ?? [])
 	);
-	let format = $derived(record.format?.title ?? sections[record.type].singular);
+	let format = $derived(formatLabel(record.format));
 
 	let description = $derived.by(() => {
 		if (record.type === 'entity') return `Curated works by ${title}.`;
 		if (record.type === 'concept') return `Curated records about ${title}.`;
 		const names = combineAsList(creators.map((creator) => displayTitle(creator)));
 		const parent = record.parent?.title ?? '';
-		return `${getArticle(format)} ${format.toLowerCase()}${names ? ` by ${names}` : ''}${parent ? ` from ${parent}` : ''}.`;
+		if (format) {
+			return `${getArticle(format)} ${format.toLowerCase()}${names ? ` by ${names}` : ''}${parent ? ` from ${parent}` : ''}.`;
+		}
+		if (names) {
+			return `By ${names}${parent ? `, from ${parent}` : ''}.`;
+		}
+		return record.summary || 'A commonplace book.';
 	});
 
 	let published = $derived((record.contentCreatedAt ?? record.recordCreatedAt).toISOString());

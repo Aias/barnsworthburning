@@ -3,7 +3,7 @@
 	import CreatorList from './CreatorList.svelte';
 	import Link from './Link.svelte';
 	import { classnames } from '$helpers/classnames';
-	import { sections, type RecordCard } from '$lib/records';
+	import { formatLabel, type RecordCard } from '$lib/records';
 
 	interface CitationProps {
 		record: RecordCard;
@@ -13,20 +13,21 @@
 
 	let { record, element = 'div', class: className }: CitationProps = $props();
 
-	let format = $derived(record.format?.title ?? sections[record.type].singular);
-	let showFormat = $derived(format.toLowerCase() !== 'fragment');
+	let format = $derived(formatLabel(record.format));
 	let creators = $derived(record.creators);
 	let source = $derived(record.url);
 </script>
 
-{#if creators.length > 0 || source || showFormat}
+{#if format || creators.length > 0 || source}
 	<svelte:element this={element} class:citation={true} class={classnames(className, 'text-mono')}>
-		{#if showFormat}
+		{#if format}
 			<span class="article">{getArticle(format)}</span>
 			<strong class="format">{format}</strong>
 		{/if}
 		{#if creators.length > 0}
-			<span> by </span>
+			{#if format}
+				<span> by </span>
+			{/if}
 			<CreatorList {creators} />
 		{/if}
 		{#if source}
