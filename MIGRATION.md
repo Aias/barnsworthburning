@@ -36,7 +36,7 @@ Working plan for rebasing barnsworthburning on the Red Cliff Record (rcr) Postgr
 
 Every query filters `isPrivate = false AND isCurated = true`.
 
-Record detail panels render title, rating stars, content/notes/summary as markdown, media with alt text, and source URL, followed by link sections grouped by predicate with human labels: `created_by` ("by"), `contained_by`/`contains` ("from"/"contains"), `tagged_with` ("tagged"), `related_to` ("related"), `has_format`, `quotes`, `about`, `references` as they occur. Incoming and outgoing directions both render, using the predicate's canonical/inverse names from hozo.
+Record detail panels render title, rating stars, content/notes/summary as markdown, media with alt text, and source URL, followed by link sections grouped by predicate with human labels: `created_by` ("by"), `contained_by`/`contains` ("from"/"contains"), `tagged_with` ("tagged"), `related_to` ("related"), `has_format`, `quotes`, `about`, `references` as they occur. Incoming and outgoing directions both render, using the predicate's canonical/inverse names from hozo. Beneath the explicit connections, each artifact panel asynchronously loads the 10 nearest records by embedding cosine similarity (excluding anything already linked), rendered as a visually neutral block so first-class links stay distinct — mirroring rcr's relations/similar split.
 
 ## Work plan: barnsworthburning
 

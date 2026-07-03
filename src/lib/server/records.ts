@@ -6,7 +6,7 @@ import {
 	type PredicateSlug,
 	type RecordType
 } from '@aias/hozo';
-import { and, count, desc, eq, exists, inArray, lte, sql } from 'drizzle-orm';
+import { and, cosineDistance, count, desc, eq, exists, inArray, lte, sql } from 'drizzle-orm';
 import { alias, type AnyPgColumn } from 'drizzle-orm/pg-core';
 import {
 	incomingLabel,
@@ -25,6 +25,7 @@ import { db } from './db';
 export const PAGE_SIZE = 100;
 const SEARCH_LIMIT = 200;
 const ASSOCIATED_LIMIT = 150;
+const SIMILAR_LIMIT = 10;
 const FEED_LIMIT = 30;
 
 /** Incoming links with these predicates define what a record collects: an entity's works, a concept's tagged records. */
@@ -250,6 +251,39 @@ export async function getRecordPage(id: number): Promise<RecordPage | null> {
 	]);
 
 	return { record: { ...record, extras }, children, connections, associated };
+}
+
+export async function getSimilarRecords(id: number): Promise<RecordCard[]> {
+	const record = await db.query.records.findFirst({
+		where: { id, ...isPublic },
+		columns: { textEmbedding: true },
+		with: {
+			outgoingLinks: { columns: { targetId: true } },
+			incomingLinks: { columns: { sourceId: true } }
+		}
+	});
+	const embedding = record?.textEmbedding;
+	if (!embedding) return [];
+
+	// Semantic neighbors complement the explicit graph, so anything already
+	// linked (in either direction) is excluded along with the record itself.
+	const linkedIds = [
+		id,
+		...record.outgoingLinks.map((link) => link.targetId),
+		...record.incomingLinks.map((link) => link.sourceId)
+	];
+	const rows = await db.query.records.findMany({
+		where: {
+			...isPublic,
+			id: { notIn: linkedIds },
+			textEmbedding: { isNotNull: true }
+		},
+		columns: cardColumns,
+		with: cardWith,
+		orderBy: (table) => [cosineDistance(table.textEmbedding, embedding)],
+		limit: SIMILAR_LIMIT
+	});
+	return rows.map(toCard);
 }
 
 export async function listRecordCards(
