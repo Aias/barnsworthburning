@@ -4,7 +4,7 @@ Working plan for rebasing barnsworthburning on the Red Cliff Record (rcr) Postgr
 
 ## Summary of decisions
 
-- **bwb becomes the public window into rcr.** It shows every curated, non-private record, not just the Airtable-sourced subset. The site adopts rcr's unified record model: artifacts, entities, and concepts are all records, each opening in the same detail panel extracts use today.
+- **bwb becomes the public window into rcr.** It shows every curated, non-private record, not just the Airtable-sourced subset. The site adopts rcr's unified record model, keeping bwb's dual-pane paradigm: artifacts open as trail panels, while entities and concepts render as gallery pages in the main pane — the trail explores within a context, the main pane switches between contexts.
 - **Hosting moves off Cloudflare Workers** to the mac mini (SvelteKit `adapter-node`, Node/pnpm toolchain kept), managed by pm2 with an auto-deploy script mirroring rcr's, exposed publicly through a Cloudflare Tunnel. Postgres stays tailnet-only.
 - **Data access is direct Drizzle queries** using `@aias/hozo` schema + relations with the `postgres-js` driver. The internal `/api/*` REST layer is deleted; pages load data in idiomatic SvelteKit `load` functions. There is no view-model translation layer; components consume record/link shapes natively.
 - **URLs get a clean break.** Record detail lives at `/records/{id}/{slug}` (id is the lookup key; the slug is derived from the title at render time, Notion-style, and exists for redundancy/SEO). Type lists live at `/artifacts`, `/entities`, `/concepts`, with `/extracts`, `/creators`, `/spaces` redirecting to them. Old Airtable rec-ID URLs get no per-record redirects.
@@ -28,7 +28,7 @@ Working plan for rebasing barnsworthburning on the Red Cliff Record (rcr) Postgr
 | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `/`                                    | Index/table-of-contents: top entities + concepts by elo (first 100, links to full lists)                                                                     |
 | `/artifacts`, `/entities`, `/concepts` | Type-filtered record lists, elo-ordered, paginated at 100/page (`?page=N`)                                                                                   |
-| `/records/{id}/{slug}`                 | Record detail panel for every type; `/records/{id}` and stale slugs 301 to the canonical path                                                                |
+| `/records/{id}/{slug}`                 | Record detail for every type (artifacts as panels, entities/concepts as galleries); `/records/{id}` and stale slugs 301 to the canonical path                |
 | `/extracts`, `/creators`, `/spaces`    | 301 → `/artifacts`, `/entities`, `/concepts` (child paths redirect to the section root)                                                                      |
 | `/search?q=&type=`                     | Trigram ILIKE over title/content/summary/abbreviation (all pg_trgm-indexed), all types, filterable by type, elo-ordered                                      |
 | `/feed.xml`                            | 30 most recent curated artifacts by `contentCreatedAt`, with children via `contained_by`; atom IDs change with the URL break (one-time re-delivery accepted) |

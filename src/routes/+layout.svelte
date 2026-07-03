@@ -24,6 +24,7 @@
 	});
 
 	beforeNavigate(({ from, to, type, cancel }) => {
+		const recordType = trail.takePendingRecordType();
 		if (bodyWidth < 720) return; // Don't add segments when the screen is too small.
 		const isNavigating = ['link', 'goto'].includes(type);
 		if (!isNavigating) return;
@@ -34,12 +35,23 @@
 		);
 		if (!fromRecordContext) return; // Only add segments when navigating from records, lists, or search.
 
+		const selectedSegment = trail.selected;
+
+		// Only artifacts open as panels. Entities and concepts change the main
+		// pane instead, keeping just the panel the click came from — the trail
+		// explores within a context, the main pane switches between contexts.
+		if (recordType !== 'artifact') {
+			if (selectedSegment) {
+				trail.removeExceptSegment(selectedSegment.entityId);
+			}
+			return;
+		}
+
 		// A record already in the trail moves to the end.
 		if (trail.segments.some((segment) => segment.entityId === toId)) {
 			trail.removeSegment(toId);
 		}
 
-		const selectedSegment = trail.selected;
 		if (selectedSegment) {
 			if (selectedSegment.entityId === toId) {
 				// Don't cancel navigation if the selected segment is the same as toId.

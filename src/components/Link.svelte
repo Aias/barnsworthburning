@@ -12,7 +12,7 @@
 	}
 
 	interface RecordLinkProps extends LinkBaseProps {
-		record: Pick<RecordLink, 'id' | 'title' | 'slug'>;
+		record: Pick<RecordLink, 'id' | 'type' | 'title' | 'slug'>;
 		href?: never;
 	}
 
@@ -38,6 +38,7 @@
 
 	const handleClick = () => {
 		trail.selectSegment(getTrailSegment?.().entityId);
+		trail.setPendingRecordType(record?.type);
 	};
 </script>
 
