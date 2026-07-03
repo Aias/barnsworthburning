@@ -109,7 +109,7 @@ const singularizeWord = (word: string): string => {
 	}
 	if (/(?:ss|x|z|ch|sh)es$/.test(word)) return word.slice(0, -2);
 	if (/[a-z]ies$/i.test(word)) return `${word.slice(0, -3)}y`;
-	if (/(?:ss|us|is)$/.test(word)) return word;
+	if (/(?:ss|us|sis|xis)$/.test(word)) return word;
 	if (word.endsWith('s')) return word.slice(0, -1);
 	return word;
 };
