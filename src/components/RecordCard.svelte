@@ -31,8 +31,11 @@
 	}: RecordCardProps<keyof HTMLElementTagNameMap> = $props();
 
 	let images = $derived(record.media.filter((item) => item.type === 'image'));
+	// The title carries the link, so titleless children can't render as chips;
+	// they still appear as read-only full cards beneath their parent.
+	let linkableChildren = $derived(record.children.filter((child) => child.title));
 	let hasRelations = $derived(
-		record.children.length > 0 ||
+		linkableChildren.length > 0 ||
 			record.connections.length > 0 ||
 			record.tags.length > 0 ||
 			record.extras.length > 0
@@ -100,8 +103,8 @@
 		</figure>
 		{#if hasRelations}
 			<nav class="relations">
-				{#if record.children.length > 0}
-					<RelationList items={record.children} symbol="↳" label="Children" />
+				{#if linkableChildren.length > 0}
+					<RelationList items={linkableChildren} symbol="↳" label="Children" />
 				{/if}
 				{#if record.connections.length > 0}
 					<RelationList items={record.connections} symbol="⮂" label="Connections" />

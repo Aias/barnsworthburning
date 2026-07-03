@@ -6,7 +6,18 @@ import {
 	type PredicateSlug,
 	type RecordType
 } from '@aias/hozo';
-import { and, cosineDistance, count, desc, eq, exists, inArray, lte, sql } from 'drizzle-orm';
+import {
+	and,
+	cosineDistance,
+	count,
+	desc,
+	eq,
+	exists,
+	inArray,
+	isNotNull,
+	lte,
+	sql
+} from 'drizzle-orm';
 import { alias, type AnyPgColumn } from 'drizzle-orm/pg-core';
 import {
 	incomingLabel,
@@ -42,8 +53,16 @@ const handledPredicates: PredicateSlug[] = [
 
 const isPublic = { isPrivate: false, isCurated: true } as const;
 
-const publicRecords = <T extends { isPrivate: AnyPgColumn; isCurated: AnyPgColumn }>(table: T) =>
-	and(eq(table.isPrivate, false), eq(table.isCurated, true));
+// Anywhere records form a clickable list (search, sections, galleries, link
+// chips, the feed) they must also carry a title — the title is what renders as
+// the link. Titleless records still appear read-only as children of a parent.
+const isListed = { ...isPublic, title: { isNotNull: true } } as const;
+
+const listableRecords = <
+	T extends { isPrivate: AnyPgColumn; isCurated: AnyPgColumn; title: AnyPgColumn }
+>(
+	table: T
+) => and(eq(table.isPrivate, false), eq(table.isCurated, true), isNotNull(table.title));
 
 type RecordsQueryConfig = NonNullable<Parameters<typeof db.query.records.findMany>[0]>;
 
@@ -116,6 +135,9 @@ const pickLink = ({ id, type, title, slug }: RecordLink): RecordLink => ({ id, t
 const isVisible = (record: LinkRowRecord | null): record is LinkRowRecord =>
 	record !== null && record.isCurated && !record.isPrivate;
 
+const isListable = (record: LinkRowRecord | null): record is LinkRowRecord =>
+	isVisible(record) && record.title !== null;
+
 const dedupeById = (items: RecordLink[]): RecordLink[] => {
 	const seen = new Set<number>();
 	return items.filter((item) => {
@@ -129,20 +151,20 @@ function toCard(row: CardRow): RecordCard {
 	const { media, outgoingLinks, incomingLinks, ...fields } = row;
 	const targets = (predicate: PredicateSlug): RecordLink[] =>
 		outgoingLinks.flatMap((link) =>
-			link.predicate === predicate && isVisible(link.target) ? [pickLink(link.target)] : []
+			link.predicate === predicate && isListable(link.target) ? [pickLink(link.target)] : []
 		);
-	const sources = (predicate: PredicateSlug): RecordLink[] =>
+	const sources = (predicate: PredicateSlug, guard: typeof isListable = isListable): RecordLink[] =>
 		incomingLinks.flatMap((link) =>
-			link.predicate === predicate && isVisible(link.source) ? [pickLink(link.source)] : []
+			link.predicate === predicate && guard(link.source) ? [pickLink(link.source)] : []
 		);
 
 	const parentTarget =
 		outgoingLinks.find((link) => link.predicate === 'contained_by')?.target ?? null;
-	const parent = isVisible(parentTarget)
+	const parent = isListable(parentTarget)
 		? {
 				...pickLink(parentTarget),
 				creators: parentTarget.outgoingLinks.flatMap((link) =>
-					isVisible(link.target) ? [pickLink(link.target)] : []
+					isListable(link.target) ? [pickLink(link.target)] : []
 				)
 			}
 		: null;
@@ -177,7 +199,9 @@ function toCard(row: CardRow): RecordCard {
 		tags: targets('tagged_with'),
 		format: targets('has_format')[0] ?? null,
 		parent,
-		children: sources('contained_by'),
+		// Children double as read-only full-card content, so titleless records
+		// stay in the list; the card filters them out of its clickable chips.
+		children: sources('contained_by', isVisible),
 		connections: dedupeById([...targets('related_to'), ...sources('related_to')]),
 		extras: [...extras.values()]
 	};
@@ -227,7 +251,7 @@ export async function getRecordPage(id: number): Promise<RecordPage | null> {
 					row.incomingLinks.flatMap((link) =>
 						isPredicateSlug(link.predicate) &&
 						describingPredicates.includes(link.predicate) &&
-						isVisible(link.source)
+						isListable(link.source)
 							? [link.source.id]
 							: []
 					)
@@ -258,7 +282,7 @@ export async function getSimilarRecords(id: number): Promise<RecordCard[]> {
 		where: { id, ...isPublic },
 		columns: { textEmbedding: true },
 		with: {
-			outgoingLinks: { columns: { targetId: true } },
+			outgoingLinks: { columns: { predicate: true, targetId: true } },
 			incomingLinks: { columns: { sourceId: true } }
 		}
 	});
@@ -267,16 +291,24 @@ export async function getSimilarRecords(id: number): Promise<RecordCard[]> {
 
 	// Semantic neighbors complement the explicit graph, so anything already
 	// linked (in either direction) is excluded along with the record itself.
+	// Siblings go too: they always score high but are better read together by
+	// opening the parent, and they crowd out farther-flung relations.
 	const linkedIds = [
 		id,
 		...record.outgoingLinks.map((link) => link.targetId),
 		...record.incomingLinks.map((link) => link.sourceId)
 	];
+	const parentIds = record.outgoingLinks.flatMap((link) =>
+		link.predicate === 'contained_by' ? [link.targetId] : []
+	);
 	const rows = await db.query.records.findMany({
 		where: {
-			...isPublic,
+			...isListed,
 			id: { notIn: linkedIds },
-			textEmbedding: { isNotNull: true }
+			textEmbedding: { isNotNull: true },
+			...(parentIds.length > 0
+				? { NOT: { outgoingLinks: { predicate: 'contained_by', targetId: { in: parentIds } } } }
+				: {})
 		},
 		columns: cardColumns,
 		with: cardWith,
@@ -292,14 +324,14 @@ export async function listRecordCards(
 ): Promise<{ cards: RecordCard[]; total: number }> {
 	const [rows, total] = await Promise.all([
 		db.query.records.findMany({
-			where: { type, ...isPublic },
+			where: { type, ...isListed },
 			columns: cardColumns,
 			with: cardWith,
 			orderBy: byBest,
 			limit: PAGE_SIZE,
 			offset: (page - 1) * PAGE_SIZE
 		}),
-		db.$count(records, and(eq(records.type, type), publicRecords(records)))
+		db.$count(records, and(eq(records.type, type), listableRecords(records)))
 	]);
 	return { cards: rows.map(toCard), total };
 }
@@ -324,11 +356,11 @@ async function indexEntriesFor(type: RecordType, limit: number, offset = 0): Pro
 					db
 						.select({ present: sql`1` })
 						.from(source)
-						.where(and(eq(source.id, links.sourceId), publicRecords(source)))
+						.where(and(eq(source.id, links.sourceId), listableRecords(source)))
 				)
 			)
 		)
-		.where(and(eq(records.type, type), publicRecords(records)))
+		.where(and(eq(records.type, type), listableRecords(records)))
 		.groupBy(records.id)
 		.orderBy(
 			desc(records.eloScore),
@@ -364,7 +396,7 @@ async function topRecordsFor(targetIds: number[]): Promise<Map<number, RecordLin
 				)
 			})
 			.from(links)
-			.innerJoin(source, and(eq(source.id, links.sourceId), publicRecords(source)))
+			.innerJoin(source, and(eq(source.id, links.sourceId), listableRecords(source)))
 			.where(
 				and(inArray(links.targetId, targetIds), inArray(links.predicate, describingPredicates))
 			)
@@ -384,7 +416,7 @@ export async function listRecordGroups(
 ): Promise<{ groups: RecordGroup[]; total: number }> {
 	const [entries, total] = await Promise.all([
 		indexEntriesFor(type, PAGE_SIZE, (page - 1) * PAGE_SIZE),
-		db.$count(records, and(eq(records.type, type), publicRecords(records)))
+		db.$count(records, and(eq(records.type, type), listableRecords(records)))
 	]);
 	const tops = await topRecordsFor(entries.map((entry) => entry.id));
 	return {
@@ -397,7 +429,7 @@ export async function searchRecords(query: string, type?: RecordType): Promise<R
 	const pattern = `%${query.replace(/[\\%_]/g, '\\$&')}%`;
 	const rows = await db.query.records.findMany({
 		where: {
-			...isPublic,
+			...isListed,
 			...(type ? { type } : {}),
 			OR: [
 				{ title: { ilike: pattern } },
@@ -416,7 +448,7 @@ export async function searchRecords(query: string, type?: RecordType): Promise<R
 
 export async function getFeedEntries(): Promise<FeedEntry[]> {
 	const rows = await db.query.records.findMany({
-		where: { type: 'artifact', ...isPublic },
+		where: { type: 'artifact', ...isListed },
 		columns: cardColumns,
 		with: cardWith,
 		orderBy: byRecency,
