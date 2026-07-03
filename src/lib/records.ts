@@ -91,22 +91,31 @@ export const displayTitle = (record: Pick<RecordSelect, 'title' | 'type'>): stri
 	record.title || sections[record.type].singular;
 
 // Format concepts carry plural titles ("Essays", "Research Papers"); the
-// citation line needs the singular ("An essay by …").
-const irregularPlurals: Record<string, string> = {
+// citation line needs the noun for a single record of that format ("An essay
+// by …"). Overrides cover irregular plurals and mass nouns whose countable
+// singular the suffix rules can't derive ("Poetry" → "A poem by …").
+const singularOverrides: Record<string, string> = {
+	advice: 'piece of advice',
 	automata: 'automaton',
+	fiction: 'fiction story',
+	media: 'media work',
 	memetics: 'meme',
 	memoranda: 'memorandum',
 	movies: 'movie',
+	photography: 'photograph',
+	poetry: 'poem',
+	prototyping: 'prototype',
 	series: 'series',
+	summarization: 'summary',
 	theses: 'thesis'
 };
 
 const singularizeWord = (word: string): string => {
-	const irregular = irregularPlurals[word.toLowerCase()];
-	if (irregular) {
+	const override = singularOverrides[word.toLowerCase()];
+	if (override) {
 		return word.charAt(0) === word.charAt(0).toUpperCase()
-			? irregular.charAt(0).toUpperCase() + irregular.slice(1)
-			: irregular;
+			? override.charAt(0).toUpperCase() + override.slice(1)
+			: override;
 	}
 	if (/(?:ss|x|z|ch|sh)es$/.test(word)) return word.slice(0, -2);
 	if (/[a-z]ies$/i.test(word)) return `${word.slice(0, -3)}y`;
