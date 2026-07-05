@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@aias/hozo':
-        specifier: file:../../red-cliff-record/mumbai/packages/hozo
-        version: file:../../red-cliff-record/mumbai/packages/hozo(drizzle-orm@1.0.0-rc.4(@cloudflare/workers-types@4.20251229.0)(postgres@3.4.9)(zod@4.4.3))(zod@4.4.3)
+        specifier: ~0.4.0
+        version: 0.4.0(drizzle-orm@1.0.0-rc.4(@cloudflare/workers-types@4.20251229.0)(postgres@3.4.9)(zod@4.4.3))(zod@4.4.3)
       devalue:
         specifier: ~5.8.1
         version: 5.8.1
@@ -102,8 +102,8 @@ importers:
 
 packages:
 
-  '@aias/hozo@file:../../red-cliff-record/mumbai/packages/hozo':
-    resolution: {directory: ../../red-cliff-record/mumbai/packages/hozo, type: directory}
+  '@aias/hozo@0.4.0':
+    resolution: {integrity: sha512-QyyRtNtmnwt1qzJNSi9OSBRuf+48ok3S6U4f/dgsLC/0AiPYDt+XRDBtMSP8CzJ8Jio4Gse6+9CRXDQ1MkVocA==}
     peerDependencies:
       drizzle-orm: 1.0.0-rc.4
       zod: ~4.4.3
@@ -1620,7 +1620,7 @@ packages:
 
 snapshots:
 
-  '@aias/hozo@file:../../red-cliff-record/mumbai/packages/hozo(drizzle-orm@1.0.0-rc.4(@cloudflare/workers-types@4.20251229.0)(postgres@3.4.9)(zod@4.4.3))(zod@4.4.3)':
+  '@aias/hozo@0.4.0(drizzle-orm@1.0.0-rc.4(@cloudflare/workers-types@4.20251229.0)(postgres@3.4.9)(zod@4.4.3))(zod@4.4.3)':
     dependencies:
       drizzle-orm: 1.0.0-rc.4(@cloudflare/workers-types@4.20251229.0)(postgres@3.4.9)(zod@4.4.3)
       zod: 4.4.3

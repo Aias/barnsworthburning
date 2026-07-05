@@ -26,7 +26,7 @@
 		"format": "prettier --write ."
 	},
 	"dependencies": {
-		"@aias/hozo": "file:../../red-cliff-record/mumbai/packages/hozo",
+		"@aias/hozo": "~0.4.0",
 		"devalue": "~5.8.1",
 		"drizzle-orm": "1.0.0-rc.4",
 		"marked": "~18.0.5",
