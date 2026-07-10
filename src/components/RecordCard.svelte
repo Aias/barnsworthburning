@@ -50,16 +50,16 @@
 	class={classnames('extract', `extract--${variant}`, 'ssm-container', className)}
 	suppress={suppressBlockLink}
 >
-	{#if record.parent}
+	{#each record.parents as parent (parent.id)}
 		<section class="extract-parent">
 			<strong class="parent-title"
-				><Link record={record.parent} inherit>{displayTitle(record.parent)}</Link></strong
+				><Link record={parent} inherit>{displayTitle(parent)}</Link></strong
 			>
-			{#if record.parent.creators.length > 0}
-				<CreatorList class="parent-creators" creators={record.parent.creators} />
+			{#if parent.creators.length > 0}
+				<CreatorList class="parent-creators" creators={parent.creators} />
 			{/if}
 		</section>
-	{/if}
+	{/each}
 	<section class="extract-body">
 		{#if record.title}
 			<header>
@@ -109,7 +109,7 @@
 				{#if record.connections.length > 0}
 					<RelationList items={record.connections} symbol="⮂" label="Connections" />
 				{/if}
-				{#each record.extras as group (group.predicate)}
+				{#each record.extras as group (group.label)}
 					<RelationList items={group.records} symbol="→" label={group.label} />
 				{/each}
 				{#if record.tags.length > 0}

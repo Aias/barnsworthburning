@@ -33,7 +33,8 @@ const cleanLink = (link: string) => {
 const images = (record: RecordCard) => record.media.filter((item) => item.type === 'image');
 
 const generateContentMarkup = (record: RecordCard, isChild: boolean = false) => {
-	const { content, notes, url, mediaCaption, creators, connections, tags, parent } = record;
+	const { content, notes, url, mediaCaption, creators, connections, tags, parents } = record;
+	const parent = parents[0];
 	const format = formatLabel(record.format)?.toLowerCase();
 	const recordImages = images(record);
 	let markup = '<article>\n';

@@ -15,10 +15,11 @@
 
 	let format = $derived(formatLabel(record.format));
 	let creators = $derived(record.creators);
+	let attributions = $derived(record.attributions);
 	let source = $derived(record.url);
 </script>
 
-{#if format || creators.length > 0 || source}
+{#if format || creators.length > 0 || attributions.length > 0 || source}
 	<svelte:element this={element} class:citation={true} class={classnames(className, 'text-mono')}>
 		{#if format}
 			<span class="article">{getArticle(format)}</span>
@@ -29,7 +30,9 @@
 				<span> by </span>
 			{/if}
 			<CreatorList {creators} />
-		{/if}
+		{/if}{#each attributions as group, i (group.label)}{#if format || creators.length > 0 || i > 0};{/if}
+			<span class="attribution">{group.label}</span>
+			<CreatorList creators={group.records} />{/each}
 		{#if source}
 			{@const sourceUrl = new URL(source)}
 			<Link href={source} class="source-link" target="_blank" rel="noopener">

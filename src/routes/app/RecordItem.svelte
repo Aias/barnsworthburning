@@ -10,7 +10,7 @@
 	}
 	let { page }: RecordItemProps = $props();
 
-	let { record, children, connections, associated } = $derived(page);
+	let { record, references, children, connections, associated } = $derived(page);
 	let similar = $state<RecordCardData[]>([]);
 
 	// Semantic neighbors load after the record itself, so navigation never
@@ -38,6 +38,17 @@
 	<article>
 		<RecordCard {record} class="chromatic" variant="card" suppressBlockLink />
 
+		{#each references as group (group.label)}
+			<section class="reference-group">
+				<div class="connections-separator" role="presentation">
+					<hr />
+					<small class="text-secondary text-mono">{group.label}</small>
+					<hr />
+				</div>
+				<RecordList records={group.records} />
+			</section>
+		{/each}
+
 		{#each children as child (child.id)}
 			<RecordCard record={child} suppressBlockLink />
 		{/each}
@@ -59,7 +70,10 @@
 		{/if}
 	</article>
 {:else}
-	<h1>{displayTitle(record)}</h1>
+	<h1>
+		{displayTitle(record)}
+		{#if record.abbreviation}<small class="text-secondary">({record.abbreviation})</small>{/if}
+	</h1>
 	{#if associated.length > 0}
 		<RecordGallery records={associated} />
 	{:else}
@@ -75,6 +89,12 @@
 	article {
 		max-width: 600px;
 		margin-inline: auto;
+		display: flex;
+		flex-direction: column;
+		gap: 2em;
+	}
+
+	.reference-group {
 		display: flex;
 		flex-direction: column;
 		gap: 2em;

@@ -20,16 +20,24 @@ export interface LinkGroup {
 export interface RecordCard extends RecordFields {
 	media: MediaSelect[];
 	creators: RecordLink[];
+	attributions: LinkGroup[];
 	tags: RecordLink[];
 	format: RecordLink | null;
-	parent: (RecordLink & { creators: RecordLink[] }) | null;
+	parents: (RecordLink & { creators: RecordLink[] })[];
 	children: RecordLink[];
+	references: LinkGroup[];
 	connections: RecordLink[];
 	extras: LinkGroup[];
 }
 
+export interface ReferenceGroup {
+	label: string;
+	records: RecordCard[];
+}
+
 export interface RecordPage {
 	record: RecordCard;
+	references: ReferenceGroup[];
 	children: RecordCard[];
 	connections: RecordCard[];
 	associated: RecordCard[];

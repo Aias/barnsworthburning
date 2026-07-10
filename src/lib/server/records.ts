@@ -1,6 +1,8 @@
 import {
 	isPredicateSlug,
 	links,
+	PREDICATES,
+	predicateSlugs,
 	records,
 	type MediaSelect,
 	type PredicateSlug,
@@ -39,17 +41,42 @@ const ASSOCIATED_LIMIT = 150;
 const SIMILAR_LIMIT = 10;
 const FEED_LIMIT = 30;
 
-/** Incoming links with these predicates define what a record collects: an entity's works, a concept's tagged records. */
-const describingPredicates: PredicateSlug[] = ['created_by', 'tagged_with', 'about'];
-
-/** Predicates the card shape models explicitly; everything else lands in `extras`. */
-const handledPredicates: PredicateSlug[] = [
+/** Incoming links with these predicates define what a record collects: an entity's works, a concept's tagged records, the artifacts about a subject. */
+const describingPredicates: PredicateSlug[] = [
 	'created_by',
 	'tagged_with',
-	'has_format',
-	'contained_by',
-	'related_to'
+	'about',
+	'references',
+	'responds_to'
 ];
+
+/** Containment links frame the card: outgoing targets (the container, the quoted work) render above the record, incoming sources render below as children. */
+const containmentPredicates: PredicateSlug[] = ['contained_by', 'quotes'];
+
+/** Predicate/direction pairs the card shape models with dedicated fields. */
+const modeledPredicates: Record<LinkGroup['direction'], PredicateSlug[]> = {
+	outgoing: ['created_by', 'tagged_with', 'has_format', ...containmentPredicates, 'related_to'],
+	incoming: [...containmentPredicates, 'related_to']
+};
+
+type GroupBucket = 'attributions' | 'references' | 'extras';
+
+/**
+ * Every remaining predicate places by its type: creation attributes the record
+ * in its citation line, reference and identity render as relation rows above
+ * the children, and inverse views without a dedicated home (creator of, tag
+ * of, countered by, …) render as rows at the bottom of the card.
+ */
+const bucketFor = (
+	predicate: PredicateSlug,
+	direction: LinkGroup['direction']
+): GroupBucket | null => {
+	if (modeledPredicates[direction].includes(predicate)) return null;
+	const { type } = PREDICATES[predicate];
+	if (type === 'reference' || type === 'identity') return 'references';
+	if (type === 'creation' && direction === 'outgoing') return 'attributions';
+	return 'extras';
+};
 
 const isPublic = { isPrivate: false, isCurated: true } as const;
 
@@ -138,7 +165,7 @@ const isVisible = (record: LinkRowRecord | null): record is LinkRowRecord =>
 const isListable = (record: LinkRowRecord | null): record is LinkRowRecord =>
 	isVisible(record) && record.title !== null;
 
-const dedupeById = (items: RecordLink[]): RecordLink[] => {
+const dedupeById = <T extends RecordLink>(items: T[]): T[] => {
 	const seen = new Set<number>();
 	return items.filter((item) => {
 		if (seen.has(item.id)) return false;
@@ -158,52 +185,66 @@ function toCard(row: CardRow): RecordCard {
 			link.predicate === predicate && guard(link.source) ? [pickLink(link.source)] : []
 		);
 
-	const parentTarget =
-		outgoingLinks.find((link) => link.predicate === 'contained_by')?.target ?? null;
-	const parent = isListable(parentTarget)
-		? {
-				...pickLink(parentTarget),
-				creators: parentTarget.outgoingLinks.flatMap((link) =>
-					isListable(link.target) ? [pickLink(link.target)] : []
-				)
-			}
-		: null;
+	const parents = dedupeById(
+		containmentPredicates.flatMap((predicate) =>
+			outgoingLinks.flatMap((link) =>
+				link.predicate === predicate && isListable(link.target)
+					? [
+							{
+								...pickLink(link.target),
+								creators: link.target.outgoingLinks.flatMap((nested) =>
+									isListable(nested.target) ? [pickLink(nested.target)] : []
+								)
+							}
+						]
+					: []
+			)
+		)
+	);
 
 	// Self-inverse predicates share a label across directions, so grouping by
 	// label merges them into one deduplicated list.
-	const extras = new Map<string, LinkGroup>();
-	const addExtra = (
+	const buckets: Record<GroupBucket, Map<string, LinkGroup>> = {
+		attributions: new Map(),
+		references: new Map(),
+		extras: new Map()
+	};
+	const addGroup = (
 		predicate: PredicateSlug,
 		direction: LinkGroup['direction'],
 		records: RecordLink[]
 	) => {
 		if (records.length === 0) return;
+		const bucket = bucketFor(predicate, direction);
+		if (!bucket) return;
 		const label = direction === 'outgoing' ? outgoingLabel(predicate) : incomingLabel(predicate);
-		const group = extras.get(label) ?? { predicate, label, direction, records: [] };
+		const group = buckets[bucket].get(label) ?? { predicate, label, direction, records: [] };
 		group.records = dedupeById([...group.records, ...records]);
-		extras.set(label, group);
+		buckets[bucket].set(label, group);
 	};
-	for (const predicate of new Set(outgoingLinks.map((link) => link.predicate))) {
-		if (!isPredicateSlug(predicate) || handledPredicates.includes(predicate)) continue;
-		addExtra(predicate, 'outgoing', targets(predicate));
-	}
-	for (const predicate of new Set(incomingLinks.map((link) => link.predicate))) {
-		if (!isPredicateSlug(predicate) || handledPredicates.includes(predicate)) continue;
-		addExtra(predicate, 'incoming', sources(predicate));
+	// Declaration order in PREDICATES keeps citation phrases and relation rows stable.
+	for (const predicate of predicateSlugs) {
+		if (!isPredicateSlug(predicate)) continue;
+		addGroup(predicate, 'outgoing', targets(predicate));
+		addGroup(predicate, 'incoming', sources(predicate));
 	}
 
 	return {
 		...fields,
 		media,
 		creators: targets('created_by'),
+		attributions: [...buckets.attributions.values()],
 		tags: targets('tagged_with'),
 		format: targets('has_format')[0] ?? null,
-		parent,
+		parents,
 		// Children double as read-only full-card content, so titleless records
 		// stay in the list; the card filters them out of its clickable chips.
-		children: sources('contained_by', isVisible),
+		children: dedupeById(
+			containmentPredicates.flatMap((predicate) => sources(predicate, isVisible))
+		),
+		references: [...buckets.references.values()],
 		connections: dedupeById([...targets('related_to'), ...sources('related_to')]),
-		extras: [...extras.values()]
+		extras: [...buckets.extras.values()]
 	};
 }
 
@@ -231,7 +272,9 @@ export async function getRecordPage(id: number): Promise<RecordPage | null> {
 			...cardWith,
 			incomingLinks: {
 				where: {
-					predicate: { in: ['contained_by', 'related_to', 'quotes', ...describingPredicates] }
+					predicate: {
+						in: [...containmentPredicates, 'related_to', 'same_as', ...describingPredicates]
+					}
 				},
 				with: { source: { columns: linkColumns } }
 			}
@@ -258,23 +301,42 @@ export async function getRecordPage(id: number): Promise<RecordPage | null> {
 				)
 			]
 		: [];
-	const extras = collectsRecords
-		? record.extras.filter(
-				(group) =>
-					!(group.direction === 'incoming' && describingPredicates.includes(group.predicate))
-			)
-		: record.extras;
+	const stripDescribing = (groups: LinkGroup[]): LinkGroup[] =>
+		groups.filter(
+			(group) => !(group.direction === 'incoming' && describingPredicates.includes(group.predicate))
+		);
+	const referenceLinks = collectsRecords ? stripDescribing(record.references) : record.references;
+	const referenceIds = [
+		...new Set(referenceLinks.flatMap((group) => group.records.map((link) => link.id)))
+	];
 
-	const [children, connections, associated] = await Promise.all([
+	const [children, connections, associated, referenceCards] = await Promise.all([
 		getRecordCards(
 			record.children.map((child) => child.id),
 			'chronological'
 		),
 		getRecordCards(record.connections.map((connection) => connection.id)),
-		getRecordCards(associatedIds, 'best', ASSOCIATED_LIMIT)
+		getRecordCards(associatedIds, 'best', ASSOCIATED_LIMIT),
+		getRecordCards(referenceIds)
 	]);
 
-	return { record: { ...record, extras }, children, connections, associated };
+	// The reference blocks render full cards, so each group's links map onto
+	// the fetched cards, keeping the best-first order of the card query.
+	const references = referenceLinks.flatMap((group) => {
+		const ids = new Set(group.records.map((link) => link.id));
+		const cards = referenceCards.filter((card) => ids.has(card.id));
+		return cards.length > 0 ? [{ label: group.label, records: cards }] : [];
+	});
+
+	return {
+		record: collectsRecords
+			? { ...record, references: referenceLinks, extras: stripDescribing(record.extras) }
+			: record,
+		references,
+		children,
+		connections,
+		associated
+	};
 }
 
 export async function getSimilarRecords(id: number): Promise<RecordCard[]> {

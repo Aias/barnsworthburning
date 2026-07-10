@@ -11,7 +11,7 @@
 
 	let title = $derived(displayTitle(record));
 	let creators = $derived(
-		record.creators.length > 0 ? record.creators : (record.parent?.creators ?? [])
+		record.creators.length > 0 ? record.creators : (record.parents[0]?.creators ?? [])
 	);
 	let format = $derived(formatLabel(record.format));
 
@@ -19,7 +19,7 @@
 		if (record.type === 'entity') return `Curated works by ${title}.`;
 		if (record.type === 'concept') return `Curated records about ${title}.`;
 		const names = combineAsList(creators.map((creator) => displayTitle(creator)));
-		const parent = record.parent?.title ?? '';
+		const parent = record.parents[0]?.title ?? '';
 		if (format) {
 			return `${getArticle(format)} ${format.toLowerCase()}${names ? ` by ${names}` : ''}${parent ? ` from ${parent}` : ''}.`;
 		}
