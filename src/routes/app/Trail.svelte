@@ -1,13 +1,17 @@
 <script lang="ts">
-	import trail from '$lib/trail.svelte';
 	import { classnames } from '$helpers/classnames';
+	import type { TrailSegment as TrailSegmentData } from '$lib/trail.svelte';
+	import type { HTMLOlAttributes } from 'svelte/elements';
 	import TrailSegment from './TrailSegment.svelte';
 
-	let { ...restProps } = $props();
+	interface TrailProps extends HTMLOlAttributes {
+		segments: TrailSegmentData[];
+	}
+	let { segments, ...restProps }: TrailProps = $props();
 </script>
 
 <ol class:trail={true} {...restProps}>
-	{#each trail.segments as segment (segment.addedOn)}
+	{#each segments as segment (segment.entityId)}
 		<li class={classnames('segment', 'chromatic', segment.color)}>
 			<hr class="segment-separator" />
 			<div class="segment-contents">

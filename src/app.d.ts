@@ -13,7 +13,9 @@ declare global {
 				palette: Palette;
 			};
 		}
-		// interface PageState {}
+		interface PageState {
+			trail?: number[];
+		}
 		// interface Platform {}
 	}
 }

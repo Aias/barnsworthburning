@@ -1,12 +1,11 @@
 import type { RecordType } from '@aias/hozo';
 import { type Palette, paletteOptions } from '$types/Theme';
-import { DEFAULT_PALETTE } from '$lib/theme/config';
-import settings from './settings.svelte';
+
+export const TRAIL_PARAM = 'trail';
 
 export type TrailSegment = {
 	entityId: number;
 	color: Palette;
-	addedOn: Date;
 };
 
 const rotatePalette = (start: Palette, steps: number = 1) => {
@@ -15,50 +14,40 @@ const rotatePalette = (start: Palette, steps: number = 1) => {
 	return paletteOptions[newIndex];
 };
 
+export const parseTrail = (url: URL): number[] => {
+	const ids = new Set<number>();
+	for (const part of url.searchParams.get(TRAIL_PARAM)?.split('-') ?? []) {
+		const id = Number(part);
+		if (Number.isInteger(id) && id > 0) ids.add(id);
+	}
+	return [...ids];
+};
+
+export const trailHref = (url: URL, ids: number[]): string => {
+	const nextUrl = new URL(url);
+	if (ids.length > 0) {
+		nextUrl.searchParams.set(TRAIL_PARAM, ids.join('-'));
+	} else {
+		nextUrl.searchParams.delete(TRAIL_PARAM);
+	}
+	return `${nextUrl.pathname}${nextUrl.search}`;
+};
+
+export const trailSegments = (ids: number[], basePalette: Palette): TrailSegment[] =>
+	ids.map((entityId, index) => ({ entityId, color: rotatePalette(basePalette, index) }));
+
 export function createTrailState() {
-	let trail = $state<TrailSegment[]>([]);
-	let selectedSegment = $state<TrailSegment>();
+	let selectedId = $state<number>();
 	// Record links carry the target's type through navigation, since the
 	// unified /records/{id} URL alone can't tell an artifact from a concept.
 	let pendingRecordType: RecordType | undefined;
 
 	return {
-		get segments() {
-			return trail;
-		},
-		get selected() {
-			return selectedSegment;
-		},
-		get length() {
-			return trail.length;
-		},
-		addSegment: (entityId: number) => {
-			const lastSegment = trail[trail.length - 1];
-			const nextColor = lastSegment
-				? rotatePalette(lastSegment.color)
-				: (settings.palette ?? DEFAULT_PALETTE);
-			trail = [...trail, { entityId, color: nextColor, addedOn: new Date() }];
-		},
-		removeSegment: (id: number) => {
-			trail = trail.filter((segment) => segment.entityId !== id);
-		},
-		removeAfterSegment: (id: number) => {
-			const index = trail.findIndex((segment) => segment.entityId === id);
-			if (index >= 0) {
-				trail = trail.slice(0, index + 1);
-			}
-		},
-		removeExceptSegment: (id: number) => {
-			const index = trail.findIndex((segment) => segment.entityId === id);
-			if (index >= 0) {
-				trail = trail.slice(index, index + 1);
-			}
-		},
-		clearTrail: () => {
-			trail = [];
+		get selectedId() {
+			return selectedId;
 		},
 		selectSegment: (id?: number) => {
-			selectedSegment = trail.find((segment) => segment.entityId === id);
+			selectedId = id;
 		},
 		setPendingRecordType: (type?: RecordType) => {
 			pendingRecordType = type;

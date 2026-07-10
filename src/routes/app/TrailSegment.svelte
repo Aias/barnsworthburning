@@ -11,15 +11,21 @@
 	let { segment }: TrailSegmentProps = $props();
 
 	let recordPage = $state<RecordPage>();
+	let failed = $state(false);
 
 	setContext('trailSegment', () => segment);
 
 	$effect(() => {
 		const { entityId } = segment;
 		let cancelled = false;
+		failed = false;
 		void (async () => {
 			const response = await fetch(`/records/${entityId}/context.json`);
-			if (!response.ok || cancelled) return;
+			if (cancelled) return;
+			if (!response.ok) {
+				failed = true;
+				return;
+			}
 			const parsed: RecordPage = parse(await response.text());
 			if (!cancelled) {
 				recordPage = parsed;
@@ -33,6 +39,8 @@
 
 {#if recordPage}
 	<RecordItem page={recordPage} />
+{:else if failed}
+	<p>Record not found.</p>
 {:else}
 	<div class="loading-container">
 		<p><em>Loading...</em></p>

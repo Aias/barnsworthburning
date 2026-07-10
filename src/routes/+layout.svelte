@@ -1,10 +1,11 @@
 <script lang="ts">
 	import '$styles/app.css';
 	import { page } from '$app/state';
-	import { afterNavigate, beforeNavigate } from '$app/navigation';
+	import { afterNavigate, beforeNavigate, goto, pushState } from '$app/navigation';
 	import settings from '$lib/settings.svelte';
 	import interaction from '$lib/interaction.svelte';
-	import trail from '$lib/trail.svelte';
+	import trail, { parseTrail, trailHref, trailSegments, TRAIL_PARAM } from '$lib/trail.svelte';
+	import { DEFAULT_PALETTE } from '$lib/theme/config';
 	import SEO from '$components/SEO.svelte';
 	import Trail from './app/Trail.svelte';
 	import Nav from './app/Nav.svelte';
@@ -18,6 +19,8 @@
 	let isRecordDetail = $derived(Boolean(page.params.id));
 
 	let { indexEntries, theme } = $derived(data);
+	let trailIds = $derived(page.state.trail ?? parseTrail(page.url));
+	let segments = $derived(trailSegments(trailIds, theme?.palette ?? DEFAULT_PALETTE));
 
 	$effect.pre(() => {
 		document.documentElement.className = settings.themeClass;
@@ -26,43 +29,53 @@
 	beforeNavigate(({ from, to, type, cancel }) => {
 		const recordType = trail.takePendingRecordType();
 		if (bodyWidth < 720) return; // Don't add segments when the screen is too small.
-		const isNavigating = ['link', 'goto'].includes(type);
+		const isNavigating = ['link', 'goto', 'form'].includes(type);
 		if (!isNavigating) return;
-		const toId = to?.params?.id ? Number(to.params.id) : undefined;
-		if (!toId) return; // Only records open as panels.
+		if (to?.route?.id == null) return;
+		if (to.url.searchParams.has(TRAIL_PARAM)) return;
+		const toId = Number(to.params?.id);
 		const fromRecordContext = Boolean(
 			from?.params?.id || from?.params?.section || from?.route.id === '/search'
 		);
-		if (!fromRecordContext) return; // Only add segments when navigating from records, lists, or search.
-
-		const selectedSegment = trail.selected;
 
 		// Only artifacts open as panels. Entities and concepts change the main
 		// pane instead, keeping just the panel the click came from — the trail
 		// explores within a context, the main pane switches between contexts.
-		if (recordType !== 'artifact') {
-			if (selectedSegment) {
-				trail.removeExceptSegment(selectedSegment.entityId);
+		if (toId && fromRecordContext && recordType === 'artifact') {
+			const selectedId = trail.selectedId;
+			if (selectedId === toId) {
+				cancel();
+				// eslint-disable-next-line svelte/no-navigation-without-resolve -- to.url is already resolved
+				void goto(trailHref(to.url, trailIds));
+				return;
 			}
+			let nextIds = trailIds.filter((id) => id !== toId);
+			if (selectedId) {
+				const selectedIndex = nextIds.indexOf(selectedId);
+				if (selectedIndex >= 0) nextIds = nextIds.slice(0, selectedIndex + 1);
+			} else {
+				nextIds = [];
+			}
+			nextIds.push(toId);
+			cancel();
+			// eslint-disable-next-line svelte/no-navigation-without-resolve -- page.url is already resolved
+			pushState(trailHref(page.url, nextIds), { trail: nextIds });
 			return;
 		}
 
-		// A record already in the trail moves to the end.
-		if (trail.segments.some((segment) => segment.entityId === toId)) {
-			trail.removeSegment(toId);
+		if (toId && fromRecordContext) {
+			const keepIds = trail.selectedId ? [trail.selectedId] : trailIds;
+			if (keepIds.length === 0) return;
+			cancel();
+			// eslint-disable-next-line svelte/no-navigation-without-resolve -- to.url is already resolved
+			void goto(trailHref(to.url, keepIds));
+			return;
 		}
 
-		if (selectedSegment) {
-			if (selectedSegment.entityId === toId) {
-				// Don't cancel navigation if the selected segment is the same as toId.
-				return;
-			}
-			trail.removeAfterSegment(selectedSegment.entityId);
-		} else {
-			trail.clearTrail();
-		}
-		trail.addSegment(toId);
+		if (trailIds.length === 0) return;
 		cancel();
+		// eslint-disable-next-line svelte/no-navigation-without-resolve -- to.url is already resolved
+		void goto(trailHref(to.url, trailIds));
 	});
 
 	afterNavigate(() => {
@@ -77,12 +90,18 @@
 		bodyEl.classList.toggle('show-super-secret-menus', interaction.metaKeyPressed);
 	});
 
+	const clearTrail = () => {
+		if (trailIds.length === 0) return;
+		// eslint-disable-next-line svelte/no-navigation-without-resolve -- page.url is already resolved
+		pushState(trailHref(page.url, []), { trail: [] });
+	};
+
 	const handleInteractions = (event: KeyboardEvent | MouseEvent) => {
 		interaction.setAltKeyPressed(event.altKey);
 		interaction.setMetaKeyPressed(event.metaKey);
 		if (event instanceof KeyboardEvent) {
 			if (event.key === 'Escape') {
-				trail.clearTrail();
+				clearTrail();
 			}
 		}
 	};
@@ -118,15 +137,12 @@
 		<Index entries={indexEntries} class="app-index" />
 	</footer>
 </div>
-{#if !isIndex && trail.length > 0}
+{#if !isIndex && segments.length > 0}
 	<div class="aside-container">
-		<button
-			class="trail-controls chromatic"
-			aria-label="Close Panel"
-			onclick={() => trail.clearTrail()}>×</button
+		<button class="trail-controls chromatic" aria-label="Close Panel" onclick={clearTrail}>×</button
 		>
 		<aside class="app-aside">
-			<Trail class="app-trail" />
+			<Trail {segments} class="app-trail" />
 		</aside>
 	</div>
 {/if}
