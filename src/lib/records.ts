@@ -7,7 +7,7 @@ import {
 	type RecordType
 } from '@aias/hozo';
 
-export type RecordFields = Omit<RecordSelect, 'textEmbedding'>;
+export type RecordFields = Omit<RecordSelect, 'textEmbedding' | 'textSearch'>;
 export type RecordLink = Pick<RecordSelect, 'id' | 'type' | 'title' | 'slug'>;
 
 export interface LinkGroup {

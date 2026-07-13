@@ -30,7 +30,7 @@ Working plan for rebasing barnsworthburning on the Red Cliff Record (rcr) Postgr
 | `/artifacts`, `/entities`, `/concepts` | Type-filtered record lists, elo-ordered, paginated at 100/page (`?page=N`)                                                                                   |
 | `/records/{id}/{slug}`                 | Record detail for every type (artifacts as panels, entities/concepts as galleries); `/records/{id}` and stale slugs 301 to the canonical path                |
 | `/extracts`, `/creators`, `/spaces`    | 301 → `/artifacts`, `/entities`, `/concepts` (child paths redirect to the section root)                                                                      |
-| `/search?q=&type=`                     | Trigram ILIKE over title/content/summary/abbreviation (all pg_trgm-indexed), all types, filterable by type, elo-ordered                                      |
+| `/search?q=&type=`                     | Weighted full-text search over the `text_search` document plus ILIKE substring fallback, ranked by exactness tier → relevance → elo; filterable by type      |
 | `/feed.xml`                            | 30 most recent curated artifacts by `contentCreatedAt`, with children via `contained_by`; atom IDs change with the URL break (one-time re-delivery accepted) |
 | `/index.txt`                           | Entities + concepts, mirroring the homepage                                                                                                                  |
 
@@ -56,7 +56,7 @@ Record detail panels render title, rating stars, content/notes/summary as markdo
 
 ## Cutover checklist
 
-1. Publish `@aias/hozo` 0.4.0 to npm; swap bwb's `file:` dep for `~0.4.0` (the mini can't resolve the worktree path).
+1. Publish `@aias/hozo` to npm; bwb tracks published versions (currently `~0.5.0`) since the mini can't resolve the worktree path.
 2. Freeze Airtable edits; run the final sync; verify record counts match expectations.
 3. Delete `has_format` links targeting the Fragments record in prod (`delete from links where predicate = 'has_format' and target_id = 3233;`) — an absent format means fragment, which the site leaves unlabeled.
 4. Optionally sweep the 11 non-curated Airtable artifacts (curate or consciously leave hidden).

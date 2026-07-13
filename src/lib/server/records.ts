@@ -30,7 +30,8 @@ import {
 	inArray,
 	isNotNull,
 	lte,
-	sql
+	sql,
+	type SQL
 } from 'drizzle-orm';
 import { alias, type AnyPgColumn } from 'drizzle-orm/pg-core';
 import { db } from './db';
@@ -93,7 +94,10 @@ const listableRecords = <
 
 type RecordsQueryConfig = NonNullable<Parameters<typeof db.query.records.findMany>[0]>;
 
-const cardColumns = { textEmbedding: false } satisfies RecordsQueryConfig['columns'];
+const cardColumns = {
+	textEmbedding: false,
+	textSearch: false
+} satisfies RecordsQueryConfig['columns'];
 
 const linkColumns = {
 	id: true,
@@ -487,22 +491,67 @@ export async function listRecordGroups(
 	};
 }
 
+const escapeLike = (query: string) => query.replace(/[\\%_]/g, '\\$&');
+
+/**
+ * Build a tsquery from user input: websearch syntax for whole words, OR'd
+ * with a per-word prefix query so partially typed words still match.
+ */
+const toTsQuery = (query: string): SQL => {
+	const prefix = query
+		.trim()
+		.split(/\s+/)
+		.map((word) => word.replace(/[^\p{L}\p{N}]/gu, ''))
+		.filter(Boolean)
+		.map((word) => `${word}:*`)
+		.join(' & ');
+	return prefix.length > 0
+		? sql`(websearch_to_tsquery('english', ${query}) || to_tsquery('english', ${prefix}))`
+		: sql`websearch_to_tsquery('english', ${query})`;
+};
+
+/**
+ * Tiered exactness for ranking: 0 = exact title/abbreviation match, 1 = title
+ * prefix, 2 = title/abbreviation substring, 3 = everything else. Keeps literal
+ * matches ahead of relevance-ranked and fuzzier ones.
+ */
+const exactMatchTier = (
+	record: { title: AnyPgColumn; abbreviation: AnyPgColumn },
+	query: string
+): SQL<number> => {
+	const escaped = escapeLike(query.trim());
+	return sql<number>`CASE
+		WHEN lower(${record.title}) = lower(${query}) OR lower(${record.abbreviation}) = lower(${query}) THEN 0
+		WHEN ${record.title} ILIKE ${`${escaped}%`} THEN 1
+		WHEN ${record.title} ILIKE ${`%${escaped}%`} OR ${record.abbreviation} ILIKE ${`%${escaped}%`} THEN 2
+		ELSE 3
+	END`;
+};
+
 export async function searchRecords(query: string, type?: RecordType): Promise<RecordCard[]> {
-	const pattern = `%${query.replace(/[\\%_]/g, '\\$&')}%`;
+	const substring = `%${escapeLike(query)}%`;
 	const rows = await db.query.records.findMany({
 		where: {
 			...isListed,
 			...(type ? { type } : {}),
-			OR: [
-				{ title: { ilike: pattern } },
-				{ content: { ilike: pattern } },
-				{ summary: { ilike: pattern } },
-				{ abbreviation: { ilike: pattern } }
-			]
+			// The weighted search document matches whole words anywhere (including
+			// long content, where trigram similarity vanishes); ILIKE keeps the
+			// old mid-word substring matches working.
+			RAW: (record) => sql`(
+				${record.textSearch} @@ ${toTsQuery(query)} OR
+				${record.title} ILIKE ${substring} OR
+				${record.abbreviation} ILIKE ${substring} OR
+				${record.content} ILIKE ${substring} OR
+				${record.summary} ILIKE ${substring}
+			)`
 		},
 		columns: cardColumns,
 		with: cardWith,
-		orderBy: byBest,
+		orderBy: (record, operators) => [
+			exactMatchTier(record, query),
+			operators.desc(sql`ts_rank_cd(${record.textSearch}, ${toTsQuery(query)})`),
+			...byBest(record, operators)
+		],
 		limit: SEARCH_LIMIT
 	});
 	return rows.map(toCard);
