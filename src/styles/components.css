@@ -1,3 +1,10 @@
+.lucide {
+	inline-size: 1em;
+	block-size: 1em;
+	flex-shrink: 0;
+	color: currentColor;
+}
+
 .ssm {
 	display: none;
 }
@@ -8,18 +15,20 @@
 .nav-link {
 	border-radius: var(--border-radius-small);
 	padding-inline: 0.5em;
+	height: 2em;
 	display: flex;
 	flex-direction: row;
+	align-items: center;
 	gap: 1ch;
 	text-decoration: none;
 
-	&:hover {
-		background-color: var(--flood);
+	.nav-link__label {
+		text-box-trim: trim-both;
+		text-box-edge: cap alphabetic;
 	}
 
-	&::before {
-		content: attr(data-icon);
-		display: inline-block;
+	&:hover {
+		background-color: var(--flood);
 	}
 
 	&.active {

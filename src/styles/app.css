@@ -38,12 +38,20 @@
 		inset-inline-start: 0;
 		inset-block-start: 1rem;
 		z-index: 10;
-		font-size: var(--size);
-		width: var(--size);
-		height: var(--size);
+		font-size: calc(var(--size) * 0.65);
+		inline-size: var(--size);
+		block-size: var(--size);
+		display: grid;
+		place-items: center;
+		padding: 0;
 		border-radius: var(--border-radius-medium) 0 0 var(--border-radius-medium);
 		border-inline-end: 0;
 		transform: translateX(-100%);
+
+		.lucide {
+			inline-size: 1em;
+			block-size: 1em;
+		}
 	}
 }
 
@@ -116,10 +124,6 @@
 			flex-direction: column;
 			gap: 0;
 			align-items: center;
-
-			&::before {
-				transform: translateY(0.25cap);
-			}
 		}
 	}
 	.app-toolbar {

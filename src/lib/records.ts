@@ -6,6 +6,7 @@ import {
 	type RecordSelect,
 	type RecordType
 } from '@aias/hozo';
+import { FileTextIcon, LightbulbIcon, UserIcon, type LucideIcon } from '@lucide/svelte';
 
 export type RecordFields = Omit<RecordSelect, 'textEmbedding' | 'textSearch'>;
 export type RecordLink = Pick<RecordSelect, 'id' | 'type' | 'title' | 'slug'>;
@@ -61,19 +62,20 @@ export interface Section {
 	path: string;
 	label: string;
 	singular: string;
-	icon: string;
 }
 
 export const sections: Record<RecordType, Section> = {
-	artifact: {
-		type: 'artifact',
-		path: 'artifacts',
-		label: 'Artifacts',
-		singular: 'Artifact',
-		icon: '📝'
-	},
-	entity: { type: 'entity', path: 'entities', label: 'Entities', singular: 'Entity', icon: '🧑‍🎨' },
-	concept: { type: 'concept', path: 'concepts', label: 'Concepts', singular: 'Concept', icon: '🏷️' }
+	artifact: { type: 'artifact', path: 'artifacts', label: 'Artifacts', singular: 'Artifact' },
+	entity: { type: 'entity', path: 'entities', label: 'Entities', singular: 'Entity' },
+	concept: { type: 'concept', path: 'concepts', label: 'Concepts', singular: 'Concept' }
+};
+
+// Sections travel through `load` payloads, which SvelteKit serializes, so the
+// icon components live in a parallel map rather than on the Section itself.
+export const sectionIcons: Record<RecordType, LucideIcon> = {
+	artifact: FileTextIcon,
+	entity: UserIcon,
+	concept: LightbulbIcon
 };
 
 export const sectionByPath = (path: string): Section | undefined =>

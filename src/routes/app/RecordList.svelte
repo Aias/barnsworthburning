@@ -5,6 +5,7 @@
 	import { getArticle } from '$helpers/grammar';
 	import markdown from '$helpers/markdown';
 	import { displayTitle, formatLabel, type RecordCard } from '$lib/records';
+	import { StarIcon } from '@lucide/svelte';
 
 	interface RecordListProps {
 		records: RecordCard[];
@@ -24,7 +25,7 @@
 						{#if record.rating}
 							<span class="stars">
 								{#each Array(record.rating) as _, index (index)}
-									<span>⭐</span>
+									<StarIcon fill="currentColor" />
 								{/each}
 							</span>
 						{/if}
@@ -98,7 +99,7 @@
 
 		& > .stars {
 			font-size: 0.75em;
-			transform: translate(0, -2px);
+			color: var(--accent);
 		}
 
 		& > :global(.creators) {

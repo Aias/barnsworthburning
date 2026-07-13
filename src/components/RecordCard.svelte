@@ -3,6 +3,12 @@
 	import { classnames } from '$helpers/classnames';
 	import markdown from '$helpers/markdown';
 	import { displayTitle, type RecordCard } from '$lib/records';
+	import {
+		ArrowLeftRightIcon,
+		ArrowRightIcon,
+		CloudIcon,
+		CornerDownRightIcon
+	} from '@lucide/svelte';
 	import type { HTMLAttributes } from 'svelte/elements';
 	import BlockLink from './BlockLink.svelte';
 	import Citation from './Citation.svelte';
@@ -74,7 +80,7 @@
 						href={rcrUrl}
 						target="_blank"
 						rel="noopener external"
-						title="Open in Red Cliff Record">☁️</a
+						title="Open in Red Cliff Record"><CloudIcon /></a
 					>
 				{/if}
 			</header>
@@ -104,13 +110,17 @@
 		{#if hasRelations}
 			<nav class="relations">
 				{#if linkableChildren.length > 0}
-					<RelationList items={linkableChildren} symbol="↳" label="Children" />
+					<RelationList items={linkableChildren} symbol={CornerDownRightIcon} label="Children" />
 				{/if}
 				{#if record.connections.length > 0}
-					<RelationList items={record.connections} symbol="⮂" label="Connections" />
+					<RelationList
+						items={record.connections}
+						symbol={ArrowLeftRightIcon}
+						label="Connections"
+					/>
 				{/if}
 				{#each record.extras as group (group.label)}
-					<RelationList items={group.records} symbol="→" label={group.label} />
+					<RelationList items={group.records} symbol={ArrowRightIcon} label={group.label} />
 				{/each}
 				{#if record.tags.length > 0}
 					<TopicList topics={record.tags} />

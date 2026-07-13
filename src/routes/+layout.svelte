@@ -7,6 +7,7 @@
 	import settings from '$lib/settings.svelte';
 	import { DEFAULT_PALETTE } from '$lib/theme/config';
 	import trail, { parseTrail, trailHref, trailSegments, TRAIL_PARAM } from '$lib/trail.svelte';
+	import { XIcon } from '@lucide/svelte';
 	import Index from './app/Index.svelte';
 	import Nav from './app/Nav.svelte';
 	import SettingsMenu from './app/SettingsMenu.svelte';
@@ -134,7 +135,8 @@
 </div>
 {#if !isIndex && segments.length > 0}
 	<div class="aside-container">
-		<button class="trail-controls chromatic" aria-label="Close Panel" onclick={clearTrail}>×</button
+		<button class="trail-controls chromatic" aria-label="Close Panel" onclick={clearTrail}
+			><XIcon /></button
 		>
 		<aside class="app-aside">
 			<Trail {segments} class="app-trail" />

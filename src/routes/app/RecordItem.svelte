@@ -2,6 +2,7 @@
 	import RecordCard from '$components/RecordCard.svelte';
 	import RecordGallery from '$components/RecordGallery.svelte';
 	import { displayTitle, type RecordCard as RecordCardData, type RecordPage } from '$lib/records';
+	import { ArrowLeftRightIcon } from '@lucide/svelte';
 	import { parse } from 'devalue';
 	import RecordList from './RecordList.svelte';
 
@@ -56,7 +57,7 @@
 		{#if connections.length > 0 || similar.length > 0}
 			<div class="connections-separator" role="presentation">
 				<hr />
-				<small class="text-secondary text-mono">See ⮂ Also</small>
+				<small class="text-secondary text-mono">See <ArrowLeftRightIcon /> Also</small>
 				<hr />
 			</div>
 			{#if connections.length > 0}

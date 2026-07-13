@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { displayTitle, type RecordLink } from '$lib/records';
+	import type { LucideIcon } from '@lucide/svelte';
 	import Link from './Link.svelte';
 
 	interface RelationListProps {
 		items: RecordLink[];
 		label: string;
-		symbol: string;
+		symbol: LucideIcon;
 		maxChildren?: number;
 	}
 
@@ -26,37 +27,45 @@
 </script>
 
 {#if items?.length > 0}
-	<ol class="relation-list" data-symbol={symbol} title={label}>
-		{#each displayedItems as item (item.id)}
-			<li><Link record={item}>{displayTitle(item)}</Link></li>
-		{/each}
-		{#if isTruncated}
-			<li class="show-more">
-				<button onclick={expandList} class="link">+{items.length - maxChildren} More</button>
-			</li>
-		{/if}
-	</ol>
+	{@const Symbol = symbol}
+	<div class="relation-list" title={label}>
+		<Symbol class="relation-symbol" />
+		<ol>
+			{#each displayedItems as item (item.id)}
+				<li><Link record={item}>{displayTitle(item)}</Link></li>
+			{/each}
+			{#if isTruncated}
+				<li class="show-more">
+					<button onclick={expandList} class="link">+{items.length - maxChildren} More</button>
+				</li>
+			{/if}
+		</ol>
+	</div>
 {/if}
 
 <style>
 	.relation-list {
 		display: block;
 		position: relative;
-		margin: 0;
-		padding: 0;
 		padding-inline-start: 1.5em;
-		list-style-type: none;
 		color: var(--link);
 		font-family: var(--font-stack-mono);
 		overflow: hidden;
 		white-space: break-spaces;
 		text-overflow: ellipsis;
 
-		&::before {
-			content: attr(data-symbol);
+		& :global(.relation-symbol) {
 			position: absolute;
 			inset-inline-start: 0;
+			inset-block-start: calc((1lh - 1em) / 2);
 			color: var(--hint);
+		}
+
+		ol {
+			display: inline;
+			margin: 0;
+			padding: 0;
+			list-style-type: none;
 		}
 	}
 	li {

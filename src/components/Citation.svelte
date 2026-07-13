@@ -2,6 +2,7 @@
 	import { classnames } from '$helpers/classnames';
 	import { getArticle } from '$helpers/grammar';
 	import { formatLabel, type RecordCard } from '$lib/records';
+	import { ArrowUpRightIcon } from '@lucide/svelte';
 	import CreatorList from './CreatorList.svelte';
 	import Link from './Link.svelte';
 
@@ -36,7 +37,7 @@
 		{#if source}
 			{@const sourceUrl = new URL(source)}
 			<Link href={source} class="source-link" target="_blank" rel="noopener">
-				{sourceUrl.hostname}
+				{sourceUrl.hostname}&nbsp;<ArrowUpRightIcon />
 			</Link>
 		{/if}
 	</svelte:element>
@@ -66,11 +67,11 @@
 		color: var(--accent);
 		text-decoration: none;
 		font-size: var(--font-size-tiny);
-		transform: translateY(-0.065lh);
+		translate: 0 -0.065lh;
 
-		:global(&::after) {
-			content: '⤤';
-			margin-inline-start: 0.75ch;
+		:global(& .lucide) {
+			margin-inline-start: -0.5ch;
+			translate: 0 0.1lh;
 		}
 
 		:global(&:hover) {

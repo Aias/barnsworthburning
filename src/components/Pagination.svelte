@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { ArrowLeftIcon, ArrowRightIcon } from '@lucide/svelte';
 	import Link from './Link.svelte';
 
 	interface PaginationProps {
@@ -11,11 +12,11 @@
 {#if totalPages > 1}
 	<nav class="pagination text-mono" aria-label="Pagination">
 		{#if page > 1}
-			<Link href={`?page=${page - 1}`}>← Previous</Link>
+			<Link href={`?page=${page - 1}`}><ArrowLeftIcon /> Previous</Link>
 		{/if}
 		<span class="text-secondary">Page {page} of {totalPages}</span>
 		{#if page < totalPages}
-			<Link href={`?page=${page + 1}`}>Next →</Link>
+			<Link href={`?page=${page + 1}`}>Next <ArrowRightIcon /></Link>
 		{/if}
 	</nav>
 {/if}

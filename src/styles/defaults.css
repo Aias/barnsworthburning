@@ -175,8 +175,7 @@ label:has(> input),
 summary {
 	color: var(--accent);
 }
-svg,
-.icon {
+:where(svg, .icon):not(.lucide) {
 	fill: var(--secondary);
 }
 
