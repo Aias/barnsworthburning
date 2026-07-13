@@ -1,9 +1,9 @@
 <script lang="ts">
+	import { recordPath, type RecordLink } from '$lib/records';
+	import trail, { type TrailSegment } from '$lib/trail.svelte';
 	import type { Snippet } from 'svelte';
 	import { getContext } from 'svelte';
 	import type { HTMLAnchorAttributes } from 'svelte/elements';
-	import { recordPath, type RecordLink } from '$lib/records';
-	import trail, { type TrailSegment } from '$lib/trail.svelte';
 
 	interface LinkBaseProps extends HTMLAnchorAttributes {
 		active?: boolean;
@@ -42,7 +42,6 @@
 	};
 </script>
 
-<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 <a onclick={handleClick} href={url} class:inherit class:active {...restProps}
 	>{@render children()}</a
 >

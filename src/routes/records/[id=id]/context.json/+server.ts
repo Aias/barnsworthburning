@@ -1,7 +1,7 @@
+import { getCacheHeaders } from '$helpers/cache';
+import { getRecordPage } from '$lib/server/records';
 import { error } from '@sveltejs/kit';
 import { stringify } from 'devalue';
-import { getRecordPage } from '$lib/server/records';
-import { getCacheHeaders } from '$helpers/cache';
 
 export async function GET({ params }) {
 	const recordPage = await getRecordPage(Number(params.id));

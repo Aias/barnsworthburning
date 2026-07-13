@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { setContext } from 'svelte';
-	import { parse } from 'devalue';
-	import RecordItem from './RecordItem.svelte';
 	import type { RecordPage } from '$lib/records';
 	import type { TrailSegment } from '$lib/trail.svelte';
+	import { parse } from 'devalue';
+	import { setContext } from 'svelte';
+	import RecordItem from './RecordItem.svelte';
 
 	interface TrailSegmentProps {
 		segment: TrailSegment;

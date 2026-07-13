@@ -1,6 +1,6 @@
-import { recordTypes } from '@aias/hozo';
-import { searchRecords } from '$lib/server/records';
 import { getCacheHeaders } from '$helpers/cache';
+import { searchRecords } from '$lib/server/records';
+import { recordTypes } from '@aias/hozo';
 
 export async function load({ url, setHeaders }) {
 	const rawType = url.searchParams.get('type');

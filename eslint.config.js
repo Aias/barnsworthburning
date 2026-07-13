@@ -31,6 +31,9 @@ export default tseslint.config(
 		rules: {
 			'no-undef': 'off',
 			'svelte/no-at-html-tags': 'off',
+			// Trail navigation builds URLs from SvelteKit's own page.url/to.url,
+			// which are already base-resolved; resolve() only takes route IDs.
+			'svelte/no-navigation-without-resolve': 'off',
 			'svelte/prefer-writable-derived': 'off',
 			'@typescript-eslint/no-unused-vars': [
 				'warn',

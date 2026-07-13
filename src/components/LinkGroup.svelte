@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import Link from './Link.svelte';
 	import { displayTitle, recordSlug, type RecordGroup } from '$lib/records';
+	import Link from './Link.svelte';
 
 	interface LinkGroupProps {
 		group: RecordGroup;

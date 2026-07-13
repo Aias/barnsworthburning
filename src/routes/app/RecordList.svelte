@@ -1,9 +1,9 @@
 <script lang="ts">
-	import CreatorList from '$components/CreatorList.svelte';
-	import markdown from '$helpers/markdown';
-	import { getArticle } from '$helpers/grammar';
-	import Link from '$components/Link.svelte';
 	import BlockLink from '$components/BlockLink.svelte';
+	import CreatorList from '$components/CreatorList.svelte';
+	import Link from '$components/Link.svelte';
+	import { getArticle } from '$helpers/grammar';
+	import markdown from '$helpers/markdown';
 	import { displayTitle, formatLabel, type RecordCard } from '$lib/records';
 
 	interface RecordListProps {

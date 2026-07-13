@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { SvelteURLSearchParams } from 'svelte/reactivity';
 	import Link from '$components/Link.svelte';
 	import RecordGallery from '$components/RecordGallery.svelte';
 	import TextInput from '$components/TextInput.svelte';
-	import { sections } from '$lib/records';
 	import { highlightSearchResults } from '$helpers/highlight';
+	import { sections } from '$lib/records';
+	import { SvelteURLSearchParams } from 'svelte/reactivity';
 
 	const { data } = $props();
 	const results = $derived(data.results);

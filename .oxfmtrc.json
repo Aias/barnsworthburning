@@ -1,0 +1,33 @@
+{
+	"$schema": "./node_modules/oxfmt/configuration_schema.json",
+	"useTabs": true,
+	"tabWidth": 2,
+	"singleQuote": true,
+	"trailingComma": "none",
+	"printWidth": 100,
+	"svelte": true,
+	"sortImports": {
+		"newlinesBetween": false,
+		"internalPattern": ["$*"],
+		"groups": [
+			["side_effect"],
+			["builtin", "type-builtin"],
+			["external", "type-external"],
+			["internal", "type-internal"],
+			["parent", "type-parent"],
+			["sibling", "type-sibling"],
+			["index", "type-index"]
+		]
+	},
+	"sortPackageJson": {
+		"sortScripts": true
+	},
+	"embeddedLanguageFormatting": "auto",
+	"ignorePatterns": [
+		"pnpm-lock.yaml",
+		"build/**",
+		".svelte-kit/**",
+		"static/themePreferences.js",
+		"src/styles/palette.css"
+	]
+}

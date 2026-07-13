@@ -1,7 +1,7 @@
-import { error, redirect } from '@sveltejs/kit';
+import { getCacheHeaders } from '$helpers/cache';
 import { recordPath } from '$lib/records';
 import { getRecordPage } from '$lib/server/records';
-import { getCacheHeaders } from '$helpers/cache';
+import { error, redirect } from '@sveltejs/kit';
 
 export async function load({ params, setHeaders, url }) {
 	const recordPage = await getRecordPage(Number(params.id));

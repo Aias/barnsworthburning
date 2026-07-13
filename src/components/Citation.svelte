@@ -1,9 +1,9 @@
 <script lang="ts">
+	import { classnames } from '$helpers/classnames';
 	import { getArticle } from '$helpers/grammar';
+	import { formatLabel, type RecordCard } from '$lib/records';
 	import CreatorList from './CreatorList.svelte';
 	import Link from './Link.svelte';
-	import { classnames } from '$helpers/classnames';
-	import { formatLabel, type RecordCard } from '$lib/records';
 
 	interface CitationProps {
 		record: RecordCard;

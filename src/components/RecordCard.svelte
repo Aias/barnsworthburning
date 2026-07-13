@@ -1,16 +1,16 @@
 <script lang="ts">
+	import { env } from '$env/dynamic/public';
+	import { classnames } from '$helpers/classnames';
 	import markdown from '$helpers/markdown';
+	import { displayTitle, type RecordCard } from '$lib/records';
+	import type { HTMLAttributes } from 'svelte/elements';
 	import BlockLink from './BlockLink.svelte';
 	import Citation from './Citation.svelte';
-	import TopicList from './TopicList.svelte';
-	import RelationList from './RelationList.svelte';
-	import RecordImage from './RecordImage.svelte';
-	import Link from './Link.svelte';
 	import CreatorList from './CreatorList.svelte';
-	import { classnames } from '$helpers/classnames';
-	import { displayTitle, type RecordCard } from '$lib/records';
-	import { env } from '$env/dynamic/public';
-	import type { HTMLAttributes } from 'svelte/elements';
+	import Link from './Link.svelte';
+	import RecordImage from './RecordImage.svelte';
+	import RelationList from './RelationList.svelte';
+	import TopicList from './TopicList.svelte';
 
 	interface RecordCardProps<T extends keyof HTMLElementTagNameMap> extends HTMLAttributes<
 		HTMLElementTagNameMap[T]

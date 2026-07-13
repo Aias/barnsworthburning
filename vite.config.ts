@@ -1,28 +1,27 @@
+import { promises as fs } from 'node:fs';
+import path from 'node:path';
 import { sveltekit } from '@sveltejs/kit/vite';
+import { format } from 'oxfmt';
 import { defineConfig, type Plugin, type PluginOption } from 'vite';
-import { promises as fs, existsSync } from 'fs';
-import path from 'path';
-import prettier from 'prettier';
-import { generateFullTheme } from './src/styles/generators';
 import { generateThemeScript } from './src/lib/theme/generate';
+import { generateFullTheme } from './src/styles/generators';
 
 const makeThemeFile = async () => {
 	const cssContent = generateFullTheme();
-	let formattedContent;
+	let formattedContent = cssContent;
 	try {
-		formattedContent = await prettier.format(cssContent, {
-			parser: 'css'
-		});
-	} catch (e) {
-		console.error(e);
-		formattedContent = cssContent;
+		const result = await format('palette.css', cssContent);
+		if (result.errors.length === 0) {
+			formattedContent = result.code;
+		} else {
+			console.error(result.errors);
+		}
+	} catch (error) {
+		console.error(error);
 	}
 
-	const outputDir = './src/styles'; // Ensure this directory exists or use your path
-	if (!existsSync(outputDir)) {
-		await fs.mkdir(outputDir);
-	}
-
+	const outputDir = './src/styles';
+	await fs.mkdir(outputDir, { recursive: true });
 	await fs.writeFile(path.resolve(outputDir, 'palette.css'), formattedContent);
 };
 

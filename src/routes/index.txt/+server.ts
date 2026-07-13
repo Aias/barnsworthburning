@@ -1,8 +1,8 @@
-import { text } from '@sveltejs/kit';
-import { getContentType } from '$helpers/content';
 import { getCacheHeaders } from '$helpers/cache';
+import { getContentType } from '$helpers/content';
 import { displayTitle, recordPath, sections } from '$lib/records';
 import { getIndexEntries } from '$lib/server/records';
+import { text } from '@sveltejs/kit';
 
 export async function GET({ url }) {
 	const entries = await getIndexEntries();

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Link from './Link.svelte';
 	import { displayTitle, type RecordLink } from '$lib/records';
 	import type { HTMLAttributes } from 'svelte/elements';
+	import Link from './Link.svelte';
 
 	interface CreatorListProps extends HTMLAttributes<HTMLSpanElement> {
 		creators: RecordLink[];

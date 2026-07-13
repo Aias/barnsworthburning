@@ -1,6 +1,6 @@
+import { env } from '$env/dynamic/private';
 import { relations } from '@aias/hozo';
 import { drizzle, type PostgresJsDatabase } from 'drizzle-orm/postgres-js';
-import { env } from '$env/dynamic/private';
 
 const createDb = (): PostgresJsDatabase<typeof relations> => {
 	if (!env.DATABASE_URL) {

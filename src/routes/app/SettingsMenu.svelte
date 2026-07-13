@@ -30,8 +30,7 @@
 	});
 
 	// Use initial theme from server if available, otherwise fall back to settings
-	// eslint-disable-next-line svelte/no-unused-svelte-ignore -- needed for svelte-check
-	// svelte-ignore state_referenced_locally -- intentional SSR hydration pattern
+	// svelte-ignore state_referenced_locally
 	let currentMode = $state(initialMode ?? settings.mode);
 	// svelte-ignore state_referenced_locally
 	let currentPalette = $state(initialPalette ?? settings.palette);

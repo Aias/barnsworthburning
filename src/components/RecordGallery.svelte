@@ -1,6 +1,6 @@
 <script lang="ts">
-	import RecordCard from './RecordCard.svelte';
 	import type { RecordCard as CardData } from '$lib/records';
+	import RecordCard from './RecordCard.svelte';
 
 	interface GalleryProps {
 		records: CardData[];

@@ -1,4 +1,16 @@
 import {
+	incomingLabel,
+	outgoingLabel,
+	type FeedEntry,
+	type IndexEntry,
+	type LinkGroup,
+	type RecordCard,
+	type RecordFields,
+	type RecordGroup,
+	type RecordLink,
+	type RecordPage
+} from '$lib/records';
+import {
 	isPredicateSlug,
 	links,
 	PREDICATES,
@@ -21,18 +33,6 @@ import {
 	sql
 } from 'drizzle-orm';
 import { alias, type AnyPgColumn } from 'drizzle-orm/pg-core';
-import {
-	incomingLabel,
-	outgoingLabel,
-	type FeedEntry,
-	type IndexEntry,
-	type LinkGroup,
-	type RecordCard,
-	type RecordFields,
-	type RecordGroup,
-	type RecordLink,
-	type RecordPage
-} from '$lib/records';
 import { db } from './db';
 
 export const PAGE_SIZE = 100;
@@ -160,7 +160,7 @@ interface CardRow extends RecordFields {
 const pickLink = ({ id, type, title, slug }: RecordLink): RecordLink => ({ id, type, title, slug });
 
 const isVisible = (record: LinkRowRecord | null): record is LinkRowRecord =>
-	record !== null && record.isCurated && !record.isPrivate;
+	record?.isCurated === true && !record.isPrivate;
 
 const isListable = (record: LinkRowRecord | null): record is LinkRowRecord =>
 	isVisible(record) && record.title !== null;

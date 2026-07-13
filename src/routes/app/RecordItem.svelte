@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { parse } from 'devalue';
 	import RecordCard from '$components/RecordCard.svelte';
 	import RecordGallery from '$components/RecordGallery.svelte';
-	import RecordList from './RecordList.svelte';
 	import { displayTitle, type RecordCard as RecordCardData, type RecordPage } from '$lib/records';
+	import { parse } from 'devalue';
+	import RecordList from './RecordList.svelte';
 
 	interface RecordItemProps {
 		page: RecordPage;

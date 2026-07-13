@@ -1,3 +1,4 @@
+import { resolve } from '$app/paths';
 import {
 	PREDICATES,
 	type MediaSelect,
@@ -5,7 +6,6 @@ import {
 	type RecordSelect,
 	type RecordType
 } from '@aias/hozo';
-import { resolve } from '$app/paths';
 
 export type RecordFields = Omit<RecordSelect, 'textEmbedding'>;
 export type RecordLink = Pick<RecordSelect, 'id' | 'type' | 'title' | 'slug'>;

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Link from './Link.svelte';
 	import { displayTitle, type RecordLink } from '$lib/records';
+	import Link from './Link.svelte';
 
 	interface RelationListProps {
 		items: RecordLink[];

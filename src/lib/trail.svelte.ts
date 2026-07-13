@@ -1,5 +1,5 @@
-import type { RecordType } from '@aias/hozo';
 import { type Palette, paletteOptions } from '$types/Theme';
+import type { RecordType } from '@aias/hozo';
 
 export const TRAIL_PARAM = 'trail';
 

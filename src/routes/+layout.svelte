@@ -1,16 +1,16 @@
 <script lang="ts">
 	import '$styles/app.css';
-	import { page } from '$app/state';
 	import { afterNavigate, beforeNavigate, goto, pushState } from '$app/navigation';
-	import settings from '$lib/settings.svelte';
-	import interaction from '$lib/interaction.svelte';
-	import trail, { parseTrail, trailHref, trailSegments, TRAIL_PARAM } from '$lib/trail.svelte';
-	import { DEFAULT_PALETTE } from '$lib/theme/config';
+	import { page } from '$app/state';
 	import SEO from '$components/SEO.svelte';
-	import Trail from './app/Trail.svelte';
-	import Nav from './app/Nav.svelte';
+	import interaction from '$lib/interaction.svelte';
+	import settings from '$lib/settings.svelte';
+	import { DEFAULT_PALETTE } from '$lib/theme/config';
+	import trail, { parseTrail, trailHref, trailSegments, TRAIL_PARAM } from '$lib/trail.svelte';
 	import Index from './app/Index.svelte';
+	import Nav from './app/Nav.svelte';
 	import SettingsMenu from './app/SettingsMenu.svelte';
+	import Trail from './app/Trail.svelte';
 
 	let { children, data } = $props();
 	let bodyEl = $state<HTMLBodyElement>();
@@ -31,7 +31,7 @@
 		if (bodyWidth < 720) return; // Don't add segments when the screen is too small.
 		const isNavigating = ['link', 'goto', 'form'].includes(type);
 		if (!isNavigating) return;
-		if (to?.route?.id == null) return;
+		if (to?.route?.id === null || to?.route?.id === undefined) return;
 		if (to.url.searchParams.has(TRAIL_PARAM)) return;
 		const toId = Number(to.params?.id);
 		const fromRecordContext = Boolean(
@@ -45,7 +45,6 @@
 			const selectedId = trail.selectedId;
 			if (selectedId === toId) {
 				cancel();
-				// eslint-disable-next-line svelte/no-navigation-without-resolve -- to.url is already resolved
 				void goto(trailHref(to.url, trailIds));
 				return;
 			}
@@ -58,7 +57,6 @@
 			}
 			nextIds.push(toId);
 			cancel();
-			// eslint-disable-next-line svelte/no-navigation-without-resolve -- page.url is already resolved
 			pushState(trailHref(page.url, nextIds), { trail: nextIds });
 			return;
 		}
@@ -67,14 +65,12 @@
 			const keepIds = trail.selectedId ? [trail.selectedId] : trailIds;
 			if (keepIds.length === 0) return;
 			cancel();
-			// eslint-disable-next-line svelte/no-navigation-without-resolve -- to.url is already resolved
 			void goto(trailHref(to.url, keepIds));
 			return;
 		}
 
 		if (trailIds.length === 0) return;
 		cancel();
-		// eslint-disable-next-line svelte/no-navigation-without-resolve -- to.url is already resolved
 		void goto(trailHref(to.url, trailIds));
 	});
 
@@ -92,7 +88,6 @@
 
 	const clearTrail = () => {
 		if (trailIds.length === 0) return;
-		// eslint-disable-next-line svelte/no-navigation-without-resolve -- page.url is already resolved
 		pushState(trailHref(page.url, []), { trail: [] });
 	};
 

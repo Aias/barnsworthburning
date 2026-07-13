@@ -1,6 +1,6 @@
 import { setCookie, getCookie } from '$helpers/cookies';
-import { paletteOptions, Palette, Chroma, Mode } from '$types/Theme';
 import { THEME_CONFIG, DEFAULT_MODE, DEFAULT_CHROMA, DEFAULT_PALETTE } from '$lib/theme/config';
+import { paletteOptions, Palette, Chroma, Mode } from '$types/Theme';
 
 const MODE_COOKIE = THEME_CONFIG.cookies.mode;
 const CHROMA_COOKIE = THEME_CONFIG.cookies.chroma;
@@ -12,7 +12,7 @@ export function createSettings() {
 		cookieValue: string | undefined,
 		defaultValue: T
 	): T => {
-		if (typeof document !== 'undefined' && document.documentElement) {
+		if (typeof document !== 'undefined') {
 			const classes = document.documentElement.classList;
 			for (const value of Object.values(enumObj)) {
 				if (classes.contains(value)) {

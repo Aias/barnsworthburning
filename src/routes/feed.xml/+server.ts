@@ -1,7 +1,6 @@
-import xmlFormatter from 'xml-formatter';
-import markdown from '$helpers/markdown';
-import { getArticle, combineAsList } from '$helpers/grammar';
 import { getCacheHeaders } from '$helpers/cache';
+import { getArticle, combineAsList } from '$helpers/grammar';
+import markdown from '$helpers/markdown';
 import {
 	displayTitle,
 	formatLabel,
@@ -10,6 +9,7 @@ import {
 	type RecordCard
 } from '$lib/records';
 import { getFeedEntries } from '$lib/server/records';
+import xmlFormatter from 'xml-formatter';
 
 const meta = {
 	title: 'barnsworthburning',
