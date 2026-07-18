@@ -32,7 +32,12 @@ export enum Palette {
 	Sky = 'sky'
 }
 export type Neutral =
-	Palette.Gray | Palette.Slate | Palette.Sand | Palette.Mauve | Palette.Olive | Palette.Sage;
+	| Palette.Gray
+	| Palette.Slate
+	| Palette.Sand
+	| Palette.Mauve
+	| Palette.Olive
+	| Palette.Sage;
 
 export const paletteOptions: Palette[] = [
 	Palette.Gold,

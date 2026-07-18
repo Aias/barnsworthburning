@@ -1,6 +1,6 @@
-import { THEME_CONFIG } from './config';
 import { promises as fs } from 'fs';
 import path from 'path';
+import { THEME_CONFIG } from './config';
 
 export async function generateThemeScript() {
 	const script = `// Auto-generated from src/lib/theme/config.ts - DO NOT EDIT

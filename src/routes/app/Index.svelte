@@ -1,79 +1,43 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { entityTypes, type EntityType } from '$helpers/params';
 	import Link from '$components/Link.svelte';
-	import type { ICreator, ISpace } from '$types/Airtable';
+	import { displayTitle, type IndexEntry } from '$lib/records';
 	import type { HTMLOlAttributes } from 'svelte/elements';
 
 	interface IndexProps extends HTMLOlAttributes {
-		creators: ICreator[];
-		spaces: ISpace[];
+		entries: IndexEntry[];
 	}
-	let { creators, spaces, ...restProps }: IndexProps = $props();
+	let { entries, ...restProps }: IndexProps = $props();
 
-	interface IndexEntry {
-		type: EntityType;
-		name: string;
-		id: string;
-		count: number;
-	}
+	let currentId = $derived(page.params?.id);
 
-	let pageParams = $derived(page.params || {});
-
-	const index = $derived.by(() => {
-		const creatorEntries = creators.map((c) => ({
-			type: entityTypes.creator,
-			name: c.name || 'Unknown',
-			id: c.id,
-			count: c.numExtracts
-		}));
-		const spaceEntries = spaces.map((s) => ({
-			type: entityTypes.space,
-			name: s.topic || 'general',
-			id: s.id,
-			count: s.numExtracts
-		}));
-		const all = [...creatorEntries, ...spaceEntries].sort(sortByName);
-
-		return all;
-	});
-
-	function sortByName(a: IndexEntry, b: IndexEntry) {
-		return a.name.localeCompare(b.name);
-	}
+	const index = $derived(
+		[...entries].sort((a, b) => displayTitle(a).localeCompare(displayTitle(b)))
+	);
 </script>
 
 <ol class="index" class:themed={true} {...restProps}>
 	{#each index as entry (entry.id)}
-		{@const { type, name, id, count } = entry}
 		<li class="index-entry">
-			<Link
-				class="entity-link"
-				toType={type.key}
-				toId={id}
-				active={type.urlParam === pageParams.entityType && id === pageParams.id}
-			>
-				{name}
-			</Link>&nbsp;<span class="count">{count}</span>
+			<Link class="entity-link" record={entry} active={String(entry.id) === currentId}>
+				{displayTitle(entry)}
+			</Link>&nbsp;<span class="count">{entry.count}</span>
 		</li>
 	{/each}
 	<li class="index-entry">
 		<hr role="presentation" class="section-break" />
 	</li>
 	<li class="index-entry">
-		<Link toType="extract" toId="rechxgCFt4OkQUsKD">About</Link>
+		<Link href="/records/26716">About</Link>
 	</li>
 	<li class="index-entry">
 		<Link href="/feed.xml" data-sveltekit-preload-data="off">RSS Feed</Link>
 	</li>
 	<li class="index-entry">
-		<Link toType="extract" toId="recBkp3allrWUXK72">Contact</Link>
+		<Link href="/records/27520">Contact</Link>
 	</li>
 	<li class="index-entry">
-		<Link
-			href="https://www.airtable.com/universe/expKiUBA3E8no5Dgp/a-commonplace-book"
-			target="_blank">Source</Link
-		>
+		<Link href="https://github.com/Aias/barnsworthburning" target="_blank">Source</Link>
 	</li>
 </ol>
 

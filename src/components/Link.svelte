@@ -1,10 +1,9 @@
 <script lang="ts">
+	import { recordPath, type RecordLink } from '$lib/records';
+	import trail, { type TrailSegment } from '$lib/trail.svelte';
 	import type { Snippet } from 'svelte';
 	import { getContext } from 'svelte';
-	import { entityTypes } from '$helpers/params';
-	import { resolve } from '$app/paths';
 	import type { HTMLAnchorAttributes } from 'svelte/elements';
-	import trail, { type TrailSegment } from '$lib/trail.svelte';
 
 	interface LinkBaseProps extends HTMLAnchorAttributes {
 		active?: boolean;
@@ -12,23 +11,20 @@
 		inherit?: boolean;
 	}
 
-	interface InternalLinkProps extends LinkBaseProps {
-		toType?: keyof typeof entityTypes;
-		toId: string;
+	interface RecordLinkProps extends LinkBaseProps {
+		record: Pick<RecordLink, 'id' | 'type' | 'title' | 'slug'>;
 		href?: never;
 	}
 
 	interface StaticLinkProps extends LinkBaseProps {
 		href: string;
-		toType?: never;
-		toId?: never;
+		record?: never;
 	}
 
-	type LinkProps = InternalLinkProps | StaticLinkProps;
+	type LinkProps = RecordLinkProps | StaticLinkProps;
 
 	let {
-		toType = 'extract',
-		toId,
+		record,
 		active = false,
 		inherit = false,
 		href,
@@ -36,20 +32,16 @@
 		...restProps
 	}: LinkProps = $props();
 
-	let trailSegment: TrailSegment | undefined = getContext('trailSegment');
+	let getTrailSegment: (() => TrailSegment) | undefined = getContext('trailSegment');
 
-	let url = $derived.by(() => {
-		if (href) return href;
-		let segment = entityTypes[toType].urlParam;
-		return resolve(`/${segment}/${toId}`);
-	});
+	let url = $derived(href ?? (record ? recordPath(record) : '#'));
 
 	const handleClick = () => {
-		trail.selectSegment(trailSegment?.entityId);
+		trail.selectSegment(getTrailSegment?.().entityId);
+		trail.setPendingRecordType(record?.type);
 	};
 </script>
 
-<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 <a onclick={handleClick} href={url} class:inherit class:active {...restProps}
 	>{@render children()}</a
 >

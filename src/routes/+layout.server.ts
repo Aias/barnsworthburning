@@ -1,17 +1,12 @@
-import { createApi } from '$lib/api';
+import { getIndexEntries } from '$lib/server/records';
 import { getThemeFromCookies } from '$lib/theme/server';
 
-export async function load({ fetch, cookies }) {
-	const api = createApi(fetch);
-
-	const [creators, spaces] = await Promise.all([api.creators.list(), api.spaces.list()]);
-
+export async function load({ cookies }) {
+	const indexEntries = await getIndexEntries();
 	const theme = getThemeFromCookies(cookies);
 
 	return {
-		creators,
-		spaces,
-		extracts: undefined,
+		indexEntries,
 		theme
 	};
 }

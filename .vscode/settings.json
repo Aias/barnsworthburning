@@ -1,0 +1,10 @@
+{
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit"
+	},
+	"editor.defaultFormatter": "oxc.oxc-vscode",
+	"editor.formatOnSave": true,
+	"npm.packageManager": "pnpm",
+	"oxc.enable.oxlint": false,
+	"oxc.fmt.configPath": ".oxfmtrc.json"
+}

@@ -1,0 +1,136 @@
+<script lang="ts">
+	import { env } from '$env/dynamic/public';
+	import { classnames } from '$helpers/classnames';
+	import markdown from '$helpers/markdown';
+	import { displayTitle, type RecordCard } from '$lib/records';
+	import {
+		ArrowLeftRightIcon,
+		ArrowRightIcon,
+		CloudIcon,
+		CornerDownRightIcon
+	} from '@lucide/svelte';
+	import type { HTMLAttributes } from 'svelte/elements';
+	import BlockLink from './BlockLink.svelte';
+	import Citation from './Citation.svelte';
+	import CreatorList from './CreatorList.svelte';
+	import Link from './Link.svelte';
+	import RecordImage from './RecordImage.svelte';
+	import RelationList from './RelationList.svelte';
+	import TopicList from './TopicList.svelte';
+
+	interface RecordCardProps<T extends keyof HTMLElementTagNameMap> extends HTMLAttributes<
+		HTMLElementTagNameMap[T]
+	> {
+		record: RecordCard;
+		element?: T;
+		suppressBlockLink?: boolean;
+		variant?: 'default' | 'card';
+		class?: string;
+	}
+
+	let {
+		record,
+		element = 'article',
+		suppressBlockLink = false,
+		class: className,
+		variant = 'default'
+	}: RecordCardProps<keyof HTMLElementTagNameMap> = $props();
+
+	let images = $derived(record.media.filter((item) => item.type === 'image'));
+	// The title carries the link, so titleless children can't render as chips;
+	// they still appear as read-only full cards beneath their parent.
+	let linkableChildren = $derived(record.children.filter((child) => child.title));
+	let hasRelations = $derived(
+		linkableChildren.length > 0 ||
+			record.connections.length > 0 ||
+			record.tags.length > 0 ||
+			record.extras.length > 0
+	);
+	let rcrUrl = $derived(
+		env.PUBLIC_RCR_URL ? `${env.PUBLIC_RCR_URL}/records/${record.id}` : undefined
+	);
+</script>
+
+<BlockLink
+	{element}
+	class={classnames('extract', `extract--${variant}`, 'ssm-container', className)}
+	suppress={suppressBlockLink}
+>
+	{#each record.parents as parent (parent.id)}
+		<section class="extract-parent">
+			<strong class="parent-title"
+				><Link record={parent} inherit>{displayTitle(parent)}</Link></strong
+			>
+			{#if parent.creators.length > 0}
+				<CreatorList class="parent-creators" creators={parent.creators} />
+			{/if}
+		</section>
+	{/each}
+	<section class="extract-body">
+		{#if record.title}
+			<header>
+				<h2 class="extract-title">
+					<Link {record} class="main-link" inherit>
+						{record.title}
+					</Link>
+				</h2>
+				{#if rcrUrl}
+					<a
+						class="ssm content-opener chromatic"
+						href={rcrUrl}
+						target="_blank"
+						rel="noopener external"
+						title="Open in Red Cliff Record"><CloudIcon /></a
+					>
+				{/if}
+			</header>
+		{/if}
+		<figure class="extract-main">
+			{#if images.length > 0}
+				{#each images as image (image.id)}
+					<RecordImage media={image} />
+				{/each}
+				{#if record.mediaCaption}
+					<div class="extract-image-caption content">
+						{@html markdown.parse(record.mediaCaption)}
+					</div>
+				{/if}
+			{/if}
+			{#if record.content}
+				<blockquote class="extract-text content" cite={record.url ?? undefined}>
+					{@html markdown.parse(record.content)}
+				</blockquote>
+			{:else if record.summary}
+				<blockquote class="extract-text content">
+					{@html markdown.parse(record.summary)}
+				</blockquote>
+			{/if}
+			<Citation {record} element="figcaption" />
+		</figure>
+		{#if hasRelations}
+			<nav class="relations">
+				{#if linkableChildren.length > 0}
+					<RelationList items={linkableChildren} symbol={CornerDownRightIcon} label="Children" />
+				{/if}
+				{#if record.connections.length > 0}
+					<RelationList
+						items={record.connections}
+						symbol={ArrowLeftRightIcon}
+						label="Connections"
+					/>
+				{/if}
+				{#each record.extras as group (group.label)}
+					<RelationList items={group.records} symbol={ArrowRightIcon} label={group.label} />
+				{/each}
+				{#if record.tags.length > 0}
+					<TopicList topics={record.tags} />
+				{/if}
+			</nav>
+		{/if}
+	</section>
+	{#if record.notes}
+		<footer class="extract-footer content">
+			{@html markdown.parse(record.notes)}
+		</footer>
+	{/if}
+</BlockLink>

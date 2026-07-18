@@ -1,13 +1,11 @@
-import { type EntityType } from '$helpers/params';
 import { type Palette, paletteOptions } from '$types/Theme';
-import { DEFAULT_PALETTE } from '$lib/theme/config';
-import settings from './settings.svelte';
+import type { RecordType } from '@aias/hozo';
+
+export const TRAIL_PARAM = 'trail';
 
 export type TrailSegment = {
-	entityType: EntityType;
-	entityId: string;
+	entityId: number;
 	color: Palette;
-	addedOn: Date;
 };
 
 const rotatePalette = (start: Palette, steps: number = 1) => {
@@ -16,47 +14,48 @@ const rotatePalette = (start: Palette, steps: number = 1) => {
 	return paletteOptions[newIndex];
 };
 
+export const parseTrail = (url: URL): number[] => {
+	const ids = new Set<number>();
+	for (const part of url.searchParams.get(TRAIL_PARAM)?.split('-') ?? []) {
+		const id = Number(part);
+		if (Number.isInteger(id) && id > 0) ids.add(id);
+	}
+	return [...ids];
+};
+
+export const trailHref = (url: URL, ids: number[]): string => {
+	const nextUrl = new URL(url);
+	if (ids.length > 0) {
+		nextUrl.searchParams.set(TRAIL_PARAM, ids.join('-'));
+	} else {
+		nextUrl.searchParams.delete(TRAIL_PARAM);
+	}
+	return `${nextUrl.pathname}${nextUrl.search}`;
+};
+
+export const trailSegments = (ids: number[], basePalette: Palette): TrailSegment[] =>
+	ids.map((entityId, index) => ({ entityId, color: rotatePalette(basePalette, index) }));
+
 export function createTrailState() {
-	let trail = $state<TrailSegment[]>([]);
-	let selectedSegment = $state<TrailSegment>();
+	let selectedId = $state<number>();
+	// Record links carry the target's type through navigation, since the
+	// unified /records/{id} URL alone can't tell an artifact from a concept.
+	let pendingRecordType: RecordType | undefined;
 
 	return {
-		get segments() {
-			return trail;
+		get selectedId() {
+			return selectedId;
 		},
-		get selected() {
-			return selectedSegment;
+		selectSegment: (id?: number) => {
+			selectedId = id;
 		},
-		get length() {
-			return trail.length;
+		setPendingRecordType: (type?: RecordType) => {
+			pendingRecordType = type;
 		},
-		addSegment: (entityType: EntityType, entityId: string) => {
-			const lastSegment = trail[trail.length - 1];
-			const nextColor = lastSegment
-				? rotatePalette(lastSegment.color)
-				: (settings.palette ?? DEFAULT_PALETTE);
-			trail = [...trail, { entityType, entityId, color: nextColor, addedOn: new Date() }];
-		},
-		removeSegment: (id: string) => {
-			trail = trail.filter((segment) => segment.entityId !== id);
-		},
-		removeAfterSegment: (id: string) => {
-			const index = trail.findIndex((segment) => segment.entityId === id);
-			if (index >= 0) {
-				trail = trail.slice(0, index + 1);
-			}
-		},
-		removeExceptSegment: (id: string) => {
-			const index = trail.findIndex((segment) => segment.entityId === id);
-			if (index >= 0) {
-				trail = trail.slice(index, index + 1);
-			}
-		},
-		clearTrail: () => {
-			trail = [];
-		},
-		selectSegment: (id?: string) => {
-			selectedSegment = trail.find((segment) => segment.entityId === id);
+		takePendingRecordType: (): RecordType | undefined => {
+			const type = pendingRecordType;
+			pendingRecordType = undefined;
+			return type;
 		}
 	};
 }

@@ -1,6 +1,6 @@
-import radix from '@radix-ui/colors';
-import { Palette, Shade, paletteOptions, neutralsMap, type Neutral } from '../types/Theme';
+import * as radix from '@radix-ui/colors';
 import { DEFAULT_PALETTE } from '../lib/theme/config';
+import { neutralsMap, paletteOptions, Shade, type Neutral, type Palette } from '../types/Theme';
 
 interface Ramp {
 	[key: string]: string;

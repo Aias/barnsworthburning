@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { classnames } from '$helpers/classnames';
 	import { resolve } from '$app/paths';
+	import { classnames } from '$helpers/classnames';
 	interface TestCardProps {
 		mode?: string;
 		palette?: string;

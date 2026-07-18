@@ -1,6 +1,7 @@
 <script lang="ts">
 	import settings from '$lib/settings.svelte';
 	import { Chroma, Mode, Palette } from '$types/Theme';
+	import { CheckIcon, MoonIcon, PaletteIcon, SunIcon, SunMoonIcon } from '@lucide/svelte';
 
 	interface SettingsMenuProps {
 		initialMode?: Mode;
@@ -30,8 +31,7 @@
 	});
 
 	// Use initial theme from server if available, otherwise fall back to settings
-	// eslint-disable-next-line svelte/no-unused-svelte-ignore -- needed for svelte-check
-	// svelte-ignore state_referenced_locally -- intentional SSR hydration pattern
+	// svelte-ignore state_referenced_locally
 	let currentMode = $state(initialMode ?? settings.mode);
 	// svelte-ignore state_referenced_locally
 	let currentPalette = $state(initialPalette ?? settings.palette);
@@ -89,6 +89,7 @@
 						onchange={handleThemeChange}
 						checked={currentPalette === paletteKey}
 					/>
+					<CheckIcon class="check" stroke-width={3} />
 				</label>
 			{/each}
 		</fieldset>
@@ -102,7 +103,7 @@
 					class="screenreader"
 					checked={currentMode === Mode.Light}
 					onchange={() => settings.setMode(Mode.Light)}
-				/>🌅</label
+				/><SunIcon /></label
 			>
 			<label aria-label="Match System Mode" title="Match System Mode"
 				><input
@@ -111,7 +112,7 @@
 					class="screenreader"
 					checked={currentMode === Mode.Auto}
 					onchange={() => settings.setMode(Mode.Auto)}
-				/>🌄</label
+				/><SunMoonIcon /></label
 			>
 			<label aria-label="Night Mode" title="Night Mode"
 				><input
@@ -120,7 +121,7 @@
 					class="screenreader"
 					checked={currentMode === Mode.Dark}
 					onchange={() => settings.setMode(Mode.Dark)}
-				/>🌌</label
+				/><MoonIcon /></label
 			>
 		</fieldset>
 	</li>
@@ -133,7 +134,7 @@
 					class="screenreader"
 					checked={currentChroma === Chroma.Chromatic}
 					onchange={() => settings.setChroma()}
-				/>🎨</label
+				/><PaletteIcon /></label
 			>
 		</fieldset>
 	</li>
@@ -178,44 +179,43 @@
 				background-color: var(--sink);
 			}
 
+			& :global(.check) {
+				visibility: hidden;
+				color: var(--main-contrast);
+				font-size: 0.75em;
+				position: absolute;
+				inset-block-start: 50%;
+				inset-inline-start: 50%;
+				transform: translate(-50%, -50%);
+			}
+
 			&:has(input:checked) {
 				color: var(--main);
 				background-color: currentColor;
 				border-color: var(--edge);
 
-				&::after {
-					color: var(--main-contrast);
-					content: '✔';
-					display: block;
-					font-size: 0.75em;
-					line-height: 1;
-					position: absolute;
-					inset-block-start: 50%;
-					inset-inline-start: 50%;
-					transform: translate(-50%, -50%);
+				& :global(.check) {
+					visibility: visible;
 				}
 			}
 		}
 	}
 	.mode-selector,
 	.chroma-selector {
+		gap: 8px;
 		label {
-			position: relative;
+			display: grid;
+			place-items: center;
 			opacity: 0.5;
-			color: var(--display);
+			color: var(--display-neutral);
+
+			&:hover {
+				opacity: 1;
+			}
+
 			&:has(input:checked) {
 				opacity: 1;
-				&::after {
-					--border-height: 2px;
-					content: '';
-					display: block;
-					position: absolute;
-					inset-inline: 0;
-					inset-block-end: calc(-1 * var(--border-height));
-					height: var(--border-height);
-					border-radius: calc(var(--border-height) / 2);
-					background-color: var(--main);
-				}
+				color: var(--main);
 			}
 		}
 	}

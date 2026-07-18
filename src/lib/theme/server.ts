@@ -1,6 +1,6 @@
-import { THEME_CONFIG } from './config';
 import type { Cookies } from '@sveltejs/kit';
 import type { Mode, Chroma, Palette } from '../../types/Theme';
+import { THEME_CONFIG } from './config';
 
 export interface ThemeState {
 	mode: Mode;

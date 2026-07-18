@@ -1,42 +1,43 @@
 <script lang="ts">
-	import { getArticle } from '$helpers/grammar';
-	import CreatorList from './CreatorList.svelte';
-	import { type IExtract } from '$types/Airtable';
 	import { classnames } from '$helpers/classnames';
+	import { getArticle } from '$helpers/grammar';
+	import { formatLabel, type RecordCard } from '$lib/records';
+	import { ArrowUpRightIcon } from '@lucide/svelte';
+	import CreatorList from './CreatorList.svelte';
 	import Link from './Link.svelte';
 
 	interface CitationProps {
-		extract: IExtract;
+		record: RecordCard;
 		element?: string;
 		class?: string;
 	}
 
-	let { extract, element = 'div', class: className }: CitationProps = $props();
+	let { record, element = 'div', class: className }: CitationProps = $props();
 
-	const formats = {
-		Fragment: 'Fragment',
-		Extract: 'Extract'
-	};
-
-	let { format = formats.Extract, creators, source } = $derived(extract);
+	let format = $derived(formatLabel(record.format));
+	let creators = $derived(record.creators);
+	let attributions = $derived(record.attributions);
+	let source = $derived(record.url);
 </script>
 
-{#if creators || source || format !== formats.Fragment}
+{#if format || creators.length > 0 || attributions.length > 0 || source}
 	<svelte:element this={element} class:citation={true} class={classnames(className, 'text-mono')}>
-		{#if format !== formats.Fragment}
+		{#if format}
 			<span class="article">{getArticle(format)}</span>
 			<strong class="format">{format}</strong>
 		{/if}
-		{#if format && creators && creators.length > 0}
-			<span> by </span>
-		{/if}
-		{#if creators && creators.length > 0}
+		{#if creators.length > 0}
+			{#if format}
+				<span> by </span>
+			{/if}
 			<CreatorList {creators} />
-		{/if}
+		{/if}{#each attributions as group, i (group.label)}{#if format || creators.length > 0 || i > 0};{/if}
+			<span class="attribution">{group.label}</span>
+			<CreatorList creators={group.records} />{/each}
 		{#if source}
 			{@const sourceUrl = new URL(source)}
 			<Link href={source} class="source-link" target="_blank" rel="noopener">
-				{sourceUrl.hostname}
+				{sourceUrl.hostname}&nbsp;<ArrowUpRightIcon />
 			</Link>
 		{/if}
 	</svelte:element>
@@ -66,11 +67,11 @@
 		color: var(--accent);
 		text-decoration: none;
 		font-size: var(--font-size-tiny);
-		transform: translateY(-0.065lh);
+		translate: 0 -0.065lh;
 
-		:global(&::after) {
-			content: '⤤';
-			margin-inline-start: 0.75ch;
+		:global(& .lucide) {
+			margin-inline-start: -0.5ch;
+			translate: 0 0.1lh;
 		}
 
 		:global(&:hover) {
