@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@aias/hozo':
-        specifier: ~0.5.0
-        version: 0.5.0(drizzle-orm@1.0.0-rc.4(@cloudflare/workers-types@4.20251229.0)(postgres@3.4.9)(zod@4.4.3))(zod@4.4.3)
+        specifier: ~0.6.0
+        version: 0.6.0(drizzle-orm@1.0.0-rc.4(@cloudflare/workers-types@4.20251229.0)(postgres@3.4.9)(zod@4.4.3))(zod@4.4.3)
       '@lucide/svelte':
         specifier: ~1.24.0
         version: 1.24.0(svelte@5.56.6(@typescript-eslint/types@8.62.1))
@@ -90,8 +90,8 @@ importers:
 
 packages:
 
-  '@aias/hozo@0.5.0':
-    resolution: {integrity: sha512-Gn+haB+4EeW/OG3xNaHNQwBxLSfYqRRWWPNLypJVY2tZXuggg2mtZduMwaqgObsI4gZKx3dV57OKLDPGWn9nOg==}
+  '@aias/hozo@0.6.0':
+    resolution: {integrity: sha512-rcbrkFoTE2HGEs5agDJCcxvLrIdTOJObfSe/UNKin6ENObWXikWmElxA/oflAUQXZOqgDtZkjNJysWrb4uJMMw==}
     peerDependencies:
       drizzle-orm: 1.0.0-rc.4
       zod: ~4.4.3
@@ -1743,7 +1743,7 @@ packages:
 
 snapshots:
 
-  '@aias/hozo@0.5.0(drizzle-orm@1.0.0-rc.4(@cloudflare/workers-types@4.20251229.0)(postgres@3.4.9)(zod@4.4.3))(zod@4.4.3)':
+  '@aias/hozo@0.6.0(drizzle-orm@1.0.0-rc.4(@cloudflare/workers-types@4.20251229.0)(postgres@3.4.9)(zod@4.4.3))(zod@4.4.3)':
     dependencies:
       drizzle-orm: 1.0.0-rc.4(@cloudflare/workers-types@4.20251229.0)(postgres@3.4.9)(zod@4.4.3)
       zod: 4.4.3

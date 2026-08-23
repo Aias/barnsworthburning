@@ -133,7 +133,6 @@ const cardWith = {
 
 const byBest = ((record, { desc: descend }) => [
 	descend(record.eloScore),
-	descend(record.rating),
 	descend(sql`coalesce(${record.contentCreatedAt}, ${record.recordCreatedAt})`)
 ]) satisfies RecordsQueryConfig['orderBy'];
 
@@ -430,7 +429,6 @@ async function indexEntriesFor(type: RecordType, limit: number, offset = 0): Pro
 		.groupBy(records.id)
 		.orderBy(
 			desc(records.eloScore),
-			desc(records.rating),
 			desc(sql`coalesce(${records.contentCreatedAt}, ${records.recordCreatedAt})`)
 		)
 		.limit(limit)
@@ -457,7 +455,7 @@ async function topRecordsFor(targetIds: number[]): Promise<Map<number, RecordLin
 				type: source.type,
 				title: source.title,
 				slug: source.slug,
-				rank: sql<number>`row_number() over (partition by ${links.targetId} order by ${source.eloScore} desc, ${source.rating} desc)`.as(
+				rank: sql<number>`row_number() over (partition by ${links.targetId} order by ${source.eloScore} desc, ${source.recordUpdatedAt} desc)`.as(
 					'rank'
 				)
 			})
