@@ -1,4 +1,4 @@
-import { Mode, Chroma, Palette } from '../../types/Theme';
+import { Mode, Chroma, Palette } from '../../types/Theme.ts';
 
 export const THEME_CONFIG = {
 	cookies: {

@@ -3,8 +3,8 @@ import path from 'node:path';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { format } from 'oxfmt';
 import { defineConfig, type Plugin, type PluginOption } from 'vite';
-import { generateThemeScript } from './src/lib/theme/generate';
-import { generateFullTheme } from './src/styles/generators';
+import { generateThemeScript } from './src/lib/theme/generate.ts';
+import { generateFullTheme } from './src/styles/generators.ts';
 
 const makeThemeFile = async () => {
 	const cssContent = generateFullTheme();
