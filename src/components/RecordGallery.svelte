@@ -29,17 +29,14 @@
 			padding-block-end: 0;
 		}
 	}
-	@supports (grid-template-rows: masonry) {
+	@supports (display: grid-lanes) {
 		.gallery {
-			all: initial;
-			display: grid;
+			display: grid-lanes;
 			grid-template-columns: repeat(auto-fill, minmax(40ch, 1fr));
-			grid-template-rows: masonry;
 			gap: 1em;
-
-			& > :global(*) {
-				margin-block: 0;
-			}
+		}
+		.extract-wrapper {
+			padding-block-end: 0;
 		}
 	}
 </style>
