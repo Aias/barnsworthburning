@@ -40,7 +40,6 @@ export interface RecordPage {
 	record: RecordCard;
 	references: ReferenceGroup[];
 	children: RecordCard[];
-	connections: RecordCard[];
 	associated: RecordCard[];
 }
 

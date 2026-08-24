@@ -105,7 +105,10 @@ const linkColumns = {
 	title: true,
 	slug: true,
 	isPrivate: true,
-	isCurated: true
+	isCurated: true,
+	eloScore: true,
+	contentCreatedAt: true,
+	recordCreatedAt: true
 } as const;
 
 const cardWith = {
@@ -133,7 +136,8 @@ const cardWith = {
 
 const byBest = ((record, { desc: descend }) => [
 	descend(record.eloScore),
-	descend(sql`coalesce(${record.contentCreatedAt}, ${record.recordCreatedAt})`)
+	descend(sql`coalesce(${record.contentCreatedAt}, ${record.recordCreatedAt})`),
+	descend(record.id)
 ]) satisfies RecordsQueryConfig['orderBy'];
 
 const byChronology = ((record, { asc: ascend }) => [
@@ -146,15 +150,32 @@ const byRecency = ((record, { desc: descend }) => [
 	descend(record.id)
 ]) satisfies RecordsQueryConfig['orderBy'];
 
-type LinkRowRecord = RecordLink & Pick<RecordFields, 'isPrivate' | 'isCurated'>;
+type LinkRowRecord = RecordLink &
+	Pick<
+		RecordFields,
+		'isPrivate' | 'isCurated' | 'eloScore' | 'contentCreatedAt' | 'recordCreatedAt'
+	>;
+
+// The relational query can't order nested link rows by their linked record, so
+// the chip rows sort here instead — these comparators must match byBest and
+// byChronology exactly, or the chips diverge from the full-card lists they
+// preview.
+const linkDate = (record: LinkRowRecord) =>
+	(record.contentCreatedAt ?? record.recordCreatedAt).getTime();
+const byBestLink = (a: LinkRowRecord, b: LinkRowRecord) =>
+	b.eloScore - a.eloScore || linkDate(b) - linkDate(a) || b.id - a.id;
+const byChronologyLink = (a: LinkRowRecord, b: LinkRowRecord) =>
+	linkDate(a) - linkDate(b) || a.id - b.id;
 
 interface CardRow extends RecordFields {
 	media: MediaSelect[];
 	outgoingLinks: {
+		id: number;
 		predicate: string;
 		target: (LinkRowRecord & { outgoingLinks: { target: LinkRowRecord | null }[] }) | null;
 	}[];
 	incomingLinks: {
+		id: number;
 		predicate: string;
 		source: LinkRowRecord | null;
 	}[];
@@ -179,35 +200,61 @@ const dedupeById = <T extends RecordLink>(items: T[]): T[] => {
 
 function toCard(row: CardRow): RecordCard {
 	const { media, outgoingLinks, incomingLinks, ...fields } = row;
-	const targets = (predicate: PredicateSlug): RecordLink[] =>
-		outgoingLinks.flatMap((link) =>
-			link.predicate === predicate && isListable(link.target) ? [pickLink(link.target)] : []
-		);
-	const sources = (predicate: PredicateSlug, guard: typeof isListable = isListable): RecordLink[] =>
-		incomingLinks.flatMap((link) =>
-			link.predicate === predicate && guard(link.source) ? [pickLink(link.source)] : []
-		);
+	// The nested link rows arrive unordered, and the chip rows they become
+	// preview full-card lists, so each relation sorts by the same order as the
+	// card query that renders it.
+	const targets = (predicate: PredicateSlug): LinkRowRecord[] =>
+		outgoingLinks
+			.flatMap((link) =>
+				link.predicate === predicate && isListable(link.target) ? [link.target] : []
+			)
+			.sort(byBestLink);
+	const sources = (
+		predicate: PredicateSlug,
+		guard: typeof isListable = isListable
+	): LinkRowRecord[] =>
+		incomingLinks
+			.flatMap((link) => (link.predicate === predicate && guard(link.source) ? [link.source] : []))
+			.sort(byBestLink);
 
 	const parents = dedupeById(
-		containmentPredicates.flatMap((predicate) =>
-			outgoingLinks.flatMap((link) =>
-				link.predicate === predicate && isListable(link.target)
-					? [
-							{
-								...pickLink(link.target),
-								creators: link.target.outgoingLinks.flatMap((nested) =>
-									isListable(nested.target) ? [pickLink(nested.target)] : []
-								)
-							}
-						]
-					: []
+		containmentPredicates
+			.flatMap((predicate) =>
+				outgoingLinks.flatMap((link) =>
+					link.predicate === predicate && isListable(link.target) ? [link.target] : []
+				)
 			)
-		)
+			.sort(byBestLink)
+			.map((target) => ({
+				...pickLink(target),
+				creators: target.outgoingLinks.flatMap((nested) =>
+					isListable(nested.target) ? [pickLink(nested.target)] : []
+				)
+			}))
 	);
 
+	// Connections keep the order their links were added in — the earliest links
+	// are typically the most relevant.
+	const connectionRows = [
+		...outgoingLinks.flatMap((link) =>
+			link.predicate === 'related_to' && isListable(link.target)
+				? [{ linkId: link.id, record: link.target }]
+				: []
+		),
+		...incomingLinks.flatMap((link) =>
+			link.predicate === 'related_to' && isListable(link.source)
+				? [{ linkId: link.id, record: link.source }]
+				: []
+		)
+	].sort((a, b) => a.linkId - b.linkId);
+
 	// Self-inverse predicates share a label across directions, so grouping by
-	// label merges them into one deduplicated list.
-	const buckets: Record<GroupBucket, Map<string, LinkGroup>> = {
+	// label merges them into one deduplicated list, re-sorted once both
+	// directions are in.
+	const buckets: Record<
+		GroupBucket,
+		Map<string, Pick<LinkGroup, 'predicate' | 'label' | 'direction'> & { rows: LinkRowRecord[] }>
+	> = {
 		attributions: new Map(),
 		references: new Map(),
 		extras: new Map()
@@ -215,14 +262,14 @@ function toCard(row: CardRow): RecordCard {
 	const addGroup = (
 		predicate: PredicateSlug,
 		direction: LinkGroup['direction'],
-		records: RecordLink[]
+		rows: LinkRowRecord[]
 	) => {
-		if (records.length === 0) return;
+		if (rows.length === 0) return;
 		const bucket = bucketFor(predicate, direction);
 		if (!bucket) return;
 		const label = direction === 'outgoing' ? outgoingLabel(predicate) : incomingLabel(predicate);
-		const group = buckets[bucket].get(label) ?? { predicate, label, direction, records: [] };
-		group.records = dedupeById([...group.records, ...records]);
+		const group = buckets[bucket].get(label) ?? { predicate, label, direction, rows: [] };
+		group.rows = [...group.rows, ...rows];
 		buckets[bucket].set(label, group);
 	};
 	// Declaration order in PREDICATES keeps citation phrases and relation rows stable.
@@ -231,23 +278,31 @@ function toCard(row: CardRow): RecordCard {
 		addGroup(predicate, 'outgoing', targets(predicate));
 		addGroup(predicate, 'incoming', sources(predicate));
 	}
+	const groupsOf = (bucket: GroupBucket): LinkGroup[] =>
+		[...buckets[bucket].values()].map(({ rows, ...group }) => ({
+			...group,
+			records: dedupeById(rows.sort(byBestLink).map(pickLink))
+		}));
 
 	return {
 		...fields,
 		media,
-		creators: targets('created_by'),
-		attributions: [...buckets.attributions.values()],
-		tags: targets('tagged_with'),
-		format: targets('has_format')[0] ?? null,
+		creators: targets('created_by').map(pickLink),
+		attributions: groupsOf('attributions'),
+		tags: targets('tagged_with').map(pickLink),
+		format: targets('has_format').map(pickLink)[0] ?? null,
 		parents,
 		// Children double as read-only full-card content, so titleless records
 		// stay in the list; the card filters them out of its clickable chips.
 		children: dedupeById(
-			containmentPredicates.flatMap((predicate) => sources(predicate, isVisible))
+			containmentPredicates
+				.flatMap((predicate) => sources(predicate, isVisible))
+				.sort(byChronologyLink)
+				.map(pickLink)
 		),
-		references: [...buckets.references.values()],
-		connections: dedupeById([...targets('related_to'), ...sources('related_to')]),
-		extras: [...buckets.extras.values()]
+		references: groupsOf('references'),
+		connections: dedupeById(connectionRows.map(({ record }) => pickLink(record))),
+		extras: groupsOf('extras')
 	};
 }
 
@@ -313,7 +368,7 @@ export async function getRecordPage(id: number): Promise<RecordPage | null> {
 		...new Set(referenceLinks.flatMap((group) => group.records.map((link) => link.id)))
 	];
 
-	const [children, connections, associated, referenceCards] = await Promise.all([
+	const [children, connectionCards, associated, referenceCards] = await Promise.all([
 		getRecordCards(
 			record.children.map((child) => child.id),
 			'chronological'
@@ -323,13 +378,26 @@ export async function getRecordPage(id: number): Promise<RecordPage | null> {
 		getRecordCards(referenceIds)
 	]);
 
+	// Connection cards keep the card's link-addition order, not the fetch's
+	// best-first order.
+	const connectionsById = new Map(connectionCards.map((card) => [card.id, card]));
+	const connections = record.connections.flatMap(
+		(connection) => connectionsById.get(connection.id) ?? []
+	);
+
 	// The reference blocks render full cards, so each group's links map onto
 	// the fetched cards, keeping the best-first order of the card query.
-	const references = referenceLinks.flatMap((group) => {
-		const ids = new Set(group.records.map((link) => link.id));
-		const cards = referenceCards.filter((card) => ids.has(card.id));
-		return cards.length > 0 ? [{ label: group.label, records: cards }] : [];
-	});
+	// Explicit connections join them as their own labeled group.
+	const references = [
+		...referenceLinks.flatMap((group) => {
+			const ids = new Set(group.records.map((link) => link.id));
+			const cards = referenceCards.filter((card) => ids.has(card.id));
+			return cards.length > 0 ? [{ label: group.label, records: cards }] : [];
+		}),
+		...(connections.length > 0
+			? [{ label: outgoingLabel('related_to'), records: connections }]
+			: [])
+	];
 
 	return {
 		record: collectsRecords
@@ -337,7 +405,6 @@ export async function getRecordPage(id: number): Promise<RecordPage | null> {
 			: record,
 		references,
 		children,
-		connections,
 		associated
 	};
 }

@@ -11,7 +11,7 @@
 	}
 	let { page }: RecordItemProps = $props();
 
-	let { record, references, children, connections, associated } = $derived(page);
+	let { record, references, children, associated } = $derived(page);
 	// Semantic neighbors load after the record itself, so navigation never
 	// waits on the similarity query.
 	let similarQuery = $derived(record.type === 'artifact' ? similarRecords(record.id) : undefined);
@@ -37,20 +37,15 @@
 			<RecordCard record={child} suppressBlockLink />
 		{/each}
 
-		{#if connections.length > 0 || similar.length > 0}
+		{#if similar.length > 0}
 			<div class="connections-separator" role="presentation">
 				<hr />
 				<small class="text-secondary text-mono">See <ArrowLeftRightIcon /> Also</small>
 				<hr />
 			</div>
-			{#if connections.length > 0}
-				<RecordList records={connections} />
-			{/if}
-			{#if similar.length > 0}
-				<div class="neutral">
-					<RecordList records={similar} />
-				</div>
-			{/if}
+			<div class="neutral">
+				<RecordList records={similar} />
+			</div>
 		{/if}
 	</article>
 {:else}
@@ -88,6 +83,10 @@
 		display: flex;
 		align-items: center;
 		gap: 1em;
+
+		small {
+			text-transform: capitalize;
+		}
 
 		hr {
 			flex: 1;
