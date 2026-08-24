@@ -20,19 +20,7 @@ import {
 	type PredicateSlug,
 	type RecordType
 } from '@aias/hozo';
-import {
-	and,
-	cosineDistance,
-	count,
-	desc,
-	eq,
-	exists,
-	inArray,
-	isNotNull,
-	lte,
-	sql,
-	type SQL
-} from 'drizzle-orm';
+import { and, cosineDistance, desc, eq, inArray, isNotNull, lte, sql, type SQL } from 'drizzle-orm';
 import { alias, type AnyPgColumn } from 'drizzle-orm/pg-core';
 import { db } from './db';
 
@@ -469,34 +457,46 @@ export async function listRecordCards(
 }
 
 async function indexEntriesFor(type: RecordType, limit: number, offset = 0): Promise<IndexEntry[]> {
-	const source = alias(records, 'source');
+	const inPredicates = (predicates: PredicateSlug[]) =>
+		sql.join(
+			predicates.map((predicate) => sql`${predicate}`),
+			sql`, `
+		);
+	// The count is the listable corpus behind an entry: records that describe it
+	// directly, plus quotes and children of the works it created — a creator's
+	// extracts attach to the work, not the creator.
+	const corpusCount = sql<number>`(
+		SELECT count(DISTINCT contributor.source_id)::int
+		FROM (
+			SELECT described.source_id FROM ${links} described
+			WHERE described.target_id = ${records}.id
+				AND described.predicate IN (${inPredicates(describingPredicates)})
+			UNION
+			SELECT child.source_id FROM ${links} child
+			JOIN ${links} work ON work.source_id = child.target_id
+				AND work.predicate = 'created_by' AND work.target_id = ${records}.id
+			WHERE child.predicate IN (${inPredicates(containmentPredicates)})
+		) contributor
+		WHERE EXISTS (
+			SELECT 1 FROM ${records} source
+			WHERE source.id = contributor.source_id
+				AND source.is_private = false AND source.is_curated = true AND source.title IS NOT NULL
+		)
+	)`;
 	return db
 		.select({
 			id: records.id,
 			title: records.title,
 			slug: records.slug,
 			type: records.type,
-			count: count(links.id)
+			count: corpusCount
 		})
 		.from(records)
-		.leftJoin(
-			links,
-			and(
-				eq(links.targetId, records.id),
-				inArray(links.predicate, describingPredicates),
-				exists(
-					db
-						.select({ present: sql`1` })
-						.from(source)
-						.where(and(eq(source.id, links.sourceId), listableRecords(source)))
-				)
-			)
-		)
 		.where(and(eq(records.type, type), listableRecords(records)))
-		.groupBy(records.id)
 		.orderBy(
 			desc(records.eloScore),
-			desc(sql`coalesce(${records.contentCreatedAt}, ${records.recordCreatedAt})`)
+			desc(sql`coalesce(${records.contentCreatedAt}, ${records.recordCreatedAt})`),
+			desc(records.id)
 		)
 		.limit(limit)
 		.offset(offset);
