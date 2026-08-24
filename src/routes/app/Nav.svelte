@@ -26,6 +26,11 @@
 		const [indexRoute, ...otherRoutes] = routes;
 		if (!currentRoute) return undefined;
 		if (currentRoute === '/') return indexRoute;
+		const recordType = page.data.record?.type;
+		if (recordType) {
+			const sectionPath = `/${sections[recordType].path}`;
+			return otherRoutes.find((route) => route.path === sectionPath);
+		}
 		return otherRoutes.find((route) => currentRoute.startsWith(route.path));
 	});
 </script>

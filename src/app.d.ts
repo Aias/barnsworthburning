@@ -1,5 +1,6 @@
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
+import type { RecordCard } from '#lib/records.js';
 import type { Mode, Chroma, Palette } from './types/Theme';
 
 declare global {
@@ -7,6 +8,7 @@ declare global {
 		// interface Error {}
 		// interface Locals {}
 		interface PageData {
+			record?: RecordCard;
 			theme?: {
 				mode: Mode;
 				chroma: Chroma;
