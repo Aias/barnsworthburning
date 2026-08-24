@@ -9,7 +9,7 @@
 
 .app {
 	--sidebar-width: 14rem;
-	--segment-width: 30rem;
+	--segment-width: 33.75rem;
 	--trail-width: var(--segment-width);
 	height: 100%;
 	width: 100%;
