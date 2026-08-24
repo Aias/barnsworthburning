@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { getArticle, combineAsList } from '$helpers/grammar';
-	import { displayTitle, formatLabel, recordPath, type RecordPage } from '$lib/records';
+	import { getArticle, combineAsList } from '#helpers/grammar.js';
+	import { displayTitle, formatLabel, recordPath, type RecordPage } from '#lib/records.js';
 
 	interface RecordSEOProps {
 		page: RecordPage;

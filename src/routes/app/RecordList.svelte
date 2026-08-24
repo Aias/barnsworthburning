@@ -1,10 +1,10 @@
 <script lang="ts">
-	import BlockLink from '$components/BlockLink.svelte';
-	import CreatorList from '$components/CreatorList.svelte';
-	import Link from '$components/Link.svelte';
-	import { getArticle } from '$helpers/grammar';
-	import markdown from '$helpers/markdown';
-	import { displayTitle, formatLabel, type RecordCard } from '$lib/records';
+	import BlockLink from '#components/BlockLink.svelte';
+	import CreatorList from '#components/CreatorList.svelte';
+	import Link from '#components/Link.svelte';
+	import { getArticle } from '#helpers/grammar.js';
+	import markdown from '#helpers/markdown.js';
+	import { displayTitle, formatLabel, type RecordCard } from '#lib/records.js';
 
 	interface RecordListProps {
 		records: RecordCard[];

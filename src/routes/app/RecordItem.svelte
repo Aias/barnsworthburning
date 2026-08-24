@@ -1,9 +1,9 @@
 <script lang="ts">
-	import RecordCard from '$components/RecordCard.svelte';
-	import RecordGallery from '$components/RecordGallery.svelte';
-	import { displayTitle, type RecordCard as RecordCardData, type RecordPage } from '$lib/records';
+	import RecordCard from '#components/RecordCard.svelte';
+	import RecordGallery from '#components/RecordGallery.svelte';
+	import { displayTitle, type RecordPage } from '#lib/records.js';
+	import { similarRecords } from '#lib/records.remote.js';
 	import { ArrowLeftRightIcon } from '@lucide/svelte';
-	import { parse } from 'devalue';
 	import RecordList from './RecordList.svelte';
 
 	interface RecordItemProps {
@@ -12,27 +12,10 @@
 	let { page }: RecordItemProps = $props();
 
 	let { record, references, children, connections, associated } = $derived(page);
-	let similar = $state<RecordCardData[]>([]);
-
 	// Semantic neighbors load after the record itself, so navigation never
 	// waits on the similarity query.
-	$effect(() => {
-		similar = [];
-		if (record.type !== 'artifact') return;
-		const { id } = record;
-		let cancelled = false;
-		void (async () => {
-			const response = await fetch(`/records/${id}/similar.json`);
-			if (!response.ok || cancelled) return;
-			const parsed: RecordCardData[] = parse(await response.text());
-			if (!cancelled) {
-				similar = parsed;
-			}
-		})();
-		return () => {
-			cancelled = true;
-		};
-	});
+	let similarQuery = $derived(record.type === 'artifact' ? similarRecords(record.id) : undefined);
+	let similar = $derived(similarQuery?.current ?? []);
 </script>
 
 {#if record.type === 'artifact'}

@@ -1,10 +1,10 @@
 # Deploying barnsworthburning on the Mac mini
 
-The site runs as a Node process under PM2, reads the Red Cliff Record Postgres database on the same machine, and is exposed publicly through a Cloudflare Tunnel. An auto-deploy monitor polls `main` and rebuilds on new commits.
+The site runs as a Bun server under PM2, reads the Red Cliff Record Postgres database on the same machine, and is exposed publicly through a Cloudflare Tunnel. An auto-deploy monitor polls `main` and rebuilds on new commits.
 
 ## Prerequisites
 
-- Node 24 and pnpm (`corepack enable pnpm` or a version manager)
+- Bun (`brew install oven-sh/bun/bun` or a version manager)
 - PM2: `npm install -g pm2`
 - `cloudflared` (`brew install cloudflared`)
 - The Red Cliff Record Postgres database running locally
@@ -30,7 +30,7 @@ If a future rcr migration drops and recreates one of these tables, re-run the `G
    ```bash
    git clone git@github.com:Aias/barnsworthburning.git
    cd barnsworthburning
-   pnpm install
+   bun install
    ```
 
 2. Create `.env` (see `.env.example`):
@@ -43,7 +43,7 @@ If a future rcr migration drops and recreates one of these tables, re-run the `G
 3. Build and start under PM2:
 
    ```bash
-   pnpm build
+   bun run build
    ./scripts/deploy/setup-pm2.sh
    ```
 
@@ -80,12 +80,12 @@ sudo cloudflared service install
 
 ## Auto-deployment
 
-`barnsworthburning-deploy` (started by `setup-pm2.sh`) polls `origin/main` every 60 seconds. On new commits it pulls, runs `pnpm install --frozen-lockfile`, builds, and restarts the app process. Deploying is just merging to `main`.
+`barnsworthburning-deploy` (started by `setup-pm2.sh`) polls `origin/main` every 60 seconds. On new commits it pulls, runs `bun install --frozen-lockfile`, builds, and restarts the app process. Deploying is just merging to `main`.
 
 ## Operations
 
 - **Status**: `pm2 status`
 - **App logs**: `pm2 logs barnsworthburning`
 - **Deploy logs**: `pm2 logs barnsworthburning-deploy`
-- **Manual deploy**: `git pull && pnpm install && pnpm build && pm2 restart barnsworthburning`
+- **Manual deploy**: `git pull && bun install && bun run build && pm2 restart barnsworthburning`
 - **Log rotation**: handled by `pm2-logrotate` (installed by `setup-pm2.sh`); tune with `pm2 set pm2-logrotate:<key> <value>`

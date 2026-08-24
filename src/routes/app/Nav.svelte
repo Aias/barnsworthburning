@@ -1,7 +1,7 @@
 <script lang="ts">
+	import Link from '#components/Link.svelte';
+	import { sectionIcons, sections } from '#lib/records.js';
 	import { page } from '$app/state';
-	import Link from '$components/Link.svelte';
-	import { sectionIcons, sections } from '$lib/records';
 	import { LibraryBigIcon, SearchIcon, type LucideIcon } from '@lucide/svelte';
 
 	let { ...restProps } = $props();

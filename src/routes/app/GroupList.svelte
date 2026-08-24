@@ -1,6 +1,6 @@
 <script lang="ts">
-	import LinkGroup from '$components/LinkGroup.svelte';
-	import type { RecordGroup } from '$lib/records';
+	import LinkGroup from '#components/LinkGroup.svelte';
+	import type { RecordGroup } from '#lib/records.js';
 
 	interface GroupListProps {
 		groups: RecordGroup[];

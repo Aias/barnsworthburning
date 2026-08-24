@@ -1,10 +1,10 @@
 <script lang="ts">
+	import Link from '#components/Link.svelte';
+	import RecordGallery from '#components/RecordGallery.svelte';
+	import TextInput from '#components/TextInput.svelte';
+	import { highlightSearchResults } from '#helpers/highlight.js';
+	import { sections } from '#lib/records.js';
 	import { page } from '$app/state';
-	import Link from '$components/Link.svelte';
-	import RecordGallery from '$components/RecordGallery.svelte';
-	import TextInput from '$components/TextInput.svelte';
-	import { highlightSearchResults } from '$helpers/highlight';
-	import { sections } from '$lib/records';
 	import { SvelteURLSearchParams } from 'svelte/reactivity';
 
 	const { data } = $props();
@@ -40,7 +40,7 @@
 </script>
 
 <div class="toolbar">
-	<form data-sveltekit-keepfocus class="search-input">
+	<form data-sveltekit-reset="false" class="search-input">
 		<TextInput
 			type="search"
 			name="q"
@@ -55,12 +55,12 @@
 		<button type="submit">Search</button>
 	</form>
 	<nav class="type-filter text-mono" aria-label="Filter by type">
-		<Link href={filterUrl()} active={!activeType} data-sveltekit-keepfocus>All</Link>
+		<Link href={filterUrl()} active={!activeType} data-sveltekit-reset="false">All</Link>
 		{#each Object.values(sections) as section (section.type)}
 			<Link
 				href={filterUrl(section.type)}
 				active={activeType === section.type}
-				data-sveltekit-keepfocus>{section.label}</Link
+				data-sveltekit-reset="false">{section.label}</Link
 			>
 		{/each}
 	</nav>

@@ -12,20 +12,27 @@
 		"url": "https://github.com/Aias/barnsworthburning"
 	},
 	"type": "module",
+	"imports": {
+		"#components/*": "./src/components/*",
+		"#helpers/*": "./src/helpers/*",
+		"#lib/*": "./src/lib/*",
+		"#styles/*": "./src/styles/*",
+		"#types/*": "./src/types/*"
+	},
 	"scripts": {
-		"build": "vite build",
+		"build": "bunx --bun vite build",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --tsgo",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --tsgo --watch",
-		"dev": "vite dev",
+		"dev": "bunx --bun vite dev",
 		"format": "oxfmt",
 		"format:check": "oxfmt --check",
 		"lint": "oxfmt --check && oxlint --fix --type-aware .",
-		"preview": "vite preview"
+		"prepare": "svelte-kit sync || echo ''",
+		"preview": "bunx --bun vite preview"
 	},
 	"dependencies": {
 		"@aias/hozo": "~0.6.0",
 		"@lucide/svelte": "~1.33.0",
-		"devalue": "~5.9.1",
 		"drizzle-orm": "1.0.0-rc.4",
 		"marked": "~18.0.10",
 		"normalize.css": "~8.0.1",
@@ -35,8 +42,8 @@
 	},
 	"devDependencies": {
 		"@radix-ui/colors": "~3.0.0",
-		"@sveltejs/adapter-node": "~5.5.7",
-		"@sveltejs/kit": "~2.70.3",
+		"@sveltejs/adapter-bun": "~1.0.0-next.1",
+		"@sveltejs/kit": "~3.0.0-next.25",
 		"@sveltejs/vite-plugin-svelte": "~7.3.0",
 		"@types/node": "~26.2.0",
 		"@typescript/native": "npm:typescript@~7.0.2",
@@ -48,9 +55,5 @@
 		"tslib": "~2.8.1",
 		"typescript": "~6.0.3",
 		"vite": "~8.2.2"
-	},
-	"engines": {
-		"node": "24.x"
-	},
-	"packageManager": "pnpm@10.29.3+sha512.498e1fb4cca5aa06c1dcf2611e6fafc50972ffe7189998c409e90de74566444298ffe43e6cd2acdc775ba1aa7cc5e092a8b7054c811ba8c5770f84693d33d2dc"
+	}
 }

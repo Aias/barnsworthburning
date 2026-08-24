@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { displayTitle, type RecordLink } from '$lib/records';
+	import { displayTitle, type RecordLink } from '#lib/records.js';
 	import type { HTMLAttributes } from 'svelte/elements';
 	import Link from './Link.svelte';
 

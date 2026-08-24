@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Pagination from '$components/Pagination.svelte';
+	import Pagination from '#components/Pagination.svelte';
 	import GroupList from '../app/GroupList.svelte';
 	import RecordList from '../app/RecordList.svelte';
 

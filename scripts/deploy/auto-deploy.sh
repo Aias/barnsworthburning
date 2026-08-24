@@ -7,7 +7,7 @@ REPO_DIR="$(cd "$(dirname "$0")/../.." && pwd)"
 BRANCH="main"
 CHECK_INTERVAL=60 # Check every 60 seconds
 
-# Source shell profile so version-managed tools (node, pnpm, pm2) are on PATH.
+# Source shell profile so version-managed tools (bun, pm2) are on PATH.
 # Non-interactive shells (like those spawned by PM2) don't load these automatically.
 for f in "$HOME/.profile" "$HOME/.bash_profile" "$HOME/.bashrc"; do
 	[ -f "$f" ] && source "$f" 2>/dev/null
@@ -20,7 +20,7 @@ log() {
 cd "$REPO_DIR" || exit 1
 
 # Verify required tools are available
-for cmd in git node pnpm pm2; do
+for cmd in git bun pm2; do
 	if ! command -v "$cmd" &>/dev/null; then
 		log "FATAL: $cmd not found on PATH. Exiting."
 		exit 1
@@ -47,11 +47,11 @@ while true; do
 			log "Pull successful"
 
 			log "Installing dependencies..."
-			if pnpm install --frozen-lockfile; then
+			if bun install --frozen-lockfile; then
 				log "Dependencies installed"
 
 				log "Building application..."
-				if pnpm build; then
+				if bun run build; then
 					log "Build successful"
 
 					log "Restarting PM2 process..."

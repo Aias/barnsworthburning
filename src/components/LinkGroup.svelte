@@ -1,6 +1,6 @@
 <script lang="ts">
+	import { displayTitle, recordSlug, type RecordGroup } from '#lib/records.js';
 	import { resolve } from '$app/paths';
-	import { displayTitle, recordSlug, type RecordGroup } from '$lib/records';
 	import Link from './Link.svelte';
 
 	interface LinkGroupProps {
@@ -14,7 +14,7 @@
 <a
 	class="group-name"
 	href={resolve('/records/[id=id]/[[slug]]', {
-		id: String(group.id),
+		id: group.id,
 		slug: recordSlug(group) || undefined
 	})}>{displayTitle(group)}</a
 >

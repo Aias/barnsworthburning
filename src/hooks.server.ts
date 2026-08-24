@@ -1,5 +1,6 @@
-import { getThemeFromCookies, getThemeClasses } from '$lib/theme/server';
-import { redirect, type Handle } from '@sveltejs/kit';
+import { getThemeFromCookies, getThemeClasses } from '#lib/theme/server.js';
+import { redirect } from '@sveltejs/kit';
+import type { Handle } from '@sveltejs/kit/hooks';
 
 const legacySections: Record<string, string> = {
 	extracts: 'artifacts',

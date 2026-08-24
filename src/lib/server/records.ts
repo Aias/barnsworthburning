@@ -9,7 +9,7 @@ import {
 	type RecordGroup,
 	type RecordLink,
 	type RecordPage
-} from '$lib/records';
+} from '#lib/records.js';
 import {
 	isPredicateSlug,
 	links,

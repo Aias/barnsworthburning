@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { classnames } from '$helpers/classnames';
-	import type { TrailSegment as TrailSegmentData } from '$lib/trail.svelte';
+	import { classnames } from '#helpers/classnames.js';
+	import type { TrailSegment as TrailSegmentData } from '#lib/trail.svelte.js';
 	import type { HTMLOlAttributes } from 'svelte/elements';
 	import TrailSegment from './TrailSegment.svelte';
 

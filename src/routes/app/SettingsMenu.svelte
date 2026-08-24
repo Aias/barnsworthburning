@@ -1,6 +1,6 @@
 <script lang="ts">
-	import settings from '$lib/settings.svelte';
-	import { Chroma, Mode, Palette } from '$types/Theme';
+	import settings from '#lib/settings.svelte.js';
+	import { Chroma, Mode, Palette } from '#types/Theme.js';
 	import { CheckIcon, MoonIcon, PaletteIcon, SunIcon, SunMoonIcon } from '@lucide/svelte';
 
 	interface SettingsMenuProps {

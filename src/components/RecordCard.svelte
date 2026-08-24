@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { env } from '$env/dynamic/public';
-	import { classnames } from '$helpers/classnames';
-	import markdown from '$helpers/markdown';
-	import { displayTitle, type RecordCard } from '$lib/records';
+	import { classnames } from '#helpers/classnames.js';
+	import markdown from '#helpers/markdown.js';
+	import { displayTitle, type RecordCard } from '#lib/records.js';
+	import { PUBLIC_RCR_URL } from '$app/env/public';
 	import {
 		ArrowLeftRightIcon,
 		ArrowRightIcon,
@@ -40,15 +40,14 @@
 	// The title carries the link, so titleless children can't render as chips;
 	// they still appear as read-only full cards beneath their parent.
 	let linkableChildren = $derived(record.children.filter((child) => child.title));
+
 	let hasRelations = $derived(
 		linkableChildren.length > 0 ||
 			record.connections.length > 0 ||
 			record.tags.length > 0 ||
 			record.extras.length > 0
 	);
-	let rcrUrl = $derived(
-		env.PUBLIC_RCR_URL ? `${env.PUBLIC_RCR_URL}/records/${record.id}` : undefined
-	);
+	let rcrUrl = $derived(PUBLIC_RCR_URL ? `${PUBLIC_RCR_URL}/records/${record.id}` : undefined);
 </script>
 
 <BlockLink
@@ -70,10 +69,9 @@
 		{#if record.title}
 			<header>
 				<h2 class="extract-title">
-					<Link {record} class="main-link" inherit>
-						{record.title}
-					</Link>
+					<Link {record} class="main-link" inherit>{record.title}</Link>
 				</h2>
+
 				{#if rcrUrl}
 					<a
 						class="ssm content-opener chromatic"

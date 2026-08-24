@@ -1,10 +1,10 @@
 module.exports = {
 	apps: [
 		{
-			// Main application (adapter-node build output)
+			// Main application (adapter-bun build output); Bun loads .env itself
 			name: 'barnsworthburning',
-			script: 'node',
-			args: '--env-file=.env build',
+			script: 'bun',
+			args: './build',
 			cwd: __dirname,
 			env: {
 				NODE_ENV: 'production',

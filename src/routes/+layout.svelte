@@ -1,12 +1,12 @@
 <script lang="ts">
-	import '$styles/app.css';
-	import { afterNavigate, beforeNavigate, goto, pushState } from '$app/navigation';
+	import '#styles/app.css';
+	import SEO from '#components/SEO.svelte';
+	import interaction from '#lib/interaction.svelte.js';
+	import settings from '#lib/settings.svelte.js';
+	import { DEFAULT_PALETTE } from '#lib/theme/config.js';
+	import trail, { parseTrail, trailHref, trailSegments, TRAIL_PARAM } from '#lib/trail.svelte.js';
+	import { afterNavigate, beforeNavigate, goto } from '$app/navigation';
 	import { page } from '$app/state';
-	import SEO from '$components/SEO.svelte';
-	import interaction from '$lib/interaction.svelte';
-	import settings from '$lib/settings.svelte';
-	import { DEFAULT_PALETTE } from '$lib/theme/config';
-	import trail, { parseTrail, trailHref, trailSegments, TRAIL_PARAM } from '$lib/trail.svelte';
 	import { XIcon } from '@lucide/svelte';
 	import Index from './app/Index.svelte';
 	import Nav from './app/Nav.svelte';
@@ -27,14 +27,16 @@
 		document.documentElement.className = settings.themeClass;
 	});
 
-	beforeNavigate(({ from, to, type, cancel }) => {
+	beforeNavigate(({ from, to, type, cancel, shallow }) => {
+		if (shallow) return;
+
 		const recordType = trail.takePendingRecordType();
 		if (bodyWidth < 720) return; // Don't add segments when the screen is too small.
 		const isNavigating = ['link', 'goto', 'form'].includes(type);
 		if (!isNavigating) return;
 		if (to?.route?.id === null || to?.route?.id === undefined) return;
 		if (to.url.searchParams.has(TRAIL_PARAM)) return;
-		const toId = Number(to.params?.id);
+		const toId = to.params?.id;
 		const fromRecordContext = Boolean(
 			from?.params?.id || from?.params?.section || from?.route.id === '/search'
 		);
@@ -58,7 +60,7 @@
 			}
 			nextIds.push(toId);
 			cancel();
-			pushState(trailHref(page.url, nextIds), { trail: nextIds });
+			goto(trailHref(page.url, nextIds), { shallow: true, state: { trail: nextIds } });
 			return;
 		}
 
@@ -75,7 +77,9 @@
 		void goto(trailHref(to.url, trailIds));
 	});
 
-	afterNavigate(() => {
+	afterNavigate(({ shallow }) => {
+		if (shallow) return;
+
 		const main = document.getElementById('app-main');
 		if (main) {
 			main.scrollTo({ top: 0, behavior: 'instant' });
@@ -89,7 +93,7 @@
 
 	const clearTrail = () => {
 		if (trailIds.length === 0) return;
-		pushState(trailHref(page.url, []), { trail: [] });
+		goto(trailHref(page.url, []), { shallow: true, state: { trail: [] } });
 	};
 
 	const handleInteractions = (event: KeyboardEvent | MouseEvent) => {

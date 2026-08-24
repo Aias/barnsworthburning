@@ -93,7 +93,7 @@ export const recordSlug = (record: Pick<RecordSelect, 'title' | 'slug'>): string
 
 export const recordPath = (record: Pick<RecordSelect, 'id' | 'title' | 'slug'>) =>
 	resolve('/records/[id=id]/[[slug]]', {
-		id: String(record.id),
+		id: record.id,
 		slug: recordSlug(record) || undefined
 	});
 

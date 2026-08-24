@@ -1,7 +1,6 @@
 <script lang="ts">
-	import type { RecordPage } from '$lib/records';
-	import type { TrailSegment } from '$lib/trail.svelte';
-	import { parse } from 'devalue';
+	import { recordPage } from '#lib/records.remote.js';
+	import type { TrailSegment } from '#lib/trail.svelte.js';
 	import { setContext } from 'svelte';
 	import RecordItem from './RecordItem.svelte';
 
@@ -10,36 +9,14 @@
 	}
 	let { segment }: TrailSegmentProps = $props();
 
-	let recordPage = $state<RecordPage>();
-	let failed = $state(false);
-
 	setContext('trailSegment', () => segment);
 
-	$effect(() => {
-		const { entityId } = segment;
-		let cancelled = false;
-		failed = false;
-		void (async () => {
-			const response = await fetch(`/records/${entityId}/context.json`);
-			if (cancelled) return;
-			if (!response.ok) {
-				failed = true;
-				return;
-			}
-			const parsed: RecordPage = parse(await response.text());
-			if (!cancelled) {
-				recordPage = parsed;
-			}
-		})();
-		return () => {
-			cancelled = true;
-		};
-	});
+	let page = $derived(recordPage(segment.entityId));
 </script>
 
-{#if recordPage}
-	<RecordItem page={recordPage} />
-{:else if failed}
+{#if page.current}
+	<RecordItem page={page.current} />
+{:else if page.error}
 	<p>Record not found.</p>
 {:else}
 	<div class="loading-container">

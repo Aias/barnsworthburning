@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { recordPath, type RecordLink } from '$lib/records';
-	import trail, { type TrailSegment } from '$lib/trail.svelte';
+	import { recordPath, type RecordLink } from '#lib/records.js';
+	import trail, { type TrailSegment } from '#lib/trail.svelte.js';
 	import type { Snippet } from 'svelte';
 	import { getContext } from 'svelte';
 	import type { HTMLAnchorAttributes } from 'svelte/elements';

@@ -1,5 +1,5 @@
-import { getCacheHeaders } from '$helpers/cache';
-import { searchRecords } from '$lib/server/records';
+import { getCacheHeaders } from '#helpers/cache.js';
+import { searchRecords } from '#lib/server/records.js';
 import { recordTypes } from '@aias/hozo';
 
 export async function load({ url, setHeaders }) {

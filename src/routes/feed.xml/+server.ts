@@ -1,14 +1,14 @@
-import { getCacheHeaders } from '$helpers/cache';
-import { getArticle, combineAsList } from '$helpers/grammar';
-import markdown from '$helpers/markdown';
+import { getCacheHeaders } from '#helpers/cache.js';
+import { getArticle, combineAsList } from '#helpers/grammar.js';
+import markdown from '#helpers/markdown.js';
 import {
 	displayTitle,
 	formatLabel,
 	recordPath,
 	type FeedEntry,
 	type RecordCard
-} from '$lib/records';
-import { getFeedEntries } from '$lib/server/records';
+} from '#lib/records.js';
+import { getFeedEntries } from '#lib/server/records.js';
 import xmlFormatter from 'xml-formatter';
 
 const meta = {

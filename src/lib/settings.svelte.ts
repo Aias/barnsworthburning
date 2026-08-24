@@ -1,6 +1,6 @@
-import { setCookie, getCookie } from '$helpers/cookies';
-import { THEME_CONFIG, DEFAULT_MODE, DEFAULT_CHROMA, DEFAULT_PALETTE } from '$lib/theme/config';
-import { paletteOptions, Palette, Chroma, Mode } from '$types/Theme';
+import { setCookie, getCookie } from '#helpers/cookies.js';
+import { THEME_CONFIG, DEFAULT_MODE, DEFAULT_CHROMA, DEFAULT_PALETTE } from '#lib/theme/config.js';
+import { paletteOptions, Palette, Chroma, Mode } from '#types/Theme.js';
 
 const MODE_COOKIE = THEME_CONFIG.cookies.mode;
 const CHROMA_COOKIE = THEME_CONFIG.cookies.chroma;

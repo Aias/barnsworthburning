@@ -1,4 +1,5 @@
-import { type Palette, paletteOptions } from '$types/Theme';
+import { type Palette, paletteOptions } from '#types/Theme.js';
+import type { ReadonlyURL } from '$app/state';
 import type { RecordType } from '@aias/hozo';
 
 export const TRAIL_PARAM = 'trail';
@@ -14,7 +15,7 @@ const rotatePalette = (start: Palette, steps: number = 1) => {
 	return paletteOptions[newIndex];
 };
 
-export const parseTrail = (url: URL): number[] => {
+export const parseTrail = (url: ReadonlyURL): number[] => {
 	const ids = new Set<number>();
 	for (const part of url.searchParams.get(TRAIL_PARAM)?.split('-') ?? []) {
 		const id = Number(part);
@@ -23,8 +24,8 @@ export const parseTrail = (url: URL): number[] => {
 	return [...ids];
 };
 
-export const trailHref = (url: URL, ids: number[]): string => {
-	const nextUrl = new URL(url);
+export const trailHref = (url: ReadonlyURL, ids: number[]): string => {
+	const nextUrl = new URL(url.href);
 	if (ids.length > 0) {
 		nextUrl.searchParams.set(TRAIL_PARAM, ids.join('-'));
 	} else {

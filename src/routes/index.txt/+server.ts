@@ -1,8 +1,7 @@
-import { getCacheHeaders } from '$helpers/cache';
-import { getContentType } from '$helpers/content';
-import { displayTitle, recordPath, sections } from '$lib/records';
-import { getIndexEntries } from '$lib/server/records';
-import { text } from '@sveltejs/kit';
+import { getCacheHeaders } from '#helpers/cache.js';
+import { getContentType } from '#helpers/content.js';
+import { displayTitle, recordPath, sections } from '#lib/records.js';
+import { getIndexEntries } from '#lib/server/records.js';
 
 export async function GET({ url }) {
 	const entries = await getIndexEntries();
@@ -31,7 +30,7 @@ export async function GET({ url }) {
 		rootPageContent += `| ${item.nameWithLink.padEnd(columnWidths.nameWithLink)} | ${item.type.padEnd(columnWidths.type)} | ${String(item.count).padStart(columnWidths.count)} |\n`;
 	});
 
-	return text(rootPageContent, {
+	return new Response(rootPageContent, {
 		headers: {
 			'Content-Type': getContentType(url),
 			...getCacheHeaders('entityList')

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { classnames } from '$helpers/classnames';
-	import { getArticle } from '$helpers/grammar';
-	import { formatLabel, type RecordCard } from '$lib/records';
+	import { classnames } from '#helpers/classnames.js';
+	import { getArticle } from '#helpers/grammar.js';
+	import { formatLabel, type RecordCard } from '#lib/records.js';
 	import { ArrowUpRightIcon } from '@lucide/svelte';
 	import CreatorList from './CreatorList.svelte';
 	import Link from './Link.svelte';

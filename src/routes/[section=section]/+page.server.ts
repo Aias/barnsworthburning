@@ -1,6 +1,6 @@
-import { getCacheHeaders } from '$helpers/cache';
-import { sectionByPath } from '$lib/records';
-import { listRecordCards, listRecordGroups, PAGE_SIZE } from '$lib/server/records';
+import { getCacheHeaders } from '#helpers/cache.js';
+import { sectionByPath } from '#lib/records.js';
+import { listRecordCards, listRecordGroups, PAGE_SIZE } from '#lib/server/records.js';
 import { error } from '@sveltejs/kit';
 
 export async function load({ params, url, setHeaders }) {
