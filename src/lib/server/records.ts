@@ -117,7 +117,7 @@ const cardWith = {
 		}
 	},
 	incomingLinks: {
-		where: { predicate: { in: ['contained_by', 'related_to'] } },
+		where: { predicate: { in: [...containmentPredicates, 'related_to'] } },
 		with: { source: { columns: linkColumns } }
 	}
 } satisfies RecordsQueryConfig['with'];
@@ -131,11 +131,6 @@ const byBest = ((record, { desc: descend }) => [
 const byChronology = ((record, { asc: ascend }) => [
 	ascend(sql`coalesce(${record.contentCreatedAt}, ${record.recordCreatedAt})`),
 	ascend(record.id)
-]) satisfies RecordsQueryConfig['orderBy'];
-
-const byRecency = ((record, { desc: descend }) => [
-	descend(sql`coalesce(${record.contentCreatedAt}, ${record.recordCreatedAt})`),
-	descend(record.id)
 ]) satisfies RecordsQueryConfig['orderBy'];
 
 type LinkRowRecord = RecordLink &
@@ -605,26 +600,113 @@ export async function searchRecords(query: string, type?: RecordType): Promise<R
 	return rows.map(toCard);
 }
 
+/**
+ * The feed's unit is a containment root: a listed artifact with no listed
+ * artifact above it in the visible containment graph. Its entry carries the
+ * whole visible descendant tree, and a new descendant anywhere in the tree
+ * resurfaces the root, so the graph loads whole — roots, exclusions, and
+ * recency all come from one traversal.
+ */
 export async function getFeedEntries(): Promise<FeedEntry[]> {
-	const rows = await db.query.records.findMany({
-		where: { type: 'artifact', ...isListed },
-		columns: cardColumns,
-		with: cardWith,
-		orderBy: byRecency,
+	const containmentLinks = await db.query.links.findMany({
+		where: { predicate: { in: containmentPredicates } },
+		columns: { id: true },
+		with: { source: { columns: linkColumns }, target: { columns: linkColumns } }
+	});
+
+	const nodes = new Map<number, LinkRowRecord>();
+	const parentIds = new Map<number, number[]>();
+	const childIds = new Map<number, number[]>();
+	const connect = (edges: Map<number, number[]>, from: number, to: number) => {
+		const list = edges.get(from);
+		if (list) list.push(to);
+		else edges.set(from, [to]);
+	};
+	for (const { source, target } of containmentLinks) {
+		if (!isVisible(source) || !isVisible(target)) continue;
+		nodes.set(source.id, source);
+		nodes.set(target.id, target);
+		connect(parentIds, source.id, target.id);
+		connect(childIds, target.id, source.id);
+	}
+
+	const listedArtifact = (record: LinkRowRecord) =>
+		isListable(record) && record.type === 'artifact';
+	const traverse = (startId: number, edges: Map<number, number[]>) => {
+		const seen = new Set<number>();
+		const stack = [...(edges.get(startId) ?? [])];
+		for (let currentId = stack.pop(); currentId !== undefined; currentId = stack.pop()) {
+			if (seen.has(currentId) || currentId === startId) continue;
+			seen.add(currentId);
+			stack.push(...(edges.get(currentId) ?? []));
+		}
+		return seen;
+	};
+
+	const roots = [...nodes.values()].filter(
+		(node) =>
+			listedArtifact(node) &&
+			![...traverse(node.id, parentIds)].some((ancestorId) => {
+				const ancestor = nodes.get(ancestorId);
+				return ancestor !== undefined && listedArtifact(ancestor);
+			})
+	);
+	const treeCandidates = roots.map((root) => {
+		const descendantIds = traverse(root.id, childIds);
+		const recency = Math.max(
+			root.recordCreatedAt.getTime(),
+			...[...descendantIds].flatMap((id) => {
+				const node = nodes.get(id);
+				return node ? [node.recordCreatedAt.getTime()] : [];
+			})
+		);
+		return { id: root.id, recency, descendantIds };
+	});
+
+	// Every listed artifact in the graph either roots one of the tree candidates
+	// or renders inside one, so the standalone scan covers only records outside
+	// the graph.
+	const graphListedIds = [...nodes.values()].filter(listedArtifact).map((node) => node.id);
+	const standaloneRows = await db.query.records.findMany({
+		where: {
+			type: 'artifact',
+			...isListed,
+			...(graphListedIds.length > 0 ? { id: { notIn: graphListedIds } } : {})
+		},
+		columns: { id: true, recordCreatedAt: true },
+		orderBy: (record, { desc: descend }) => [descend(record.recordCreatedAt), descend(record.id)],
 		limit: FEED_LIMIT
 	});
-	const entries = rows.map(toCard);
-	const childIds = [
-		...new Set(entries.flatMap((entry) => entry.children.map((child) => child.id)))
-	];
-	const childCards = new Map(
-		(await getRecordCards(childIds, 'chronological')).map((card) => [card.id, card])
-	);
-	return entries.map((record) => ({
-		record,
-		children: record.children.flatMap((child) => {
-			const card = childCards.get(child.id);
-			return card ? [card] : [];
+
+	const ranked = [
+		...treeCandidates,
+		...standaloneRows.map((row) => ({
+			id: row.id,
+			recency: row.recordCreatedAt.getTime(),
+			descendantIds: new Set<number>()
+		}))
+	]
+		.sort((a, b) => b.recency - a.recency || b.id - a.id)
+		.slice(0, FEED_LIMIT);
+	if (ranked.length === 0) return [];
+
+	const cardIds = [...new Set(ranked.flatMap((entry) => [entry.id, ...entry.descendantIds]))];
+	const rows = await db.query.records.findMany({
+		where: { id: { in: cardIds }, ...isPublic },
+		columns: cardColumns,
+		with: cardWith
+	});
+	const cards = new Map(rows.map((row) => [row.id, toCard(row)] as const));
+
+	const toEntry = (card: RecordCard, path: Set<number>): FeedEntry => ({
+		record: card,
+		children: card.children.flatMap((child) => {
+			const childCard = path.has(child.id) ? undefined : cards.get(child.id);
+			return childCard ? [toEntry(childCard, new Set([...path, child.id]))] : [];
 		})
-	}));
+	});
+	return ranked.flatMap((candidate) => {
+		const card = cards.get(candidate.id);
+		return card ? [toEntry(card, new Set([candidate.id]))] : [];
+	});
 }

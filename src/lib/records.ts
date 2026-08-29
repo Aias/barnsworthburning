@@ -53,7 +53,7 @@ export interface RecordGroup extends IndexEntry {
 
 export interface FeedEntry {
 	record: RecordCard;
-	children: RecordCard[];
+	children: FeedEntry[];
 }
 
 export interface Section {
