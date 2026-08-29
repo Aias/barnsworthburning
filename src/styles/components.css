@@ -81,10 +81,11 @@
 	> li {
 		display: inline;
 	}
-	/* Trailing separator: no space before the slash, so a line can never
-	   start with one; the space after it is the wrap point. */
+	/* Separators trail their item: the no-break space glues the slash to the
+	   record before it so a line never starts with one, while the normal space
+	   after it is the wrap point. Both stretch equally under justification. */
 	> li:not(:last-child)::after {
-		content: '/ ';
+		content: '\00a0/ ';
 		font-weight: var(--font-weight-normal);
 		color: var(--accent);
 		padding-inline: var(--separation);

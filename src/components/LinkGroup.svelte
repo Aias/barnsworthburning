@@ -18,21 +18,22 @@
 			slug: recordSlug(group) || undefined
 		})}>{displayTitle(group)}</a
 	>
-</span>
-{#each group.top as link (link.id)}
+</span>{#each group.top as link (link.id)}
 	<span class="group-item">
 		<Link record={link} inherit>{displayTitle(link)}</Link>
 	</span>
-{/each}
-{#if moreItems > 0}
+{/each}{#if moreItems > 0}
 	<span class="group-item more" aria-hidden="true">+{moreItems}</span>
 {/if}
 
 <style>
-	/* Trailing separator: no space before the dot, so a line can never
-	   start with one; the space after it is the wrap point. */
+	/* Separators trail their item: the no-break space glues the dot to the
+	   record before it so a line never starts with one, while the normal space
+	   after it is the wrap point. Both stretch equally under justification.
+	   Sibling boundaries in the template are whitespace-tight so this content
+	   and padding are the only source of separation. */
 	*:not(:last-child)::after {
-		content: '• ';
+		content: '\00a0• ';
 		font-weight: var(--font-weight-normal);
 		color: var(--divider);
 		padding-inline: var(--separation, 0.5ch);
