@@ -24,7 +24,7 @@ import { and, cosineDistance, desc, eq, inArray, isNotNull, lte, sql, type SQL }
 import { alias, type AnyPgColumn } from 'drizzle-orm/pg-core';
 import { db } from './db';
 
-export const PAGE_SIZE = 100;
+const LIST_LIMIT = 100;
 const SEARCH_LIMIT = 200;
 const ASSOCIATED_LIMIT = 150;
 const SIMILAR_LIMIT = 10;
@@ -438,25 +438,18 @@ export async function getSimilarRecords(id: number): Promise<RecordCard[]> {
 	return rows.map(toCard);
 }
 
-export async function listRecordCards(
-	type: RecordType,
-	page: number
-): Promise<{ cards: RecordCard[]; total: number }> {
-	const [rows, total] = await Promise.all([
-		db.query.records.findMany({
-			where: { type, ...isListed },
-			columns: cardColumns,
-			with: cardWith,
-			orderBy: byBest,
-			limit: PAGE_SIZE,
-			offset: (page - 1) * PAGE_SIZE
-		}),
-		db.$count(records, and(eq(records.type, type), listableRecords(records)))
-	]);
-	return { cards: rows.map(toCard), total };
+export async function listRecordCards(type: RecordType): Promise<RecordCard[]> {
+	const rows = await db.query.records.findMany({
+		where: { type, ...isListed },
+		columns: cardColumns,
+		with: cardWith,
+		orderBy: byBest,
+		limit: LIST_LIMIT
+	});
+	return rows.map(toCard);
 }
 
-async function indexEntriesFor(type: RecordType, limit: number, offset = 0): Promise<IndexEntry[]> {
+async function indexEntriesFor(type: RecordType, limit: number): Promise<IndexEntry[]> {
 	const inPredicates = (predicates: PredicateSlug[]) =>
 		sql.join(
 			predicates.map((predicate) => sql`${predicate}`),
@@ -498,14 +491,13 @@ async function indexEntriesFor(type: RecordType, limit: number, offset = 0): Pro
 			desc(sql`coalesce(${records.contentCreatedAt}, ${records.recordCreatedAt})`),
 			desc(records.id)
 		)
-		.limit(limit)
-		.offset(offset);
+		.limit(limit);
 }
 
 export async function getIndexEntries(): Promise<IndexEntry[]> {
 	const [entities, concepts] = await Promise.all([
-		indexEntriesFor('entity', PAGE_SIZE),
-		indexEntriesFor('concept', PAGE_SIZE)
+		indexEntriesFor('entity', LIST_LIMIT),
+		indexEntriesFor('concept', LIST_LIMIT)
 	]);
 	return [...entities, ...concepts];
 }
@@ -541,19 +533,10 @@ async function topRecordsFor(targetIds: number[]): Promise<Map<number, RecordLin
 	return tops;
 }
 
-export async function listRecordGroups(
-	type: RecordType,
-	page: number
-): Promise<{ groups: RecordGroup[]; total: number }> {
-	const [entries, total] = await Promise.all([
-		indexEntriesFor(type, PAGE_SIZE, (page - 1) * PAGE_SIZE),
-		db.$count(records, and(eq(records.type, type), listableRecords(records)))
-	]);
+export async function listRecordGroups(type: RecordType): Promise<RecordGroup[]> {
+	const entries = await indexEntriesFor(type, LIST_LIMIT);
 	const tops = await topRecordsFor(entries.map((entry) => entry.id));
-	return {
-		groups: entries.map((entry) => ({ ...entry, top: tops.get(entry.id) ?? [] })),
-		total
-	};
+	return entries.map((entry) => ({ ...entry, top: tops.get(entry.id) ?? [] }));
 }
 
 const escapeLike = (query: string) => query.replace(/[\\%_]/g, '\\$&');

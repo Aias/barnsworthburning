@@ -1,11 +1,10 @@
 <script lang="ts">
-	import Pagination from '#components/Pagination.svelte';
 	import GroupList from '../app/GroupList.svelte';
 	import RecordList from '../app/RecordList.svelte';
 
 	let { data } = $props();
 
-	let { section, cards, groups, page, totalPages } = $derived(data);
+	let { section, cards, groups } = $derived(data);
 </script>
 
 <svelte:head>
@@ -17,4 +16,3 @@
 {:else if groups}
 	<GroupList {groups} />
 {/if}
-<Pagination {page} {totalPages} />

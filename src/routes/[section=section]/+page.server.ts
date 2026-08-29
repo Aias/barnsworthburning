@@ -1,32 +1,16 @@
 import { getCacheHeaders } from '#helpers/cache.js';
 import { sectionByPath } from '#lib/records.js';
-import { listRecordCards, listRecordGroups, PAGE_SIZE } from '#lib/server/records.js';
+import { listRecordCards, listRecordGroups } from '#lib/server/records.js';
 import { error } from '@sveltejs/kit';
 
-export async function load({ params, url, setHeaders }) {
+export async function load({ params, setHeaders }) {
 	const section = sectionByPath(params.section);
 	if (!section) error(404, 'Not found.');
 
-	const page = Math.max(1, Number(url.searchParams.get('page')) || 1);
 	setHeaders(getCacheHeaders('entityList'));
 
 	if (section.type === 'artifact') {
-		const { cards, total } = await listRecordCards(section.type, page);
-		return {
-			section,
-			page,
-			totalPages: Math.ceil(total / PAGE_SIZE),
-			cards,
-			groups: undefined
-		};
+		return { section, cards: await listRecordCards(section.type), groups: undefined };
 	}
-
-	const { groups, total } = await listRecordGroups(section.type, page);
-	return {
-		section,
-		page,
-		totalPages: Math.ceil(total / PAGE_SIZE),
-		cards: undefined,
-		groups
-	};
+	return { section, cards: undefined, groups: await listRecordGroups(section.type) };
 }
