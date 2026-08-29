@@ -11,13 +11,14 @@
 	const moreItems = $derived(group.count - group.top.length);
 </script>
 
-<a
-	class="group-name"
-	href={resolve('/records/[id=id]/[[slug]]', {
-		id: group.id,
-		slug: recordSlug(group) || undefined
-	})}>{displayTitle(group)}</a
->
+<span class="group-name">
+	<a
+		href={resolve('/records/[id=id]/[[slug]]', {
+			id: group.id,
+			slug: recordSlug(group) || undefined
+		})}>{displayTitle(group)}</a
+	>
+</span>
 {#each group.top as link (link.id)}
 	<span class="group-item">
 		<Link record={link} inherit>{displayTitle(link)}</Link>
@@ -28,14 +29,13 @@
 {/if}
 
 <style>
-	* + *::before {
-		display: inline;
-		content: ' • ';
+	/* Trailing separator: no space before the dot, so a line can never
+	   start with one; the space after it is the wrap point. */
+	*:not(:last-child)::after {
+		content: '• ';
+		font-weight: var(--font-weight-normal);
 		color: var(--divider);
-		padding-inline-start: var(--separation, 0.5ch);
-		padding-inline-end: var(--separation, 0.5ch);
-		break-after: avoid;
-		break-before: avoid;
+		padding-inline: var(--separation, 0.5ch);
 	}
 	.group-name {
 		font-weight: var(--font-weight-medium);
