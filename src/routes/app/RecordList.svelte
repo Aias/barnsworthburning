@@ -4,7 +4,13 @@
 	import Link from '#components/Link.svelte';
 	import { getArticle } from '#helpers/grammar.js';
 	import markdown from '#helpers/markdown.js';
-	import { displayTitle, formatLabel, sections, type RecordCard } from '#lib/records.js';
+	import {
+		displayTitle,
+		formatLabel,
+		sections,
+		visualMedia,
+		type RecordCard
+	} from '#lib/records.js';
 
 	interface RecordListProps {
 		records: RecordCard[];
@@ -15,7 +21,7 @@
 <ul class="block-list compact">
 	{#each records as record (record.id)}
 		{@const snippet = record.summary || record.content || record.mediaCaption || record.notes}
-		{@const image = record.media.find((item) => item.type === 'image')}
+		{@const media = visualMedia(record.media)[0]}
 		{@const descriptor = formatLabel(record.format) ?? sections[record.type].singular}
 		<!-- Alias and sense sit beside the title, unless the second line has no prose
 		to show, in which case they fill it instead of the bare descriptor. -->
@@ -54,9 +60,25 @@
 						<p class="summary descriptor">({getArticle(descriptor)} {descriptor.toLowerCase()})</p>
 					{/if}
 				</section>
-				{#if image}
+				{#if media}
 					<figure>
-						<img src={image.url} alt={image.altText ?? record.mediaCaption ?? ''} loading="lazy" />
+						{#if media.type === 'video'}
+							<video
+								src={media.url}
+								aria-label={media.altText ?? record.mediaCaption ?? undefined}
+								autoplay
+								muted
+								loop
+								playsinline
+								preload="none"
+							></video>
+						{:else}
+							<img
+								src={media.url}
+								alt={media.altText ?? record.mediaCaption ?? ''}
+								loading="lazy"
+							/>
+						{/if}
 					</figure>
 				{/if}
 			</article>
@@ -79,7 +101,8 @@
 			overflow: hidden;
 			border: 1px solid var(--divider);
 			border-radius: var(--border-radius-medium);
-			& > img {
+			& > img,
+			& > video {
 				position: absolute;
 				width: 100%;
 				height: 100%;

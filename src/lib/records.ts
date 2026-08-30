@@ -99,6 +99,9 @@ export const recordPath = (record: Pick<RecordSelect, 'id' | 'title' | 'slug'>) 
 export const displayTitle = (record: Pick<RecordSelect, 'title' | 'type'>): string =>
 	record.title || sections[record.type].singular;
 
+export const visualMedia = (media: MediaSelect[]): MediaSelect[] =>
+	media.filter((item) => item.type === 'image' || item.type === 'video');
+
 // Format concepts carry plural titles ("Essays", "Research Papers"); the
 // citation line needs the noun for a single record of that format ("An essay
 // by …"). Overrides cover irregular plurals and mass nouns whose countable

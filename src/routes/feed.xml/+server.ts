@@ -5,6 +5,7 @@ import {
 	displayTitle,
 	formatLabel,
 	recordPath,
+	visualMedia,
 	type FeedEntry,
 	type RecordCard,
 	type RecordLink
@@ -30,9 +31,6 @@ const makeSiteLink = (relativePath: string, title: string) =>
 const cleanLink = (link: string) => {
 	return link.replace(/&/g, '&amp;');
 };
-
-const feedMedia = (record: RecordCard) =>
-	record.media.filter((item) => item.type === 'image' || item.type === 'video');
 
 const recordLinkList = (records: RecordLink[]) =>
 	markdown.parseInline(
@@ -80,7 +78,7 @@ const citationPhrases = (record: RecordCard, root?: RecordCard): string[] => {
 
 const generateContentMarkup = (record: RecordCard, root?: RecordCard) => {
 	const { content, summary, notes, url, mediaCaption, connections, tags } = record;
-	const media = feedMedia(record);
+	const media = visualMedia(record.media);
 	const phrases = citationPhrases(record, root);
 	let markup = '<article>\n';
 	if (phrases.length > 0) {
@@ -172,7 +170,7 @@ const generateDescendants = (entry: FeedEntry, root: RecordCard, depth: number):
 
 const generateEntry = (entry: FeedEntry): string => {
 	const { record } = entry;
-	const enclosures = flattenRecords(entry).flatMap(feedMedia);
+	const enclosures = flattenRecords(entry).flatMap((item) => visualMedia(item.media));
 	const entryParts: string[] = [];
 	entryParts.push(`<entry>`);
 	entryParts.push(`<id>${meta.url}/records/${record.id}</id>`);

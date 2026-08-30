@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { classnames } from '#helpers/classnames.js';
 	import markdown from '#helpers/markdown.js';
-	import { displayTitle, type RecordCard } from '#lib/records.js';
+	import { displayTitle, visualMedia, type RecordCard } from '#lib/records.js';
 	import { PUBLIC_RCR_URL } from '$app/env/public';
 	import {
 		ArrowLeftRightIcon,
@@ -14,7 +14,7 @@
 	import Citation from './Citation.svelte';
 	import CreatorList from './CreatorList.svelte';
 	import Link from './Link.svelte';
-	import RecordImage from './RecordImage.svelte';
+	import RecordMedia from './RecordMedia.svelte';
 	import RelationList from './RelationList.svelte';
 	import TopicList from './TopicList.svelte';
 
@@ -36,7 +36,7 @@
 		variant = 'default'
 	}: RecordCardProps<keyof HTMLElementTagNameMap> = $props();
 
-	let images = $derived(record.media.filter((item) => item.type === 'image'));
+	let mediaItems = $derived(visualMedia(record.media));
 	// The title carries the link, so titleless children can't render as chips;
 	// they still appear as read-only full cards beneath their parent.
 	let linkableChildren = $derived(record.children.filter((child) => child.title));
@@ -84,9 +84,9 @@
 			</header>
 		{/if}
 		<figure class="extract-main">
-			{#if images.length > 0}
-				{#each images as image (image.id)}
-					<RecordImage media={image} />
+			{#if mediaItems.length > 0}
+				{#each mediaItems as item (item.id)}
+					<RecordMedia media={item} />
 				{/each}
 				{#if record.mediaCaption}
 					<div class="extract-image-caption content">
