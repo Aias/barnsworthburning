@@ -134,7 +134,7 @@ const byChronology = ((record, { asc: ascend }) => [
 ]) satisfies RecordsQueryConfig['orderBy'];
 
 const byRecency = ((record, { desc: descend }) => [
-	descend(record.recordCreatedAt),
+	descend(sql`coalesce(${record.recordCuratedAt}, ${record.recordCreatedAt})`),
 	descend(record.id)
 ]) satisfies RecordsQueryConfig['orderBy'];
 
