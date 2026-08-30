@@ -5,14 +5,14 @@
     "": {
       "name": "barnsworthburning",
       "dependencies": {
-        "@aias/hozo": "~0.6.0",
+        "@aias/hozo": "~0.6.1",
         "@lucide/svelte": "~1.35.0",
         "drizzle-orm": "1.0.0-rc.4",
         "marked": "~18.0.11",
         "normalize.css": "~8.0.1",
         "postgres": "~3.4.9",
         "xml-formatter": "~3.7.0",
-        "zod": "~4.5.1",
+        "zod": "~4.5.4",
       },
       "devDependencies": {
         "@radix-ui/colors": "~3.0.0",
@@ -33,7 +33,7 @@
     },
   },
   "packages": {
-    "@aias/hozo": ["@aias/hozo@0.6.0", "", { "peerDependencies": { "drizzle-orm": "1.0.0-rc.4", "zod": "~4.4.3" } }, "sha512-rcbrkFoTE2HGEs5agDJCcxvLrIdTOJObfSe/UNKin6ENObWXikWmElxA/oflAUQXZOqgDtZkjNJysWrb4uJMMw=="],
+    "@aias/hozo": ["@aias/hozo@0.6.1", "", { "peerDependencies": { "drizzle-orm": "1.0.0-rc.4", "zod": "~4.5.4" } }, "sha512-SHCytkGHe0g3azx9z1rxQxtM0rHVNysOdaSB7R+WUugJUcMEx654Ses3UxvlhWd0UbHvP2zYGHdQQ3UEXt4+6g=="],
 
     "@jridgewell/gen-mapping": ["@jridgewell/gen-mapping@0.3.13", "", { "dependencies": { "@jridgewell/sourcemap-codec": "^1.5.0", "@jridgewell/trace-mapping": "^0.3.24" } }, "sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA=="],
 
@@ -355,7 +355,7 @@
 
     "zimmerframe": ["zimmerframe@1.1.4", "", {}, "sha512-B58NGBEoc8Y9MWWCQGl/gq9xBCe4IiKM0a2x7GZdQKOW5Exr8S1W24J6OgM1njK8xCRGvAJIL/MxXHf6SkmQKQ=="],
 
-    "zod": ["zod@4.5.1", "", {}, "sha512-P3GqeAEOEDqKvafVGLezbg+39YW/ze4xrD4qdS0adOY8eoI3zfjv1PQM4UwQzgT8mZKXEbqtVt8K+ZKGqkMFKg=="],
+    "zod": ["zod@4.5.4", "", {}, "sha512-sC95tT5iHHH9gtpj6A81kh+NEaRAUFN+qlUPDUbRfOMvNf5QCBqsb3WgvnpVtK5Y+4UfA6KqufotuTvMGiTlsA=="],
 
     "svelte/magic-string": ["magic-string@0.30.21", "", { "dependencies": { "@jridgewell/sourcemap-codec": "^1.5.5" } }, "sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ=="],
   }

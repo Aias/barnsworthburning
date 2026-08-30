@@ -31,14 +31,14 @@
 		"preview": "bunx --bun vite preview"
 	},
 	"dependencies": {
-		"@aias/hozo": "~0.6.0",
+		"@aias/hozo": "~0.6.1",
 		"@lucide/svelte": "~1.35.0",
 		"drizzle-orm": "1.0.0-rc.4",
 		"marked": "~18.0.11",
 		"normalize.css": "~8.0.1",
 		"postgres": "~3.4.9",
 		"xml-formatter": "~3.7.0",
-		"zod": "~4.5.1"
+		"zod": "~4.5.4"
 	},
 	"devDependencies": {
 		"@radix-ui/colors": "~3.0.0",
