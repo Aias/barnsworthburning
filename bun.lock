@@ -5,7 +5,7 @@
     "": {
       "name": "barnsworthburning",
       "dependencies": {
-        "@aias/hozo": "~0.6.1",
+        "@aias/hozo": "~0.7.0",
         "@lucide/svelte": "~1.35.0",
         "drizzle-orm": "1.0.0-rc.4",
         "marked": "~18.0.11",
@@ -33,7 +33,7 @@
     },
   },
   "packages": {
-    "@aias/hozo": ["@aias/hozo@0.6.1", "", { "peerDependencies": { "drizzle-orm": "1.0.0-rc.4", "zod": "~4.5.4" } }, "sha512-SHCytkGHe0g3azx9z1rxQxtM0rHVNysOdaSB7R+WUugJUcMEx654Ses3UxvlhWd0UbHvP2zYGHdQQ3UEXt4+6g=="],
+    "@aias/hozo": ["@aias/hozo@0.7.0", "", { "peerDependencies": { "drizzle-orm": "1.0.0-rc.4", "zod": "~4.5.4" } }, "sha512-j44ZN2yh2i7rlWOhrlnfwGkSBoNwS1Tu2+kiaJbHUznM4sUPdGOyinbv1a62Bx/GG5EYw/Sd9kytvso2PJ57cg=="],
 
     "@jridgewell/gen-mapping": ["@jridgewell/gen-mapping@0.3.13", "", { "dependencies": { "@jridgewell/sourcemap-codec": "^1.5.0", "@jridgewell/trace-mapping": "^0.3.24" } }, "sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA=="],
 

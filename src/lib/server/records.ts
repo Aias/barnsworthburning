@@ -67,7 +67,7 @@ const bucketFor = (
 	return 'extras';
 };
 
-const isPublic = { isPrivate: false, isCurated: true } as const;
+const isPublic = { isPrivate: false, recordCuratedAt: { isNotNull: true } } as const;
 
 // Anywhere records form a clickable list (search, sections, galleries, link
 // chips, the feed) they must also carry a title — the title is what renders as
@@ -75,10 +75,10 @@ const isPublic = { isPrivate: false, isCurated: true } as const;
 const isListed = { ...isPublic, title: { isNotNull: true } } as const;
 
 const listableRecords = <
-	T extends { isPrivate: AnyPgColumn; isCurated: AnyPgColumn; title: AnyPgColumn }
+	T extends { isPrivate: AnyPgColumn; recordCuratedAt: AnyPgColumn; title: AnyPgColumn }
 >(
 	table: T
-) => and(eq(table.isPrivate, false), eq(table.isCurated, true), isNotNull(table.title));
+) => and(eq(table.isPrivate, false), isNotNull(table.recordCuratedAt), isNotNull(table.title));
 
 type RecordsQueryConfig = NonNullable<Parameters<typeof db.query.records.findMany>[0]>;
 
@@ -93,7 +93,7 @@ const linkColumns = {
 	title: true,
 	slug: true,
 	isPrivate: true,
-	isCurated: true,
+	recordCuratedAt: true,
 	eloScore: true,
 	contentCreatedAt: true,
 	recordCreatedAt: true
@@ -134,14 +134,14 @@ const byChronology = ((record, { asc: ascend }) => [
 ]) satisfies RecordsQueryConfig['orderBy'];
 
 const byRecency = ((record, { desc: descend }) => [
-	descend(sql`coalesce(${record.recordCuratedAt}, ${record.recordCreatedAt})`),
+	descend(record.recordCuratedAt),
 	descend(record.id)
 ]) satisfies RecordsQueryConfig['orderBy'];
 
 type LinkRowRecord = RecordLink &
 	Pick<
 		RecordFields,
-		'isPrivate' | 'isCurated' | 'eloScore' | 'contentCreatedAt' | 'recordCreatedAt'
+		'isPrivate' | 'recordCuratedAt' | 'eloScore' | 'contentCreatedAt' | 'recordCreatedAt'
 	>;
 
 // The relational query can't order nested link rows by their linked record, so
@@ -172,7 +172,7 @@ interface CardRow extends RecordFields {
 const pickLink = ({ id, type, title, slug }: RecordLink): RecordLink => ({ id, type, title, slug });
 
 const isVisible = (record: LinkRowRecord | null): record is LinkRowRecord =>
-	record?.isCurated === true && !record.isPrivate;
+	record !== null && record.recordCuratedAt !== null && !record.isPrivate;
 
 const isListable = (record: LinkRowRecord | null): record is LinkRowRecord =>
 	isVisible(record) && record.title !== null;
@@ -473,7 +473,7 @@ async function indexEntriesFor(type: RecordType, limit: number): Promise<IndexEn
 		WHERE EXISTS (
 			SELECT 1 FROM ${records} source
 			WHERE source.id = contributor.source_id
-				AND source.is_private = false AND source.is_curated = true AND source.title IS NOT NULL
+				AND source.is_private = false AND source.curated_at IS NOT NULL AND source.title IS NOT NULL
 		)
 	)`;
 	return db
