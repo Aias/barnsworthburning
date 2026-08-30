@@ -22,6 +22,10 @@
 	<article>
 		<RecordCard {record} class="chromatic" variant="card" suppressBlockLink />
 
+		{#each children as child (child.id)}
+			<RecordCard record={child} suppressBlockLink />
+		{/each}
+
 		{#each references as group (group.label)}
 			<section class="reference-group">
 				<div class="connections-separator" role="presentation">
@@ -31,10 +35,6 @@
 				</div>
 				<RecordList records={group.records} />
 			</section>
-		{/each}
-
-		{#each children as child (child.id)}
-			<RecordCard record={child} suppressBlockLink />
 		{/each}
 
 		{#if similar.length > 0}
