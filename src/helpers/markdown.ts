@@ -10,4 +10,7 @@ const markdown = new Marked({
 	}
 });
 
-export default markdown;
+export default {
+	parse: (source: string) => markdown.parse(source, { async: false }),
+	parseInline: (source: string) => markdown.parseInline(source, { async: false })
+};

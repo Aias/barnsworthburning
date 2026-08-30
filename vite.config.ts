@@ -1,28 +1,28 @@
+import { promises as fs } from 'node:fs';
+import path from 'node:path';
+import adapter from '@sveltejs/adapter-bun';
 import { sveltekit } from '@sveltejs/kit/vite';
+import { format } from 'oxfmt';
 import { defineConfig, type Plugin, type PluginOption } from 'vite';
-import { promises as fs, existsSync } from 'fs';
-import path from 'path';
-import prettier from 'prettier';
-import { generateFullTheme } from './src/styles/generators';
-import { generateThemeScript } from './src/lib/theme/generate';
+import { generateThemeScript } from './src/lib/theme/generate.ts';
+import { generateFullTheme } from './src/styles/generators.ts';
 
 const makeThemeFile = async () => {
 	const cssContent = generateFullTheme();
-	let formattedContent;
+	let formattedContent = cssContent;
 	try {
-		formattedContent = await prettier.format(cssContent, {
-			parser: 'css'
-		});
-	} catch (e) {
-		console.error(e);
-		formattedContent = cssContent;
+		const result = await format('palette.css', cssContent);
+		if (result.errors.length === 0) {
+			formattedContent = result.code;
+		} else {
+			console.error(result.errors);
+		}
+	} catch (error) {
+		console.error(error);
 	}
 
-	const outputDir = './src/styles'; // Ensure this directory exists or use your path
-	if (!existsSync(outputDir)) {
-		await fs.mkdir(outputDir);
-	}
-
+	const outputDir = './src/styles';
+	await fs.mkdir(outputDir, { recursive: true });
 	await fs.writeFile(path.resolve(outputDir, 'palette.css'), formattedContent);
 };
 
@@ -53,7 +53,15 @@ export default defineConfig(({ mode }) => {
 	} else if (mode === 'production') {
 		plugins.push(themeScriptPlugin());
 	}
-	plugins.push(sveltekit());
+
+	plugins.push(
+		sveltekit({
+			compilerOptions: { runes: true },
+			adapter: adapter(),
+			paths: { relative: false },
+			experimental: { remoteFunctions: true }
+		})
+	);
 
 	return {
 		plugins,
@@ -64,6 +72,15 @@ export default defineConfig(({ mode }) => {
 			// --lightningcss-light/--lightningcss-dark vars keyed off prefers-color-scheme,
 			// which ignores the .light/.dark class toggle and breaks the color system.
 			cssTarget: ['chrome123', 'edge123', 'firefox120', 'safari17.5', 'ios17.5']
+		},
+		ssr: {
+			// Bundle all dependencies into the Vite server build so adapter-bun's
+			// Bun.build pass never re-bundles packages from node_modules. Left
+			// external, Bun's tree-shaking drops zod v4's side-effect-free check
+			// factories while their lazy-bound methods still reference them,
+			// throwing errors like "_regex is not defined" at runtime — via any
+			// import path into zod (app code, @aias/hozo, drizzle-orm/zod).
+			noExternal: true
 		}
 	};
 });

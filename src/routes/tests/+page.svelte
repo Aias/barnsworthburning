@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '$styles/app.css';
+	import '#styles/app.css';
 	import TestCard from './TestCard.svelte';
 
 	const themes = [

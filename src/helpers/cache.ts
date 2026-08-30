@@ -53,7 +53,7 @@ function generateCacheControl(config: CacheConfig): string {
 	return parts.join(', ');
 }
 
-export function getCacheHeaders(type: keyof typeof CACHE_CONFIGS): HeadersInit {
+export function getCacheHeaders(type: keyof typeof CACHE_CONFIGS): Record<string, string> {
 	const config = CACHE_CONFIGS[type];
 	return {
 		'Cache-Control': generateCacheControl(config),

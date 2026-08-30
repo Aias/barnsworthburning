@@ -1,50 +1,42 @@
 <script lang="ts">
-	import { entityTypes, type EntityType } from '$helpers/params';
-	import type { ILinkedRecord } from '$types/Airtable';
+	import { displayTitle, recordSlug, type RecordGroup } from '#lib/records.js';
 	import { resolve } from '$app/paths';
-	import Link from '$components/Link.svelte';
+	import Link from './Link.svelte';
 
-	interface ExtractGroupProps {
-		groupType: EntityType;
-		groupId: string;
-		groupName: string;
-		links?: ILinkedRecord[];
-		linkType?: EntityType;
+	interface LinkGroupProps {
+		group: RecordGroup;
 	}
-	let {
-		groupType,
-		groupId,
-		groupName,
-		links,
-		linkType = entityTypes.extract
-	}: ExtractGroupProps = $props();
+	let { group }: LinkGroupProps = $props();
 
-	const maxItems = 5;
-	const moreItems = $derived(links ? links.length - maxItems : 0);
-	const visibleLinks = $derived(links ? links.slice(0, maxItems) : []);
+	const moreItems = $derived(group.count - group.top.length);
 </script>
 
-<a class="group-name" href={resolve(`/${groupType.urlParam}/${groupId}`)}>{groupName}</a>
-{#if links}
-	{#each visibleLinks as link (link.id)}
-		<span class="group-item">
-			<Link toId={link.id} toType={linkType.key} inherit>{link.name}</Link>
-		</span>
-	{/each}
-{/if}
-{#if moreItems > 0}
+<span class="group-name">
+	<a
+		href={resolve('/records/[id=id]/[[slug]]', {
+			id: group.id,
+			slug: recordSlug(group) || undefined
+		})}>{displayTitle(group)}</a
+	>
+</span>{#each group.top as link (link.id)}
+	<span class="group-item">
+		<Link record={link} inherit>{displayTitle(link)}</Link>
+	</span>
+{/each}{#if moreItems > 0}
 	<span class="group-item more" aria-hidden="true">+{moreItems}</span>
 {/if}
 
 <style>
-	* + *::before {
-		display: inline;
-		content: ' • ';
+	/* Separators trail their item: the no-break space glues the dot to the
+	   record before it so a line never starts with one, while the normal space
+	   after it is the wrap point. Both stretch equally under justification.
+	   Sibling boundaries in the template are whitespace-tight so this content
+	   and padding are the only source of separation. */
+	*:not(:last-child)::after {
+		content: '\00a0• ';
+		font-weight: var(--font-weight-normal);
 		color: var(--divider);
-		padding-inline-start: var(--separation, 0.5ch);
-		padding-inline-end: var(--separation, 0.5ch);
-		break-after: avoid;
-		break-before: avoid;
+		padding-inline: var(--separation, 0.5ch);
 	}
 	.group-name {
 		font-weight: var(--font-weight-medium);

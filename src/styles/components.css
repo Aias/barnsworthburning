@@ -1,3 +1,10 @@
+.lucide {
+	inline-size: 1em;
+	block-size: 1em;
+	flex-shrink: 0;
+	color: currentColor;
+}
+
 .ssm {
 	display: none;
 }
@@ -8,18 +15,20 @@
 .nav-link {
 	border-radius: var(--border-radius-small);
 	padding-inline: 0.5em;
+	height: 2em;
 	display: flex;
 	flex-direction: row;
+	align-items: center;
 	gap: 1ch;
 	text-decoration: none;
 
-	&:hover {
-		background-color: var(--flood);
+	.nav-link__label {
+		text-box-trim: trim-both;
+		text-box-edge: cap alphabetic;
 	}
 
-	&::before {
-		content: attr(data-icon);
-		display: inline-block;
+	&:hover {
+		background-color: var(--flood);
 	}
 
 	&.active {
@@ -72,15 +81,14 @@
 	> li {
 		display: inline;
 	}
-	> li + li::before {
-		display: inline;
-		content: ' / ';
+	/* Separators trail their item: the no-break space glues the slash to the
+	   record before it so a line never starts with one, while the normal space
+	   after it is the wrap point. Both stretch equally under justification. */
+	> li:not(:last-child)::after {
+		content: '\00a0/ ';
 		font-weight: var(--font-weight-normal);
 		color: var(--accent);
-		padding-inline-start: var(--separation);
-		padding-inline-end: var(--separation);
-		break-after: avoid;
-		break-before: avoid;
+		padding-inline: var(--separation);
 	}
 }
 

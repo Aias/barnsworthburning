@@ -1,5 +1,5 @@
 <script lang="ts">
-	import markdown from '$helpers/markdown';
+	import markdown from '#helpers/markdown.js';
 
 	interface MarkdownContentProps {
 		text: string;

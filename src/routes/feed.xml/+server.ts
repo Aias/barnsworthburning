@@ -1,100 +1,131 @@
-import { mapExtractRecord } from '$helpers/mapping';
-import { airtableFetch } from '$lib/server/requests';
+import { getCacheHeaders } from '#helpers/cache.js';
+import { capitalize, combineAsList, getArticle } from '#helpers/grammar.js';
+import markdown from '#helpers/markdown.js';
 import {
-	AirtableBaseId,
-	extractFields,
-	ExtractView,
-	Table,
-	type IBaseExtract,
-	type IExtract
-} from '$types/Airtable';
-import markdown from '$helpers/markdown';
-import { getArticle, combineAsList } from '$helpers/grammar';
+	displayTitle,
+	formatLabel,
+	recordPath,
+	visualMedia,
+	type FeedEntry,
+	type RecordCard,
+	type RecordLink
+} from '#lib/records.js';
+import { getFeedEntries } from '#lib/server/records.js';
 import xmlFormatter from 'xml-formatter';
-import { getCacheHeaders } from '$helpers/cache';
 
-const generateImageProxyUrl = (recordId: string, index: number) => {
-	return `${meta.imageProxyUrl}/${AirtableBaseId}/${Table.Extracts}/${recordId}?index=${index}`;
+const meta = {
+	title: 'barnsworthburning',
+	description: 'A commonplace book.',
+	author: {
+		name: 'Nick Trombley',
+		email: 'trombley.nick@gmail.com',
+		url: 'https://nicktrombley.design'
+	},
+	tags: ['design', 'knowledge', 'making', 'architecture', 'art'],
+	url: 'https://barnsworthburning.net'
 };
 
 const makeSiteLink = (relativePath: string, title: string) =>
-	`<a href="${meta.url}/${relativePath}">${title}</a>`;
+	`<a href="${meta.url}${relativePath}">${title}</a>`;
 
-const generateContentMarkup = (extract: IExtract, isChild: boolean = false) => {
-	const {
-		id,
-		extract: content,
-		notes,
-		format,
-		source,
-		images,
-		imageCaption,
-		creators,
-		connections,
-		spaces,
-		parent
-	} = extract;
-	const type = (format || 'extract').toLowerCase();
+const cleanLink = (link: string) => {
+	return link.replace(/&/g, '&amp;');
+};
+
+const recordLinkList = (records: RecordLink[]) =>
+	markdown.parseInline(
+		combineAsList(
+			records.map((record) => `[${displayTitle(record)}](${meta.url}${recordPath(record)})`)
+		)
+	);
+
+const linkRow = (label: string, records: RecordLink[]) => {
+	let markup = `<p>${label}:</p>\n`;
+	markup += '<ul>\n';
+	markup += records
+		.map((record) => `<li>${makeSiteLink(recordPath(record), displayTitle(record))}</li>\n`)
+		.join('');
+	markup += '</ul>\n';
+	return markup;
+};
+
+const sameRecords = (a: RecordLink[], b: RecordLink[]) =>
+	a.length === b.length && a.every((record, index) => record.id === b[index]?.id);
+
+/**
+ * The citation sentence: "An essay by X, edited by Y, from Z." Descendant
+ * sections cite only what differs from the root, and never their container —
+ * the entry's structure already shows it.
+ */
+const citationPhrases = (record: RecordCard, root?: RecordCard): string[] => {
+	const phrases: string[] = [];
+	const format = formatLabel(record.format);
+	const parent = record.parents[0];
+	if (format && (!root || format !== formatLabel(root.format))) {
+		phrases.push(`${getArticle(format)} <strong>${format.toLowerCase()}</strong>`);
+	}
+	if (record.creators.length > 0 && (!root || !sameRecords(record.creators, root.creators))) {
+		phrases.push(`by ${recordLinkList(record.creators)}`);
+	}
+	for (const group of record.attributions) {
+		phrases.push(`${group.label} ${recordLinkList(group.records)}`);
+	}
+	if (!root && parent) {
+		phrases.push(`from <em>${displayTitle(parent)}</em>`);
+	}
+	return phrases;
+};
+
+const generateContentMarkup = (record: RecordCard, root?: RecordCard) => {
+	const { content, summary, notes, url, mediaCaption, connections, tags } = record;
+	const media = visualMedia(record.media);
+	const phrases = citationPhrases(record, root);
 	let markup = '<article>\n';
-	if (!isChild) {
+	if (phrases.length > 0) {
+		const [first, ...rest] = phrases;
 		markup += '<header>\n';
-		markup += '<p>';
-		markup += `${getArticle(type)} <strong>${type}</strong>`;
-		if (creators) {
-			const creatorsMarkup = markdown.parseInline(
-				combineAsList(creators.map((c) => `[${c.name}](${meta.url}/creators/${c.id})`))
-			);
-			markup += ` by ${creatorsMarkup}`;
-		}
-		if (parent) {
-			markup += ` from <em>${parent.name}</em>`;
-		}
-		markup += '.</p>\n';
+		markup += `<p>${[capitalize(first), ...rest].join(' ')}.</p>\n`;
 		markup += '</header>\n';
 	}
 	markup += '<section>\n';
-	if (images) {
+	if (media.length > 0) {
 		markup += '<figure>\n';
-		markup += images
-			.map(
-				({ filename, type = 'image/*' }, index) =>
-					`<img src="${generateImageProxyUrl(id, index)}" alt="${filename}" type="${type}" />\n`
+		markup += media
+			.map((item) =>
+				item.type === 'video'
+					? `<video controls src="${item.url}"></video>\n`
+					: `<img src="${item.url}" alt="${item.altText ?? ''}" type="${item.contentTypeString}" />\n`
 			)
 			.join('');
-		if (imageCaption) {
-			markup += `<figcaption>${markdown.parse(imageCaption)}</figcaption>\n`;
+		if (mediaCaption) {
+			markup += `<figcaption>${markdown.parse(mediaCaption)}</figcaption>\n`;
 		}
 		markup += '</figure>\n';
 	}
-	if (content) {
+	const text = content ?? summary;
+	if (text) {
 		markup += '<blockquote>\n';
-		markup += markdown.parse(content);
+		markup += markdown.parse(text);
 		markup += '</blockquote>\n';
 	}
-	if (source) {
+	if (url) {
 		let linkText;
 		try {
-			linkText = new URL(source).hostname;
+			linkText = new URL(url).hostname;
 		} catch {
-			linkText = source;
+			linkText = url;
 		}
-		markup += `<p>Source: <a href="${source}">${linkText}</a></p>\n`;
+		markup += `<p>Source: <a href="${url}">${linkText}</a></p>\n`;
 	}
-	if (connections) {
-		markup += '<p>Related:</p>\n';
-		markup += '<ul>\n';
-		markup += connections
-			.map(
-				(connection) => `<li>${makeSiteLink(`extracts/${connection.id}`, connection.name)}</li>\n`
-			)
-			.join('');
-		markup += '</ul>\n';
+	for (const group of [...record.references, ...record.extras]) {
+		markup += linkRow(capitalize(group.label), group.records);
 	}
-	if (spaces) {
+	if (connections.length > 0) {
+		markup += linkRow('Related', connections);
+	}
+	if (tags.length > 0) {
 		markup += `<p>\n<small>`;
-		markup += spaces
-			.map((space) => makeSiteLink(`spaces/${space.id}`, `#${space.name}`))
-			.join(' • ');
+		markup += tags.map((tag) => makeSiteLink(recordPath(tag), `#${displayTitle(tag)}`)).join(' • ');
 		markup += `</small>\n</p>\n`;
 	}
 	if (notes) {
@@ -107,77 +138,75 @@ const generateContentMarkup = (extract: IExtract, isChild: boolean = false) => {
 	return markup;
 };
 
-const cleanLink = (link: string) => {
-	return link.replace(/&/g, '&amp;');
-};
+const flattenRecords = (entry: FeedEntry): RecordCard[] => [
+	entry.record,
+	...entry.children.flatMap(flattenRecords)
+];
 
-const meta = {
-	title: 'barnsworthburning',
-	description: 'A commonplace book.',
-	author: {
-		name: 'Nick Trombley',
-		email: 'trombley.nick@gmail.com',
-		url: 'https://nicktrombley.design'
-	},
-	tags: ['design', 'knowledge', 'making', 'architecture', 'art'],
-	url: 'https://barnsworthburning.net',
-	imageProxyUrl: 'https://airtable-media-proxy.trombley-nick.workers.dev'
-};
+const recordUpdated = (record: RecordCard) =>
+	Math.max(
+		record.recordUpdatedAt.getTime(),
+		(record.contentUpdatedAt ?? record.recordUpdatedAt).getTime()
+	);
 
-const getChildExtracts = (extract: IExtract, children: IExtract[]): IExtract[] =>
-	extract.children
-		?.map((child) => children.find((entry) => entry.id === child.id))
-		.filter((child): child is IExtract => !!child) || [];
+const entryUpdated = (entry: FeedEntry) =>
+	new Date(
+		Math.max(entry.record.recordCreatedAt.getTime(), ...flattenRecords(entry).map(recordUpdated))
+	);
 
-const generateEntry = (extract: IExtract, children: IExtract[]): string => {
-	const { title, id, creators, source, lastUpdated, publishedOn, spaces, images } = extract;
-	const extractChildren = getChildExtracts(extract, children);
+/**
+ * Descendant sections nest by containment depth — direct children under h3,
+ * grandchildren under h4, and so on — while titleless records get only the
+ * separator.
+ */
+const generateDescendants = (entry: FeedEntry, root: RecordCard, depth: number): string =>
+	entry.children
+		.map((child) => {
+			const level = Math.min(depth + 2, 6);
+			const heading = child.record.title ? `<h${level}>${child.record.title}</h${level}>` : '';
+			return `<br><hr><br>${heading}${generateContentMarkup(child.record, root)}${generateDescendants(child, root, depth + 1)}`;
+		})
+		.join('\n');
 
+const generateEntry = (entry: FeedEntry): string => {
+	const { record } = entry;
+	const enclosures = flattenRecords(entry).flatMap((item) => visualMedia(item.media));
 	const entryParts: string[] = [];
 	entryParts.push(`<entry>`);
-	entryParts.push(`<id>${meta.url}/extracts/${id}</id>`);
-	entryParts.push(`<title><![CDATA[${title}]]></title>`);
-	if (creators) {
+	entryParts.push(`<id>${meta.url}/records/${record.id}</id>`);
+	entryParts.push(`<title><![CDATA[${displayTitle(record)}]]></title>`);
+	if (record.creators.length > 0) {
 		entryParts.push(
-			creators
-				.map((creator) => `<author><name><![CDATA[${creator.name}]]></name></author>`)
+			record.creators
+				.map((creator) => `<author><name><![CDATA[${displayTitle(creator)}]]></name></author>`)
 				.join('\n')
 		);
 	}
-	entryParts.push(`<published>${new Date(publishedOn).toISOString()}</published>`);
-	entryParts.push(
-		`<updated>${new Date(
-			Math.max(new Date(publishedOn).getTime(), new Date(lastUpdated).getTime())
-		).toISOString()}</updated>`
-	);
-	entryParts.push(`<link rel="alternate" href="${meta.url}/extracts/${id}" />`);
-	if (source) {
-		entryParts.push(`<link rel="via" href="${cleanLink(source)}" />`);
+	entryParts.push(`<published>${record.recordCreatedAt.toISOString()}</published>`);
+	entryParts.push(`<updated>${entryUpdated(entry).toISOString()}</updated>`);
+	entryParts.push(`<link rel="alternate" href="${meta.url}${recordPath(record)}" />`);
+	if (record.url) {
+		entryParts.push(`<link rel="via" href="${cleanLink(record.url)}" />`);
 	}
-	if (images) {
+	if (enclosures.length > 0) {
 		entryParts.push(
-			images
+			enclosures
 				.map(
-					({ filename, type = 'image/*' }, index) =>
-						`<link rel="enclosure" href="${generateImageProxyUrl(id, index)}" type="${type}" title="${filename}" />`
+					(item) =>
+						`<link rel="enclosure" href="${item.url}" type="${item.contentTypeString}"${item.altText ? ` title="${item.altText}"` : ''} />`
 				)
 				.join('\n')
 		);
 	}
-	if (spaces) {
-		entryParts.push(spaces.map((space) => `<category term="${space.name}" />`).join('\n'));
+	if (record.tags.length > 0) {
+		entryParts.push(
+			record.tags.map((tag) => `<category term="${displayTitle(tag)}" />`).join('\n')
+		);
 	}
 	entryParts.push(`<content type="html"><![CDATA[`);
-	entryParts.push(generateContentMarkup(extract));
-	if (extractChildren.length) {
-		entryParts.push(
-			extractChildren
-				.map((child) => {
-					const { title } = child;
-					return `<br><hr><br><h3>${title}</h3>${generateContentMarkup(child, true)}`;
-				})
-				.join('\n')
-		);
+	entryParts.push(generateContentMarkup(record));
+	if (entry.children.length > 0) {
+		entryParts.push(generateDescendants(entry, record, 1));
 	}
 	entryParts.push(`]]></content>`);
 	entryParts.push(`</entry>`);
@@ -185,17 +214,9 @@ const generateEntry = (extract: IExtract, children: IExtract[]): string => {
 	return entryParts.join('');
 };
 
-const atom = (entries: IExtract[] = [], children: IExtract[] = []) => {
+const atom = (entries: FeedEntry[]) => {
 	const feedUpdated = new Date(
-		Math.max(
-			...entries.map((entry) =>
-				Math.max(
-					new Date(entry.lastUpdated).getTime(),
-					new Date(entry.publishedOn).getTime(),
-					new Date(entry.extractedOn).getTime()
-				)
-			)
-		)
+		Math.max(...entries.map((entry) => entryUpdated(entry).getTime()))
 	).toISOString();
 	return `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
@@ -212,28 +233,14 @@ const atom = (entries: IExtract[] = [], children: IExtract[] = []) => {
     </author>
     <updated>${feedUpdated}</updated>
 	${meta.tags.map((tag) => `<category term="${tag}" />`).join('\n')}
-        ${entries.map((extract) => generateEntry(extract, children)).join('\n')}
+        ${entries.map((entry) => generateEntry(entry)).join('\n')}
 </feed>`.trim();
 };
 
 export async function GET() {
-	const fetchEntryOptions = {
-		view: ExtractView.Feed,
-		maxRecords: 30,
-		fields: extractFields
-	};
-	const extracts = await airtableFetch<IBaseExtract>(Table.Extracts, fetchEntryOptions);
-	const feedEntries = extracts.map(mapExtractRecord);
-	const parentIds = feedEntries.map((extract) => extract.id).join(',');
+	const entries = await getFeedEntries();
 
-	const fetchChildOptions = {
-		filterByFormula: `AND(parent, FIND(ARRAYJOIN(parentId), '${parentIds}') > 0)`,
-		fields: extractFields
-	};
-	const childExtracts = await airtableFetch<IBaseExtract>(Table.Extracts, fetchChildOptions);
-	const entryChildren = childExtracts.map(mapExtractRecord);
-
-	const responseBody = xmlFormatter(atom(feedEntries, entryChildren), {
+	const responseBody = xmlFormatter(atom(entries), {
 		collapseContent: true
 	});
 	const responseOptions = {
