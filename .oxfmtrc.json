@@ -24,7 +24,6 @@
 	},
 	"embeddedLanguageFormatting": "auto",
 	"ignorePatterns": [
-		"pnpm-lock.yaml",
 		"build/**",
 		".svelte-kit/**",
 		"static/themePreferences.js",
