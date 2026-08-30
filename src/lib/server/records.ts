@@ -133,6 +133,11 @@ const byChronology = ((record, { asc: ascend }) => [
 	ascend(record.id)
 ]) satisfies RecordsQueryConfig['orderBy'];
 
+const byRecency = ((record, { desc: descend }) => [
+	descend(record.recordCreatedAt),
+	descend(record.id)
+]) satisfies RecordsQueryConfig['orderBy'];
+
 type LinkRowRecord = RecordLink &
 	Pick<
 		RecordFields,
@@ -438,7 +443,7 @@ export async function listRecordCards(type: RecordType): Promise<RecordCard[]> {
 		where: { type, ...isListed },
 		columns: cardColumns,
 		with: cardWith,
-		orderBy: byBest,
+		orderBy: byRecency,
 		limit: LIST_LIMIT
 	});
 	return rows.map(toCard);
