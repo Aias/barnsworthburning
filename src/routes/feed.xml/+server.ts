@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { getCacheHeaders } from '#helpers/cache.js';
 import { capitalize, combineAsList, getArticle } from '#helpers/grammar.js';
 import markdown from '#helpers/markdown.js';
@@ -11,7 +12,9 @@ import {
 	type RecordLink
 } from '#lib/records.js';
 import { getFeedEntries } from '#lib/server/records.js';
+import type { MediaSelect } from '@aias/hozo';
 import xmlFormatter from 'xml-formatter';
+import type { RequestHandler } from './$types';
 
 const meta = {
 	title: 'barnsworthburning',
@@ -25,17 +28,18 @@ const meta = {
 	url: 'https://barnsworthburning.net'
 };
 
-const makeSiteLink = (relativePath: string, title: string) =>
-	`<a href="${meta.url}${relativePath}">${title}</a>`;
+const siteHref = (relativePath: string) => `${meta.url}${relativePath}?utm_source=rss`;
 
-const cleanLink = (link: string) => {
-	return link.replace(/&/g, '&amp;');
-};
+const makeSiteLink = (relativePath: string, title: string) =>
+	`<a href="${siteHref(relativePath)}">${title}</a>`;
+
+const escapeAttribute = (value: string) =>
+	value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 
 const recordLinkList = (records: RecordLink[]) =>
 	markdown.parseInline(
 		combineAsList(
-			records.map((record) => `[${displayTitle(record)}](${meta.url}${recordPath(record)})`)
+			records.map((record) => `[${displayTitle(record)}](${siteHref(recordPath(record))})`)
 		)
 	);
 
@@ -138,6 +142,9 @@ const generateContentMarkup = (record: RecordCard, root?: RecordCard) => {
 	return markup;
 };
 
+const dimensionAttributes = (item: MediaSelect) =>
+	`${item.width ? ` width="${item.width}"` : ''}${item.height ? ` height="${item.height}"` : ''}`;
+
 const flattenRecords = (entry: FeedEntry): RecordCard[] => [
 	entry.record,
 	...entry.children.flatMap(flattenRecords)
@@ -184,23 +191,41 @@ const generateEntry = (entry: FeedEntry): string => {
 	}
 	entryParts.push(`<published>${record.recordCreatedAt.toISOString()}</published>`);
 	entryParts.push(`<updated>${entryUpdated(entry).toISOString()}</updated>`);
-	entryParts.push(`<link rel="alternate" href="${meta.url}${recordPath(record)}" />`);
+	entryParts.push(
+		`<link rel="alternate" type="text/html" href="${siteHref(recordPath(record))}" />`
+	);
 	if (record.url) {
-		entryParts.push(`<link rel="via" href="${cleanLink(record.url)}" />`);
+		entryParts.push(`<link rel="via" href="${escapeAttribute(record.url)}" />`);
 	}
 	if (enclosures.length > 0) {
 		entryParts.push(
 			enclosures
 				.map(
 					(item) =>
-						`<link rel="enclosure" href="${item.url}" type="${item.contentTypeString}"${item.altText ? ` title="${item.altText}"` : ''} />`
+						`<link rel="enclosure" href="${escapeAttribute(item.url)}" type="${item.contentTypeString}"${item.fileSize ? ` length="${item.fileSize}"` : ''}${item.altText ? ` title="${escapeAttribute(item.altText)}"` : ''} />`
 				)
 				.join('\n')
 		);
+		entryParts.push(
+			enclosures
+				.map(
+					(item) =>
+						`<media:content url="${escapeAttribute(item.url)}" type="${item.contentTypeString}" medium="${item.type}"${item.fileSize ? ` fileSize="${item.fileSize}"` : ''}${dimensionAttributes(item)} />`
+				)
+				.join('\n')
+		);
+		const thumbnail = enclosures.find((item) => item.type === 'image');
+		if (thumbnail) {
+			entryParts.push(
+				`<media:thumbnail url="${escapeAttribute(thumbnail.url)}"${dimensionAttributes(thumbnail)} />`
+			);
+		}
 	}
 	if (record.tags.length > 0) {
 		entryParts.push(
-			record.tags.map((tag) => `<category term="${displayTitle(tag)}" />`).join('\n')
+			record.tags
+				.map((tag) => `<category term="${escapeAttribute(displayTitle(tag))}" />`)
+				.join('\n')
 		);
 	}
 	entryParts.push(`<content type="html"><![CDATA[`);
@@ -214,12 +239,12 @@ const generateEntry = (entry: FeedEntry): string => {
 	return entryParts.join('');
 };
 
-const atom = (entries: FeedEntry[]) => {
-	const feedUpdated = new Date(
-		Math.max(...entries.map((entry) => entryUpdated(entry).getTime()))
-	).toISOString();
+const feedUpdated = (entries: FeedEntry[]) =>
+	new Date(Math.max(...entries.map((entry) => entryUpdated(entry).getTime())));
+
+const atom = (entries: FeedEntry[], updated: Date) => {
 	return `<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xml:lang="en">
     <id>${meta.url}/feed</id>
     <title>${meta.title}</title>
     <subtitle>${meta.description}</subtitle>
@@ -231,25 +256,31 @@ const atom = (entries: FeedEntry[]) => {
         <email>${meta.author.email}</email>
         <uri>${meta.author.url}</uri>
     </author>
-    <updated>${feedUpdated}</updated>
+    <updated>${updated.toISOString()}</updated>
 	${meta.tags.map((tag) => `<category term="${tag}" />`).join('\n')}
         ${entries.map((entry) => generateEntry(entry)).join('\n')}
 </feed>`.trim();
 };
 
-export async function GET() {
+export const GET: RequestHandler = async ({ request }) => {
 	const entries = await getFeedEntries();
-
-	const responseBody = xmlFormatter(atom(entries), {
+	const updated = feedUpdated(entries);
+	const responseBody = xmlFormatter(atom(entries, updated), {
 		collapseContent: true
 	});
-	const responseOptions = {
-		status: 200,
-		headers: {
-			'Content-Type': 'application/atom+xml; charset=utf-8',
-			...getCacheHeaders('feed')
-		}
+	const etag = `"${createHash('sha256').update(responseBody).digest('base64url')}"`;
+	const headers = {
+		'Content-Type': 'application/atom+xml; charset=utf-8',
+		ETag: etag,
+		'Last-Modified': updated.toUTCString(),
+		...getCacheHeaders('feed')
 	};
-
-	return new Response(responseBody, responseOptions);
-}
+	const ifNoneMatch = request.headers.get('if-none-match');
+	const modifiedSince = Date.parse(request.headers.get('if-modified-since') ?? '');
+	const updatedSeconds = updated.getTime() - (updated.getTime() % 1000);
+	const notModified = ifNoneMatch ? ifNoneMatch.includes(etag) : updatedSeconds <= modifiedSince;
+	if (notModified) {
+		return new Response(null, { status: 304, headers });
+	}
+	return new Response(responseBody, { status: 200, headers });
+};
