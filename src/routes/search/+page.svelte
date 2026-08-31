@@ -80,8 +80,8 @@
 	.toolbar {
 		margin-block-end: 1em;
 		display: flex;
-		align-items: center;
-		gap: 1.5em;
+		flex-direction: column;
+		gap: 0.75em;
 
 		.search-input {
 			display: flex;
