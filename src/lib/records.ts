@@ -18,6 +18,11 @@ export interface LinkGroup {
 	records: RecordLink[];
 }
 
+export interface RecordAttachment extends RecordLink {
+	creators: RecordLink[];
+	preview: string | null;
+}
+
 export interface RecordCard extends RecordFields {
 	media: MediaSelect[];
 	creators: RecordLink[];
@@ -25,6 +30,8 @@ export interface RecordCard extends RecordFields {
 	tags: RecordLink[];
 	format: RecordLink | null;
 	parents: (RecordLink & { creators: RecordLink[] })[];
+	quoted: RecordAttachment[];
+	respondsTo: RecordAttachment[];
 	children: RecordLink[];
 	childPreview: string | null;
 	childMedia: MediaSelect | null;

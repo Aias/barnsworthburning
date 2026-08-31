@@ -46,11 +46,7 @@
 					</header>
 					{#if snippet}
 						<blockquote class="summary">
-							{@html markdown
-								.parse(snippet)
-								.toString()
-								.replaceAll('<br>', '<span class="line-break"></span>')
-								.replaceAll(/<a(?:\s+[^>]*)?>([^<]*)<\/a>/g, '$1')}
+							{@html markdown.parsePreview(snippet)}
 						</blockquote>
 					{:else if record.abbreviation || record.sense}
 						<p class="summary">

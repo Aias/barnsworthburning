@@ -146,54 +146,88 @@
 		border-radius: 0;
 		background-color: transparent;
 
-		.extract-parent,
+		.extract-attachment,
 		.extract-body,
 		.extract-footer {
 			padding-inline: 0;
 			padding-block: 0;
 		}
 
-		.extract-parent {
+		.extract-attachment[data-relation='container'] {
 			display: none;
 		}
 
-		.extract-footer {
+		.extract-attachment[data-dock='top'] {
+			margin-block-end: var(--container-padding-block);
+			padding-block-end: var(--container-padding-block);
+		}
+
+		.extract-footer,
+		.extract-attachment[data-dock='bottom'] {
 			margin-block-start: var(--container-padding-block);
 			padding-block-start: var(--container-padding-block);
 		}
 	}
 
-	.extract-parent,
+	.extract-attachment,
 	.extract-body,
 	.extract-footer {
 		padding-inline: var(--container-padding-inline);
 	}
 
-	.extract-parent,
+	.extract-attachment,
 	.extract-footer {
 		padding-block: calc(var(--container-padding-block) / 1.5);
 		font-size: var(--font-size-small);
 	}
 
-	.extract-parent {
+	.extract-attachment {
 		color: var(--accent);
-		border-block-end: 1px solid var(--divider);
 		display: flex;
-		gap: var(--layout-gap);
+		flex-direction: column;
+		gap: calc(var(--layout-gap) / 2);
 
-		& > * {
-			white-space: nowrap;
+		&[data-dock='top'] {
+			border-block-end: 1px solid var(--divider);
+		}
+
+		&[data-dock='bottom'] {
+			border-block-start: 1px solid var(--divider);
+		}
+
+		.attachment-heading {
+			display: flex;
+			gap: var(--layout-gap);
+
+			& > * {
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+
+			& > .attachment-title {
+				flex: 0 1 auto;
+			}
+
+			& > .attachment-creators {
+				flex: 1;
+				min-width: 25%;
+			}
+		}
+
+		.attachment-preview {
+			color: var(--secondary);
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 3;
+			line-clamp: 3;
 			overflow: hidden;
-			text-overflow: ellipsis;
-		}
 
-		& > .parent-title {
-			flex: 0 1 auto;
-		}
-
-		& > .parent-creators {
-			flex: 1;
-			min-width: 25%;
+			.line-break::after {
+				content: '/';
+				margin-inline: 0.5ch;
+				color: var(--hint);
+			}
 		}
 	}
 
