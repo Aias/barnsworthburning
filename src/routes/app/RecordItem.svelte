@@ -20,10 +20,10 @@
 
 {#if record.type === 'artifact'}
 	<article>
-		<RecordCard {record} class="chromatic" variant="card" suppressBlockLink />
+		<RecordCard {record} class="chromatic" variant="card" pageRecordId={record.id} />
 
 		{#each children as child (child.id)}
-			<RecordCard record={child} suppressBlockLink />
+			<RecordCard record={child} pageRecordId={record.id} />
 		{/each}
 
 		{#each references as group (group.label)}
