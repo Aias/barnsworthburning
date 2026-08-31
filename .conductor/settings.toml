@@ -5,7 +5,7 @@ run_mode = "concurrent"
 setup = "bun install"
 
 [scripts.run.dev]
-available_in = [ "local" ]
+available_in = ["local"]
 command = "bun run dev --port $CONDUCTOR_PORT"
 default = true
 icon = "play"
