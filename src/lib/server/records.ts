@@ -1,6 +1,8 @@
 import {
 	incomingLabel,
 	outgoingLabel,
+	recordPreview,
+	visualMedia,
 	type FeedEntry,
 	type IndexEntry,
 	type LinkGroup,
@@ -99,6 +101,13 @@ const linkColumns = {
 	recordCreatedAt: true
 } as const;
 
+const sourceWith = {
+	source: {
+		columns: { ...linkColumns, summary: true, content: true, mediaCaption: true, notes: true },
+		with: { media: { orderBy: { id: 'asc' } } }
+	}
+} as const;
+
 const cardWith = {
 	media: {
 		orderBy: { id: 'asc' }
@@ -118,7 +127,7 @@ const cardWith = {
 	},
 	incomingLinks: {
 		where: { predicate: { in: [...containmentPredicates, 'related_to'] } },
-		with: { source: { columns: linkColumns } }
+		with: sourceWith
 	}
 } satisfies RecordsQueryConfig['with'];
 
@@ -131,11 +140,6 @@ const byBest = ((record, { desc: descend }) => [
 const byChronology = ((record, { asc: ascend }) => [
 	ascend(sql`coalesce(${record.contentCreatedAt}, ${record.recordCreatedAt})`),
 	ascend(record.id)
-]) satisfies RecordsQueryConfig['orderBy'];
-
-const byRecency = ((record, { desc: descend }) => [
-	descend(record.recordCuratedAt),
-	descend(record.id)
 ]) satisfies RecordsQueryConfig['orderBy'];
 
 type LinkRowRecord = RecordLink &
@@ -155,6 +159,9 @@ const byBestLink = (a: LinkRowRecord, b: LinkRowRecord) =>
 const byChronologyLink = (a: LinkRowRecord, b: LinkRowRecord) =>
 	linkDate(a) - linkDate(b) || a.id - b.id;
 
+type SourceRow = LinkRowRecord &
+	Pick<RecordFields, 'summary' | 'content' | 'mediaCaption' | 'notes'> & { media: MediaSelect[] };
+
 interface CardRow extends RecordFields {
 	media: MediaSelect[];
 	outgoingLinks: {
@@ -165,16 +172,16 @@ interface CardRow extends RecordFields {
 	incomingLinks: {
 		id: number;
 		predicate: string;
-		source: LinkRowRecord | null;
+		source: SourceRow | null;
 	}[];
 }
 
 const pickLink = ({ id, type, title, slug }: RecordLink): RecordLink => ({ id, type, title, slug });
 
-const isVisible = (record: LinkRowRecord | null): record is LinkRowRecord =>
+const isVisible = <T extends LinkRowRecord>(record: T | null): record is T =>
 	record !== null && record.recordCuratedAt !== null && !record.isPrivate;
 
-const isListable = (record: LinkRowRecord | null): record is LinkRowRecord =>
+const isListable = <T extends LinkRowRecord>(record: T | null): record is T =>
 	isVisible(record) && record.title !== null;
 
 const dedupeById = <T extends RecordLink>(items: T[]): T[] => {
@@ -197,10 +204,7 @@ function toCard(row: CardRow): RecordCard {
 				link.predicate === predicate && isListable(link.target) ? [link.target] : []
 			)
 			.sort(byBestLink);
-	const sources = (
-		predicate: PredicateSlug,
-		guard: typeof isListable = isListable
-	): LinkRowRecord[] =>
+	const sources = (predicate: PredicateSlug, guard: typeof isListable = isListable): SourceRow[] =>
 		incomingLinks
 			.flatMap((link) => (link.predicate === predicate && guard(link.source) ? [link.source] : []))
 			.sort(byBestLink);
@@ -272,6 +276,15 @@ function toCard(row: CardRow): RecordCard {
 			records: dedupeById(rows.sort(byBestLink).map(pickLink))
 		}));
 
+	// Children double as read-only full-card content, so titleless records
+	// stay in the list; the card filters them out of its clickable chips.
+	const childRows = dedupeById(
+		containmentPredicates
+			.flatMap((predicate) => sources(predicate, isVisible))
+			.sort(byChronologyLink)
+	);
+	const containedRows = sources('contained_by', isVisible).sort(byChronologyLink);
+
 	return {
 		...fields,
 		media,
@@ -280,14 +293,9 @@ function toCard(row: CardRow): RecordCard {
 		tags: targets('tagged_with').map(pickLink),
 		format: targets('has_format').map(pickLink)[0] ?? null,
 		parents,
-		// Children double as read-only full-card content, so titleless records
-		// stay in the list; the card filters them out of its clickable chips.
-		children: dedupeById(
-			containmentPredicates
-				.flatMap((predicate) => sources(predicate, isVisible))
-				.sort(byChronologyLink)
-				.map(pickLink)
-		),
+		children: childRows.map(pickLink),
+		childPreview: containedRows.map(recordPreview).find(Boolean) ?? null,
+		childMedia: containedRows.flatMap((child) => visualMedia(child.media))[0] ?? null,
 		references: groupsOf('references'),
 		connections: dedupeById(connectionRows.map(({ record }) => pickLink(record))),
 		extras: groupsOf('extras')
@@ -322,7 +330,7 @@ export async function getRecordPage(id: number): Promise<RecordPage | null> {
 						in: [...containmentPredicates, 'related_to', 'same_as', ...describingPredicates]
 					}
 				},
-				with: { source: { columns: linkColumns } }
+				with: sourceWith
 			}
 		}
 	});
@@ -438,15 +446,19 @@ export async function getSimilarRecords(id: number): Promise<RecordCard[]> {
 	return rows.map(toCard);
 }
 
-export async function listRecordCards(type: RecordType): Promise<RecordCard[]> {
+export async function listArtifactCards(): Promise<RecordCard[]> {
+	const ranked = await rankContainmentRoots('recordCuratedAt', LIST_LIMIT);
+	if (ranked.length === 0) return [];
 	const rows = await db.query.records.findMany({
-		where: { type, ...isListed },
+		where: { id: { in: ranked.map((root) => root.id) }, ...isListed },
 		columns: cardColumns,
-		with: cardWith,
-		orderBy: byRecency,
-		limit: LIST_LIMIT
+		with: cardWith
 	});
-	return rows.map(toCard);
+	const cards = new Map(rows.map((row) => [row.id, toCard(row)] as const));
+	return ranked.flatMap((root) => {
+		const card = cards.get(root.id);
+		return card ? [card] : [];
+	});
 }
 
 async function indexEntriesFor(type: RecordType, limit: number): Promise<IndexEntry[]> {
@@ -605,14 +617,25 @@ export async function searchRecords(query: string, type?: RecordType): Promise<R
 	return rows.map(toCard);
 }
 
+interface ContainmentRoot {
+	id: number;
+	recency: number;
+	descendantIds: Set<number>;
+}
+
 /**
- * The feed's unit is a containment root: a listed artifact with no listed
- * artifact above it in the visible containment graph. Its entry carries the
- * whole visible descendant tree, and a new descendant anywhere in the tree
- * resurfaces the root, so the graph loads whole — roots, exclusions, and
- * recency all come from one traversal.
+ * The unit of the feed and the artifacts list is a containment root: a listed
+ * artifact with no listed artifact above it in the visible containment graph.
+ * Each root carries its whole visible descendant tree, and a new descendant
+ * anywhere in the tree resurfaces the root, so the graph loads whole — roots,
+ * exclusions, and recency all come from one traversal.
  */
-export async function getFeedEntries(): Promise<FeedEntry[]> {
+async function rankContainmentRoots(
+	recencyColumn: 'recordCreatedAt' | 'recordCuratedAt',
+	limit: number
+): Promise<ContainmentRoot[]> {
+	const recencyOf = (record: Pick<RecordFields, 'recordCreatedAt' | 'recordCuratedAt'>) =>
+		(record[recencyColumn] ?? record.recordCreatedAt).getTime();
 	const containmentLinks = await db.query.links.findMany({
 		where: { predicate: { in: containmentPredicates } },
 		columns: { id: true },
@@ -659,10 +682,10 @@ export async function getFeedEntries(): Promise<FeedEntry[]> {
 	const treeCandidates = roots.map((root) => {
 		const descendantIds = traverse(root.id, childIds);
 		const recency = Math.max(
-			root.recordCreatedAt.getTime(),
+			recencyOf(root),
 			...[...descendantIds].flatMap((id) => {
 				const node = nodes.get(id);
-				return node ? [node.recordCreatedAt.getTime()] : [];
+				return node ? [recencyOf(node)] : [];
 			})
 		);
 		return { id: root.id, recency, descendantIds };
@@ -678,21 +701,25 @@ export async function getFeedEntries(): Promise<FeedEntry[]> {
 			...isListed,
 			...(graphListedIds.length > 0 ? { id: { notIn: graphListedIds } } : {})
 		},
-		columns: { id: true, recordCreatedAt: true },
-		orderBy: (record, { desc: descend }) => [descend(record.recordCreatedAt), descend(record.id)],
-		limit: FEED_LIMIT
+		columns: { id: true, recordCreatedAt: true, recordCuratedAt: true },
+		orderBy: (record, { desc: descend }) => [descend(record[recencyColumn]), descend(record.id)],
+		limit
 	});
 
-	const ranked = [
+	return [
 		...treeCandidates,
 		...standaloneRows.map((row) => ({
 			id: row.id,
-			recency: row.recordCreatedAt.getTime(),
+			recency: recencyOf(row),
 			descendantIds: new Set<number>()
 		}))
 	]
 		.sort((a, b) => b.recency - a.recency || b.id - a.id)
-		.slice(0, FEED_LIMIT);
+		.slice(0, limit);
+}
+
+export async function getFeedEntries(): Promise<FeedEntry[]> {
+	const ranked = await rankContainmentRoots('recordCreatedAt', FEED_LIMIT);
 	if (ranked.length === 0) return [];
 
 	const cardIds = [...new Set(ranked.flatMap((entry) => [entry.id, ...entry.descendantIds]))];

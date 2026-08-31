@@ -26,6 +26,8 @@ export interface RecordCard extends RecordFields {
 	format: RecordLink | null;
 	parents: (RecordLink & { creators: RecordLink[] })[];
 	children: RecordLink[];
+	childPreview: string | null;
+	childMedia: MediaSelect | null;
 	references: LinkGroup[];
 	connections: RecordLink[];
 	extras: LinkGroup[];
@@ -101,6 +103,10 @@ export const displayTitle = (record: Pick<RecordSelect, 'title' | 'type'>): stri
 
 export const visualMedia = (media: MediaSelect[]): MediaSelect[] =>
 	media.filter((item) => item.type === 'image' || item.type === 'video');
+
+export const recordPreview = (
+	record: Pick<RecordSelect, 'summary' | 'content' | 'mediaCaption' | 'notes'>
+): string | null => record.summary || record.content || record.mediaCaption || record.notes;
 
 // Format concepts carry plural titles ("Essays", "Research Papers"); the
 // citation line needs the noun for a single record of that format ("An essay
