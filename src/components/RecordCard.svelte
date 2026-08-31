@@ -23,7 +23,7 @@
 	> {
 		record: RecordCard;
 		element?: T;
-		suppressBlockLink?: boolean;
+		pageRecordId?: number;
 		variant?: 'default' | 'card';
 		class?: string;
 	}
@@ -31,10 +31,13 @@
 	let {
 		record,
 		element = 'article',
-		suppressBlockLink = false,
+		pageRecordId,
 		class: className,
 		variant = 'default'
 	}: RecordCardProps<keyof HTMLElementTagNameMap> = $props();
+
+	let quoted = $derived(record.quoted.filter((target) => target.id !== pageRecordId));
+	let respondsTo = $derived(record.respondsTo.filter((target) => target.id !== pageRecordId));
 
 	let mediaItems = $derived(visualMedia(record.media));
 	// The title carries the link, so titleless children can't render as chips;
@@ -53,12 +56,12 @@
 <BlockLink
 	{element}
 	class={classnames('extract', `extract--${variant}`, 'ssm-container', className)}
-	suppress={suppressBlockLink}
+	suppress={pageRecordId !== undefined}
 >
 	{#each record.parents as parent (parent.id)}
 		<RecordAttachment record={parent} dock="top" relation="container" />
 	{/each}
-	{#each record.respondsTo as responded (responded.id)}
+	{#each respondsTo as responded (responded.id)}
 		<RecordAttachment
 			record={responded}
 			dock="top"
@@ -132,7 +135,7 @@
 			</footer>
 		{/if}
 	</section>
-	{#each record.quoted as quote (quote.id)}
+	{#each quoted as quote (quote.id)}
 		<RecordAttachment record={quote} dock="bottom" relation="quote" preview={quote.preview} />
 	{/each}
 </BlockLink>
