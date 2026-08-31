@@ -41,12 +41,19 @@ const describingPredicates: PredicateSlug[] = [
 	'responds_to'
 ];
 
-/** Containment links frame the card: outgoing targets (the container, the quoted work) render above the record, incoming sources render below as children. */
+/** Containment links frame the card: the container and responded-to work attach above the record, quoted works attach below, and incoming sources render beneath as children. */
 const containmentPredicates: PredicateSlug[] = ['contained_by', 'quotes'];
 
 /** Predicate/direction pairs the card shape models with dedicated fields. */
 const modeledPredicates: Record<LinkGroup['direction'], PredicateSlug[]> = {
-	outgoing: ['created_by', 'tagged_with', 'has_format', ...containmentPredicates, 'related_to'],
+	outgoing: [
+		'created_by',
+		'tagged_with',
+		'has_format',
+		...containmentPredicates,
+		'responds_to',
+		'related_to'
+	],
 	incoming: [...containmentPredicates, 'related_to']
 };
 
@@ -101,9 +108,17 @@ const linkColumns = {
 	recordCreatedAt: true
 } as const;
 
+const previewColumns = {
+	...linkColumns,
+	summary: true,
+	content: true,
+	mediaCaption: true,
+	notes: true
+} as const;
+
 const sourceWith = {
 	source: {
-		columns: { ...linkColumns, summary: true, content: true, mediaCaption: true, notes: true },
+		columns: previewColumns,
 		with: { media: { orderBy: { id: 'asc' } } }
 	}
 } as const;
@@ -115,7 +130,7 @@ const cardWith = {
 	outgoingLinks: {
 		with: {
 			target: {
-				columns: linkColumns,
+				columns: previewColumns,
 				with: {
 					outgoingLinks: {
 						where: { predicate: 'created_by' },
@@ -159,15 +174,19 @@ const byBestLink = (a: LinkRowRecord, b: LinkRowRecord) =>
 const byChronologyLink = (a: LinkRowRecord, b: LinkRowRecord) =>
 	linkDate(a) - linkDate(b) || a.id - b.id;
 
-type SourceRow = LinkRowRecord &
-	Pick<RecordFields, 'summary' | 'content' | 'mediaCaption' | 'notes'> & { media: MediaSelect[] };
+type PreviewRow = LinkRowRecord &
+	Pick<RecordFields, 'summary' | 'content' | 'mediaCaption' | 'notes'>;
+
+type SourceRow = PreviewRow & { media: MediaSelect[] };
+
+type TargetRow = PreviewRow & { outgoingLinks: { target: LinkRowRecord | null }[] };
 
 interface CardRow extends RecordFields {
 	media: MediaSelect[];
 	outgoingLinks: {
 		id: number;
 		predicate: string;
-		target: (LinkRowRecord & { outgoingLinks: { target: LinkRowRecord | null }[] }) | null;
+		target: TargetRow | null;
 	}[];
 	incomingLinks: {
 		id: number;
@@ -209,21 +228,30 @@ function toCard(row: CardRow): RecordCard {
 			.flatMap((link) => (link.predicate === predicate && guard(link.source) ? [link.source] : []))
 			.sort(byBestLink);
 
-	const parents = dedupeById(
-		containmentPredicates
-			.flatMap((predicate) =>
-				outgoingLinks.flatMap((link) =>
-					link.predicate === predicate && isListable(link.target) ? [link.target] : []
+	// Quoted and responded-to works keep titleless targets: the attachment's
+	// preview lines identify them where a bare link could not.
+	const attachmentRows = (predicate: PredicateSlug, guard: typeof isListable = isListable) =>
+		dedupeById(
+			outgoingLinks
+				.flatMap((link) =>
+					link.predicate === predicate && guard(link.target) ? [link.target] : []
 				)
-			)
-			.sort(byBestLink)
-			.map((target) => ({
-				...pickLink(target),
-				creators: target.outgoingLinks.flatMap((nested) =>
-					isListable(nested.target) ? [pickLink(nested.target)] : []
-				)
-			}))
-	);
+				.sort(byBestLink)
+		);
+	const withCreators = (target: TargetRow) => ({
+		...pickLink(target),
+		creators: target.outgoingLinks.flatMap((nested) =>
+			isListable(nested.target) ? [pickLink(nested.target)] : []
+		)
+	});
+	const toAttachment = (target: TargetRow) => ({
+		...withCreators(target),
+		preview: recordPreview(target)
+	});
+
+	const parents = attachmentRows('contained_by').map(withCreators);
+	const quoted = attachmentRows('quotes', isVisible).map(toAttachment);
+	const respondsTo = attachmentRows('responds_to', isVisible).map(toAttachment);
 
 	// Connections keep the order their links were added in — the earliest links
 	// are typically the most relevant.
@@ -293,6 +321,8 @@ function toCard(row: CardRow): RecordCard {
 		tags: targets('tagged_with').map(pickLink),
 		format: targets('has_format').map(pickLink)[0] ?? null,
 		parents,
+		quoted,
+		respondsTo,
 		children: childRows.map(pickLink),
 		childPreview: containedRows.map(recordPreview).find(Boolean) ?? null,
 		childMedia: containedRows.flatMap((child) => visualMedia(child.media))[0] ?? null,
@@ -432,6 +462,7 @@ export async function getSimilarRecords(id: number): Promise<RecordCard[]> {
 	const rows = await db.query.records.findMany({
 		where: {
 			...isListed,
+			type: 'artifact',
 			id: { notIn: linkedIds },
 			textEmbedding: { isNotNull: true },
 			...(parentIds.length > 0

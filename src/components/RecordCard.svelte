@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { classnames } from '#helpers/classnames.js';
 	import markdown from '#helpers/markdown.js';
-	import { displayTitle, visualMedia, type RecordCard } from '#lib/records.js';
+	import { visualMedia, type RecordCard } from '#lib/records.js';
 	import { PUBLIC_RCR_URL } from '$app/env/public';
 	import {
 		ArrowLeftRightIcon,
@@ -12,8 +12,8 @@
 	import type { HTMLAttributes } from 'svelte/elements';
 	import BlockLink from './BlockLink.svelte';
 	import Citation from './Citation.svelte';
-	import CreatorList from './CreatorList.svelte';
 	import Link from './Link.svelte';
+	import RecordAttachment from './RecordAttachment.svelte';
 	import RecordMedia from './RecordMedia.svelte';
 	import RelationList from './RelationList.svelte';
 	import TopicList from './TopicList.svelte';
@@ -56,14 +56,15 @@
 	suppress={suppressBlockLink}
 >
 	{#each record.parents as parent (parent.id)}
-		<section class="extract-parent">
-			<strong class="parent-title"
-				><Link record={parent} inherit>{displayTitle(parent)}</Link></strong
-			>
-			{#if parent.creators.length > 0}
-				<CreatorList class="parent-creators" creators={parent.creators} />
-			{/if}
-		</section>
+		<RecordAttachment record={parent} dock="top" relation="container" />
+	{/each}
+	{#each record.respondsTo as responded (responded.id)}
+		<RecordAttachment
+			record={responded}
+			dock="top"
+			relation="response"
+			preview={responded.preview}
+		/>
 	{/each}
 	<section class="extract-body">
 		{#if record.title}
@@ -125,10 +126,13 @@
 				{/if}
 			</nav>
 		{/if}
+		{#if record.notes}
+			<footer class="extract-notes content">
+				{@html markdown.parse(record.notes)}
+			</footer>
+		{/if}
 	</section>
-	{#if record.notes}
-		<footer class="extract-footer content">
-			{@html markdown.parse(record.notes)}
-		</footer>
-	{/if}
+	{#each record.quoted as quote (quote.id)}
+		<RecordAttachment record={quote} dock="bottom" relation="quote" preview={quote.preview} />
+	{/each}
 </BlockLink>

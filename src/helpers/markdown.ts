@@ -12,5 +12,11 @@ const markdown = new Marked({
 
 export default {
 	parse: (source: string) => markdown.parse(source, { async: false }),
-	parseInline: (source: string) => markdown.parseInline(source, { async: false })
+	parseInline: (source: string) => markdown.parseInline(source, { async: false }),
+	parsePreview: (source: string) =>
+		markdown
+			.parse(source, { async: false })
+			.toString()
+			.replaceAll('<br>', '<span class="line-break"></span>')
+			.replaceAll(/<a(?:\s+[^>]*)?>([^<]*)<\/a>/g, '$1')
 };
