@@ -7,6 +7,7 @@
 	import {
 		displayTitle,
 		formatLabel,
+		recordPreview,
 		sections,
 		visualMedia,
 		type RecordCard
@@ -20,8 +21,8 @@
 
 <ul class="block-list compact">
 	{#each records as record (record.id)}
-		{@const snippet = record.summary || record.content || record.mediaCaption || record.notes}
-		{@const media = visualMedia(record.media)[0]}
+		{@const snippet = recordPreview(record) || record.childPreview}
+		{@const media = visualMedia(record.media)[0] ?? record.childMedia}
 		{@const descriptor = formatLabel(record.format) ?? sections[record.type].singular}
 		<!-- Alias and sense sit beside the title, unless the second line has no prose
 		to show, in which case they fill it instead of the bare descriptor. -->

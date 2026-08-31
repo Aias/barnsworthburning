@@ -1,6 +1,6 @@
 import { getCacheHeaders } from '#helpers/cache.js';
 import { sectionByPath } from '#lib/records.js';
-import { listRecordCards, listRecordGroups } from '#lib/server/records.js';
+import { listArtifactCards, listRecordGroups } from '#lib/server/records.js';
 import { error } from '@sveltejs/kit';
 
 export async function load({ params, setHeaders }) {
@@ -10,7 +10,7 @@ export async function load({ params, setHeaders }) {
 	setHeaders(getCacheHeaders('entityList'));
 
 	if (section.type === 'artifact') {
-		return { section, cards: await listRecordCards(section.type), groups: undefined };
+		return { section, cards: await listArtifactCards(), groups: undefined };
 	}
 	return { section, cards: undefined, groups: await listRecordGroups(section.type) };
 }
