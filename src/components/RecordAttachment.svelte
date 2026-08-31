@@ -1,6 +1,6 @@
 <script lang="ts">
 	import markdown from '#helpers/markdown.js';
-	import { displayTitle, type RecordLink } from '#lib/records.js';
+	import type { RecordLink } from '#lib/records.js';
 	import CreatorList from './CreatorList.svelte';
 	import Link from './Link.svelte';
 
@@ -14,16 +14,22 @@
 	let { record, dock, relation, preview = null }: RecordAttachmentProps = $props();
 </script>
 
-<section class="extract-attachment" data-dock={dock} data-relation={relation}>
-	<div class="attachment-heading">
-		<strong class="attachment-title"><Link {record} inherit>{displayTitle(record)}</Link></strong>
-		{#if record.creators.length > 0}
-			<CreatorList class="attachment-creators" creators={record.creators} />
+{#if record.title || record.creators.length > 0 || preview}
+	<section class="extract-attachment" data-dock={dock} data-relation={relation}>
+		{#if record.title || record.creators.length > 0}
+			<div class="attachment-heading">
+				{#if record.title}
+					<strong class="attachment-title"><Link {record} inherit>{record.title}</Link></strong>
+				{/if}
+				{#if record.creators.length > 0}
+					<CreatorList class="attachment-creators" creators={record.creators} />
+				{/if}
+			</div>
 		{/if}
-	</div>
-	{#if preview}
-		<div class="attachment-preview content">
-			{@html markdown.parsePreview(preview)}
-		</div>
-	{/if}
-</section>
+		{#if preview}
+			<div class="attachment-preview content">
+				{@html markdown.parsePreview(preview)}
+			</div>
+		{/if}
+	</section>
+{/if}

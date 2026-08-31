@@ -147,8 +147,7 @@
 		background-color: transparent;
 
 		.extract-attachment,
-		.extract-body,
-		.extract-footer {
+		.extract-body {
 			padding-inline: 0;
 			padding-block: 0;
 		}
@@ -162,7 +161,6 @@
 			padding-block-end: var(--container-padding-block);
 		}
 
-		.extract-footer,
 		.extract-attachment[data-dock='bottom'] {
 			margin-block-start: var(--container-padding-block);
 			padding-block-start: var(--container-padding-block);
@@ -170,22 +168,17 @@
 	}
 
 	.extract-attachment,
-	.extract-body,
-	.extract-footer {
+	.extract-body {
 		padding-inline: var(--container-padding-inline);
 	}
 
-	.extract-attachment,
-	.extract-footer {
-		padding-block: calc(var(--container-padding-block) / 1.5);
-		font-size: var(--font-size-small);
-	}
-
 	.extract-attachment {
-		color: var(--accent);
 		display: flex;
 		flex-direction: column;
 		gap: calc(var(--layout-gap) / 2);
+		padding-block: calc(var(--container-padding-block) / 1.5);
+		font-size: var(--font-size-small);
+		color: var(--accent);
 
 		&[data-dock='top'] {
 			border-block-end: 1px solid var(--divider);
@@ -231,9 +224,9 @@
 		}
 	}
 
-	.extract-footer {
+	.extract-notes {
 		color: var(--secondary);
-		border-block-start: 1px solid var(--divider);
+		font-size: var(--font-size-small);
 	}
 
 	.extract-body {

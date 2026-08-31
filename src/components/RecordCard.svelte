@@ -126,12 +126,12 @@
 				{/if}
 			</nav>
 		{/if}
+		{#if record.notes}
+			<footer class="extract-notes content">
+				{@html markdown.parse(record.notes)}
+			</footer>
+		{/if}
 	</section>
-	{#if record.notes}
-		<footer class="extract-footer content">
-			{@html markdown.parse(record.notes)}
-		</footer>
-	{/if}
 	{#each record.quoted as quote (quote.id)}
 		<RecordAttachment record={quote} dock="bottom" relation="quote" preview={quote.preview} />
 	{/each}
