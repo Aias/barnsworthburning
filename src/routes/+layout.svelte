@@ -133,7 +133,7 @@
 		</main>
 	{/if}
 	<hr />
-	<footer class="app-footer">
+	<footer class="app-footer scroll-fade">
 		<Index entries={indexEntries} class="app-index" />
 	</footer>
 </div>

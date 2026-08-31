@@ -65,3 +65,59 @@
 .paper {
 	background-color: var(--paper);
 }
+
+@property --scroll-fade-start {
+	syntax: '<length-percentage>';
+	inherits: false;
+	initial-value: 0px;
+}
+
+@property --scroll-fade-end {
+	syntax: '<length-percentage>';
+	inherits: false;
+	initial-value: 0px;
+}
+
+@keyframes scroll-fade-reveal-start {
+	from {
+		--scroll-fade-start: 0px;
+	}
+	to {
+		--scroll-fade-start: var(--scroll-fade-size, min(12%, 2.5rem));
+	}
+}
+
+@keyframes scroll-fade-reveal-end {
+	from {
+		--scroll-fade-end: var(--scroll-fade-size, min(12%, 2.5rem));
+	}
+	to {
+		--scroll-fade-end: 0px;
+	}
+}
+
+.scroll-fade {
+	mask-image: linear-gradient(
+		to bottom,
+		transparent 0,
+		#000 var(--scroll-fade-start),
+		#000 calc(100% - var(--scroll-fade-end)),
+		transparent 100%
+	);
+
+	@supports (animation-timeline: scroll()) {
+		animation:
+			scroll-fade-reveal-start 1ms ease-in-out,
+			scroll-fade-reveal-end 1ms ease-in-out;
+		animation-timeline: scroll(self block), scroll(self block);
+		animation-range:
+			0 var(--scroll-fade-reveal, 6rem),
+			calc(100% - var(--scroll-fade-reveal, 6rem)) 100%;
+		animation-fill-mode: both;
+	}
+
+	@supports not (animation-timeline: scroll()) {
+		--scroll-fade-start: var(--scroll-fade-size, min(12%, 2.5rem));
+		--scroll-fade-end: var(--scroll-fade-size, min(12%, 2.5rem));
+	}
+}
