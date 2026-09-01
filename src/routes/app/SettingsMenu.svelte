@@ -144,7 +144,7 @@
 	menu {
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
+		gap: 0.25rem;
 		font-size: 0.875rem;
 	}
 	fieldset {
@@ -186,7 +186,7 @@
 				position: absolute;
 				inset-block-start: 50%;
 				inset-inline-start: 50%;
-				transform: translate(-50%, -50%);
+				translate: -50% -50%;
 			}
 
 			&:has(input:checked) {
@@ -202,8 +202,10 @@
 	}
 	.mode-selector,
 	.chroma-selector {
-		gap: 8px;
+		gap: 6px;
 		label {
+			padding: 4px;
+			border-radius: 4px;
 			display: grid;
 			place-items: center;
 			opacity: 0.5;
@@ -211,11 +213,14 @@
 
 			&:hover {
 				opacity: 1;
+				background-color: var(--flood);
+				cursor: pointer;
 			}
 
 			&:has(input:checked) {
 				opacity: 1;
 				color: var(--main);
+				background-color: var(--flood);
 			}
 		}
 	}

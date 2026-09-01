@@ -45,9 +45,8 @@
 
 <style>
 	.relation-list {
-		display: block;
-		position: relative;
-		padding-inline-start: 1.5em;
+		display: flex;
+		gap: 1ch;
 		color: var(--link);
 		font-family: var(--font-stack-mono);
 		overflow: hidden;
@@ -55,9 +54,7 @@
 		text-overflow: ellipsis;
 
 		& :global(.relation-symbol) {
-			position: absolute;
-			inset-inline-start: 0;
-			inset-block-start: calc((1lh - 1em) / 2);
+			margin-block-start: calc((1lh - 1em) / 2);
 			color: var(--hint);
 		}
 

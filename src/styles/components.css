@@ -280,6 +280,19 @@
 			color: var(--secondary);
 		}
 
+		.extract-summary {
+			font-size: var(--font-size-small);
+			font-style: italic;
+			color: var(--secondary);
+
+			.summary-symbol {
+				float: inline-start;
+				margin-inline-end: 0.5em;
+				margin-block-start: calc((1lh - 1em) / 2);
+				color: var(--hint);
+			}
+		}
+
 		.extract-text {
 			all: unset; /* Remove default blockquote styling as it's being used only as a semantic element. */
 		}
