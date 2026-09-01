@@ -214,7 +214,7 @@ pre {
 
 blockquote {
 	margin-inline: 0;
-	padding-inline-start: 0.75em;
+	padding-inline-start: 1em;
 	border-inline-start: 0.35em solid var(--flood);
 	font-style: italic;
 	font-family: var(--font-stack-serif);
@@ -230,7 +230,6 @@ blockquote:not(:is(.extract-text, .content)) {
 
 .content,
 blockquote {
-	margin-trim: block;
 	--spacing: 0.5em;
 
 	> * {
