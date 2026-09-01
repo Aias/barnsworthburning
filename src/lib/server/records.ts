@@ -32,7 +32,7 @@ const ASSOCIATED_LIMIT = 150;
 const SIMILAR_LIMIT = 10;
 const FEED_LIMIT = 30;
 
-/** Incoming links with these predicates define what a record collects: an entity's works, a concept's tagged records, the artifacts about a subject. */
+/** Incoming links with these predicates count toward an index entry: an entity's works, a concept's tagged records, the artifacts about a subject. */
 const describingPredicates: PredicateSlug[] = [
 	'created_by',
 	'tagged_with',
@@ -354,42 +354,32 @@ export async function getRecordPage(id: number): Promise<RecordPage | null> {
 		columns: cardColumns,
 		with: {
 			...cardWith,
-			incomingLinks: {
-				where: {
-					predicate: {
-						in: [...containmentPredicates, 'related_to', 'same_as', ...describingPredicates]
-					}
-				},
-				with: sourceWith
-			}
+			incomingLinks: { with: sourceWith }
 		}
 	});
 	if (!row) return null;
 
 	const record = toCard(row);
 
-	// Entity and concept pages render their describing incoming links (works by
-	// an entity, records tagged with a concept) as a full-card gallery; artifact
-	// pages keep them as labeled link rows on the card instead.
+	// Entity and concept pages render every record linked to them (works by an
+	// entity, records tagged with a concept, works in a format) as a full-card
+	// gallery; artifact pages keep them as labeled link rows on the card instead.
 	const collectsRecords = record.type !== 'artifact';
+	const isSymmetric = (predicate: string) =>
+		isPredicateSlug(predicate) && PREDICATES[predicate].inverseSlug === predicate;
 	const associatedIds = collectsRecords
 		? [
-				...new Set(
-					row.incomingLinks.flatMap((link) =>
-						isPredicateSlug(link.predicate) &&
-						describingPredicates.includes(link.predicate) &&
-						isListable(link.source)
-							? [link.source.id]
-							: []
+				...new Set([
+					...row.incomingLinks.flatMap((link) => (isListable(link.source) ? [link.source.id] : [])),
+					...row.outgoingLinks.flatMap((link) =>
+						isSymmetric(link.predicate) && isListable(link.target) ? [link.target.id] : []
 					)
-				)
+				])
 			]
 		: [];
-	const stripDescribing = (groups: LinkGroup[]): LinkGroup[] =>
-		groups.filter(
-			(group) => !(group.direction === 'incoming' && describingPredicates.includes(group.predicate))
-		);
-	const referenceLinks = collectsRecords ? stripDescribing(record.references) : record.references;
+	const stripIncoming = (groups: LinkGroup[]): LinkGroup[] =>
+		groups.filter((group) => group.direction !== 'incoming');
+	const referenceLinks = collectsRecords ? stripIncoming(record.references) : record.references;
 	const referenceIds = [
 		...new Set(referenceLinks.flatMap((group) => group.records.map((link) => link.id)))
 	];
@@ -427,7 +417,7 @@ export async function getRecordPage(id: number): Promise<RecordPage | null> {
 
 	return {
 		record: collectsRecords
-			? { ...record, references: referenceLinks, extras: stripDescribing(record.extras) }
+			? { ...record, references: referenceLinks, extras: stripIncoming(record.extras) }
 			: record,
 		references,
 		children,

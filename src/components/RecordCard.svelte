@@ -1,14 +1,22 @@
 <script lang="ts">
 	import { classnames } from '#helpers/classnames.js';
 	import markdown from '#helpers/markdown.js';
-	import { visualMedia, type RecordCard } from '#lib/records.js';
+	import { visualMedia, type RecordCard, type RecordLink } from '#lib/records.js';
 	import { PUBLIC_RCR_URL } from '$app/env/public';
+	import type { PredicateSlug } from '@aias/hozo';
 	import {
 		ArrowLeftRightIcon,
 		ArrowRightIcon,
+		AtSignIcon,
 		CloudIcon,
 		CornerDownRightIcon,
-		ListCollapseIcon
+		CrosshairIcon,
+		EqualIcon,
+		ListCollapseIcon,
+		PenLineIcon,
+		ReplyIcon,
+		SwordsIcon,
+		type LucideIcon
 	} from '@lucide/svelte';
 	import type { HTMLAttributes } from 'svelte/elements';
 	import BlockLink from './BlockLink.svelte';
@@ -45,11 +53,36 @@
 	// they still appear as read-only full cards beneath their parent.
 	let linkableChildren = $derived(record.children.filter((child) => child.title));
 
+	const relationSymbols: Partial<Record<PredicateSlug, LucideIcon>> = {
+		references: AtSignIcon,
+		about: CrosshairIcon,
+		responds_to: ReplyIcon,
+		counters: SwordsIcon,
+		created_by: PenLineIcon,
+		same_as: EqualIcon
+	};
+	let relationRows = $derived.by(() => {
+		const rows = new Map<LucideIcon, { labels: string[]; items: RecordLink[] }>();
+		for (const group of [...record.references, ...record.extras]) {
+			const symbol = relationSymbols[group.predicate] ?? ArrowRightIcon;
+			const row = rows.get(symbol) ?? { labels: [], items: [] };
+			const seen = new Set(row.items.map((item) => item.id));
+			row.labels.push(group.label);
+			row.items.push(...group.records.filter((item) => !seen.has(item.id)));
+			rows.set(symbol, row);
+		}
+		return [...rows].map(([symbol, { labels, items }]) => ({
+			symbol,
+			label: labels.join(', '),
+			items
+		}));
+	});
+
 	let hasRelations = $derived(
 		linkableChildren.length > 0 ||
+			relationRows.length > 0 ||
 			record.connections.length > 0 ||
-			record.tags.length > 0 ||
-			record.extras.length > 0
+			record.tags.length > 0
 	);
 	let rcrUrl = $derived(PUBLIC_RCR_URL ? `${PUBLIC_RCR_URL}/records/${record.id}` : undefined);
 </script>
@@ -119,6 +152,9 @@
 				{#if linkableChildren.length > 0}
 					<RelationList items={linkableChildren} symbol={CornerDownRightIcon} label="Children" />
 				{/if}
+				{#each relationRows as row (row.label)}
+					<RelationList items={row.items} symbol={row.symbol} label={row.label} />
+				{/each}
 				{#if record.connections.length > 0}
 					<RelationList
 						items={record.connections}
@@ -126,9 +162,6 @@
 						label="Connections"
 					/>
 				{/if}
-				{#each record.extras as group (group.label)}
-					<RelationList items={group.records} symbol={ArrowRightIcon} label={group.label} />
-				{/each}
 				{#if record.tags.length > 0}
 					<TopicList topics={record.tags} />
 				{/if}
