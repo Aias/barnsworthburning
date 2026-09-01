@@ -7,7 +7,8 @@
 		ArrowLeftRightIcon,
 		ArrowRightIcon,
 		CloudIcon,
-		CornerDownRightIcon
+		CornerDownRightIcon,
+		ListCollapseIcon
 	} from '@lucide/svelte';
 	import type { HTMLAttributes } from 'svelte/elements';
 	import BlockLink from './BlockLink.svelte';
@@ -98,13 +99,17 @@
 					</div>
 				{/if}
 			{/if}
+			{#if record.summary}
+				<div class="extract-summary" title="Summary, auto-generated">
+					<ListCollapseIcon class="summary-symbol" />
+					<div class="content">
+						{@html markdown.parse(record.summary)}
+					</div>
+				</div>
+			{/if}
 			{#if record.content}
 				<blockquote class="extract-text content" cite={record.url ?? undefined}>
 					{@html markdown.parse(record.content)}
-				</blockquote>
-			{:else if record.summary}
-				<blockquote class="extract-text content">
-					{@html markdown.parse(record.summary)}
 				</blockquote>
 			{/if}
 			<Citation {record} element="figcaption" />
