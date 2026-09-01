@@ -100,7 +100,7 @@
 				{/if}
 			{/if}
 			{#if record.summary}
-				<div class="extract-summary" title="Summary auto-generated">
+				<div class="extract-summary" title="Summary, auto-generated">
 					<ListCollapseIcon class="summary-symbol" />
 					<div class="content">
 						{@html markdown.parse(record.summary)}
