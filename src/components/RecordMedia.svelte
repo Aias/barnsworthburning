@@ -18,6 +18,7 @@
 			src={media.url}
 			aria-label={media.altText ?? undefined}
 			autoplay
+			controls
 			muted
 			loop
 			playsinline
