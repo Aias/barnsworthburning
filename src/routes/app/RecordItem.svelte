@@ -1,7 +1,8 @@
 <script lang="ts">
 	import RecordCard from '#components/RecordCard.svelte';
 	import RecordGallery from '#components/RecordGallery.svelte';
-	import { displayTitle, type RecordPage } from '#lib/records.js';
+	import RelationList from '#components/RelationList.svelte';
+	import { displayTitle, relationRows, type RecordPage } from '#lib/records.js';
 	import { similarRecords } from '#lib/records.remote.js';
 	import { ArrowLeftRightIcon } from '@lucide/svelte';
 	import RecordList from './RecordList.svelte';
@@ -11,7 +12,8 @@
 	}
 	let { page }: RecordItemProps = $props();
 
-	let { record, references, children, associated } = $derived(page);
+	let { record, references, children, relations, associated } = $derived(page);
+	let rows = $derived(relationRows(relations));
 	// Semantic neighbors load after the record itself, so navigation never
 	// waits on the similarity query.
 	let similarQuery = $derived(record.type === 'artifact' ? similarRecords(record.id) : undefined);
@@ -49,10 +51,19 @@
 		{/if}
 	</article>
 {:else}
-	<h1>
-		{displayTitle(record)}
-		{#if record.abbreviation}<small class="text-secondary">({record.abbreviation})</small>{/if}
-	</h1>
+	<header>
+		<h1>
+			{displayTitle(record)}
+			{#if record.abbreviation}<small class="text-secondary">({record.abbreviation})</small>{/if}
+		</h1>
+		{#if rows.length > 0}
+			<nav class="relations">
+				{#each rows as row (row.label)}
+					<RelationList items={row.items} symbol={row.symbol} label={row.label} />
+				{/each}
+			</nav>
+		{/if}
+	</header>
 	{#if associated.length > 0}
 		<RecordGallery records={associated} />
 	{:else}
@@ -61,8 +72,19 @@
 {/if}
 
 <style>
-	h1 {
-		margin-block-end: 0.5em;
+	header {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5em;
+		margin-block-end: 1em;
+	}
+
+	.relations {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5em;
+		padding-block: 0.25em;
+		font-size: var(--font-size-small);
 	}
 
 	article {

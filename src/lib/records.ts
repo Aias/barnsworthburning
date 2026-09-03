@@ -1,3 +1,4 @@
+import { capitalize } from '#helpers/grammar.js';
 import { resolve } from '$app/paths';
 import {
 	PREDICATES,
@@ -6,7 +7,22 @@ import {
 	type RecordSelect,
 	type RecordType
 } from '@aias/hozo';
-import { FileTextIcon, LightbulbIcon, UserIcon, type LucideIcon } from '@lucide/svelte';
+import {
+	ArrowLeftRightIcon,
+	ArrowRightIcon,
+	AtSignIcon,
+	CornerDownRightIcon,
+	CrosshairIcon,
+	EqualIcon,
+	FileTextIcon,
+	HashIcon,
+	LightbulbIcon,
+	PenLineIcon,
+	ReplyIcon,
+	SwordsIcon,
+	UserIcon,
+	type LucideIcon
+} from '@lucide/svelte';
 
 export type RecordFields = Omit<RecordSelect, 'textEmbedding' | 'textSearch'>;
 export type RecordLink = Pick<RecordSelect, 'id' | 'type' | 'title' | 'slug'>;
@@ -49,7 +65,14 @@ export interface RecordPage {
 	record: RecordCard;
 	references: ReferenceGroup[];
 	children: RecordCard[];
+	relations: LinkGroup[];
 	associated: RecordCard[];
+}
+
+export interface RelationRow {
+	symbol: LucideIcon;
+	label: string;
+	items: RecordLink[];
 }
 
 export interface IndexEntry extends RecordLink {
@@ -84,6 +107,35 @@ export const sectionIcons: Record<RecordType, LucideIcon> = {
 	artifact: FileTextIcon,
 	entity: UserIcon,
 	concept: LightbulbIcon
+};
+
+const relationSymbols: Partial<Record<PredicateSlug, LucideIcon>> = {
+	references: AtSignIcon,
+	about: CrosshairIcon,
+	responds_to: ReplyIcon,
+	counters: SwordsIcon,
+	created_by: PenLineIcon,
+	same_as: EqualIcon,
+	related_to: ArrowLeftRightIcon,
+	tagged_with: HashIcon,
+	contained_by: CornerDownRightIcon
+};
+
+export const relationRows = (groups: LinkGroup[]): RelationRow[] => {
+	const rows = new Map<LucideIcon, { labels: string[]; items: RecordLink[] }>();
+	for (const group of groups) {
+		const symbol = relationSymbols[group.predicate] ?? ArrowRightIcon;
+		const row = rows.get(symbol) ?? { labels: [], items: [] };
+		const seen = new Set(row.items.map((item) => item.id));
+		row.labels.push(group.label);
+		row.items.push(...group.records.filter((item) => !seen.has(item.id)));
+		rows.set(symbol, row);
+	}
+	return [...rows].map(([symbol, { labels, items }]) => ({
+		symbol,
+		label: labels.map(capitalize).join(', '),
+		items
+	}));
 };
 
 export const sectionByPath = (path: string): Section | undefined =>
