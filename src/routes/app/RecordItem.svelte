@@ -83,6 +83,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.5em;
+		padding-block: 0.25em;
 		font-size: var(--font-size-small);
 	}
 
