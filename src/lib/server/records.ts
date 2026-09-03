@@ -212,6 +212,47 @@ const dedupeById = <T extends RecordLink>(items: T[]): T[] => {
 	});
 };
 
+type LinkRows = Pick<CardRow, 'outgoingLinks' | 'incomingLinks'>;
+
+function linkGroups(row: LinkRows, guard: typeof isListable = isListable): LinkGroup[] {
+	const groups = new Map<
+		string,
+		Pick<LinkGroup, 'predicate' | 'label' | 'direction'> & { rows: LinkRowRecord[] }
+	>();
+	const addGroup = (
+		predicate: PredicateSlug,
+		direction: LinkGroup['direction'],
+		rows: LinkRowRecord[]
+	) => {
+		if (rows.length === 0) return;
+		const label = direction === 'outgoing' ? outgoingLabel(predicate) : incomingLabel(predicate);
+		const group = groups.get(label) ?? { predicate, label, direction, rows: [] };
+		group.rows = [...group.rows, ...rows];
+		groups.set(label, group);
+	};
+	for (const predicate of predicateSlugs) {
+		if (!isPredicateSlug(predicate)) continue;
+		addGroup(
+			predicate,
+			'outgoing',
+			row.outgoingLinks.flatMap((link) =>
+				link.predicate === predicate && guard(link.target) ? [link.target] : []
+			)
+		);
+		addGroup(
+			predicate,
+			'incoming',
+			row.incomingLinks.flatMap((link) =>
+				link.predicate === predicate && guard(link.source) ? [link.source] : []
+			)
+		);
+	}
+	return [...groups.values()].map(({ rows, ...group }) => ({
+		...group,
+		records: dedupeById(rows.sort(byBestLink).map(pickLink))
+	}));
+}
+
 function toCard(row: CardRow): RecordCard {
 	const { media, outgoingLinks, incomingLinks, ...fields } = row;
 	// The nested link rows arrive unordered, and the chip rows they become
@@ -268,41 +309,9 @@ function toCard(row: CardRow): RecordCard {
 		)
 	].sort((a, b) => a.linkId - b.linkId);
 
-	// Self-inverse predicates share a label across directions, so grouping by
-	// label merges them into one deduplicated list, re-sorted once both
-	// directions are in.
-	const buckets: Record<
-		GroupBucket,
-		Map<string, Pick<LinkGroup, 'predicate' | 'label' | 'direction'> & { rows: LinkRowRecord[] }>
-	> = {
-		attributions: new Map(),
-		references: new Map(),
-		extras: new Map()
-	};
-	const addGroup = (
-		predicate: PredicateSlug,
-		direction: LinkGroup['direction'],
-		rows: LinkRowRecord[]
-	) => {
-		if (rows.length === 0) return;
-		const bucket = bucketFor(predicate, direction);
-		if (!bucket) return;
-		const label = direction === 'outgoing' ? outgoingLabel(predicate) : incomingLabel(predicate);
-		const group = buckets[bucket].get(label) ?? { predicate, label, direction, rows: [] };
-		group.rows = [...group.rows, ...rows];
-		buckets[bucket].set(label, group);
-	};
-	// Declaration order in PREDICATES keeps citation phrases and relation rows stable.
-	for (const predicate of predicateSlugs) {
-		if (!isPredicateSlug(predicate)) continue;
-		addGroup(predicate, 'outgoing', targets(predicate));
-		addGroup(predicate, 'incoming', sources(predicate));
-	}
+	const groups = linkGroups(row);
 	const groupsOf = (bucket: GroupBucket): LinkGroup[] =>
-		[...buckets[bucket].values()].map(({ rows, ...group }) => ({
-			...group,
-			records: dedupeById(rows.sort(byBestLink).map(pickLink))
-		}));
+		groups.filter((group) => bucketFor(group.predicate, group.direction) === bucket);
 
 	// Children double as read-only full-card content, so titleless records
 	// stay in the list; the card filters them out of its clickable chips.
@@ -361,36 +370,39 @@ export async function getRecordPage(id: number): Promise<RecordPage | null> {
 
 	const record = toCard(row);
 
-	// Entity and concept pages render every record linked to them (works by an
-	// entity, records tagged with a concept, works in a format) as a full-card
-	// gallery; artifact pages keep them as labeled link rows on the card instead.
-	const collectsRecords = record.type !== 'artifact';
-	const isSymmetric = (predicate: string) =>
-		isPredicateSlug(predicate) && PREDICATES[predicate].inverseSlug === predicate;
-	const associatedIds = collectsRecords
-		? [
-				...new Set([
-					...row.incomingLinks.flatMap((link) => (isListable(link.source) ? [link.source.id] : [])),
-					...row.outgoingLinks.flatMap((link) =>
-						isSymmetric(link.predicate) && isListable(link.target) ? [link.target.id] : []
-					)
-				])
-			]
-		: [];
-	const stripIncoming = (groups: LinkGroup[]): LinkGroup[] =>
-		groups.filter((group) => group.direction !== 'incoming');
-	const referenceLinks = collectsRecords ? stripIncoming(record.references) : record.references;
-	const referenceIds = [
-		...new Set(referenceLinks.flatMap((group) => group.records.map((link) => link.id)))
-	];
+	if (record.type !== 'artifact') {
+		const isArtifact = <T extends LinkRowRecord>(linked: T | null): linked is T =>
+			isListable(linked) && linked.type === 'artifact';
+		const isPeer = <T extends LinkRowRecord>(linked: T | null): linked is T =>
+			isListable(linked) && linked.type !== 'artifact';
+		const isSymmetric = (predicate: string) =>
+			isPredicateSlug(predicate) && PREDICATES[predicate].inverseSlug === predicate;
+		const associatedIds = [
+			...new Set([
+				...row.incomingLinks.flatMap((link) => (isArtifact(link.source) ? [link.source.id] : [])),
+				...row.outgoingLinks.flatMap((link) =>
+					isSymmetric(link.predicate) && isArtifact(link.target) ? [link.target.id] : []
+				)
+			])
+		];
+		return {
+			record,
+			references: [],
+			children: [],
+			relations: linkGroups(row, isPeer),
+			associated: await getRecordCards(associatedIds, 'best', ASSOCIATED_LIMIT)
+		};
+	}
 
-	const [children, connectionCards, associated, referenceCards] = await Promise.all([
+	const referenceIds = [
+		...new Set(record.references.flatMap((group) => group.records.map((link) => link.id)))
+	];
+	const [children, connectionCards, referenceCards] = await Promise.all([
 		getRecordCards(
 			record.children.map((child) => child.id),
 			'chronological'
 		),
 		getRecordCards(record.connections.map((connection) => connection.id)),
-		getRecordCards(associatedIds, 'best', ASSOCIATED_LIMIT),
 		getRecordCards(referenceIds)
 	]);
 
@@ -405,7 +417,7 @@ export async function getRecordPage(id: number): Promise<RecordPage | null> {
 	// the fetched cards, keeping the best-first order of the card query.
 	// Explicit connections join them as their own labeled group.
 	const references = [
-		...referenceLinks.flatMap((group) => {
+		...record.references.flatMap((group) => {
 			const ids = new Set(group.records.map((link) => link.id));
 			const cards = referenceCards.filter((card) => ids.has(card.id));
 			return cards.length > 0 ? [{ label: group.label, records: cards }] : [];
@@ -415,14 +427,7 @@ export async function getRecordPage(id: number): Promise<RecordPage | null> {
 			: [])
 	];
 
-	return {
-		record: collectsRecords
-			? { ...record, references: referenceLinks, extras: stripIncoming(record.extras) }
-			: record,
-		references,
-		children,
-		associated
-	};
+	return { record, references, children, relations: [], associated: [] };
 }
 
 export async function getSimilarRecords(id: number): Promise<RecordCard[]> {
