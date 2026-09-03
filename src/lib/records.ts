@@ -1,3 +1,4 @@
+import { capitalize } from '#helpers/grammar.js';
 import { resolve } from '$app/paths';
 import {
 	PREDICATES,
@@ -132,7 +133,7 @@ export const relationRows = (groups: LinkGroup[]): RelationRow[] => {
 	}
 	return [...rows].map(([symbol, { labels, items }]) => ({
 		symbol,
-		label: labels.join(', '),
+		label: labels.map(capitalize).join(', '),
 		items
 	}));
 };
