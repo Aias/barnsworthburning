@@ -7,7 +7,7 @@
 		ArrowLeftRightIcon,
 		CloudIcon,
 		CornerDownRightIcon,
-		ListCollapseIcon
+		TextAlignStartIcon
 	} from '@lucide/svelte';
 	import type { HTMLAttributes } from 'svelte/elements';
 	import BlockLink from './BlockLink.svelte';
@@ -102,7 +102,7 @@
 			{/if}
 			{#if record.summary}
 				<div class="extract-summary" title="Summary">
-					<ListCollapseIcon class="summary-symbol" />
+					<TextAlignStartIcon class="summary-symbol" />
 					<div class="content">
 						{@html markdown.parse(record.summary)}
 					</div>

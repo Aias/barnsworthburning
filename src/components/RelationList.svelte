@@ -1,12 +1,8 @@
 <script lang="ts">
-	import { displayTitle, type RecordLink } from '#lib/records.js';
-	import type { LucideIcon } from '@lucide/svelte';
+	import { displayTitle, type RelationRow } from '#lib/records.js';
 	import Link from './Link.svelte';
 
-	interface RelationListProps {
-		items: RecordLink[];
-		label: string;
-		symbol: LucideIcon;
+	interface RelationListProps extends RelationRow {
 		maxChildren?: number;
 	}
 
@@ -27,9 +23,13 @@
 </script>
 
 {#if items?.length > 0}
-	{@const Symbol = symbol}
 	<div class="relation-list" title={label}>
-		<Symbol class="relation-symbol" />
+		{#if typeof symbol === 'string'}
+			<span class="relation-label">{symbol}</span>
+		{:else}
+			{@const Symbol = symbol}
+			<Symbol class="relation-symbol" />
+		{/if}
 		<ol>
 			{#each displayedItems as item (item.id)}
 				<li><Link record={item}>{displayTitle(item)}</Link></li>
@@ -55,6 +55,11 @@
 
 		& :global(.relation-symbol) {
 			margin-block-start: calc((1lh - 1em) / 2);
+			color: var(--hint);
+		}
+
+		.relation-label {
+			flex-shrink: 0;
 			color: var(--hint);
 		}
 
