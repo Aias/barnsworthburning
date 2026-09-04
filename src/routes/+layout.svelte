@@ -96,19 +96,33 @@
 		goto(trailHref(page.url, []), { shallow: true, state: { trail: [] } });
 	};
 
+	const focusSearch = () => {
+		if (page.route.id === '/search') {
+			document.getElementById('search-query')?.focus();
+		} else {
+			void goto('/search');
+		}
+	};
+
 	const handleInteractions = (event: KeyboardEvent | MouseEvent) => {
 		interaction.setAltKeyPressed(event.altKey);
 		interaction.setMetaKeyPressed(event.metaKey);
-		if (event instanceof KeyboardEvent) {
-			if (event.key === 'Escape') {
-				clearTrail();
-			}
+	};
+
+	const handleKeydown = (event: KeyboardEvent) => {
+		handleInteractions(event);
+		if (event.key === 'Escape') {
+			clearTrail();
+		}
+		if (event.key === 'k' && (event.metaKey || event.ctrlKey)) {
+			event.preventDefault();
+			focusSearch();
 		}
 	};
 </script>
 
 <svelte:window
-	on:keydown={handleInteractions}
+	on:keydown={handleKeydown}
 	on:keyup={handleInteractions}
 	on:mouseenter={handleInteractions}
 	on:mouseleave={handleInteractions}

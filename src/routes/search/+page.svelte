@@ -43,6 +43,7 @@
 	<form data-sveltekit-reset="false" class="search-input">
 		<TextInput
 			type="search"
+			id="search-query"
 			name="q"
 			placeholder="Search records..."
 			value={searchValue}
