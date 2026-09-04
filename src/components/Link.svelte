@@ -33,8 +33,14 @@
 	}: LinkProps = $props();
 
 	let getTrailSegment: (() => TrailSegment) | undefined = getContext('trailSegment');
+	let getOpenRecordIds: (() => number[]) | undefined = getContext('openRecordIds');
 
 	let url = $derived(href ?? (record ? recordPath(record) : '#'));
+	let muted = $derived(
+		record !== undefined &&
+			record.id !== getTrailSegment?.().entityId &&
+			(getOpenRecordIds?.().includes(record.id) ?? false)
+	);
 
 	const handleClick = () => {
 		trail.selectSegment(getTrailSegment?.().entityId);
@@ -42,6 +48,6 @@
 	};
 </script>
 
-<a onclick={handleClick} href={url} class:inherit class:active {...restProps}
+<a onclick={handleClick} href={url} class:inherit class:active class:muted {...restProps}
 	>{@render children()}</a
 >
