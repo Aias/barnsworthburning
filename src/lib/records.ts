@@ -11,15 +11,14 @@ import {
 	ArrowLeftRightIcon,
 	ArrowRightIcon,
 	AtSignIcon,
+	CircleDotIcon,
 	CornerDownRightIcon,
-	CrosshairIcon,
 	EqualIcon,
 	FileTextIcon,
 	HashIcon,
 	LightbulbIcon,
 	PenLineIcon,
 	ReplyIcon,
-	SwordsIcon,
 	UserIcon,
 	type LucideIcon
 } from '@lucide/svelte';
@@ -70,7 +69,7 @@ export interface RecordPage {
 }
 
 export interface RelationRow {
-	symbol: LucideIcon;
+	symbol: LucideIcon | string;
 	label: string;
 	items: RecordLink[];
 }
@@ -111,9 +110,8 @@ export const sectionIcons: Record<RecordType, LucideIcon> = {
 
 const relationSymbols: Partial<Record<PredicateSlug, LucideIcon>> = {
 	references: AtSignIcon,
-	about: CrosshairIcon,
+	about: CircleDotIcon,
 	responds_to: ReplyIcon,
-	counters: SwordsIcon,
 	created_by: PenLineIcon,
 	same_as: EqualIcon,
 	related_to: ArrowLeftRightIcon,
@@ -122,9 +120,12 @@ const relationSymbols: Partial<Record<PredicateSlug, LucideIcon>> = {
 };
 
 export const relationRows = (groups: LinkGroup[]): RelationRow[] => {
-	const rows = new Map<LucideIcon, { labels: string[]; items: RecordLink[] }>();
+	const rows = new Map<RelationRow['symbol'], { labels: string[]; items: RecordLink[] }>();
 	for (const group of groups) {
-		const symbol = relationSymbols[group.predicate] ?? ArrowRightIcon;
+		const symbol =
+			group.predicate === 'counters'
+				? capitalize(group.label)
+				: (relationSymbols[group.predicate] ?? ArrowRightIcon);
 		const row = rows.get(symbol) ?? { labels: [], items: [] };
 		const seen = new Set(row.items.map((item) => item.id));
 		row.labels.push(group.label);
