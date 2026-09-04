@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { classnames } from '#helpers/classnames.js';
 	import type { TrailSegment as TrailSegmentData } from '#lib/trail.svelte.js';
+	import { setContext } from 'svelte';
 	import type { HTMLOlAttributes } from 'svelte/elements';
 	import TrailSegment from './TrailSegment.svelte';
 
@@ -8,6 +9,8 @@
 		segments: TrailSegmentData[];
 	}
 	let { segments, ...restProps }: TrailProps = $props();
+
+	setContext('openRecordIds', () => segments.map((segment) => segment.entityId));
 </script>
 
 <ol class:trail={true} {...restProps}>

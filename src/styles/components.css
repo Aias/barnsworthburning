@@ -133,6 +133,11 @@
 	}
 }
 
+.muted:not(.block-link .main-link),
+.block-link:has(.main-link.muted) {
+	opacity: 0.5;
+}
+
 .extract {
 	--layout-gap: 0.5em;
 	border: 1px solid var(--divider);
