@@ -106,10 +106,12 @@ const generateContentMarkup = (record: RecordCard, root?: RecordCard) => {
 		}
 		markup += '</figure>\n';
 	}
-	const text = content ?? summary;
-	if (text) {
+	if (summary) {
+		markup += `<p><em>${markdown.parseInline(summary)}</em></p>\n`;
+	}
+	if (content) {
 		markup += '<blockquote>\n';
-		markup += markdown.parse(text);
+		markup += markdown.parse(content);
 		markup += '</blockquote>\n';
 	}
 	if (url) {
