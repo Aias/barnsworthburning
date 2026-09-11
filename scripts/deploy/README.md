@@ -4,7 +4,7 @@ The site runs as a Bun server under PM2, reads the Red Cliff Record Postgres dat
 
 ## Prerequisites
 
-- Bun (`brew install oven-sh/bun/bun` or a version manager)
+- Bun 1.4 or newer (`brew install oven-sh/bun/bun` or a version manager)
 - PM2: `npm install -g pm2`
 - `cloudflared` (`brew install cloudflared`)
 - The Red Cliff Record Postgres database running locally
