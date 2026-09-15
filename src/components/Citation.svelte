@@ -25,11 +25,8 @@
 		{#if format}
 			<span class="article">{getArticle(format)}</span>
 			<strong class="format">{format}</strong>
-		{/if}
-		{#if creators.length > 0}
-			{#if format}
-				<span> by </span>
-			{/if}
+		{/if}{#if creators.length > 0}
+			{#if format}{' by'}{/if}
 			<CreatorList {creators} />
 		{/if}{#each attributions as group, i (group.label)}{#if format || creators.length > 0 || i > 0};{/if}
 			<span class="attribution">{group.label}</span>
