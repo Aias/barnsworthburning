@@ -1,12 +1,11 @@
-import { Marked, type Tokens } from 'marked';
-
-const linkRenderer = ({ href, title, text }: Tokens.Link) =>
-	`<a href="${href}" target="_blank"${title ? ` title="${title}"` : ''}>${text}</a>`;
+import { Marked } from 'marked';
 
 const markdown = new Marked({
 	breaks: true,
 	renderer: {
-		link: linkRenderer
+		link({ href, title, tokens }) {
+			return `<a href="${href}" target="_blank"${title ? ` title="${title}"` : ''}>${this.parser.parseInline(tokens)}</a>`;
+		}
 	}
 });
 
@@ -18,5 +17,5 @@ export default {
 			.parse(source, { async: false })
 			.toString()
 			.replaceAll('<br>', '<span class="line-break"></span>')
-			.replaceAll(/<a(?:\s+[^>]*)?>([^<]*)<\/a>/g, '$1')
+			.replaceAll(/<\/?a(?:\s+[^>]*)?>/g, '')
 };
