@@ -31,7 +31,7 @@
 		"preview": "bunx --bun vite preview"
 	},
 	"dependencies": {
-		"@aias/hozo": "~0.8.1",
+		"@aias/hozo": "~0.10.0",
 		"@lucide/svelte": "~1.46.0",
 		"drizzle-orm": "1.0.0-rc.5-ab785fc",
 		"marked": "~18.0.13",

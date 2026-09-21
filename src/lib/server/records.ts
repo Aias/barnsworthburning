@@ -46,14 +46,7 @@ const containmentPredicates: PredicateSlug[] = ['contained_by', 'quotes'];
 
 /** Predicate/direction pairs the card shape models with dedicated fields. */
 const modeledPredicates: Record<LinkGroup['direction'], PredicateSlug[]> = {
-	outgoing: [
-		'created_by',
-		'tagged_with',
-		'has_format',
-		...containmentPredicates,
-		'responds_to',
-		'related_to'
-	],
+	outgoing: ['created_by', 'tagged_with', ...containmentPredicates, 'responds_to', 'related_to'],
 	incoming: [...containmentPredicates, 'related_to']
 };
 
@@ -124,6 +117,7 @@ const sourceWith = {
 } as const;
 
 const cardWith = {
+	format: { columns: linkColumns },
 	media: {
 		orderBy: { id: 'asc' }
 	},
@@ -182,6 +176,7 @@ type SourceRow = PreviewRow & { media: MediaSelect[] };
 type TargetRow = PreviewRow & { outgoingLinks: { target: LinkRowRecord | null }[] };
 
 interface CardRow extends RecordFields {
+	format: LinkRowRecord | null;
 	media: MediaSelect[];
 	outgoingLinks: {
 		id: number;
@@ -254,7 +249,7 @@ function linkGroups(row: LinkRows, guard: typeof isListable = isListable): LinkG
 }
 
 function toCard(row: CardRow): RecordCard {
-	const { media, outgoingLinks, incomingLinks, ...fields } = row;
+	const { format, media, outgoingLinks, incomingLinks, ...fields } = row;
 	// The nested link rows arrive unordered, and the chip rows they become
 	// preview full-card lists, so each relation sorts by the same order as the
 	// card query that renders it.
@@ -328,7 +323,7 @@ function toCard(row: CardRow): RecordCard {
 		creators: targets('created_by').map(pickLink),
 		attributions: groupsOf('attributions'),
 		tags: targets('tagged_with').map(pickLink),
-		format: targets('has_format').map(pickLink)[0] ?? null,
+		format: isListable(format) ? pickLink(format) : null,
 		parents,
 		quoted,
 		respondsTo,
@@ -363,12 +358,14 @@ export async function getRecordPage(id: number): Promise<RecordPage | null> {
 		columns: cardColumns,
 		with: {
 			...cardWith,
+			formatOf: { where: { ...isListed, type: 'artifact' }, columns: { id: true } },
 			incomingLinks: { with: sourceWith }
 		}
 	});
 	if (!row) return null;
 
-	const record = toCard(row);
+	const { formatOf, ...card } = row;
+	const record = toCard(card);
 
 	if (record.type !== 'artifact') {
 		const isArtifact = <T extends LinkRowRecord>(linked: T | null): linked is T =>
@@ -379,6 +376,7 @@ export async function getRecordPage(id: number): Promise<RecordPage | null> {
 			isPredicateSlug(predicate) && PREDICATES[predicate].inverseSlug === predicate;
 		const associatedIds = [
 			...new Set([
+				...formatOf.map((formatted) => formatted.id),
 				...row.incomingLinks.flatMap((link) => (isArtifact(link.source) ? [link.source.id] : [])),
 				...row.outgoingLinks.flatMap((link) =>
 					isSymmetric(link.predicate) && isArtifact(link.target) ? [link.target.id] : []
