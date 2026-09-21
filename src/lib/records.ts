@@ -205,7 +205,8 @@ const singularizeWord = (word: string): string => {
 export const formatLabel = (format: Pick<RecordSelect, 'title'> | null): string | undefined => {
 	if (!format?.title) return undefined;
 	const words = format.title.split(' ');
-	return [...words.slice(0, -1), singularizeWord(words[words.length - 1])].join(' ');
+	const label = [...words.slice(0, -1), singularizeWord(words[words.length - 1])].join(' ');
+	return label.toLowerCase() === 'fragment' ? undefined : label;
 };
 
 export const outgoingLabel = (predicate: PredicateSlug): string => PREDICATES[predicate].name;
