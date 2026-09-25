@@ -72,15 +72,6 @@ export default defineConfig(({ mode }) => {
 			// --lightningcss-light/--lightningcss-dark vars keyed off prefers-color-scheme,
 			// which ignores the .light/.dark class toggle and breaks the color system.
 			cssTarget: ['chrome123', 'edge123', 'firefox120', 'safari17.5', 'ios17.5']
-		},
-		ssr: {
-			// Bundle all dependencies into the Vite server build so adapter-bun's
-			// Bun.build pass never re-bundles packages from node_modules. Left
-			// external, Bun's tree-shaking drops zod v4's side-effect-free check
-			// factories while their lazy-bound methods still reference them,
-			// throwing errors like "_regex is not defined" at runtime — via any
-			// import path into zod (app code, @aias/hozo, drizzle-orm/zod).
-			noExternal: true
 		}
 	};
 });
