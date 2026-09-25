@@ -31,8 +31,8 @@
 		"preview": "bunx --bun vite preview"
 	},
 	"dependencies": {
-		"@aias/hozo": "~0.11.0",
-		"drizzle-orm": "1.0.0-rc.5-ab785fc",
+		"@aias/hozo": "~0.11.1",
+		"drizzle-orm": "1.0.0-rc.5-5935859",
 		"marked": "~18.0.14",
 		"normalize.css": "~8.0.1",
 		"postgres": "~3.4.9",
