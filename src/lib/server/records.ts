@@ -6,6 +6,8 @@ import {
 	type FeedEntry,
 	type IndexEntry,
 	type LinkGroup,
+	type PreviewMedia,
+	type PublicMedia,
 	type RecordCard,
 	type RecordFields,
 	type RecordGroup,
@@ -18,7 +20,7 @@ import {
 	PREDICATES,
 	predicateSlugs,
 	records,
-	type MediaSelect,
+	type RecordSelect,
 	type PredicateSlug,
 	type RecordType
 } from '@aias/hozo';
@@ -85,17 +87,52 @@ const listableRecords = <
 type RecordsQueryConfig = NonNullable<Parameters<typeof db.query.records.findMany>[0]>;
 
 const cardColumns = {
-	textEmbedding: false,
-	textSearch: false
-} satisfies RecordsQueryConfig['columns'];
+	id: true,
+	type: true,
+	title: true,
+	slug: true,
+	abbreviation: true,
+	sense: true,
+	summary: true,
+	content: true,
+	mediaCaption: true,
+	notes: true,
+	url: true,
+	avatarUrl: true,
+	contentCreatedAt: true,
+	contentUpdatedAt: true,
+	recordCreatedAt: true,
+	recordUpdatedAt: true
+} satisfies Record<keyof RecordFields, true> & RecordsQueryConfig['columns'];
 
-const linkColumns = {
+const mediaColumns = {
+	id: true,
+	type: true,
+	url: true,
+	altText: true,
+	width: true,
+	height: true,
+	contentTypeString: true,
+	fileSize: true
+} satisfies Record<keyof PublicMedia, true>;
+
+const previewMediaColumns = {
+	type: true,
+	url: true,
+	altText: true
+} satisfies Record<keyof PreviewMedia, true>;
+
+const visibleLinkColumns = {
 	id: true,
 	type: true,
 	title: true,
 	slug: true,
 	isPrivate: true,
-	recordCuratedAt: true,
+	recordCuratedAt: true
+} satisfies RecordsQueryConfig['columns'];
+
+const linkColumns = {
+	...visibleLinkColumns,
 	eloScore: true,
 	contentCreatedAt: true,
 	recordCreatedAt: true
@@ -109,36 +146,75 @@ const previewColumns = {
 	notes: true
 } as const;
 
+const relationColumns = { id: true, predicate: true } satisfies { id: true; predicate: true };
 const sourceWith = {
 	source: {
 		columns: previewColumns,
-		with: { media: { orderBy: { id: 'asc' } } }
+		with: { media: { columns: previewMediaColumns, orderBy: { id: 'asc' } } }
 	}
 } as const;
 
 const cardWith = {
-	format: { columns: linkColumns },
+	format: { columns: visibleLinkColumns },
 	media: {
+		columns: mediaColumns,
 		orderBy: { id: 'asc' }
 	},
 	outgoingLinks: {
+		columns: relationColumns,
 		with: {
 			target: {
 				columns: previewColumns,
 				with: {
 					outgoingLinks: {
+						columns: {},
 						where: { predicate: 'created_by' },
-						with: { target: { columns: linkColumns } }
+						with: { target: { columns: visibleLinkColumns } }
 					}
 				}
 			}
 		}
 	},
 	incomingLinks: {
+		columns: relationColumns,
 		where: { predicate: { in: [...containmentPredicates, 'related_to'] } },
 		with: sourceWith
 	}
 } satisfies RecordsQueryConfig['with'];
+
+const pickRecord = (row: RecordFields): RecordFields => ({
+	id: row.id,
+	type: row.type,
+	title: row.title,
+	slug: row.slug,
+	abbreviation: row.abbreviation,
+	sense: row.sense,
+	summary: row.summary,
+	content: row.content,
+	mediaCaption: row.mediaCaption,
+	notes: row.notes,
+	url: row.url,
+	avatarUrl: row.avatarUrl,
+	contentCreatedAt: row.contentCreatedAt,
+	contentUpdatedAt: row.contentUpdatedAt,
+	recordCreatedAt: row.recordCreatedAt,
+	recordUpdatedAt: row.recordUpdatedAt
+});
+const pickMedia = (item: PublicMedia): PublicMedia => ({
+	id: item.id,
+	type: item.type,
+	url: item.url,
+	altText: item.altText,
+	width: item.width,
+	height: item.height,
+	contentTypeString: item.contentTypeString,
+	fileSize: item.fileSize
+});
+const pickPreviewMedia = ({ type, url, altText }: PreviewMedia): PreviewMedia => ({
+	type,
+	url,
+	altText
+});
 
 const byBest = ((record, { desc: descend }) => [
 	descend(record.eloScore),
@@ -151,11 +227,10 @@ const byChronology = ((record, { asc: ascend }) => [
 	ascend(record.id)
 ]) satisfies RecordsQueryConfig['orderBy'];
 
-type LinkRowRecord = RecordLink &
-	Pick<
-		RecordFields,
-		'isPrivate' | 'recordCuratedAt' | 'eloScore' | 'contentCreatedAt' | 'recordCreatedAt'
-	>;
+type VisibleRecord = Pick<RecordSelect, 'isPrivate' | 'recordCuratedAt' | 'title'>;
+type VisibleLink = RecordLink & VisibleRecord;
+type LinkRowRecord = VisibleLink &
+	Pick<RecordSelect, 'eloScore' | 'contentCreatedAt' | 'recordCreatedAt'>;
 
 // The relational query can't order nested link rows by their linked record, so
 // the chip rows sort here instead — these comparators must match byBest and
@@ -171,13 +246,13 @@ const byChronologyLink = (a: LinkRowRecord, b: LinkRowRecord) =>
 type PreviewRow = LinkRowRecord &
 	Pick<RecordFields, 'summary' | 'content' | 'mediaCaption' | 'notes'>;
 
-type SourceRow = PreviewRow & { media: MediaSelect[] };
+type SourceRow = PreviewRow & { media: PreviewMedia[] };
 
-type TargetRow = PreviewRow & { outgoingLinks: { target: LinkRowRecord | null }[] };
+type TargetRow = PreviewRow & { outgoingLinks: { target: VisibleLink | null }[] };
 
 interface CardRow extends RecordFields {
-	format: LinkRowRecord | null;
-	media: MediaSelect[];
+	format: VisibleLink | null;
+	media: PublicMedia[];
 	outgoingLinks: {
 		id: number;
 		predicate: string;
@@ -192,10 +267,10 @@ interface CardRow extends RecordFields {
 
 const pickLink = ({ id, type, title, slug }: RecordLink): RecordLink => ({ id, type, title, slug });
 
-const isVisible = <T extends LinkRowRecord>(record: T | null): record is T =>
+const isVisible = <T extends VisibleRecord>(record: T | null): record is T =>
 	record !== null && record.recordCuratedAt !== null && !record.isPrivate;
 
-const isListable = <T extends LinkRowRecord>(record: T | null): record is T =>
+const isListable = <T extends VisibleRecord>(record: T | null): record is T =>
 	isVisible(record) && record.title !== null;
 
 const dedupeById = <T extends RecordLink>(items: T[]): T[] => {
@@ -209,7 +284,10 @@ const dedupeById = <T extends RecordLink>(items: T[]): T[] => {
 
 type LinkRows = Pick<CardRow, 'outgoingLinks' | 'incomingLinks'>;
 
-function linkGroups(row: LinkRows, guard: typeof isListable = isListable): LinkGroup[] {
+function linkGroups(
+	row: LinkRows,
+	guard: (record: LinkRowRecord | null) => record is LinkRowRecord = isListable
+): LinkGroup[] {
 	const groups = new Map<
 		string,
 		Pick<LinkGroup, 'predicate' | 'label' | 'direction'> & { rows: LinkRowRecord[] }
@@ -249,7 +327,7 @@ function linkGroups(row: LinkRows, guard: typeof isListable = isListable): LinkG
 }
 
 function toCard(row: CardRow): RecordCard {
-	const { format, media, outgoingLinks, incomingLinks, ...fields } = row;
+	const { format, media, outgoingLinks, incomingLinks } = row;
 	// The nested link rows arrive unordered, and the chip rows they become
 	// preview full-card lists, so each relation sorts by the same order as the
 	// card query that renders it.
@@ -318,8 +396,8 @@ function toCard(row: CardRow): RecordCard {
 	const containedRows = sources('contained_by', isVisible).sort(byChronologyLink);
 
 	return {
-		...fields,
-		media,
+		...pickRecord(row),
+		media: media.map(pickMedia),
 		creators: targets('created_by').map(pickLink),
 		attributions: groupsOf('attributions'),
 		tags: targets('tagged_with').map(pickLink),
@@ -329,7 +407,8 @@ function toCard(row: CardRow): RecordCard {
 		respondsTo,
 		children: childRows.map(pickLink),
 		childPreview: containedRows.map(recordPreview).find(Boolean) ?? null,
-		childMedia: containedRows.flatMap((child) => visualMedia(child.media))[0] ?? null,
+		childMedia:
+			containedRows.flatMap((child) => visualMedia(child.media).map(pickPreviewMedia))[0] ?? null,
 		references: groupsOf('references'),
 		connections: dedupeById(connectionRows.map(({ record }) => pickLink(record))),
 		extras: groupsOf('extras')
@@ -359,7 +438,7 @@ export async function getRecordPage(id: number): Promise<RecordPage | null> {
 		with: {
 			...cardWith,
 			formatOf: { where: { ...isListed, type: 'artifact' }, columns: { id: true } },
-			incomingLinks: { with: sourceWith }
+			incomingLinks: { columns: relationColumns, with: sourceWith }
 		}
 	});
 	if (!row) return null;
@@ -504,6 +583,8 @@ async function indexEntriesFor(type: RecordType, limit: number): Promise<IndexEn
 			SELECT child.source_id FROM ${links} child
 			JOIN ${links} work ON work.source_id = child.target_id
 				AND work.predicate = 'created_by' AND work.target_id = ${records}.id
+			JOIN ${records} visible_work ON visible_work.id = work.source_id
+				AND visible_work.is_private = false AND visible_work.curated_at IS NOT NULL
 			WHERE child.predicate IN (${inPredicates(containmentPredicates)})
 		) contributor
 		WHERE EXISTS (
@@ -560,7 +641,17 @@ async function topRecordsFor(targetIds: number[]): Promise<Map<number, RecordLin
 				and(inArray(links.targetId, targetIds), inArray(links.predicate, describingPredicates))
 			)
 	);
-	const rows = await db.with(ranked).select().from(ranked).where(lte(ranked.rank, 5));
+	const rows = await db
+		.with(ranked)
+		.select({
+			targetId: ranked.targetId,
+			id: ranked.id,
+			type: ranked.type,
+			title: ranked.title,
+			slug: ranked.slug
+		})
+		.from(ranked)
+		.where(lte(ranked.rank, 5));
 	for (const { targetId, id, type, title, slug } of rows) {
 		const list = tops.get(targetId) ?? [];
 		list.push({ id, type, title, slug });
@@ -641,6 +732,16 @@ export async function searchRecords(query: string, type?: RecordType): Promise<R
 	return rows.map(toCard);
 }
 
+const graphColumns = {
+	id: true,
+	type: true,
+	title: true,
+	isPrivate: true,
+	recordCuratedAt: true,
+	recordCreatedAt: true
+} satisfies RecordsQueryConfig['columns'];
+type GraphRecord = Pick<RecordSelect, keyof typeof graphColumns>;
+
 interface ContainmentRoot {
 	id: number;
 	recency: number;
@@ -658,15 +759,15 @@ async function rankContainmentRoots(
 	recencyColumn: 'recordCreatedAt' | 'recordCuratedAt',
 	limit: number
 ): Promise<ContainmentRoot[]> {
-	const recencyOf = (record: Pick<RecordFields, 'recordCreatedAt' | 'recordCuratedAt'>) =>
+	const recencyOf = (record: Pick<RecordSelect, 'recordCreatedAt' | 'recordCuratedAt'>) =>
 		(record[recencyColumn] ?? record.recordCreatedAt).getTime();
 	const containmentLinks = await db.query.links.findMany({
 		where: { predicate: { in: containmentPredicates } },
-		columns: { id: true },
-		with: { source: { columns: linkColumns }, target: { columns: linkColumns } }
+		columns: {},
+		with: { source: { columns: graphColumns }, target: { columns: graphColumns } }
 	});
 
-	const nodes = new Map<number, LinkRowRecord>();
+	const nodes = new Map<number, GraphRecord>();
 	const parentIds = new Map<number, number[]>();
 	const childIds = new Map<number, number[]>();
 	const connect = (edges: Map<number, number[]>, from: number, to: number) => {
@@ -682,8 +783,7 @@ async function rankContainmentRoots(
 		connect(childIds, target.id, source.id);
 	}
 
-	const listedArtifact = (record: LinkRowRecord) =>
-		isListable(record) && record.type === 'artifact';
+	const listedArtifact = (record: GraphRecord) => isListable(record) && record.type === 'artifact';
 	const traverse = (startId: number, edges: Map<number, number[]>) => {
 		const seen = new Set<number>();
 		const stack = [...(edges.get(startId) ?? [])];

@@ -8,11 +8,11 @@ import {
 	recordPath,
 	visualMedia,
 	type FeedEntry,
+	type PublicMedia,
 	type RecordCard,
 	type RecordLink
 } from '#lib/records.js';
 import { getFeedEntries } from '#lib/server/records.js';
-import type { MediaSelect } from '@aias/hozo';
 import xmlFormatter from 'xml-formatter';
 import type { RequestHandler } from './$types';
 
@@ -144,7 +144,7 @@ const generateContentMarkup = (record: RecordCard, root?: RecordCard) => {
 	return markup;
 };
 
-const dimensionAttributes = (item: MediaSelect) =>
+const dimensionAttributes = (item: PublicMedia) =>
 	`${item.width ? ` width="${item.width}"` : ''}${item.height ? ` height="${item.height}"` : ''}`;
 
 const flattenRecords = (entry: FeedEntry): RecordCard[] => [
