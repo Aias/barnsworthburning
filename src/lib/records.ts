@@ -23,7 +23,6 @@ import {
 	type LucideIcon
 } from '@lucide/svelte';
 
-// Only fields consumed by the public UI, SEO, and feed belong in these DTOs.
 export type RecordFields = Pick<
 	RecordSelect,
 	| 'id'

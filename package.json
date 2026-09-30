@@ -28,8 +28,7 @@
 		"format:check": "oxfmt --check",
 		"lint": "oxfmt --check && oxlint --fix --type-aware .",
 		"prepare": "svelte-kit sync || echo ''",
-		"preview": "bunx --bun vite preview",
-		"test": "node --test scripts/tests/*.test.mjs"
+		"preview": "bunx --bun vite preview"
 	},
 	"dependencies": {
 		"@aias/hozo": "~0.11.1",
