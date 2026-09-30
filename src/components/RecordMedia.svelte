@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { MediaSelect } from '@aias/hozo';
+	import type { PublicMedia } from '#lib/records.js';
 
 	interface RecordMediaProps {
-		media: MediaSelect;
+		media: PublicMedia;
 	}
 
 	let { media }: RecordMediaProps = $props();

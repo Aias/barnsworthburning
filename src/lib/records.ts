@@ -23,7 +23,30 @@ import {
 	type LucideIcon
 } from '@lucide/svelte';
 
-export type RecordFields = Omit<RecordSelect, 'textEmbedding' | 'textSearch'>;
+export type RecordFields = Pick<
+	RecordSelect,
+	| 'id'
+	| 'type'
+	| 'title'
+	| 'slug'
+	| 'abbreviation'
+	| 'sense'
+	| 'summary'
+	| 'content'
+	| 'mediaCaption'
+	| 'notes'
+	| 'url'
+	| 'avatarUrl'
+	| 'contentCreatedAt'
+	| 'contentUpdatedAt'
+	| 'recordCreatedAt'
+	| 'recordUpdatedAt'
+>;
+export type PublicMedia = Pick<
+	MediaSelect,
+	'id' | 'type' | 'url' | 'altText' | 'width' | 'height' | 'contentTypeString' | 'fileSize'
+>;
+export type PreviewMedia = Pick<PublicMedia, 'type' | 'url' | 'altText'>;
 export type RecordLink = Pick<RecordSelect, 'id' | 'type' | 'title' | 'slug'>;
 
 export interface LinkGroup {
@@ -39,7 +62,7 @@ export interface RecordAttachment extends RecordLink {
 }
 
 export interface RecordCard extends RecordFields {
-	media: MediaSelect[];
+	media: PublicMedia[];
 	creators: RecordLink[];
 	attributions: LinkGroup[];
 	tags: RecordLink[];
@@ -49,7 +72,7 @@ export interface RecordCard extends RecordFields {
 	respondsTo: RecordAttachment[];
 	children: RecordLink[];
 	childPreview: string | null;
-	childMedia: MediaSelect | null;
+	childMedia: PreviewMedia | null;
 	references: LinkGroup[];
 	connections: RecordLink[];
 	extras: LinkGroup[];
@@ -161,7 +184,7 @@ export const recordPath = (record: Pick<RecordSelect, 'id' | 'title' | 'slug'>) 
 export const displayTitle = (record: Pick<RecordSelect, 'title' | 'type'>): string =>
 	record.title || sections[record.type].singular;
 
-export const visualMedia = (media: MediaSelect[]): MediaSelect[] =>
+export const visualMedia = <T extends Pick<MediaSelect, 'type'>>(media: T[]): T[] =>
 	media.filter((item) => item.type === 'image' || item.type === 'video');
 
 export const recordPreview = (
