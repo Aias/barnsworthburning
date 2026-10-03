@@ -21,7 +21,7 @@
 		const names = combineAsList(creators.map((creator) => displayTitle(creator)));
 		const parent = record.parents[0]?.title ?? '';
 		if (format) {
-			return `${getArticle(format)} ${format.toLowerCase()}${names ? ` by ${names}` : ''}${parent ? ` from ${parent}` : ''}.`;
+			return `${getArticle(format)} ${format}${names ? ` by ${names}` : ''}${parent ? ` from ${parent}` : ''}.`;
 		}
 		if (names) {
 			return `By ${names}${parent ? `, from ${parent}` : ''}.`;

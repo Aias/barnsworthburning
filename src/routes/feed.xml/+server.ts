@@ -66,7 +66,7 @@ const citationPhrases = (record: RecordCard, root?: RecordCard): string[] => {
 	const format = formatLabel(record.format);
 	const parent = record.parents[0];
 	if (format && (!root || format !== formatLabel(root.format))) {
-		phrases.push(`${getArticle(format)} <strong>${format.toLowerCase()}</strong>`);
+		phrases.push(`${getArticle(format)} <strong>${format}</strong>`);
 	}
 	if (record.creators.length > 0 && (!root || !sameRecords(record.creators, root.creators))) {
 		phrases.push(`by ${recordLinkList(record.creators)}`);
