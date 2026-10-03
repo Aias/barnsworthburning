@@ -193,33 +193,34 @@ export const recordPreview = (
 
 // Format concepts carry plural titles ("Essays", "Research Papers"); the
 // citation line needs the noun for a single record of that format ("An essay
-// by …"). Overrides cover irregular plurals and mass nouns whose countable
-// singular the suffix rules can't derive ("Poetry" → "A poem by …").
-const singularOverrides: Record<string, string> = {
+// by …"). Labels are lowercase. Overrides, keyed by the whole title or its last
+// word, cover irregular plurals, mass nouns, and phrases the suffix rules can't
+// derive ("Poetry" → "A poem by …"), and spell out their own casing.
+const singularOverrides: Partial<Record<string, string>> = {
 	advice: 'piece of advice',
+	art: 'artwork',
 	automata: 'automaton',
 	fiction: 'fiction story',
 	media: 'media work',
 	memetics: 'meme',
 	memoranda: 'memorandum',
 	movies: 'movie',
+	'opposite-the-editorial': 'op-ed',
 	photography: 'photograph',
 	poetry: 'poem',
 	prototyping: 'prototype',
+	'question and answer': 'Q&A',
 	series: 'series',
+	standup: 'standup special',
 	summarization: 'summary',
 	theses: 'thesis'
 };
 
 const singularizeWord = (word: string): string => {
-	const override = singularOverrides[word.toLowerCase()];
-	if (override) {
-		return word.charAt(0) === word.charAt(0).toUpperCase()
-			? override.charAt(0).toUpperCase() + override.slice(1)
-			: override;
-	}
+	const override = singularOverrides[word];
+	if (override) return override;
 	if (/(?:ss|x|z|ch|sh)es$/.test(word)) return word.slice(0, -2);
-	if (/[a-z]ies$/i.test(word)) return `${word.slice(0, -3)}y`;
+	if (/[a-z]ies$/.test(word)) return `${word.slice(0, -3)}y`;
 	if (/(?:ss|us|sis|xis)$/.test(word)) return word;
 	if (word.endsWith('s')) return word.slice(0, -1);
 	return word;
@@ -227,9 +228,12 @@ const singularizeWord = (word: string): string => {
 
 export const formatLabel = (format: Pick<RecordSelect, 'title'> | null): string | undefined => {
 	if (!format?.title) return undefined;
-	const words = format.title.split(' ');
-	const label = [...words.slice(0, -1), singularizeWord(words[words.length - 1])].join(' ');
-	return label.toLowerCase() === 'fragment' ? undefined : label;
+	const title = format.title.toLowerCase();
+	const words = title.split(' ');
+	const label =
+		singularOverrides[title] ??
+		[...words.slice(0, -1), singularizeWord(words[words.length - 1])].join(' ');
+	return label === 'fragment' ? undefined : label;
 };
 
 export const outgoingLabel = (predicate: PredicateSlug): string => PREDICATES[predicate].name;

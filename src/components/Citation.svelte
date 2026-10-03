@@ -50,7 +50,6 @@
 	}
 
 	.format {
-		text-transform: lowercase;
 		color: var(--display);
 	}
 

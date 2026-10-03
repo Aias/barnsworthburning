@@ -23,7 +23,7 @@
 	{#each records as record (record.id)}
 		{@const snippet = recordPreview(record) || record.childPreview}
 		{@const media = visualMedia(record.media)[0] ?? record.childMedia}
-		{@const descriptor = formatLabel(record.format) ?? sections[record.type].singular}
+		{@const descriptor = formatLabel(record.format) ?? sections[record.type].singular.toLowerCase()}
 		<!-- Alias and sense sit beside the title, unless the second line has no prose
 		to show, in which case they fill it instead of the bare descriptor. -->
 		<BlockLink element="li">
@@ -54,7 +54,7 @@
 							{/if}{#if record.sense}<span class="sense">{record.sense}</span>{/if}
 						</p>
 					{:else}
-						<p class="summary descriptor">({getArticle(descriptor)} {descriptor.toLowerCase()})</p>
+						<p class="summary descriptor">({getArticle(descriptor)} {descriptor})</p>
 					{/if}
 				</section>
 				{#if media}
